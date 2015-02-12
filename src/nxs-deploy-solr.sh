@@ -68,19 +68,6 @@ function kill_solr() {
   fi
 }
 
-function check_solr_running() {
-  host=$1
-  solr_pid=$(ssh npteam@${host} ps -ef | grep java | grep nextprot.solr | tr -s " " | cut -f2 -d' ')
-
-  if [ -x "${solr_pid}" ]; then
-    #echo "solr was not running on ${host}"
-    return 1
-  else
-    #echo "solr was running as pid ${solr_pid} on ${host}"
-    return 0
-  fi
-}
-
 function check_solr() {
   host=$1
   path=$2
@@ -115,7 +102,7 @@ if [ ! ${no_clean_flag} ]; then
 fi
 
 echo "copying solr from ${SRC_HOST} to ${TRG_HOST}:${TRG_PATH}"
-ssh npteam@${TRG_HOST} rsync -avz ${SRC_HOST}:/work/devtools/solr-4.5.0/ ${TRG_PATH}
+ssh npteam@${SRC_HOST} rsync -avz /work/devtools/solr-4.5.0/ ${TRG_HOST}:${TRG_PATH}
 
 sleep 5
 start_solr ${SRC_HOST}
