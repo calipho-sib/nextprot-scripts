@@ -5,7 +5,9 @@ error_color='\e[1;32m'   # begin error color
 warning_color='\e[1;33m' # begin warning color
 _color='\e[0m'           # end Color
 
-source "./strict-mode.sh"
+set -o errexit  # make your script exit when a command fails.
+set -o pipefail # prevents errors in a pipeline from being masked. If any command in a pipeline fails, that return code will be used as the return code of the whole pipeline.
+set -o nounset  # exit when your script tries to use undeclared variables.
 
 function echoUsage() {
     echo "usage: $0 <src_host> <dest_host>" >&2

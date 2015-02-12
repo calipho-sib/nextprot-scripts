@@ -14,7 +14,9 @@
 
 # Warning: This script assumes that the solr config / indexes are up-to-date on <src_host>.
 
-source "./strict-mode.sh"
+set -o errexit  # make your script exit when a command fails.
+set -o pipefail # prevents errors in a pipeline from being masked. If any command in a pipeline fails, that return code will be used as the return code of the whole pipeline.
+set -o nounset  # exit when your script tries to use undeclared variables.
 
 function echoUsage() {
   echo "usage: $0 [-nv] <src_host> <dest_host> [<dest_path> <dest_jetty_port>]"
