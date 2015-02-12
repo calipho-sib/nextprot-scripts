@@ -7,7 +7,7 @@
 # -c: activate cold backup mode
 # -v: verbose mode
 
-# ex: bash -c deploy-npdb.sh kant uat-web2 npdb
+# ex: bash -c nxs-deploy-npdb.sh kant uat-web2 npdb
 
 set -o errexit  # make your script exit when a command fails.
 set -o pipefail # prevents errors in a pipeline from being masked. If any command in a pipeline fails, that return code will be used as the return code of the whole pipeline.
