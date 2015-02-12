@@ -5,16 +5,14 @@
 
 # [virtuoso logs are here: /var/lib/virtuoso/db/virtuoso.log]
 
-# ex: bash -c nxs-deploy-virtuoso.sh kant uat-web2
+# ex: bash nxs-deploy-virtuoso.sh uat-web2 godel
 
 set -o errexit  # make your script exit when a command fails.
 set -o pipefail # prevents errors in a pipeline from being masked. If any command in a pipeline fails, that return code will be used as the return code of the whole pipeline.
 set -o nounset  # exit when your script tries to use undeclared variables.
 
-set -x
-
 function echoUsage() {
-    echo "usage: $0 [-c][-v] <src_host> <dest_host>" >&2
+    echo "usage: $0 <src_host> <dest_host>" >&2
 }
 
 function check-virtuoso-is-up() {
@@ -71,8 +69,8 @@ function start-virtuoso() {
 function clear-virtuoso() {
     host=$1
 
-    ssh npteam@${host} "mkdir -p /var/lib/virtuoso/tmp"
-    ssh npteam@${host} "cp /var/lib/virtuoso/db/virtuoso.ini /var/lib/virtuoso/tmp"
+    ssh npteam@${host} "mkdir -p /home/npteam/tmp"
+    ssh npteam@${host} "cp /var/lib/virtuoso/db/virtuoso.ini /home/npteam/tmp"
     ssh npteam@${host} "rm -rf /var/lib/virtuoso/db/*"
 }
 
@@ -80,9 +78,10 @@ function copyDb() {
     src=$1
     dest=$2
 
-    ssh npteam@${src} "rsync -avz --progress /var/lib/virtuoso/db/* ${dest}:/var/lib/virtuoso/db"
+    ssh npteam@${src} "rsync -avz /var/lib/virtuoso/db/* ${dest}:/var/lib/virtuoso/db"
     ssh npteam@${dest} "rm /var/lib/virtuoso/db/virtuoso.trx"
-    ssh npteam@${dest} "cp /var/lib/virtuoso/tmp/virtuoso.ini /var/lib/virtuoso/db"
+    ssh npteam@${dest} "cp /home/npteam/tmp/virtuoso.ini /var/lib/virtuoso/db"
+    ssh npteam@${dest} "rm -rf /home/npteam/tmp"
 }
 
 args=("$*")
