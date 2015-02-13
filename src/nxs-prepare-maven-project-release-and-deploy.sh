@@ -43,17 +43,20 @@ if getNextReleaseVersion RELEASE_VERSION; then
     echo preparing ${RELEASE_NAME} v${RELEASE_VERSION}...
 
     # prepare new version
-    mvn versions:set -DnewVersion=${RELEASE_VERSION} -DgenerateBackupPoms=false || exit 1
+    mvn versions:set -DnewVersion=${RELEASE_VERSION} -DgenerateBackupPoms=false
 
     git add pom.xml
     git commit -m "New release version ${RELEASE_VERSION}"
 
     # create a new release tag
-    git tag -a v${RELEASE_VERSION} -m "tag v${RELEASE_VERSION}" || exit 2
-    git push origin master --tags || exit 3
+    git tag -a v${RELEASE_VERSION} -m "tag v${RELEASE_VERSION}"
+    git push origin master --tags
+
+    # build
+    mvn clean install
 
     # deploy on nexus
-    mvn clean deploy || exit 4
+    mvn deploy
 else
     exit 5
 fi
