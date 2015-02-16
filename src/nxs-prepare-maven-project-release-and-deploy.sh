@@ -46,7 +46,7 @@ if [ $# -lt 1 ]; then
 fi
 
 RELEASE_VERSION=
-DEV_VERSION=
+NEXT_DEV_VERSION=
 GIT_REPO=$1
 
 # return the next release version to prepare on master
@@ -56,20 +56,20 @@ getNextReleaseVersion () {
     if [ ! -f "pom.xml" ]; then
 
         echo "pom.xml was not found: not a maven project"
-        return 1
+        exit 2
     fi
 
     # get develop version (http://stackoverflow.com/questions/3545292/how-to-get-maven-project-version-to-the-bash-command-line)
-    DEV_VERSION=`mvn org.apache.maven.plugins:maven-help-plugin:2.1.1:evaluate -Dexpression=project.version | grep -Ev '(^\[|Download\w+:)'`
-    RELEASE_NAME=`mvn org.apache.maven.plugins:maven-help-plugin:2.1.1:evaluate -Dexpression=project.name | grep -Ev '(^\[|Download\w+:)'`
+    devVersion=`mvn org.apache.maven.plugins:maven-help-plugin:2.1.1:evaluate -Dexpression=project.version | grep -Ev '(^\[|Download\w+:)'`
+    releaseName=`mvn org.apache.maven.plugins:maven-help-plugin:2.1.1:evaluate -Dexpression=project.name | grep -Ev '(^\[|Download\w+:)'`
 
-    if [[ ! ${DEV_VERSION} =~ [0-9]+\.[0-9]+\.[0-9]+-SNAPSHOT ]]; then
+    if [[ ! ${devVersion} =~ [0-9]+\.[0-9]+\.[0-9]+-SNAPSHOT ]]; then
 
-        echo "cannot release ${RELEASE_NAME} v${DEV_VERSION}: not a snapshot (develop) version"
-        return 3
+        echo "cannot release ${releaseName} v${devVersion}: not a snapshot (develop) version"
+        exit 3
     fi
 
-    RELEASE_VERSION=${DEV_VERSION%-*}
+    RELEASE_VERSION=${devVersion%-*}
 }
 
 makeNextDevelopmentVersion () {
@@ -80,7 +80,7 @@ makeNextDevelopmentVersion () {
     if [[ ! ${version} =~ [0-9]+\.[0-9]+\.[0-9]+ ]]; then
 
         echo "cannot increment ${version} version"
-        return 4
+        exit 4
     fi
 
     # extract x.y
@@ -91,7 +91,7 @@ makeNextDevelopmentVersion () {
 
     z=$(expr ${developVersion} + 1)
 
-    DEV_VERSION=${xy}.${z}-SNAPSHOT
+    NEXT_DEV_VERSION=${xy}.${z}-SNAPSHOT
 }
 
 echo "move to ${GIT_REPO}"
@@ -135,10 +135,10 @@ if [ ${BUILD_NEXT_SNAPSHOT} ]; then
 
     makeNextDevelopmentVersion RELEASE_VERSION
 
-    mvn versions:set -DnewVersion="${DEV_VERSION}" -DgenerateBackupPoms=false
+    mvn versions:set -DnewVersion="${NEXT_DEV_VERSION}" -DgenerateBackupPoms=false
 
     git add -A
-    git commit -m "Preparing next development snapshot version ${DEV_VERSION}"
+    git commit -m "Preparing next development snapshot version ${NEXT_DEV_VERSION}"
     git push origin develop
 fi
 
