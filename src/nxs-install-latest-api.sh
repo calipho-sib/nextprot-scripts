@@ -1,4 +1,4 @@
-#!/bin/bash
+#!/usr/bin/env bash
 
 info_color='\e[1;34m'    # begin info color
 error_color='\e[1;32m'   # begin error color
@@ -6,8 +6,8 @@ warning_color='\e[1;33m' # begin warning color
 _color='\e[0m'           # end Color
 
 function echoUsage() {
-    echo "Install the latest nexprot-api fetched from nexus (release or snapshot) at <host>:/work/jetty/ as npteam user."
-    echo "usage: $0 [-cs] <host>"
+    echo "Install the latest nextprot-api fetched from nexus (release or snapshot) at <host>:/work/jetty/ as npteam user."
+    echo "usage: $0 [-hcrs] <host>"
     echo "Params:"
     echo " <host> machine to install nexprot-api on"
     echo "Options:"
@@ -84,17 +84,17 @@ stop_jetty ${HOST}
 echo -e "${info_color}removing cache and repository ${_color}"
 
 if [ ! ${KEEP_CACHE} ]; then
-    echo "delete /work/jetty/cache"
+    echo -e "${info_color}delete /work/jetty/cache${_color}"
     ssh npteam@${host} "rm -r /work/jetty/cache"
 else
-    echo "keeping /work/jetty/cache"
+    echo -e "${info_color}keeping /work/jetty/cache${_color}"
 fi
 
 if [ ! ${KEEP_REPO} ]; then
-    echo "delete /work/jetty/repository"
+    echo -e "${info_color}delete /work/jetty/repository${_color}"
     ssh npteam@${host} "rm -r /work/jetty/repository"
 else
-    echo "keeping /work/jetty/repository"
+    echo -e "${info_color}keeping /work/jetty/repository${_color}"
 fi
 
 echo -e "${info_color}removing log files ${_color}"

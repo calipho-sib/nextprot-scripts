@@ -3,14 +3,8 @@
 # This script deploys solr data between 2 machines. It stops solr service on both <src> and <target> hosts,
 # rsync the solr directory and restart the solr services.
 
-# Option no-clean: do not clean solr data directories on target server before copy
-
 # ex: bash nxs-deploy-solr.sh -n crick uat-web2
 # ex: bash nxs-deploy-solr.sh -n crick kant /work/devtools/solr/ 8985
-
-# options:
-# -n: do not clean target
-# -v: verbose mode
 
 # Warning: This script assumes that the solr config / indexes are up-to-date on <src_host>.
 
@@ -18,18 +12,25 @@ set -o errexit  # make your script exit when a command fails.
 set -o nounset  # exit when your script tries to use undeclared variables.
 
 function echoUsage() {
-  echo "usage: $0 [-nv] <src_host> <dest_host> [<dest_path> <dest_jetty_port>]"
+    echo "usage: $0 [-hn] <src_host> <dest_host> [<dest_path> <dest_jetty_port>]"
+    echo "Params:"
+    echo " <src_host> source host"
+    echo " <dest_host> destination host"
+    echo "Options:"
+    echo " -h print usage"
+    echo " -n do not clean solr data directories on target server before rsync"
 }
 
 # handle optional arg
 no_clean_flag=
 
-while getopts 'nv' OPTION
+while getopts 'hn' OPTION
 do
     case ${OPTION} in
-    n) no_clean_flag=1
+    h) echoUsage
+        exit 0
         ;;
-    v) set -x
+    n) no_clean_flag=1
         ;;
     ?) echoUsage
         exit 1
@@ -53,7 +54,7 @@ TRG_JETTY_PORT=8985
 
 if [ $# -eq 4 ]; then
     TRG_PATH=$3
-    TRG_SOLR_PORT=$4
+    TRG_JETTY_PORT=$4
 fi
 
 function kill_solr() {
@@ -80,8 +81,11 @@ function check_solr() {
 
 function start_solr() {
   host=$1
+  path=$2
+  port=$3
+
   echo "starting solr on ${host} port ${TRG_JETTY_PORT}"
-  ssh npteam@${host} "sh -c 'cd /work/devtools/solr-4.5.0/example; nohup java -Dnextprot.solr -Xmx1024m -jar -Djetty.port=${TRG_JETTY_PORT} start.jar  > solr.log 2>&1  &'"
+  ssh npteam@${host} "sh -c 'cd ${path}/example; nohup java -Dnextprot.solr -Xmx1024m -jar -Djetty.port=${port} start.jar  > solr.log 2>&1  &'"
 }
 
 echo -n "checking solr is properly installed on ${SRC_HOST}... "
@@ -105,6 +109,6 @@ echo "copying solr from ${SRC_HOST} to ${TRG_HOST}:${TRG_PATH}"
 ssh npteam@${SRC_HOST} rsync -avz /work/devtools/solr-4.5.0/ ${TRG_HOST}:${TRG_PATH}
 
 sleep 5
-start_solr ${SRC_HOST}
+start_solr ${SRC_HOST} "/work/devtools/solr-4.5.0" 8985
 sleep 5
-start_solr ${TRG_HOST}
+start_solr ${TRG_HOST} ${TRG_PATH} ${TRG_JETTY_PORT}
