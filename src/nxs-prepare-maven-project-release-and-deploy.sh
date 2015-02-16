@@ -107,7 +107,7 @@ if getNextReleaseVersion RELEASE_VERSION; then
         echo -e "${warning_color}in construction${_color}"
         # change branch to develop
         git checkout develop
-        mvn versions:set -DnewVersion=${NEXT_SNAPSHOT_VERSION} -DgenerateBackupPoms=false
+        mvn versions:set -DnewVersion="${NEXT_SNAPSHOT_VERSION}-SNAPSHOT" -DgenerateBackupPoms=false
 
         git add -A
         git commit -m "Preparing next development snapshot version ${NEXT_SNAPSHOT_VERSION}"
