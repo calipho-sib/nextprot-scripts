@@ -133,7 +133,7 @@ git checkout develop
 
 if [ ${BUILD_NEXT_SNAPSHOT} ]; then
 
-    makeNextDevelopmentVersion RELEASE_VERSION
+    makeNextDevelopmentVersion ${RELEASE_VERSION}
 
     mvn versions:set -DnewVersion="${NEXT_DEV_VERSION}" -DgenerateBackupPoms=false
 
