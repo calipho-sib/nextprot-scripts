@@ -45,6 +45,8 @@ if [ $# -lt 1 ]; then
   echoUsage; exit 2
 fi
 
+RELEASE_VERSION=
+DEV_VERSION=
 GIT_REPO=$1
 
 # return the next release version to prepare on master
@@ -67,7 +69,7 @@ getNextReleaseVersion () {
         return 3
     fi
 
-    echo ${DEV_VERSION%-*}
+    RELEASE_VERSION=${DEV_VERSION%-*}
 }
 
 makeNextDevelopmentVersion () {
@@ -89,7 +91,7 @@ makeNextDevelopmentVersion () {
 
     z=$(expr ${developVersion} + 1)
 
-    echo ${xy}.${z}-SNAPSHOT
+    DEV_VERSION=${xy}.${z}-SNAPSHOT
 }
 
 echo "move to ${GIT_REPO}"
@@ -105,7 +107,7 @@ if [ ${MERGE_DEVELOP_TO_MASTER} ]; then
 fi
 
 # get release version to prepare
-RELEASE_VERSION=$(getNextReleaseVersion);
+getNextReleaseVersion
 
 echo preparing ${RELEASE_NAME} v${RELEASE_VERSION}...
 
@@ -131,12 +133,12 @@ git checkout develop
 
 if [ ${BUILD_NEXT_SNAPSHOT} ]; then
 
-    devVersion=$(makeNextDevelopmentVersion RELEASE_VERSION)
+    makeNextDevelopmentVersion RELEASE_VERSION
 
-    mvn versions:set -DnewVersion="${devVersion}" -DgenerateBackupPoms=false
+    mvn versions:set -DnewVersion="${DEV_VERSION}" -DgenerateBackupPoms=false
 
     git add -A
-    git commit -m "Preparing next development snapshot version ${devVersion}"
+    git commit -m "Preparing next development snapshot version ${DEV_VERSION}"
     git push origin develop
 fi
 
