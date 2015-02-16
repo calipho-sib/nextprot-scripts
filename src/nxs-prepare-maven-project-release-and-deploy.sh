@@ -64,7 +64,7 @@ getNextReleaseVersion () {
     if [[ ! ${DEV_VERSION} =~ [0-9]+\.[0-9]+\.[0-9]+-SNAPSHOT ]]; then
 
         echo "cannot release ${RELEASE_NAME} v${DEV_VERSION}: not a snapshot (develop) version"
-        return 2
+        return 3
     fi
 
     echo ${DEV_VERSION%-*}
@@ -78,7 +78,7 @@ makeNextDevelopmentVersion () {
     if [[ ! ${version} =~ [0-9]+\.[0-9]+\.[0-9]+ ]]; then
 
         echo "cannot increment ${version} version"
-        return 3
+        return 4
     fi
 
     # extract x.y
