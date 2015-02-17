@@ -110,6 +110,9 @@ if [ ${MERGE_DEVELOP_TO_MASTER} ]; then
     git push origin master
 fi
 
+# build
+mvn clean install
+
 # get release version to prepare
 getNextReleaseVersion
 
@@ -124,9 +127,6 @@ git commit -m "New release version ${RELEASE_VERSION}"
 # create a new release tag
 git tag -a v${RELEASE_VERSION} -m "tag v${RELEASE_VERSION}"
 git push origin master --tags
-
-# build
-mvn clean install
 
 # deploy on nexus
 
