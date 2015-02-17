@@ -6,13 +6,16 @@ set -o errexit  # make your script exit when a command fails.
 set -o pipefail # prevents errors in a pipeline from being masked. If any command in a pipeline fails, that return code will be used as the return code of the whole pipeline.
 set -o nounset  # exit when your script tries to use undeclared variables.
 
+VERSION=0.1.0
+
 function echoUsage() {
     echo "This script prepares and deploys a new maven project release on nexus."
-    echo "usage: $0 [-hmn] <repo>"
+    echo "usage: $0 [-hmnv] <repo>"
     echo "Params:"
     echo " <repo> maven project git repository"
     echo "Options:"
     echo " -h print usage"
+    echo " -v print version"
     echo " -m pre: merge branch develop to master"
     echo " -n post: prepare next snapshot version in branch develop"
 }
@@ -20,10 +23,13 @@ function echoUsage() {
 MERGE_DEVELOP_TO_MASTER=
 BUILD_NEXT_SNAPSHOT=
 
-while getopts 'hmn' OPTION
+while getopts 'hmnv' OPTION
 do
     case ${OPTION} in
     h) echoUsage
+        exit 0
+        ;;
+    v) echo v${VERSION}
         exit 0
         ;;
     m) MERGE_DEVELOP_TO_MASTER=1
@@ -97,6 +103,10 @@ makeNextDevelopmentVersion () {
 echo "move to ${GIT_REPO}"
 cd ${GIT_REPO}
 
+# change branch to develop
+git checkout develop
+git pull
+
 # change branch to master
 git checkout master
 
@@ -105,6 +115,9 @@ if [ ${MERGE_DEVELOP_TO_MASTER} ]; then
     git merge develop -X theirs
     git push origin master
 fi
+
+# build
+mvn clean install #-DskipTests
 
 # get release version to prepare
 getNextReleaseVersion
@@ -121,12 +134,8 @@ git commit -m "New release version ${RELEASE_VERSION}"
 git tag -a v${RELEASE_VERSION} -m "tag v${RELEASE_VERSION}"
 git push origin master --tags
 
-# build
-mvn clean install
-
 # deploy on nexus
-
-mvn deploy
+mvn clean deploy -Dmaven.test.skip=true
 
 # change branch to develop
 git checkout develop
