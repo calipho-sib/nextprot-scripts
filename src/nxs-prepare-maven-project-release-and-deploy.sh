@@ -135,7 +135,7 @@ git tag -a v${RELEASE_VERSION} -m "tag v${RELEASE_VERSION}"
 git push origin master --tags
 
 # deploy on nexus
-mvn deploy
+mvn clean deploy -Dmaven.test.skip=true
 
 # change branch to develop
 git checkout develop
