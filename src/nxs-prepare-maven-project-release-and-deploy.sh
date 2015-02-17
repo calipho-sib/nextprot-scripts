@@ -97,6 +97,10 @@ makeNextDevelopmentVersion () {
 echo "move to ${GIT_REPO}"
 cd ${GIT_REPO}
 
+# change branch to develop
+git checkout develop
+git pull
+
 # change branch to master
 git checkout master
 
