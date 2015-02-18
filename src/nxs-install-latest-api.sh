@@ -7,7 +7,7 @@ _color='\e[0m'           # end Color
 
 function echoUsage() {
     echo "Install the latest nextprot-api fetched from nexus (release or snapshot) at <host>:/work/jetty/ as npteam user."
-    echo "usage: $0 [-hcrs] <host>"
+    echo "usage: $0 [-hcrs][-w war-version] <host>"
     echo "Params:"
     echo " <host> machine to install nexprot-api on"
     echo "Options:"
@@ -15,13 +15,15 @@ function echoUsage() {
     echo " -c keep jetty cache/"
     echo " -r keep jetty repository/"
     echo " -s get nextprot-api from nexus snapshot repository"
+    echo " -w war-version specific war version to be installed"
 }
 
 KEEP_CACHE=
 KEEP_REPO=
 SNAPSHOT=
+WAR_VERSION=
 
-while getopts 'hcrs' OPTION
+while getopts 'hcrsw:' OPTION
 do
     case ${OPTION} in
     h) echoUsage
@@ -32,6 +34,8 @@ do
     r) KEEP_REPO=1
         ;;
     s) SNAPSHOT=1
+        ;;
+    w) WAR_VERSION=${OPTARG}
         ;;
     ?) echoUsage
         exit 1
@@ -103,14 +107,18 @@ ssh npteam@${host} "rm -r /work/jetty/logs/*"
 echo -e "${info_color}removing nextprot-api-web.war${_color}"
 ssh npteam@${host} "rm /work/jetty/webapps/nextprot-api-web.war"
 
-LATEST_WAR="http://miniwatt:8800/nexus/service/local/artifact/maven/redirect?r=nextprot-repo&g=org.nextprot&a=nextprot-api-web&v=LATEST&p=war"
-if [ ${SNAPSHOT} ]; then
-    echo -e "${info_color} getting latest snapshot version ${_color}"
-    LATEST_WAR="http://miniwatt:8800/nexus/service/local/artifact/maven/redirect?r=nextprot-snapshot-repo&g=org.nextprot&a=nextprot-api-web&v=LATEST&p=war"
-else
-    echo -e "${info_color} getting latest release version ${_color}"
+if [ ! ${WAR_VERSION} ]; then
+    WAR_VERSION="LATEST"
 fi
 
-ssh npteam@${host} "wget -O /work/jetty/webapps/nextprot-api-web.war \"${LATEST_WAR}\""
+WAR="http://miniwatt:8800/nexus/service/local/artifact/maven/redirect?r=nextprot-repo&g=org.nextprot&a=nextprot-api-web&v=${WAR_VERSION}&p=war"
+if [ ${SNAPSHOT} ]; then
+    echo -e "${info_color} getting snapshot version ${WAR_VERSION} ${_color}"
+    WAR="http://miniwatt:8800/nexus/service/local/artifact/maven/redirect?r=nextprot-snapshot-repo&g=org.nextprot&a=nextprot-api-web&v=${WAR_VERSION}&p=war"
+else
+    echo -e "${info_color} getting release version ${WAR_VERSION}${_color}"
+fi
+
+ssh npteam@${host} "wget -O /work/jetty/webapps/nextprot-api-web.war \"${WAR}\""
 
 start_jetty ${HOST}
