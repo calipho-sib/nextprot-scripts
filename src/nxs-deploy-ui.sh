@@ -41,6 +41,9 @@ source ${repo}/deploy.conf
 echo "entering repository ${repo}"
 cd ${repo}
 
+echo "updating repository ${repo}"
+git pull
+
 echo "brunching modules"
 rm -rf build
 ./node_modules/.bin/brunch build -P
