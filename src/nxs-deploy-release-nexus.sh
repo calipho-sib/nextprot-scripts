@@ -6,7 +6,7 @@ set -o errexit  # make your script exit when a command fails.
 set -o pipefail # prevents errors in a pipeline from being masked. If any command in a pipeline fails, that return code will be used as the return code of the whole pipeline.
 set -o nounset  # exit when your script tries to use undeclared variables.
 
-VERSION=0.1.1
+VERSION=0.1.2
 
 function echoUsage() {
     echo "This script prepares and deploys a new maven project release on nexus."
@@ -17,7 +17,7 @@ function echoUsage() {
     echo " -h print usage"
     echo " -v print version"
     echo " -m pre: merge branch develop to master"
-    echo " -n post: prepare next snapshot version in branch develop"
+    #echo " -n post: prepare next snapshot version in branch develop"
 }
 
 MERGE_DEVELOP_TO_MASTER=
@@ -135,20 +135,20 @@ git tag -a v${RELEASE_VERSION} -m "tag v${RELEASE_VERSION}"
 git push origin master --tags
 
 # deploy on nexus
-mvn clean deploy -Dmaven.test.skip=true
+mvn clean deploy
 
 # change branch to develop
 git checkout develop
 
-if [ ${BUILD_NEXT_SNAPSHOT} ]; then
-
-    makeNextDevelopmentVersion ${RELEASE_VERSION}
-
-    mvn versions:set -DnewVersion="${NEXT_DEV_VERSION}" -DgenerateBackupPoms=false
-
-    git add -A
-    git commit -m "Preparing next development snapshot version ${NEXT_DEV_VERSION}"
-    git push origin develop
-fi
+#if [ ${BUILD_NEXT_SNAPSHOT} ]; then
+#
+#    makeNextDevelopmentVersion ${RELEASE_VERSION}
+#
+#    mvn versions:set -DnewVersion="${NEXT_DEV_VERSION}" -DgenerateBackupPoms=false
+#
+#    git add -A
+#    git commit -m "Preparing next development snapshot version ${NEXT_DEV_VERSION}"
+#    git push origin develop
+#fi
 
 exit 0
