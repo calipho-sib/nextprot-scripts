@@ -18,6 +18,20 @@ function echoUsage() {
     echo "usage: $0 <repo> <[dev|build|alpha|pro]>" >&2
 }
 
+function backupSite() {
+    host=$1
+    path=$2
+
+    echo "backup site at ${host}:/work/site-archives/"
+    if ssh ${host} ! test -d /work/site-archives/; then
+        ssh ${host} mkdir "/work/site-archives/"
+    else
+        echo "/work/site-archives/ already exists at ${host}"
+    fi
+    baseDir=$(ssh ${host} basename ${path})
+    ssh ${host} tar -zcvf "/work/site-archives/${baseDir}_$(date +%Y-%m-%d_%H%M%S).tar.gz" ${path}
+}
+
 args=("$*")
 
 if [ $# -lt 2 ]; then
@@ -54,15 +68,15 @@ mv tmp.dat build/js/app.js
 
 echo "deploying to ${target}"
 
-# for pro, send to plato, see target directory there
 if [ ${target} = "dev" ]; then
-    rsync -auv build/* ${DEV_PATH}
+    rsync -auv build/* ${DEV_HOST}:${DEV_PATH}
 elif [ ${target} = "pro" ]; then
-    rsync -auv build/* ${PRO_PATH}
+    backupSite ${PRO_HOST} ${PRO_PATH}
+    rsync -auv build/* ${PRO_HOST}:${PRO_PATH}
 elif [ ${target} = "build" ]; then
-    rsync -auv build/* ${BUILD_PATH}
+    rsync -auv build/* ${BUILD_HOST}:${BUILD_PATH}
 elif [ ${target} = "alpha" ]; then
-    rsync -auv build/* ${ALPHA_PATH}
+    rsync -auv build/* ${ALPHA_HOST}:${ALPHA_PATH}
 else
     echo "wrong environment"
 fi
