@@ -79,9 +79,6 @@ source ${repo}/deploy.conf
 echo "entering repository ${repo}"
 cd ${repo}
 
-echo "updating repository ${repo}"
-git pull
-
 if [ ${SKIP_BRUNCH} ]; then
     echo "brunching modules"
     rm -rf build
