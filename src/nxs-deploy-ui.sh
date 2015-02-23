@@ -16,7 +16,41 @@ _color='\e[0m'           # end Color
 
 function echoUsage() {
     echo "usage: $0 <repo> <[dev|build|alpha|pro]>" >&2
+    echo "This script deploys repo web app content in dev, build, alpha or pro machine"
+    echo "Params:"
+    echo " <repo> repository"
+    echo "Options:"
+    echo " -h print usage"
+    echo " -s skip brunch"
 }
+
+SKIP_BRUNCH=
+
+while getopts 'hs' OPTION
+do
+    case ${OPTION} in
+    h) echoUsage
+        exit 0
+        ;;
+    s) SKIP_BRUNCH=1
+        ;;
+    ?) echoUsage
+        exit 1
+        ;;
+    esac
+done
+
+shift $(($OPTIND - 1))
+
+args=("$*")
+
+if [ $# -lt 2 ]; then
+  echo "missing arguments: Specify the environment where to deploy [dev,build,alpha,pro] and a directory"  >&2
+  echoUsage; exit 1
+fi
+
+repo=$1
+target=$2
 
 function backupSite() {
     host=$1
@@ -32,16 +66,6 @@ function backupSite() {
     ssh ${host} tar -zcvf "/work/site-archives/${baseDir}_$(date +%Y-%m-%d_%H%M%S).tar.gz" ${path}
 }
 
-args=("$*")
-
-if [ $# -lt 2 ]; then
-  echo "missing arguments: Specify the environment where to deploy [dev,build,alpha,pro] and a directory"  >&2
-  echoUsage; exit 1
-fi
-
-repo=$1
-target=$2
-
 if [ ! -d ${repo} ]; then
     echo -e "${error_color}${repo} is not a directory${_color}"
     exit 2
@@ -55,12 +79,13 @@ source ${repo}/deploy.conf
 echo "entering repository ${repo}"
 cd ${repo}
 
-echo "updating repository ${repo}"
-git pull
-
-echo "brunching modules"
-rm -rf build
-./node_modules/.bin/brunch build -P
+if [ ${SKIP_BRUNCH} ]; then
+    echo "brunching modules"
+    rm -rf build
+    ./node_modules/.bin/brunch build -P
+else
+    echo "no brunch today"
+fi
 
 sedcmd="s/NX_ENV/${target}/g"
 sed ${sedcmd} build/js/app.js > tmp.dat

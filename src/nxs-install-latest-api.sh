@@ -108,17 +108,19 @@ echo -e "${info_color}removing nextprot-api-web.war${_color}"
 ssh npteam@${host} "rm /work/jetty/webapps/nextprot-api-web.war"
 
 if [ ! ${WAR_VERSION} ]; then
-    WAR_VERSION="LATEST"
+    if [ ${SNAPSHOT} ]; then
+        WAR_VERSION="LATEST"
+    else
+        WAR_VERSION="RELEASE"
+    fi
 fi
 
 WAR="http://miniwatt:8800/nexus/service/local/artifact/maven/redirect?r=nextprot-repo&g=org.nextprot&a=nextprot-api-web&v=${WAR_VERSION}&p=war"
 if [ ${SNAPSHOT} ]; then
-    echo -e "${info_color} getting snapshot version ${WAR_VERSION} ${_color}"
     WAR="http://miniwatt:8800/nexus/service/local/artifact/maven/redirect?r=nextprot-snapshot-repo&g=org.nextprot&a=nextprot-api-web&v=${WAR_VERSION}&p=war"
-else
-    echo -e "${info_color} getting release version ${WAR_VERSION}${_color}"
 fi
 
+echo -e "${info_color} fetching version ${WAR_VERSION} ${_color}"
 ssh npteam@${host} "wget -O /work/jetty/webapps/nextprot-api-web.war \"${WAR}\""
 
 start_jetty ${HOST}
