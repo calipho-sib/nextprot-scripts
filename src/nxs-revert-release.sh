@@ -6,7 +6,7 @@ set -o nounset  # exit when your script tries to use undeclared variables.
 set -x
 
 function echoUsage() {
-    echo "This script revert the last release on local and remote branches master"
+    echo "This script revert master branch to the latest release of the git repository"
     echo "usage: $0 [-h] <repo>"
     echo "Params:"
     echo " <repo> git repository"
