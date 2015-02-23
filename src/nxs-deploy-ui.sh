@@ -79,7 +79,7 @@ source ${repo}/deploy.conf
 echo "entering repository ${repo}"
 cd ${repo}
 
-if [ ${SKIP_BRUNCH} ]; then
+if [ ! ${SKIP_BRUNCH} ]; then
     echo "brunching modules"
     rm -rf build
     ./node_modules/.bin/brunch build -P
