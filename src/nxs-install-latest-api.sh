@@ -121,6 +121,6 @@ if [ ${SNAPSHOT} ]; then
 fi
 
 echo -e "${info_color} fetching version ${WAR_VERSION} ${_color}"
-ssh npteam@${host} "wget -O /work/jetty/webapps/nextprot-api-web.war \"${WAR}\""
+ssh npteam@${host} "wget -qO /work/jetty/webapps/nextprot-api-web.war \"${WAR}\""
 
 start_jetty ${HOST}
