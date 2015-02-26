@@ -15,24 +15,29 @@ warning_color='\e[1;33m' # begin warning color
 _color='\e[0m'           # end Color
 
 function echoUsage() {
-    echo "usage: $0 <repo> <[dev|build|alpha|pro]>" >&2
+    echo "usage: $0 <repo> <machine>" >&2
     echo "This script deploys repo web app content in dev, build, alpha or pro machine"
     echo "Params:"
     echo " <repo> repository"
+    echo " <machine> the machine type to deploy on: dev|build|alpha|pro"
     echo "Options:"
     echo " -h print usage"
     echo " -s skip brunch"
+    echo " -b backup previous site (activated for pro machine)"
 }
 
 SKIP_BRUNCH=
+BACKUP_SITE=
 
-while getopts 'hs' OPTION
+while getopts 'hsb' OPTION
 do
     case ${OPTION} in
     h) echoUsage
         exit 0
         ;;
     s) SKIP_BRUNCH=1
+        ;;
+    b) BACKUP_SITE=1
         ;;
     ?) echoUsage
         exit 1
@@ -56,14 +61,16 @@ function backupSite() {
     host=$1
     path=$2
 
-    echo "backup site at ${host}:/work/site-archives/"
-    if ssh ${host} ! test -d /work/site-archives/; then
-        ssh ${host} mkdir "/work/site-archives/"
+    archive="/work/www-archive"
+
+    echo "backup site at ${host}:${archive}"
+    if ssh ${host} ! test -d ${archive}; then
+        ssh ${host} mkdir ${archive}
     else
-        echo "/work/site-archives/ already exists at ${host}"
+        echo "${archive} already exists at ${host}"
     fi
     baseDir=$(ssh ${host} basename ${path})
-    ssh ${host} tar -zcvf "/work/site-archives/${baseDir}_$(date +%Y-%m-%d_%H%M%S).tar.gz" ${path}
+    ssh ${host} tar -zcvf "${archive}/${baseDir}_$(date +%Y-%m-%d_%H%M%S).tar.gz" ${path}
 }
 
 if [ ! -d ${repo} ]; then
@@ -94,16 +101,25 @@ mv tmp.dat build/js/app.js
 echo "deploying to ${target}"
 
 if [ ${target} = "dev" ]; then
+    if [ ${BACKUP_SITE} ]; then
+        backupSite ${DEV_HOST} ${DEV_PATH}
+    fi
     rsync -auv build/* ${DEV_HOST}:${DEV_PATH}
 elif [ ${target} = "pro" ]; then
     backupSite ${PRO_HOST} ${PRO_PATH}
     rsync -auv build/* ${PRO_HOST}:${PRO_PATH}
 elif [ ${target} = "build" ]; then
+    if [ ${BACKUP_SITE} ]; then
+        backupSite ${BUILD_HOST} ${BUILD_PATH}
+    fi
     rsync -auv build/* ${BUILD_HOST}:${BUILD_PATH}
 elif [ ${target} = "alpha" ]; then
+    if [ ${BACKUP_SITE} ]; then
+        backupSite ${ALPHA_HOST} ${ALPHA_PATH}
+    fi
     rsync -auv build/* ${ALPHA_HOST}:${ALPHA_PATH}
 else
-    echo "wrong environment"
+    echo "unknown machine type"
 fi
 
 
