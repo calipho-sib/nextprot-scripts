@@ -63,6 +63,11 @@ function backupSite() {
 
     archive="/work/www-archive"
 
+    if ssh ${host} ! test -d ${path}; then
+        echo "no ${path} to backup"
+        return
+    fi
+
     echo "backup site at ${host}:${archive}"
     if ssh ${host} ! test -d ${archive}; then
         ssh ${host} mkdir ${archive}
