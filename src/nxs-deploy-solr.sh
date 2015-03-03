@@ -106,7 +106,7 @@ if [ ! ${no_clean_flag} ]; then
 fi
 
 echo "copying solr from ${SRC_HOST} to ${TRG_HOST}:${TRG_PATH}"
-ssh npteam@${SRC_HOST} rsync -avz /work/devtools/solr-4.5.0/ ${TRG_HOST}:${TRG_PATH}
+ssh npteam@${SRC_HOST} rsync -avz --delete /work/devtools/solr-4.5.0/ ${TRG_HOST}:${TRG_PATH}
 
 sleep 5
 start_solr ${SRC_HOST} "/work/devtools/solr-4.5.0" 8985
