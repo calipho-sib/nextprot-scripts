@@ -18,19 +18,13 @@ function echoUsage() {
     echo " <dest_host> destination host"
     echo "Options:"
     echo " -h print usage"
-    echo " -n do not clean solr data directories on target server before rsync"
 }
 
-# handle optional arg
-no_clean_flag=
-
-while getopts 'hn' OPTION
+while getopts 'h' OPTION
 do
     case ${OPTION} in
     h) echoUsage
         exit 0
-        ;;
-    n) no_clean_flag=1
         ;;
     ?) echoUsage
         exit 1
@@ -100,10 +94,6 @@ sleep 10
 
 echo "making solr dir ${TRG_PATH} on ${TRG_HOST}"
 ssh npteam@${TRG_HOST} mkdir -p ${TRG_PATH}
-if [ ! ${no_clean_flag} ]; then
-  echo "clearing solr ${TRG_PATH} on ${TRG_HOST}"
-  ssh npteam@${TRG_HOST} rm -rf ${TRG_PATH}/*
-fi
 
 echo "copying solr from ${SRC_HOST} to ${TRG_HOST}:${TRG_PATH}"
 ssh npteam@${SRC_HOST} rsync -avz --delete /work/devtools/solr-4.5.0/ ${TRG_HOST}:${TRG_PATH}
