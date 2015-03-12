@@ -43,7 +43,7 @@ fi
 
 SRC_HOST=$1
 TRG_HOST=$2
-TRG_PATH="/work/devtools/solr-4.5.0/"
+TRG_PATH="/work/devtools/solr-4.5.0"
 TRG_JETTY_PORT=8985
 
 if [ $# -eq 4 ]; then
@@ -51,8 +51,8 @@ if [ $# -eq 4 ]; then
     TRG_JETTY_PORT=$4
 fi
 
-TRG_PATH_NEW=${TRG_PATH}.new
-TRG_PATH_BACK=${TRG_PATH}.back
+TRG_PATH_NEW="${TRG_PATH}.new/"
+TRG_PATH_BACK="${TRG_PATH}.back/"
 
 function kill_solr() {
 
@@ -103,6 +103,7 @@ ssh npteam@${SRC_HOST} rsync -avz --delete /work/devtools/solr-4.5.0/ ${TRG_HOST
 echo "Kill solr on ${TRG_HOST}"
 kill_solr ${TRG_HOST}
 
+ssh npteam@${TRG_HOST} rm -rf ${TRG_PATH_BACK}
 ssh npteam@${TRG_HOST} mv ${TRG_PATH} ${TRG_PATH_BACK}
 ssh npteam@${TRG_HOST} mv ${TRG_PATH_NEW} ${TRG_PATH}
 
