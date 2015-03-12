@@ -12,7 +12,7 @@ set -o errexit  # make your script exit when a command fails.
 set -o nounset  # exit when your script tries to use undeclared variables.
 
 function echoUsage() {
-    echo "usage: $0 [-hn] <src_host> <dest_host> [<dest_path> <dest_jetty_port>]"
+    echo "usage: $0 [-h] <src_host> <dest_host> [<dest_path> <dest_jetty_port>]"
     echo "Params:"
     echo " <src_host> source host"
     echo " <dest_host> destination host"
@@ -51,6 +51,9 @@ if [ $# -eq 4 ]; then
     TRG_JETTY_PORT=$4
 fi
 
+TRG_PATH_NEW=${TRG_PATH}.new
+TRG_PATH_BACK=${TRG_PATH}.back
+
 function kill_solr() {
 
   host=$1
@@ -86,17 +89,22 @@ echo -n "checking solr is properly installed on ${SRC_HOST}... "
 check_solr ${SRC_HOST} "/work/devtools/solr-4.5.0/"
 echo "OK"
 
-echo "Attempt to kill solr on ${SRC_HOST} and ${TRG_HOST}"
+echo "Kill solr on ${SRC_HOST}"
 kill_solr ${SRC_HOST}
-kill_solr ${TRG_HOST}
 
 sleep 10
 
-echo "making solr dir ${TRG_PATH} on ${TRG_HOST}"
-ssh npteam@${TRG_HOST} mkdir -p ${TRG_PATH}
+echo "making solr dir ${TRG_PATH_NEW} on ${TRG_HOST}"
+ssh npteam@${TRG_HOST} mkdir -p ${TRG_PATH_NEW}
 
-echo "copying solr from ${SRC_HOST} to ${TRG_HOST}:${TRG_PATH}"
-ssh npteam@${SRC_HOST} rsync -avz --delete /work/devtools/solr-4.5.0/ ${TRG_HOST}:${TRG_PATH}
+echo "copying solr from ${SRC_HOST} to ${TRG_HOST}:${TRG_PATH_NEW}"
+ssh npteam@${SRC_HOST} rsync -avz --delete /work/devtools/solr-4.5.0/ ${TRG_HOST}:${TRG_PATH_NEW}
+
+echo "Kill solr on ${TRG_HOST}"
+kill_solr ${TRG_HOST}
+
+ssh npteam@${TRG_HOST} mv ${TRG_PATH} ${TRG_PATH_BACK}
+ssh npteam@${TRG_HOST} mv ${TRG_PATH_NEW} ${TRG_PATH}
 
 sleep 5
 start_solr ${SRC_HOST} "/work/devtools/solr-4.5.0" 8985
