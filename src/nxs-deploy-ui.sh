@@ -91,6 +91,9 @@ source ${repo}/deploy.conf
 echo "entering repository ${repo}"
 cd ${repo}
 
+echo "bower update"
+./node_modules/.bin/bower update
+
 if [ ! ${SKIP_BRUNCH} ]; then
     echo "brunching modules"
     rm -rf build
