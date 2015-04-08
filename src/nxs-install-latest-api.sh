@@ -75,6 +75,10 @@ function stop_jetty() {
 function start_jetty() {
   echo -e "${info_color}Starting jetty at ${host}...${_color}"
   host=$1
+  # for jung:
+  # $ ssh npteam@jung
+  # $ exec /work/jetty/bin/jetty.sh start
+  # type password !!!
   ssh npteam@${host} "/work/jetty/bin/jetty.sh start > /dev/null 2>&1 &"
   while ! ssh npteam@${host} "grep -q STARTED /work/jetty/jetty.state 2>/dev/null"; do
       sleep 1
@@ -120,7 +124,7 @@ if [ ${SNAPSHOT} ]; then
     WAR="http://miniwatt:8800/nexus/service/local/artifact/maven/redirect?r=nextprot-snapshot-repo&g=org.nextprot&a=nextprot-api-web&v=${WAR_VERSION}&p=war"
 fi
 
-echo -e "${info_color} fetching version ${WAR_VERSION} ${_color}"
+echo -e "${info_color} fetching version ${WAR_VERSION} ${WAR}${_color}"
 ssh npteam@${host} "wget -qO /work/jetty/webapps/nextprot-api-web.war \"${WAR}\""
 
 start_jetty ${HOST}
