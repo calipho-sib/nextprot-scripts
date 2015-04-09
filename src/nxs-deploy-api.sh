@@ -74,7 +74,6 @@ start_jetty ${SRC_HOST}
 
 stop_jetty ${TRG_HOST}
 
-dirs="webapps cache repository"
 for dir in ${dirs}; do
   echo -e "${color}Removing directory ${dir}.bak in ${TRG_HOST}${_color}"
   ssh npteam@${TRG_HOST} "rm -rf /work/jetty/${dir}.bak"
