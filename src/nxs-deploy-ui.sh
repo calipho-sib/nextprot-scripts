@@ -96,16 +96,20 @@ echo -n "fetching build number: "
 BUILD_NUMBER=`git rev-list HEAD --count`
 echo "${BUILD_NUMBER}"
 
-echo "bower update"
+echo "updating bower"
 ./node_modules/.bin/bower update
 
 echo "brunching modules"
 rm -rf build
 ./node_modules/.bin/brunch build -P
 
-sedcmd="s/NX_ENV/${target}/g"
-sed ${sedcmd} build/js/app.js > tmp.dat
-mv tmp.dat build/js/app.js
+replaceEnvToken="s/NX_ENV/${target}/g"
+replaceBuildToken="s/NX_BUILD/${BUILD_NUMBER}/g"
+echo "replacing NX_ENV -> ${target} in build/js/app.js"
+sed ${replaceEnvToken} build/js/app.js > tmp.dat
+echo "replacing NX_BUILD -> ${BUILD_NUMBER} in build/js/app.js"
+sed ${replaceBuildToken} tmp.dat > tmp2.dat
+mv tmp2.dat build/js/app.js
 
 echo "deploying to ${target}"
 
