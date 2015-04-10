@@ -110,6 +110,7 @@ sed ${replaceEnvToken} build/js/app.js > tmp.dat
 echo "replacing NX_BUILD -> ${BUILD_NUMBER} in build/js/app.js"
 sed ${replaceBuildToken} tmp.dat > tmp2.dat
 mv tmp2.dat build/js/app.js
+rm tmp.dat
 
 echo "deploying to ${target}"
 
