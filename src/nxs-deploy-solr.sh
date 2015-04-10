@@ -103,8 +103,11 @@ ssh npteam@${SRC_HOST} rsync -avz --delete /work/devtools/solr-4.5.0/ ${TRG_HOST
 echo "Kill solr on ${TRG_HOST}"
 kill_solr ${TRG_HOST}
 
+echo "rm -rf ${TRG_PATH_BACK}"
 ssh npteam@${TRG_HOST} rm -rf ${TRG_PATH_BACK}
+echo "mv ${TRG_PATH} ${TRG_PATH_BACK}"
 ssh npteam@${TRG_HOST} mv ${TRG_PATH} ${TRG_PATH_BACK}
+echo "mv ${TRG_PATH_NEW} ${TRG_PATH}"
 ssh npteam@${TRG_HOST} mv ${TRG_PATH_NEW} ${TRG_PATH}
 
 sleep 5
