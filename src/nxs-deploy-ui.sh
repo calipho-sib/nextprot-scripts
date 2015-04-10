@@ -16,22 +16,26 @@ _color='\e[0m'           # end Color
 
 function echoUsage() {
     echo "usage: $0 <repo> <machine>" >&2
-    echo "This script deploys repo web app content in dev, build, alpha or pro machine"
+    echo "This script deploys web app snapshot (develop branch by default) in dev, build, alpha or pro environment"
     echo "Params:"
     echo " <repo> repository"
-    echo " <machine> the machine type to deploy on: dev|build|alpha|pro"
+    echo " <environment> dev|build|alpha|pro (see deploy.conf for environment to server mapping)"
     echo "Options:"
     echo " -h print usage"
+    echo " -r deploy new release (master branch)"
     echo " -b backup previous site (activated for pro machine)"
 }
 
 BACKUP_SITE=
+DEPLOYED_BRANCH="develop"
 
-while getopts 'hsb' OPTION
+while getopts 'hrb' OPTION
 do
     case ${OPTION} in
     h) echoUsage
         exit 0
+        ;;
+    r) DEPLOYED_BRANCH="master"
         ;;
     b) BACKUP_SITE=1
         ;;
@@ -86,6 +90,11 @@ source ${repo}/deploy.conf
 
 echo "entering repository ${repo}"
 cd ${repo}
+echo "checkout ${DEPLOYED_BRANCH} branch"
+git checkout ${DEPLOYED_BRANCH}
+echo -n "fetching build number: "
+BUILD_NUMBER=`git rev-list HEAD --count`
+echo "${BUILD_NUMBER}"
 
 echo "bower update"
 ./node_modules/.bin/bower update
