@@ -16,7 +16,7 @@ _color='\e[0m'           # end Color
 
 function echoUsage() {
     echo "usage: $0 <repo> <machine>" >&2
-    echo "This script deploys web app snapshot (develop branch by default) in dev, build, alpha or pro environment"
+    echo "This script deploys web app snapshot (actual branch by default) in dev, build, alpha or pro environment"
     echo "Params:"
     echo " <repo> repository"
     echo " <environment> dev|build|alpha|pro (see deploy.conf for environment to server mapping)"
@@ -27,7 +27,7 @@ function echoUsage() {
 }
 
 BACKUP_SITE=
-DEPLOYED_BRANCH="develop"
+DEPLOYED_MASTER_BRANCH=
 
 while getopts 'hrb' OPTION
 do
@@ -35,7 +35,7 @@ do
     h) echoUsage
         exit 0
         ;;
-    r) DEPLOYED_BRANCH="master"
+    r) DEPLOYED_MASTER_BRANCH=1
         ;;
     b) BACKUP_SITE=1
         ;;
@@ -90,8 +90,11 @@ source ${repo}/deploy.conf
 
 echo "entering repository ${repo}"
 cd ${repo}
-echo "checkout ${DEPLOYED_BRANCH} branch"
-git checkout ${DEPLOYED_BRANCH}
+if [ ${DEPLOYED_MASTER_BRANCH} ]; then
+    echo "checkout master branch"
+    git checkout master
+fi
+
 echo -n "fetching build number: "
 BUILD_NUMBER=`git rev-list HEAD --count`
 echo "${BUILD_NUMBER}"
