@@ -22,11 +22,9 @@ function echoUsage() {
     echo " <machine> the machine type to deploy on: dev|build|alpha|pro"
     echo "Options:"
     echo " -h print usage"
-    echo " -s skip brunch"
     echo " -b backup previous site (activated for pro machine)"
 }
 
-SKIP_BRUNCH=
 BACKUP_SITE=
 
 while getopts 'hsb' OPTION
@@ -34,8 +32,6 @@ do
     case ${OPTION} in
     h) echoUsage
         exit 0
-        ;;
-    s) SKIP_BRUNCH=1
         ;;
     b) BACKUP_SITE=1
         ;;
@@ -94,13 +90,9 @@ cd ${repo}
 echo "bower update"
 ./node_modules/.bin/bower update
 
-if [ ! ${SKIP_BRUNCH} ]; then
-    echo "brunching modules"
-    rm -rf build
-    ./node_modules/.bin/brunch build -P
-else
-    echo "no brunch today"
-fi
+echo "brunching modules"
+rm -rf build
+./node_modules/.bin/brunch build -P
 
 sedcmd="s/NX_ENV/${target}/g"
 sed ${sedcmd} build/js/app.js > tmp.dat
