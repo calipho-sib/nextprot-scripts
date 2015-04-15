@@ -55,18 +55,25 @@ fi
 
 HOST=$1
 
-if [ ! ${SNAPSHOT} ] && [ ${HOST} == ${PROD_HOST} ]; then
+if [ ${HOST} == ${PROD_HOST} ]; then
 
-    echo "Warning: The standard protocol to release a new stable nextprot-api version to ${PROD_HOST} is:"
-    echo "Warning: 1. installation of the latest release in kant (w/ this script)"
-    echo "Warning: 2. rebuilt of cache on kant if needed (w/ script nxs-build-api-cache-on-kant.sh)"
-    echo "Warning: 3. deployment of api from kant to ${PROD_HOST} (w/ script nxs-deploy-api.sh)"
-    echo -n "Are you sure you want to install a release on ${HOST}? [y/N]: "
-    read answer
-    echo
-    if [ "${answer}" != "Y" ] && [ "${answer}" != "y" ]; then
-        echo "The installation of the latest release to ${HOST} was cancelled."
-        exit 3
+    # Trying to install release on prod
+    if [ ! ${SNAPSHOT} ]; then
+
+        echo "Warning: The standard protocol to release a new stable nextprot-api version to ${PROD_HOST} is:"
+        echo "Warning: 1. installation of the latest release in kant (w/ this script)"
+        echo "Warning: 2. rebuilt of cache on kant if needed (w/ script nxs-build-api-cache-on-kant.sh)"
+        echo "Warning: 3. deployment of api from kant to ${PROD_HOST} (w/ script nxs-deploy-api.sh)"
+        echo -n "Are you sure you want to install a release on ${HOST}? [y/N]: "
+        read answer
+        echo
+        if [ "${answer}" != "Y" ] && [ "${answer}" != "y" ]; then
+            echo "Release installation to production server (${HOST}) was cancelled."
+            exit 3
+        fi
+    else
+        echo "Cannot install a snapshot in production server (${HOST}) - operation aborted."
+        exit 4
     fi
 fi
 
