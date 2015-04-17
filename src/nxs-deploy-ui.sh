@@ -124,8 +124,6 @@ else
 fi
 rm tmp.dat
 
-exit 23
-
 echo "deploying to ${target}"
 
 if [ ${target} = "dev" ]; then
