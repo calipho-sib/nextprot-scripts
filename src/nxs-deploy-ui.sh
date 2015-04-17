@@ -108,12 +108,23 @@ rm -rf build
 
 replaceEnvToken="s/NX_ENV/${target}/g"
 replaceBuildToken="s/NX_BUILD/${BUILD_NUMBER}/g"
+replaceTrackingTokenIfProd="s/NX_TRACKING_PROD/true/g"
+
 echo "replacing NX_ENV -> ${target} in build/js/app.js"
 sed ${replaceEnvToken} build/js/app.js > tmp.dat
 echo "replacing NX_BUILD -> ${BUILD_NUMBER} in build/js/app.js"
 sed ${replaceBuildToken} tmp.dat > tmp2.dat
-mv tmp2.dat build/js/app.js
+if [ ${target} = "pro" ]; then
+    sed ${replaceTrackingTokenIfProd} tmp2.dat > tmp3.dat
+    echo "replacing NX_TRACKING_PROD -> true in build/js/app.js"
+    mv tmp3.dat build/js/app.js
+    rm tmp2.dat
+else
+    mv tmp2.dat build/js/app.js
+fi
 rm tmp.dat
+
+exit 23
 
 echo "deploying to ${target}"
 
