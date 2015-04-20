@@ -140,6 +140,9 @@ mvn clean deploy
 # change branch to develop
 git checkout develop
 
+makeNextDevelopmentVersion ${RELEASE_VERSION}
+echo "Next development version ready to be set v${RELEASE_VERSION}->v${NEXT_DEV_VERSION}"
+
 #if [ ${BUILD_NEXT_SNAPSHOT} ]; then
 #
 #    makeNextDevelopmentVersion ${RELEASE_VERSION}
