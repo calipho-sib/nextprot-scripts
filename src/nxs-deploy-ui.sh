@@ -27,15 +27,12 @@ function echoUsage() {
 }
 
 BACKUP_SITE=
-DEPLOYED_MASTER_BRANCH=
 
 while getopts 'hrb' OPTION
 do
     case ${OPTION} in
     h) echoUsage
         exit 0
-        ;;
-    r) DEPLOYED_MASTER_BRANCH=1
         ;;
     b) BACKUP_SITE=1
         ;;
@@ -90,7 +87,7 @@ source ${repo}/deploy.conf
 
 echo "entering repository ${repo}"
 cd ${repo}
-if [ ${DEPLOYED_MASTER_BRANCH} ]; then
+if [ ${target} = "pro" ]; then
     echo "checkout master branch"
     git checkout master
 fi
@@ -134,6 +131,8 @@ if [ ${target} = "dev" ]; then
 elif [ ${target} = "pro" ]; then
     backupSite ${PRO_HOST} ${PRO_PATH}
     rsync -auv build/* ${PRO_HOST}:${PRO_PATH}
+    echo "checkout develop branch"
+    git checkout develop
 elif [ ${target} = "build" ]; then
     if [ ${BACKUP_SITE} ]; then
         backupSite ${BUILD_HOST} ${BUILD_PATH}
