@@ -16,6 +16,8 @@ function echoUsage() {
     echo "Params:"
     echo " <src_host> source host"
     echo " <dest_host> destination host"
+    echo "[<dest_path> default: /work/devtools/solr-4.5.0]"
+    echo "[<dest_jetty_port> default: 8983]"
     echo "Options:"
     echo " -h print usage"
 }
@@ -44,7 +46,7 @@ fi
 SRC_HOST=$1
 TRG_HOST=$2
 TRG_PATH="/work/devtools/solr-4.5.0"
-TRG_JETTY_PORT=8985
+TRG_JETTY_PORT=8983
 
 if [ $# -eq 4 ]; then
     TRG_PATH=$3
@@ -111,6 +113,6 @@ echo "mv ${TRG_PATH_NEW} ${TRG_PATH}"
 ssh npteam@${TRG_HOST} mv ${TRG_PATH_NEW} ${TRG_PATH}
 
 sleep 5
-start_solr ${SRC_HOST} "/work/devtools/solr-4.5.0" 8985
+start_solr ${SRC_HOST} "/work/devtools/solr-4.5.0" 8983
 sleep 5
 start_solr ${TRG_HOST} ${TRG_PATH} ${TRG_JETTY_PORT}
