@@ -16,26 +16,23 @@ _color='\e[0m'           # end Color
 
 function echoUsage() {
     echo "usage: $0 <repo> <machine>" >&2
-    echo "This script deploys repo web app content in dev, build, alpha or pro machine"
+    echo "This script deploys web app snapshot (actual branch by default) in dev, build, alpha or pro environment"
     echo "Params:"
     echo " <repo> repository"
-    echo " <machine> the machine type to deploy on: dev|build|alpha|pro"
+    echo " <environment> dev|build|alpha|pro (see deploy.conf for environment to server mapping)"
     echo "Options:"
     echo " -h print usage"
-    echo " -s skip brunch"
+    echo " -r deploy new release (master branch)"
     echo " -b backup previous site (activated for pro machine)"
 }
 
-SKIP_BRUNCH=
 BACKUP_SITE=
 
-while getopts 'hsb' OPTION
+while getopts 'hrb' OPTION
 do
     case ${OPTION} in
     h) echoUsage
         exit 0
-        ;;
-    s) SKIP_BRUNCH=1
         ;;
     b) BACKUP_SITE=1
         ;;
@@ -90,21 +87,39 @@ source ${repo}/deploy.conf
 
 echo "entering repository ${repo}"
 cd ${repo}
-
-echo "bower update"
-./node_modules/.bin/bower update
-
-if [ ! ${SKIP_BRUNCH} ]; then
-    echo "brunching modules"
-    rm -rf build
-    ./node_modules/.bin/brunch build -P
-else
-    echo "no brunch today"
+if [ ${target} = "pro" ]; then
+    echo "checkout master branch"
+    git checkout master
 fi
 
-sedcmd="s/NX_ENV/${target}/g"
-sed ${sedcmd} build/js/app.js > tmp.dat
-mv tmp.dat build/js/app.js
+echo -n "fetching build number: "
+BUILD_NUMBER=`git rev-list HEAD --count`
+echo "${BUILD_NUMBER}"
+
+echo "updating bower"
+./node_modules/.bin/bower update
+
+echo "brunching modules"
+rm -rf build
+./node_modules/.bin/brunch build -P
+
+replaceEnvToken="s/NX_ENV/${target}/g"
+replaceBuildToken="s/NX_BUILD/${BUILD_NUMBER}/g"
+replaceTrackingTokenIfProd="s/NX_TRACKING_PROD/true/g"
+
+echo "replacing NX_ENV -> ${target} in build/js/app.js"
+sed ${replaceEnvToken} build/js/app.js > tmp.dat
+echo "replacing NX_BUILD -> ${BUILD_NUMBER} in build/js/app.js"
+sed ${replaceBuildToken} tmp.dat > tmp2.dat
+if [ ${target} = "pro" ]; then
+    sed ${replaceTrackingTokenIfProd} tmp2.dat > tmp3.dat
+    echo "replacing NX_TRACKING_PROD -> true in build/js/app.js"
+    mv tmp3.dat build/js/app.js
+    rm tmp2.dat
+else
+    mv tmp2.dat build/js/app.js
+fi
+rm tmp.dat
 
 echo "deploying to ${target}"
 
@@ -116,6 +131,8 @@ if [ ${target} = "dev" ]; then
 elif [ ${target} = "pro" ]; then
     backupSite ${PRO_HOST} ${PRO_PATH}
     rsync -auv build/* ${PRO_HOST}:${PRO_PATH}
+    echo "checkout develop branch"
+    git checkout develop
 elif [ ${target} = "build" ]; then
     if [ ${BACKUP_SITE} ]; then
         backupSite ${BUILD_HOST} ${BUILD_PATH}

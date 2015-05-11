@@ -18,6 +18,7 @@ function echoUsage() {
     echo " -w war-version specific war version to be installed"
 }
 
+PROD_HOST='jung'
 KEEP_CACHE=
 KEEP_REPO=
 SNAPSHOT=
@@ -54,6 +55,28 @@ fi
 
 HOST=$1
 
+if [ ${HOST} == ${PROD_HOST} ]; then
+
+    # Trying to install release on prod
+    if [ ! ${SNAPSHOT} ]; then
+
+        echo "Warning: The standard protocol to release a new stable nextprot-api version to ${PROD_HOST} is:"
+        echo "Warning: 1. installation of the latest release in kant (w/ this script)"
+        echo "Warning: 2. rebuilt of cache on kant if needed (w/ script nxs-build-api-cache-on-kant.sh)"
+        echo "Warning: 3. deployment of api from kant to ${PROD_HOST} (w/ script nxs-deploy-api.sh)"
+        echo -n "Are you sure you want to install a release on ${HOST}? [y/N]: "
+        read answer
+        echo
+        if [ "${answer}" != "Y" ] && [ "${answer}" != "y" ]; then
+            echo "Release installation to production server (${HOST}) was cancelled."
+            exit 3
+        fi
+    else
+        echo "Cannot install a snapshot in production server (${HOST}) - operation aborted."
+        exit 4
+    fi
+fi
+
 function stop_jetty() {
   host=$1
   if ! ssh npteam@${host} test -f /work/jetty/jetty.pid; then
@@ -75,6 +98,10 @@ function stop_jetty() {
 function start_jetty() {
   echo -e "${info_color}Starting jetty at ${host}...${_color}"
   host=$1
+  # for jung:
+  # $ ssh npteam@jung
+  # $ exec /work/jetty/bin/jetty.sh start
+  # type password !!!
   ssh npteam@${host} "/work/jetty/bin/jetty.sh start > /dev/null 2>&1 &"
   while ! ssh npteam@${host} "grep -q STARTED /work/jetty/jetty.state 2>/dev/null"; do
       sleep 1
@@ -120,7 +147,7 @@ if [ ${SNAPSHOT} ]; then
     WAR="http://miniwatt:8800/nexus/service/local/artifact/maven/redirect?r=nextprot-snapshot-repo&g=org.nextprot&a=nextprot-api-web&v=${WAR_VERSION}&p=war"
 fi
 
-echo -e "${info_color} fetching version ${WAR_VERSION} ${_color}"
+echo -e "${info_color} fetching version ${WAR_VERSION} ${WAR}${_color}"
 ssh npteam@${host} "wget -qO /work/jetty/webapps/nextprot-api-web.war \"${WAR}\""
 
 start_jetty ${HOST}

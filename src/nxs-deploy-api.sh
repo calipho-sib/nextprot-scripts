@@ -57,10 +57,13 @@ stop_jetty ${SRC_HOST}
 dirs="webapps cache repository"
 for dir in ${dirs}; do
   echo -e "${color}Copying directory ${dir} to ${TRG_HOST}${_color}"
+  echo "ssh npteam@${TRG_HOST} rm -rf /work/jetty/${dir}.new"
   ssh npteam@${TRG_HOST} "rm -rf /work/jetty/${dir}.new"
+  echo "ssh npteam@${TRG_HOST} mkdir /work/jetty/${dir}.new"
   ssh npteam@${TRG_HOST} "mkdir /work/jetty/${dir}.new"
 
   if ssh npteam@${SRC_HOST} test -d /work/jetty/${dir}; then
+      echo "ssh npteam@${SRC_HOST} rsync -az /work/jetty/${dir}/ npteam@${TRG_HOST}:/work/jetty/${dir}.new..."
       ssh npteam@${SRC_HOST} "rsync -az /work/jetty/${dir}/ npteam@${TRG_HOST}:/work/jetty/${dir}.new"
   elif [ ${dir} = "webapps" ]; then
       echo -e "${error_color}ERROR: /work/jetty/${dir} is missing at ${host} ${_color}"
@@ -74,7 +77,6 @@ start_jetty ${SRC_HOST}
 
 stop_jetty ${TRG_HOST}
 
-dirs="webapps cache repository"
 for dir in ${dirs}; do
   echo -e "${color}Removing directory ${dir}.bak in ${TRG_HOST}${_color}"
   ssh npteam@${TRG_HOST} "rm -rf /work/jetty/${dir}.bak"
