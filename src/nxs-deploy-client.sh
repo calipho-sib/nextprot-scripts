@@ -2,8 +2,8 @@
 
 # This script deploys repo web app content in dev, build, alpha or pro machine
 
-# ex1: bash -x nxs-deploy-ui.sh /Users/fnikitin/Projects/nextprot-ui/ dev
-# ex2: bash nxs-deploy-ui.sh /Users/fnikitin/Projects/nextprot-snorql/ dev
+# ex1: bash -x nxs-deploy-client.sh /Users/fnikitin/Projects/nextprot-ui/ dev
+# ex2: bash nxs-deploy-client.sh /Users/fnikitin/Projects/nextprot-snorql/ dev
 
 set -o errexit  # make your script exit when a command fails.
 set -o pipefail # prevents errors in a pipeline from being masked. If any command in a pipeline fails, that return code will be used as the return code of the whole pipeline.
@@ -22,13 +22,12 @@ function echoUsage() {
     echo " <environment> dev|build|alpha|pro (see deploy.conf for environment to server mapping)"
     echo "Options:"
     echo " -h print usage"
-    echo " -r deploy new release (master branch)"
     echo " -b backup previous site (activated for pro machine)"
 }
 
 BACKUP_SITE=
 
-while getopts 'hrb' OPTION
+while getopts 'hb' OPTION
 do
     case ${OPTION} in
     h) echoUsage
