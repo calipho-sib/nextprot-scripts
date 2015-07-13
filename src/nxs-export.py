@@ -6,7 +6,7 @@ import urllib2, time, argparse
 url_path = "/export/entries/chromosome/"
 
 number_of_chromosome = 23
-num_threads = 1
+num_threads = 8
 
 class Worker(Thread):
     """Thread executing tasks from a given tasks queue"""
