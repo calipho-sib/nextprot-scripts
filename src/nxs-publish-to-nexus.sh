@@ -1,6 +1,6 @@
 #!/usr/bin/env bash
 
-# This script prepares and deploys a new maven project release on nexus.
+# This script prepares and publish a maven artefact to nexus.
 
 set -o errexit  # make your script exit when a command fails.
 set -o pipefail # prevents errors in a pipeline from being masked. If any command in a pipeline fails, that return code will be used as the return code of the whole pipeline.

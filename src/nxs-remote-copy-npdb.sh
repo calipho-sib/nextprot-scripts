@@ -1,13 +1,13 @@
 #!/usr/bin/env bash
 
-# this script deploys PostgreSQL database between 2 machines.
+# this script remotely copy PostgreSQL database between 2 machines.
 # It stops postgresql on both <src> and <dest> hosts and rsync the npdb directory and restart postgresql.
 
 # options:
 # -c: activate cold backup mode
 # -v: verbose mode
 
-# ex: bash -c nxs-deploy-npdb.sh kant uat-web2 npdb
+# ex: bash -c nxs-remote-copy-npdb.sh kant uat-web2 npdb
 
 set -o errexit  # make your script exit when a command fails.
 set -o pipefail # prevents errors in a pipeline from being masked. If any command in a pipeline fails, that return code will be used as the return code of the whole pipeline.

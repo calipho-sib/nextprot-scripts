@@ -1,11 +1,11 @@
 #!/usr/bin/env bash
 
-# As npteam, this script deploys virtuoso between 2 machines.
+# As npteam, this script remotely copy virtuoso db between 2 machines.
 # It stops virtuoso on both <src> and <dest> hosts and rsync the virtuoso db and then restart virtuoso.
 
 # [virtuoso logs are here: /var/lib/virtuoso/db/virtuoso.log]
 
-# ex: bash nxs-deploy-virtuoso.sh uat-web2 godel
+# ex: bash nxs-remote-copy-virtuosodb.sh uat-web2 godel
 
 set -o errexit  # make your script exit when a command fails.
 set -o pipefail # prevents errors in a pipeline from being masked. If any command in a pipeline fails, that return code will be used as the return code of the whole pipeline.
