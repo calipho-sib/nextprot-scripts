@@ -2,8 +2,8 @@
 
 # This script build and remotely copy a single page application in dev, build, alpha or pro machine
 
-# ex1: bash -x nxs-build-remote-copy-spa.sh /Users/fnikitin/Projects/nextprot-ui/ dev
-# ex2: bash nxs-build-remote-copy-spa.sh /Users/fnikitin/Projects/nextprot-snorql/ dev
+# ex1: bash -x nxs-build-and-deploy-spa.sh /Users/fnikitin/Projects/nextprot-ui/ dev
+# ex2: bash nxs-build-and-deploy-spa.sh /Users/fnikitin/Projects/nextprot-snorql/ dev
 
 set -o errexit  # make your script exit when a command fails.
 set -o pipefail # prevents errors in a pipeline from being masked. If any command in a pipeline fails, that return code will be used as the return code of the whole pipeline.
@@ -16,7 +16,7 @@ _color='\e[0m'           # end Color
 
 function echoUsage() {
     echo "usage: $0 <repo> <machine>" >&2
-    echo "This script deploys web app snapshot (actual branch by default) in dev, build, alpha or pro environment"
+    echo "This script builds and deploys web app snapshot (actual branch by default) in dev, build, alpha or pro environment"
     echo "Params:"
     echo " <repo> repository"
     echo " <environment> dev|build|alpha|pro (see deploy.conf for environment to server mapping)"
@@ -87,8 +87,8 @@ source ${repo}/deploy.conf
 echo "entering repository ${repo}"
 cd ${repo}
 if [ ${target} = "pro" ]; then
-    echo "checkout master branch"
-    git checkout master
+    echo "ERROR: please change to master branch first before deploying to production server"
+    exit 1
 fi
 
 echo -n "fetching build number: "
