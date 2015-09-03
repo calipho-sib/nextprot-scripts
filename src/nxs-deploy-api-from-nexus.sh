@@ -48,11 +48,7 @@ shift $(($OPTIND - 1))
 
 args=("$*")
 
-if [ $# -lt 1 ]; then
-  echo missing arguments >&2
-  echoUsage; exit 2
-fi
-
+#Setting current hostname if $1 was not defined
 HOST=${1:-${HOSTNAME}}
 
 if [ ${HOST} == ${PROD_HOST} ]; then
