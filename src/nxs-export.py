@@ -3,7 +3,7 @@ from Queue import Queue
 from threading import Thread
 import urllib2, time, argparse
 
-url_path = "/export/entries/chromosome/"
+url_path = "/export/entries"
 
 number_of_chromosome = 23
 num_threads = 8
@@ -62,8 +62,14 @@ if __name__ == '__main__':
     
     globalTimer = Timer()
     with globalTimer:
-        for n in range (0, 23):
-            pool.add_task(export, 'http://' + args.api + url_path + str(n) + "." + args.format, args.directory + "/chromosome-" + str(n) + "." + args.format)
-        #pool.add_task(export, url_base + str(n), "file" + str(n) + "-" + str(n+batch_size))
+        url = 'http://' + args.api + url_path  + "." + args.format + "?chromosome=";
+        for n in range (1, 22):
+            pool.add_task(export, url + str(n) , args.directory + str(n) + "." + args.format)
+        #Adding other chromosomes   
+        pool.add_task(export, url + "MT" , args.directory + str(n) + "." + args.format)
+        pool.add_task(export, url + "Y" , args.directory + str(n) + "." + args.format)
+        pool.add_task(export, url + "X" , args.directory + str(n) + "." + args.format)
+        pool.add_task(export, url + "unknown" , args.directory + str(n) + "." + args.format)
+
         pool.wait_completion()
     print "Process finished in " + str(globalTimer.duration_in_seconds()) + "\n"
