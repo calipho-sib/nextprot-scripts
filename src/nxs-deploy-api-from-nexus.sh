@@ -53,7 +53,7 @@ if [ $# -lt 1 ]; then
   echoUsage; exit 2
 fi
 
-HOST=$1
+HOST=${1:-${HOSTNAME}}
 
 if [ ${HOST} == ${PROD_HOST} ]; then
 
