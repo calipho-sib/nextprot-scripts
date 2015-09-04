@@ -63,7 +63,7 @@ if __name__ == '__main__':
     globalTimer = Timer()
     with globalTimer:
         url = 'http://' + args.api + url_path  + "." + args.format + "?chromosome=";
-        for n in range (1, 22):
+        for n in range (1, 23):
             filepath = args.directory + "/chromosome-" + str(n) + "." + args.format;
             pool.add_task(export, url + str(n) , filepath)
         #Adding other chromosomes   
