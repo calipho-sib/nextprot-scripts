@@ -48,7 +48,7 @@ if __name__ == '__main__':
     parser = argparse.ArgumentParser(description='Export neXtProt entries')
     parser.add_argument('api', help='the api url example: build-api.nextprot.org')
     parser.add_argument('format', help='the output format, example: ttl or xml')
-    parser.add_argument('directory', help='the directory where to save the ouput files. example /tmp/export')
+    parser.add_argument('directory', help='the directory where to save the ouput files. example /work/ttldata/chromosome-new')
     args = parser.parse_args()
    
     def export(url, filename):
