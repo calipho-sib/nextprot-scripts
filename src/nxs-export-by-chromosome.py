@@ -72,5 +72,12 @@ if __name__ == '__main__':
         pool.add_task(export, url + "X" , args.directory + "/X." + args.format)
         pool.add_task(export, url + "unknown" , args.directory + "/unknown." + args.format)
 
+        if args.format == 'ttl':
+            #Adding publications, schema, terminology and experimental contexts
+            pool.add_task(export, 'http://' + args.api + "/rdf/schema.ttl" , args.directory + "/schema.ttl")
+            pool.add_task(export, 'http://' + args.api + "/rdf/experimentalcontext.ttl" , args.directory + "/experimentalcontext.ttl")
+            pool.add_task(export, 'http://' + args.api + "/rdf/terminology.ttl" , args.directory + "/terminology.ttl")
+            pool.add_task(export, 'http://' + args.api + "/rdf/publication.ttl" , args.directory + "/publication.ttl")
+
         pool.wait_completion()
     print "Process finished in " + str(globalTimer.duration_in_seconds()) + "\n"
