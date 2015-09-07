@@ -64,13 +64,13 @@ if __name__ == '__main__':
     with globalTimer:
         url = 'http://' + args.api + url_path  + "." + args.format + "?chromosome=";
         for n in range (1, 23):
-            filepath = args.directory + "/chromosome-" + str(n) + "." + args.format;
+            filepath = args.directory + "/" + str(n) + "." + args.format;
             pool.add_task(export, url + str(n) , filepath)
         #Adding other chromosomes   
-        pool.add_task(export, url + "MT" , args.directory + "/chromosome-MT." + args.format)
-        pool.add_task(export, url + "Y" , args.directory + "/chromosome-Y." + args.format)
-        pool.add_task(export, url + "X" , args.directory + "/chromosome-X." + args.format)
-        pool.add_task(export, url + "unknown" , args.directory + "/chromosome-unknown." + args.format)
+        pool.add_task(export, url + "MT" , args.directory + "/MT." + args.format)
+        pool.add_task(export, url + "Y" , args.directory + "/Y." + args.format)
+        pool.add_task(export, url + "X" , args.directory + "/X." + args.format)
+        pool.add_task(export, url + "unknown" , args.directory + "/unknown." + args.format)
 
         pool.wait_completion()
     print "Process finished in " + str(globalTimer.duration_in_seconds()) + "\n"
