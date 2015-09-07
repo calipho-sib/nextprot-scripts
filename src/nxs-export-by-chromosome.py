@@ -46,7 +46,7 @@ class Timer(object):
 if __name__ == '__main__':
 
     parser = argparse.ArgumentParser(description='Export neXtProt entries')
-    parser.add_argument('api', help='the api url example: dev-api.nextprot.org')
+    parser.add_argument('api', help='the api url example: build-api.nextprot.org')
     parser.add_argument('format', help='the output format, example: ttl or xml')
     parser.add_argument('directory', help='the directory where to save the ouput files. example /tmp/export')
     args = parser.parse_args()
