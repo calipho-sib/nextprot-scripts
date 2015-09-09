@@ -61,7 +61,7 @@ function copy_npdb() {
     # The files are transferred in "archive" mode, which ensures that symbolic links, devices, attributes, permissions,
     # ownerships, etc. are preserved in the transfer.  Additionally, compression will be used to reduce the size of data
     # portions of the transfer.
-    ssh ${dbuser}@${src} "rsync -avz /work/postgres/${dbdir} ${dbuser}@${dest}:/work/postgres/${dbdirnew}"
+    ssh ${dbuser}@${src} "rsync -avz /work/postgres/${dbdir}/* ${dbuser}@${dest}:/work/postgres/${dbdirnew}"
 }
 
 function backup_setup_db_dest() {
