@@ -4,18 +4,37 @@
 # It stops postgresql on both <src> and <dest> hosts and rsync the npdb directory and restart postgresql.
 
 # options:
-# -c: activate cold backup mode
 # -v: verbose mode
 
-# ex: bash -c nxs-remote-copy-npdb.sh kant uat-web2 npdb
+# ex: nohup bash nxs-remote-copy-npdb.sh -v kant uat-web2 npdb &
 
 set -o errexit  # make your script exit when a command fails.
 set -o pipefail # prevents errors in a pipeline from being masked. If any command in a pipeline fails, that return code will be used as the return code of the whole pipeline.
 set -o nounset  # exit when your script tries to use undeclared variables.
 
 function echoUsage() {
-    echo "usage: $0 [-c][-v] <src_host> <dest_host> <dest_user>" >&2
+    echo "usage: $0 [-c][-v] <src_host> <dest_host> <db_user>"
+    echo "Params:"
+    echo " <src_host> source host"
+    echo " <dest_host> destination host"
+    echo " <db_user> db user name at src_host and dest_host"
+    echo "Options:"
+    echo " -h print usage"
 }
+
+while getopts 'hv' OPTION
+do
+    case ${OPTION} in
+    h)  echoUsage
+        exit 0
+        ;;
+    v) set -x
+        ;;
+    ?) echoUsage
+        exit 2
+        ;;
+    esac
+done
 
 function start_pg() {
     host=$1
@@ -32,15 +51,30 @@ function stop_pg() {
 function copy_npdb() {
     src=$1
     dest=$2
-    user=$3
-    suffix=$4
+    dbuser=$3
+    dbdir=$4
+    dbdirnew=$5
 
-    ssh ${user}@${dest} "mkdir -p /work/postgres/pg5432_nextprot${suffix}"
+    ssh ${dbuser}@${dest} "rm -rf /work/postgres/${dbdirnew}"
+    ssh ${dbuser}@${dest} "mkdir -p /work/postgres/${dbdirnew}"
 
     # The files are transferred in "archive" mode, which ensures that symbolic links, devices, attributes, permissions,
     # ownerships, etc. are preserved in the transfer.  Additionally, compression will be used to reduce the size of data
     # portions of the transfer.
-    ssh ${user}@${src} "rsync -avz /work/postgres/pg5432_nextprot/ npdb@${dest}:/work/postgres/pg5432_nextprot${suffix}"
+    ssh ${dbuser}@${src} "rsync -avz /work/postgres/${dbdir} ${dbuser}@${dest}:/work/postgres/${dbdirnew}"
+}
+
+function backup_setup_db_dest() {
+
+    dest=$1
+    dbuser=$2
+    dbdir=$3
+    dbdirback=$4
+    dbdirnew=$5
+
+    ssh ${dbuser}@${dest} rm -rf /work/postgres/${dbdirback}
+    ssh ${dbuser}@${dest} mv /work/postgres/${dbdir} /work/postgres/${dbdirback}
+    ssh ${dbuser}@${dest} mv /work/postgres/${dbdirnew} /work/postgres/${dbdir}
 }
 
 function check_npdb() {
@@ -56,22 +90,6 @@ function check_npdb() {
     fi
 }
 
-# handle optional arg
-coldbackup_flag=
-
-while getopts 'cv' OPTION
-do
-    case ${OPTION} in
-    c)  coldbackup_flag=1
-        ;;
-    v) set -x
-        ;;
-    ?) echoUsage
-        exit 2
-        ;;
-    esac
-done
-
 shift $(($OPTIND - 1))
 
 args=("$*")
@@ -83,26 +101,23 @@ fi
 
 SRC_HOST=$1
 DEST_HOST=$2
-DEST_USER=$3
+DB_USER=$3
 
-if [ "$coldbackup_flag" ]
-  then
-    printf "Cold backup activated\n"
-fi
+DB_DATA_DIR_NAME="pg5432_nextprot"
+DB_DATA_DIR_NAME_NEW="${DB_DATA_DIR_NAME}.new"
+DB_DATA_DIR_NAME_BACK="${DB_DATA_DIR_NAME}.back"
 
-stop_pg ${SRC_HOST} ${DEST_USER}
+stop_pg ${SRC_HOST} ${DB_USER}
 sleep 5
 
-if [ "$coldbackup_flag" ]; then
-    stop_pg ${DEST_HOST} ${DEST_USER}
-    copy_npdb ${SRC_HOST} ${DEST_HOST} ${DEST_USER}
-    start_pg ${DEST_HOST} ${DEST_USER}
-else
-    copy_npdb ${SRC_HOST} ${DEST_HOST} ${DEST_USER} .back
-fi
+copy_npdb ${SRC_HOST} ${DEST_HOST} ${DB_USER} ${DB_DATA_DIR_NAME} ${DB_DATA_DIR_NAME_NEW}
+start_pg ${SRC_HOST} ${DB_USER}
 
-start_pg ${SRC_HOST} ${DEST_USER}
+stop_pg ${DEST_HOST} ${DB_USER}
 
-check_npdb ${DEST_HOST} ${DEST_USER}
+backup_setup_db_dest ${DEST_HOST} ${DB_USER} ${DB_DATA_DIR_NAME} ${DB_DATA_DIR_NAME_BACK} ${DB_DATA_DIR_NAME_NEW}
+
+start_pg ${DEST_HOST} ${DB_USER}
+check_npdb ${DEST_HOST} ${DB_USER}
 
 exit 0
