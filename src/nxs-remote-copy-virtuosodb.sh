@@ -5,7 +5,9 @@
 
 # [virtuoso logs are here: /var/lib/virtuoso/db/virtuoso.log]
 
-# ex: bash nxs-remote-copy-virtuosodb.sh uat-web2 godel
+# kant is the build platform: the source for any deployment
+# ex: bash nxs-remote-copy-virtuosodb.sh kant godel
+# ex: bash nxs-remote-copy-virtuosodb.sh kant uat-web2
 
 set -o errexit  # make your script exit when a command fails.
 set -o pipefail # prevents errors in a pipeline from being masked. If any command in a pipeline fails, that return code will be used as the return code of the whole pipeline.
