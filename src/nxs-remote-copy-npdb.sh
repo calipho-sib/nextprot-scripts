@@ -39,7 +39,8 @@ done
 function start_pg() {
     host=$1
     user=$2
-    ssh ${user}@${host} "pg_ctl -D /work/postgres/pg5432_nextprot/ start"
+    # ssh never returns if we don't redirect stdout / stderr to a file
+    ssh ${user}@${host} "pg_ctl -D /work/postgres/pg5432_nextprot/ start < /dev/null > pg-start.log 2>&1 &"
 }
 
 function stop_pg() {
@@ -73,9 +74,9 @@ function backup_setup_db_dest() {
     dbdirback=$4
     dbdirnew=$5
 
-    ssh ${dbuser}@${dest} rm -rf /work/postgres/${dbdirback}
-    ssh ${dbuser}@${dest} mv /work/postgres/${dbdir} /work/postgres/${dbdirback}
-    ssh ${dbuser}@${dest} mv /work/postgres/${dbdirnew} /work/postgres/${dbdir}
+    ssh ${dbuser}@${dest} "rm -rf /work/postgres/${dbdirback}"
+    ssh ${dbuser}@${dest} "if [ -e "/work/postgres/${dbdir}" ]; then mv /work/postgres/${dbdir} /work/postgres/${dbdirback}; fi"
+    ssh ${dbuser}@${dest} "mv /work/postgres/${dbdirnew} /work/postgres/${dbdir}"
 }
 
 function check_npdb() {
@@ -86,7 +87,7 @@ function check_npdb() {
 
     echo ${MESS}
 
-    if [ -z ${MESS} ]; then
+    if [ -z "${MESS}" ]; then
         echo "warning: postgresql on ${user}@${host} did not correctly restart" >&2
     fi
 }
@@ -105,6 +106,7 @@ DEST_HOST=$2
 DB_USER=$3
 
 DB_DATA_DIR_NAME="pg5432_nextprot"
+#DB_DATA_DIR_NAME="testdata"
 DB_DATA_DIR_NAME_NEW="${DB_DATA_DIR_NAME}.new"
 DB_DATA_DIR_NAME_BACK="${DB_DATA_DIR_NAME}.back"
 
