@@ -3,8 +3,8 @@
 # This script deploys solr data between 2 machines. It stops solr service on both <src> and <target> hosts,
 # rsync the solr directory and restart the solr services.
 
-# ex: bash nxs-remote-copy-solr.sh -n kant crick 
-# ex: bash nxs-remote-copy-solr.sh -n kant uat-web2
+# ex: bash nxs-remote-copy-solr.sh kant crick 
+# ex: bash nxs-remote-copy-solr.sh kant uat-web2
 
 # Warning: This script assumes that the solr config / indexes are up-to-date on <src_host>.
 
