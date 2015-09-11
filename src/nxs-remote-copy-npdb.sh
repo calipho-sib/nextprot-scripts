@@ -57,6 +57,7 @@ function copy_npdb() {
 
     ssh ${dbuser}@${dest} "rm -rf /work/postgres/${dbdirnew}"
     ssh ${dbuser}@${dest} "mkdir -p /work/postgres/${dbdirnew}"
+    ssh ${dbuser}@${dest} "chmod 700 /work/postgres/${dbdirnew}"
 
     # The files are transferred in "archive" mode, which ensures that symbolic links, devices, attributes, permissions,
     # ownerships, etc. are preserved in the transfer.  Additionally, compression will be used to reduce the size of data
