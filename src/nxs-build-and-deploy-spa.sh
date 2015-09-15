@@ -109,7 +109,7 @@ rm -rf build
 replaceEnvToken="s/NX_ENV/${target}/g"
 replaceBuildToken="s/BUILD_NUMBER/${BUILD_NUMBER}/g"
 replaceGitHashToken="s/GIT_HASH/${GIT_HASH}/g"
-replaceTrackingTokenIfProd="s/'IS_PRODUCTION'/true/g"
+replaceTrackingTokenIfProd="s/IS_PRODUCTION/true/g"
 
 echo "replacing NX_ENV -> ${target} in build/js/app.js"
 sed ${replaceEnvToken} build/js/app.js > tmp.dat
