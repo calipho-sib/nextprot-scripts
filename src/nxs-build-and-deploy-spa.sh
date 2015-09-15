@@ -95,6 +95,10 @@ echo -n "fetching build number: "
 BUILD_NUMBER=`git rev-list HEAD --count`
 echo "${BUILD_NUMBER}"
 
+echo -n "fetching SHA-1 of current commit: "
+GIT_HASH=`git rev-parse --short HEAD`
+echo "${GIT_HASH}"
+
 echo "updating bower"
 ./node_modules/.bin/bower update
 
@@ -103,22 +107,25 @@ rm -rf build
 ./node_modules/.bin/brunch build -P
 
 replaceEnvToken="s/NX_ENV/${target}/g"
-replaceBuildToken="s/NX_BUILD/${BUILD_NUMBER}/g"
-replaceTrackingTokenIfProd="s/NX_TRACKING_PROD/true/g"
+replaceBuildToken="s/BUILD_NUMBER/${BUILD_NUMBER}/g"
+replaceGitHashToken="s/GIT_HASH/${GIT_HASH}/g"
+replaceTrackingTokenIfProd="s/'IS_PRODUCTION'/true/g"
 
 echo "replacing NX_ENV -> ${target} in build/js/app.js"
 sed ${replaceEnvToken} build/js/app.js > tmp.dat
-echo "replacing NX_BUILD -> ${BUILD_NUMBER} in build/js/app.js"
+echo "replacing BUILD_NUMBER -> ${BUILD_NUMBER} in build/js/app.js"
 sed ${replaceBuildToken} tmp.dat > tmp2.dat
+echo "replacing GIT_HASH -> ${GIT_HASH} in build/js/app.js"
+sed ${replaceGitHashToken} tmp2.dat > tmp3.dat
+
 if [ ${target} = "pro" ]; then
-    sed ${replaceTrackingTokenIfProd} tmp2.dat > tmp3.dat
-    echo "replacing NX_TRACKING_PROD -> true in build/js/app.js"
-    mv tmp3.dat build/js/app.js
-    rm tmp2.dat
+    sed ${replaceTrackingTokenIfProd} tmp3.dat > tmp4.dat
+    echo "replacing IS_PRODUCTION -> true in build/js/app.js"
+    mv tmp4.dat build/js/app.js
 else
-    mv tmp2.dat build/js/app.js
+    mv tmp3.dat build/js/app.js
 fi
-rm tmp.dat
+rm tmp*.dat
 
 echo "deploying to ${target}"
 
