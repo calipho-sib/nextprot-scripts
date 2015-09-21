@@ -54,7 +54,7 @@ TRG_HOST=$2
 
 stop_jetty ${SRC_HOST}
 
-dirs="webapps cache repository"
+dirs="webapps cache"
 for dir in ${dirs}; do
   echo -e "${color}Copying directory ${dir} to ${TRG_HOST}${_color}"
   echo "ssh npteam@${TRG_HOST} rm -rf /work/jetty/${dir}.new"
