@@ -7,32 +7,28 @@ _color='\e[0m'           # end Color
 
 function echoUsage() {
     echo "Install the latest nextprot-api fetched from nexus (release or snapshot) at <host>:/work/jetty/ as npteam user."
-    echo "usage: $0 [-hcrs][-w war-version] <host>"
+    echo "usage: $0 [-hcs][-w war-version] <host>"
     echo "Params:"
     echo " <host> machine to install nexprot-api on"
     echo "Options:"
     echo " -h print usage"
     echo " -c keep jetty cache/"
-    echo " -r keep jetty repository/"
     echo " -s get nextprot-api from nexus snapshot repository"
     echo " -w war-version specific war version to be installed"
 }
 
 PROD_HOST='jung'
 KEEP_CACHE=
-KEEP_REPO=
 SNAPSHOT=
 WAR_VERSION=
 
-while getopts 'hcrsw:' OPTION
+while getopts 'hcsw:' OPTION
 do
     case ${OPTION} in
     h) echoUsage
         exit 0
         ;;
     c) KEEP_CACHE=1
-        ;;
-    r) KEEP_REPO=1
         ;;
     s) SNAPSHOT=1
         ;;
@@ -108,27 +104,20 @@ function start_jetty() {
 
 stop_jetty ${HOST}
 
-echo -e "${info_color}removing cache and repository ${_color}"
+echo -e "${info_color}removing cache ${_color} on ${HOST}"
 
 if [ ! ${KEEP_CACHE} ]; then
     echo -e "${info_color}delete /work/jetty/cache${_color}"
-    ssh npteam@${host} "rm -r /work/jetty/cache"
+    ssh npteam@${HOST} "rm -r /work/jetty/cache"
 else
     echo -e "${info_color}keeping /work/jetty/cache${_color}"
 fi
 
-if [ ! ${KEEP_REPO} ]; then
-    echo -e "${info_color}delete /work/jetty/repository${_color}"
-    ssh npteam@${host} "rm -r /work/jetty/repository"
-else
-    echo -e "${info_color}keeping /work/jetty/repository${_color}"
-fi
-
 echo -e "${info_color}removing log files ${_color}"
-ssh npteam@${host} "rm -r /work/jetty/logs/*"
+ssh npteam@${HOST} "rm -r /work/jetty/logs/*"
 
 echo -e "${info_color}removing nextprot-api-web.war${_color}"
-ssh npteam@${host} "rm /work/jetty/webapps/nextprot-api-web.war"
+ssh npteam@${HOST} "rm /work/jetty/webapps/nextprot-api-web.war"
 
 if [ ! ${WAR_VERSION} ]; then
     if [ ${SNAPSHOT} ]; then
@@ -144,6 +133,6 @@ if [ ${SNAPSHOT} ]; then
 fi
 
 echo -e "${info_color} fetching version ${WAR_VERSION} ${WAR}${_color}"
-ssh npteam@${host} "wget -qO /work/jetty/webapps/nextprot-api-web.war \"${WAR}\""
+ssh npteam@${HOST} "wget -qO /work/jetty/webapps/nextprot-api-web.war \"${WAR}\""
 
 start_jetty ${HOST}
