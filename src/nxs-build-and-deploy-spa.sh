@@ -87,8 +87,11 @@ source ${repo}/deploy.conf
 echo "entering repository ${repo}"
 cd ${repo}
 if [ ${target} = "pro" ]; then
-    echo "ERROR: please change to master branch first before deploying to production server"
-    exit 1
+    branch=$(git rev-parse --abbrev-ref HEAD)
+    if [ ! ${branch} = "master" ]; then
+        echo "ERROR: please change to master branch first before deploying to production server"
+        exit 1
+    fi
 fi
 
 echo -n "fetching build number: "
