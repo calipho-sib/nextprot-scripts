@@ -5,6 +5,7 @@
 
 # ex: bash nxs-remote-copy-solr.sh kant crick 
 # ex: bash nxs-remote-copy-solr.sh kant uat-web2
+# ex: nohup nxs-remote-copy-solr.sh uat-web2 jung /work/devtools/solr-4.5.0 44455  > nohup.remote-copy-solr.out 2>&1
 
 # Warning: This script assumes that the solr config / indexes are up-to-date on <src_host>.
 
