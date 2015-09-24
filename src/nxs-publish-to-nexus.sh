@@ -112,8 +112,7 @@ git checkout master
 
 if [ ${MERGE_DEVELOP_TO_MASTER} ]; then
     echo "merge branch develop to master"
-    git merge develop
-    git checkout --theirs .
+    git merge -X theirs develop
     git commit -a
     git push origin master
 fi
