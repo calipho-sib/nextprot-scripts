@@ -140,8 +140,6 @@ if [ ${target} = "dev" ]; then
 elif [ ${target} = "pro" ]; then
     backupSite ${PRO_HOST} ${PRO_PATH}
     rsync -auv build/* ${PRO_HOST}:${PRO_PATH}
-    echo "checkout develop branch"
-    git checkout develop
 elif [ ${target} = "build" ]; then
     if [ ${BACKUP_SITE} ]; then
         backupSite ${BUILD_HOST} ${BUILD_PATH}
