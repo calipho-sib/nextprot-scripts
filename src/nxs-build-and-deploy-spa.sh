@@ -102,9 +102,6 @@ echo -n "fetching SHA-1 of current commit: "
 GIT_HASH=`git rev-parse --short HEAD`
 echo "${GIT_HASH}"
 
-echo "updating bower"
-./node_modules/.bin/bower update
-
 echo "brunching modules"
 rm -rf build
 ./node_modules/.bin/brunch build -P
