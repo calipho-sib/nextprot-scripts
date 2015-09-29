@@ -1,0 +1,23 @@
+<script src="js/jquery-min.js"></script>
+<script src="js/raphael-min.js"></script>
+<script src="js/underscore-min.js"></script>
+<script src="js/sequence-diagram-min.js"></script>
+
+<div class="diagram">
+    
+Note over jenkins#master:git clone repository
+Note over jenkins#master:git checkout master
+Note over jenkins#master:RELEASE_VERSION=getNextReleaseVersion (based on pom.xml) MUST BE SNAPSHOT
+Note over jenkins#master:mvn versions:set -DnewVersion=${RELEASE_VERSION} -DgenerateBackupPoms=false
+Note over jenkins#master:mvn clean deploy
+Note over jenkins#master:git add -A
+Note over jenkins#master:git commit -m "New release version ${RELEASE_VERSION}"
+Note over jenkins#master:git tag -a v${RELEASE_VERSION} -m "tag v${RELEASE_VERSION}"
+Note over jenkins#master:git push origin master --tags
+
+
+</div>
+
+<script>
+    $(".diagram").sequenceDiagram({theme: 'hand'});
+</script>

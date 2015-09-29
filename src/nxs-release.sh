@@ -75,7 +75,7 @@ fi
 
 echo -n "changing to git repository directory '${GIT_REPO}'... "
 cd ${GIT_REPO}
-echo "SUCCEED"
+echo "OK"
 
 echo -n "checking master git branch... "
 currentBranch=$(git rev-parse --abbrev-ref HEAD)
@@ -83,12 +83,12 @@ if [ ! ${currentBranch} = "master" ]; then
     echo "FAILS: cannot deploy to production nexus repository from branch ${currentBranch} (expected master branch)"
     exit 2
 fi
-echo "SUCCEED"
+echo "OK"
 
 # get release version to prepare
 echo -n "fetching next release version to prepare... "
 getNextReleaseVersion
-echo "SUCCEED: found v${RELEASE_VERSION}"
+echo "OK: found v${RELEASE_VERSION}"
 
 # prepare new version
 echo "preparing new release v${RELEASE_VERSION} for ${RELEASE_NAME}... "

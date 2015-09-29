@@ -45,16 +45,24 @@ else
     fi
 fi
 
+checkMavenProject () {
+
+    # check it is a maven project
+    if [ ! -f "pom.xml" ]; then
+
+        echo "FAILS: pom.xml was not found (not a maven project)"
+        exit 2
+    fi
+}
+
 echo -n "changing to git repository directory '${GIT_REPO}'... "
 cd ${GIT_REPO}
-echo "SUCCEED"
+echo "OK"
 
 # check it is a maven project
-if [ ! -f "pom.xml" ]; then
-
-    echo "FAILS: pom.xml was not found (not a maven project)"
-    exit 2
-fi
+echo -n "checking maven project... "
+checkMavenProject
+echo "OK"
 
 git checkout develop
 git pull origin develop
