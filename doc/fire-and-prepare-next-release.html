@@ -5,20 +5,20 @@
 
 <div class="diagram">
     
-Note over local(develop): git checkout develop
-Note over local(develop): git pull origin develop
-local(develop)-->master: git checkout master
-Note over local(master): git pull origin master
-Note over local(master): git merge -X theirs develop
-Note over local(master): git add -A
-Note over local(master): git push origin master
-local(master)-->jenkins: JENKINS will fire (5 min)
+Note over local#develop: git checkout develop
+Note over local#develop: git pull origin develop
+local#develop-->local#master: git checkout master
+Note over local#master: git pull origin master
+Note over local#master: git merge -X theirs develop
+Note over local#master: git add -A
+Note over local#master: git push origin master
+local#master-->jenkins: JENKINS will fire (5 min)
 Note over jenkins: Runs nxs-release.sh \n deploy / commit / tag / push in master 
-local(master)-->local(develop): git checkout develop
-Note over local(develop): mvn versions:set \n-DnewVersion=$version-SNAPSHOT -DgenerateBackupPoms=false
-Note over local(develop): git add -A
-Note over local(develop): git commit -m "Preparing next development snapshot version v$version"
-Note over local(develop): git push origin develop
+local#master-->local#develop: git checkout develop
+Note over local#develop: mvn versions:set \n-DnewVersion=$version-SNAPSHOT -DgenerateBackupPoms=false
+Note over local#develop: git add -A
+Note over local#develop: git commit -m "Preparing next development snapshot version v$version"
+Note over local#develop: git push origin develop
 </div>
 
 <script>
