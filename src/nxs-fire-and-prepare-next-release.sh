@@ -9,10 +9,10 @@ set -o pipefail # prevents errors in a pipeline from being masked. If any comman
 set -o nounset  # exit when your script tries to use undeclared variables.
 
 function echoUsage() {
-    echo "usage: $0 <version>" >&2
-    echo "This script fires indirectly a new production release (through jenkins) and prepares next development release"
+    echo "usage: $0 <snapshot-version>" >&2
+    echo "This script fires indirectly a new production release (through jenkins) and prepares next development release with the given version (-SNAPSHOT is added automatically)"
     echo "Params:"
-    echo " <version> version"
+    echo " <snapshot-version> next snapshot version"
     echo "Options:"
     echo " -h print usage"
 }
