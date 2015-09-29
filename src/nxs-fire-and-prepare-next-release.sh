@@ -49,6 +49,13 @@ echo -n "changing to git repository directory '${GIT_REPO}'... "
 cd ${GIT_REPO}
 echo "SUCCEED"
 
+# check it is a maven project
+if [ ! -f "pom.xml" ]; then
+
+    echo "FAILS: pom.xml was not found (not a maven project)"
+    exit 2
+fi
+
 git checkout develop
 git pull origin develop
 git checkout master
