@@ -46,7 +46,7 @@ getNextReleaseVersion () {
     # check it is a maven project
     if [ ! -f "pom.xml" ]; then
 
-        echo "pom.xml was not found: not a maven project"
+        echo "FAILS: pom.xml was not found (not a maven project)"
         exit 2
     fi
 
@@ -56,7 +56,7 @@ getNextReleaseVersion () {
 
     if [[ ! ${devVersion} =~ [0-9]+\.[0-9]+\.[0-9]+-SNAPSHOT ]]; then
 
-        echo "failed (cannot release ${RELEASE_NAME} v${devVersion}: snapshot (develop) version expected)"
+        echo "FAILS: cannot release ${RELEASE_NAME} v${devVersion} (expected a snapshot version)"
         exit 3
     fi
 
@@ -66,28 +66,28 @@ getNextReleaseVersion () {
 read -p "The following script should be executed by Jenkins - Are you Jenkins?[y/N] " -r
 if [[ ! $REPLY =~ ^[Yy]$ ]]
 then
-    echo "Only Jenkins should execute this script!"
+    echo "FAILS: Only Jenkins should execute this script!"
     exit 1
 fi
 
 echo "changing directory to ${GIT_REPO}"
 cd ${GIT_REPO}
 
-#echo -n "testing git branch... "
-#currentBranch=$(git rev-parse --abbrev-ref HEAD)
-#if [ ! ${currentBranch} = "master" ]; then
-#    echo "failed (cannot deploy to production nexus repository: master branch expected) got: ${currentBranch}"
-#    exit 2
-#fi
-#echo "done"
+echo -n "testing git branch... "
+currentBranch=$(git rev-parse --abbrev-ref HEAD)
+if [ ! ${currentBranch} = "master" ]; then
+    echo "FAILS: cannot deploy to production nexus repository from branch ${currentBranch} (expected master branch)"
+    exit 2
+fi
+echo "SUCCEED"
 
 # get release version to prepare
-echo -n "getting next release... "
+echo -n "getting next release to prepare... "
 getNextReleaseVersion
-echo "done (${RELEASE_VERSION})"
+echo "SUCCEED: found v${RELEASE_VERSION}"
 
 # prepare new version
-echo "preparing ${RELEASE_NAME} v${RELEASE_VERSION}... "
+echo "preparing new release v${RELEASE_VERSION} for ${RELEASE_NAME}... "
 mvn versions:set -DnewVersion=${RELEASE_VERSION} -DgenerateBackupPoms=false
 
 ###### Clean, test and deploy on nexus
@@ -100,7 +100,6 @@ git add -A
 git commit -m "New release version ${RELEASE_VERSION}"
 
 echo "tagging and pushing to origin master... "
-# create a new release tag
 git tag -a v${RELEASE_VERSION} -m "tag v${RELEASE_VERSION}"
 git push origin master --tags
 
