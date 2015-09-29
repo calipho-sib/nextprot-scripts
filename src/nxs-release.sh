@@ -1,7 +1,11 @@
 #!/usr/bin/env bash
 
-# This script prepares and publish a maven artefact to nexus.
-# Execute the following command in a jenkins job: yes|nxs-release.sh <repo>
+### This script prepares and publish a maven artefact to nexus.
+
+# Execute the following command in a jenkins job:
+# yes -y | nxs-release.sh /work/git-project
+# or
+# yes -y | nxs-release.sh
 
 set -o errexit  # make your script exit when a command fails.
 set -o pipefail # prevents errors in a pipeline from being masked. If any command in a pipeline fails, that return code will be used as the return code of the whole pipeline.
@@ -9,9 +13,9 @@ set -o nounset  # exit when your script tries to use undeclared variables.
 
 function echoUsage() {
     echo "ONLY JENKINS SHOULD EXECUTE THIS SCRIPT. It prepares and deploys a new release on nexus repository."
-    echo "usage: $0 [-h] <repo>"
+    echo "usage: $0 [-h] [repo]"
     echo "Params:"
-    echo " <repo> maven project git repository"
+    echo " <repo> optional maven project git repository"
     echo "Options:"
     echo " -h print usage"
 }
@@ -30,14 +34,11 @@ done
 
 shift $(($OPTIND - 1))
 
-args=("$*")
-
 RELEASE_VERSION=
-GIT_REPO=
+GIT_REPO="./"
 
 if [ $# -lt 1 ]; then
     echo "WARN: set git repository path to current directory './'"
-    GIT_REPO="./"
 else
     GIT_REPO=$1
 fi
@@ -58,7 +59,7 @@ getNextReleaseVersion () {
 
     if [[ ! ${devVersion} =~ [0-9]+\.[0-9]+\.[0-9]+-SNAPSHOT ]]; then
 
-        echo "WARN: cannot make release ${RELEASE_NAME} v${devVersion} (expected snapshot version)"
+        echo "WARN: cannot make ${RELEASE_NAME} v${devVersion} release (expected snapshot version)"
         exit 0
     fi
 
@@ -85,7 +86,7 @@ fi
 echo "SUCCEED"
 
 # get release version to prepare
-echo -n "fetching next release to prepare... "
+echo -n "fetching next release version to prepare... "
 getNextReleaseVersion
 echo "SUCCEED: found v${RELEASE_VERSION}"
 
