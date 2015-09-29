@@ -32,13 +32,15 @@ shift $(($OPTIND - 1))
 
 args=("$*")
 
-if [ $# -lt 1 ]; then
-  echo missing arguments >&2
-  echoUsage; exit 2
-fi
-
 RELEASE_VERSION=
-GIT_REPO=$1
+GIT_REPO=
+
+if [ $# -lt 1 ]; then
+    echo "WARN: set git repository path to current directory './'"
+    GIT_REPO="./"
+else
+    GIT_REPO=$1
+fi
 
 # return the next release version to prepare on master
 getNextReleaseVersion () {
@@ -47,7 +49,7 @@ getNextReleaseVersion () {
     if [ ! -f "pom.xml" ]; then
 
         echo "FAILS: pom.xml was not found (not a maven project)"
-        exit 2
+        exit 3
     fi
 
     # get develop version (http://stackoverflow.com/questions/3545292/how-to-get-maven-project-version-to-the-bash-command-line)
@@ -56,8 +58,8 @@ getNextReleaseVersion () {
 
     if [[ ! ${devVersion} =~ [0-9]+\.[0-9]+\.[0-9]+-SNAPSHOT ]]; then
 
-        echo "FAILS: cannot release ${RELEASE_NAME} v${devVersion} (expected a snapshot version)"
-        exit 3
+        echo "WARN: cannot make release ${RELEASE_NAME} v${devVersion} (expected snapshot version)"
+        exit 0
     fi
 
     RELEASE_VERSION=${devVersion%-*}
@@ -70,10 +72,11 @@ then
     exit 1
 fi
 
-echo "changing directory to ${GIT_REPO}"
+echo -n "changing to git repository directory '${GIT_REPO}'... "
 cd ${GIT_REPO}
+echo "SUCCEED"
 
-echo -n "testing git branch... "
+echo -n "checking master git branch... "
 currentBranch=$(git rev-parse --abbrev-ref HEAD)
 if [ ! ${currentBranch} = "master" ]; then
     echo "FAILS: cannot deploy to production nexus repository from branch ${currentBranch} (expected master branch)"
@@ -82,7 +85,7 @@ fi
 echo "SUCCEED"
 
 # get release version to prepare
-echo -n "getting next release to prepare... "
+echo -n "fetching next release to prepare... "
 getNextReleaseVersion
 echo "SUCCEED: found v${RELEASE_VERSION}"
 
