@@ -9,10 +9,11 @@ set -o pipefail # prevents errors in a pipeline from being masked. If any comman
 set -o nounset  # exit when your script tries to use undeclared variables.
 
 function echoUsage() {
-    echo "usage: $0 <snapshot-version>" >&2
+    echo "usage: $0 <snapshot-version> [repo]" >&2
     echo "This script fires indirectly a new production release (through jenkins) and prepares next development release with the given version (-SNAPSHOT is added automatically)"
     echo "Params:"
     echo " <snapshot-version> next snapshot version"
+    echo " <repo> optional maven project git repository"
     echo "Options:"
     echo " -h print usage"
 }
@@ -31,12 +32,22 @@ done
 
 shift $(($OPTIND - 1))
 
+GIT_REPO="./"
+VERSION=
+
 if [ $# -lt 1 ]; then
-  echo "missing arguments: Specify the new version (example 0.2.1)"  >&2
-  echoUsage; exit 1
+    echo "missing arguments: Specify the new version (example 0.2.1)"  >&2
+    echoUsage; exit 1
+else
+    VERSION=$1
+    if [ $# -eq 2 ]; then
+        GIT_REPO=$2
+    fi
 fi
 
-version=$1
+echo -n "changing to git repository directory '${GIT_REPO}'... "
+cd ${GIT_REPO}
+echo "SUCCEED"
 
 git checkout develop
 git pull origin develop
@@ -47,7 +58,7 @@ git add -A
 git push origin master
 echo "Jenkins will fire at this point or in 5mins (but we don't wait for it to finish) we assume everything is fine :) "
 git checkout develop
-mvn versions:set -DnewVersion=$version-SNAPSHOT -DgenerateBackupPoms=false
+mvn versions:set -DnewVersion=${VERSION}-SNAPSHOT -DgenerateBackupPoms=false
 git add -A
-git commit -m "Preparing next development snapshot version v$version"
+git commit -m "Preparing next development snapshot version v${VERSION}"
 git push origin develop
