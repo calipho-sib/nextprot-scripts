@@ -84,7 +84,7 @@ cd ${GIT_REPO}
 # get release version to prepare
 echo -n "getting next release... "
 getNextReleaseVersion
-echo "done (${RELEASE_VERSION}")
+echo "done (${RELEASE_VERSION})"
 
 # prepare new version
 echo "preparing ${RELEASE_NAME} v${RELEASE_VERSION}... "
