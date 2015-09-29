@@ -76,7 +76,7 @@ cd ${GIT_REPO}
 echo -n "testing git branch... "
 currentBranch=$(git rev-parse --abbrev-ref HEAD)
 if [ ! ${currentBranch} = "master" ]; then
-    echo "failed (cannot deploy to production nexus repository: master branch expected)"
+    echo "failed (cannot deploy to production nexus repository: master branch expected) got: ${currentBranch}"
     exit 2
 fi
 echo "done"
