@@ -101,6 +101,7 @@ git commit -m "New release version ${RELEASE_VERSION}"
 
 echo "tagging and pushing to origin master... "
 # create a new release tag
+git tag -d v${RELEASE_VERSION}
 git tag -a v${RELEASE_VERSION} -m "tag v${RELEASE_VERSION}"
 git push origin master --tags
 
