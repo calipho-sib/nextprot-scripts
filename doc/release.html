@@ -7,7 +7,7 @@
     
 Note over jenkins#master:git clone repository
 Note over jenkins#master:git checkout master
-Note over jenkins#master:getNextReleaseVersion (based on snapshot pom.xml) MUST BE SNAPSHOT
+Note over jenkins#master:RELEASE_VERSION=getNextReleaseVersion (based on pom.xml) MUST BE SNAPSHOT
 Note over jenkins#master:mvn versions:set -DnewVersion=${RELEASE_VERSION} -DgenerateBackupPoms=false
 Note over jenkins#master:mvn clean deploy
 Note over jenkins#master:git add -A
