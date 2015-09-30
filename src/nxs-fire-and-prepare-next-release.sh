@@ -45,23 +45,32 @@ else
     fi
 fi
 
+checkSnapshotVersion () {
+
+    if [[ ! $1 =~ [0-9]+\.[0-9]+\.[0-9]+ ]]; then
+
+        echo "FAILS: invalid version format (expect format:'X.Y.Z')"
+        exit 2
+    fi
+}
+
 checkMavenProject () {
 
     # check it is a maven project
     if [ ! -f "pom.xml" ]; then
 
         echo "FAILS: pom.xml was not found (not a maven project)"
-        exit 2
+        exit 3
     fi
 }
 
-prompt () {
+askUserForConfirmation () {
 
     read -p "$1[y/N] " -r
     if [[ ! $REPLY =~ ^[Yy]$ ]]
     then
         echo "$2"
-        exit 3
+        exit 4
     fi
 }
 
@@ -77,13 +86,17 @@ checkGitRepo () {
         git status
 
         if [[ ! ${gitStatus} =~ " ??**" ]]; then
-            prompt "There are some untracked files in branch $(git rev-parse --abbrev-ref HEAD) - Do you want to proceed for releasing ?" "Exit script on user request"
+            askUserForConfirmation "There are some untracked files in branch $(git rev-parse --abbrev-ref HEAD) - Do you want to proceed for releasing ?" "Exit script on user request"
         else
             echo "Cannot make release"
-            exit 4
+            exit 5
         fi
     fi
 }
+
+echo -n "checking snapshot version argument (${VERSION})... "
+checkSnapshotVersion ${VERSION}
+echo "OK"
 
 echo -n "changing to git repository directory '${GIT_REPO}'... "
 cd ${GIT_REPO}
