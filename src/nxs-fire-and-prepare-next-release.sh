@@ -9,10 +9,10 @@ set -o pipefail # prevents errors in a pipeline from being masked. If any comman
 set -o nounset  # exit when your script tries to use undeclared variables.
 
 function echoUsage() {
-    echo "usage: $0 <snapshot-version> [repo]" >&2
+    echo "usage: $0 <next-snapshot-version> [repo]" >&2
     echo "This script fires indirectly a new production release (through jenkins) and prepares next development release with the given version (-SNAPSHOT is added automatically)"
     echo "Params:"
-    echo " <snapshot-version> next snapshot version"
+    echo " <next-snapshot-version> next snapshot version"
     echo " <repo> optional maven project git repository"
     echo "Options:"
     echo " -h print usage"
@@ -55,6 +55,36 @@ checkMavenProject () {
     fi
 }
 
+prompt () {
+
+    read -p "$1[y/N] " -r
+    if [[ ! $REPLY =~ ^[Yy]$ ]]
+    then
+        echo "$2"
+        exit 3
+    fi
+}
+
+checkGitRepo () {
+
+    gitStatus=$(git status -s)
+
+    if [[ ${gitStatus} == "" ]]; then
+        echo "Clear git repository!";
+    else
+        echo "Git working directory should be clean!"
+
+        git status
+
+        if [[ ! ${gitStatus} =~ " ??**" ]]; then
+            prompt "There are some untracked files in branch $(git rev-parse --abbrev-ref HEAD) - Do you want to proceed for releasing ?" "Exit script on user request"
+        else
+            echo "Cannot make release"
+            exit 4
+        fi
+    fi
+}
+
 echo -n "changing to git repository directory '${GIT_REPO}'... "
 cd ${GIT_REPO}
 echo "OK"
@@ -66,10 +96,24 @@ echo "OK"
 
 git checkout develop
 git pull origin develop
+
+checkGitRepo
+
+exit 23
+
 git checkout master
 git pull origin master
-git merge -X theirs develop
+
+checkGitRepo
+
+exit 23
+
+git merge -X theirs develop --no-commit --no-ff
+
+checkGitRepo
+
 git add -A
+git commit -m "Merging develop to master for next release"
 git push origin master
 echo "Jenkins will fire at this point or in 5mins (but we don't wait for it to finish) we assume everything is fine :) "
 git checkout develop
