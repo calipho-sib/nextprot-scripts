@@ -100,7 +100,7 @@ checkGitRepo () {
 }
 
 if [ $# -lt 1 ]; then
-    echo "missing version number 'MAJOR.MINOR' (example 0.2)"  >&2
+    echo "missing version number 'MAJOR.MINOR.PATCH' (i.e: 0.2.0)"  >&2
     echoUsage; exit 6
 else
     VERSION=$1
