@@ -56,8 +56,11 @@ function copy_npdb() {
     dbdir=$4
     dbdirnew=$5
 
+    echo "removing new dir /work/postgres/${dbdirnew} on ${dbuser}@${dest}"
     ssh ${dbuser}@${dest} "rm -rf /work/postgres/${dbdirnew}"
+    echo "making new dir /work/postgres/${dbdirnew} on ${dbuser}@${dest}"
     ssh ${dbuser}@${dest} "mkdir -p /work/postgres/${dbdirnew}"
+    echo "chmod dir /work/postgres/${dbdirnew} on ${dbuser}@${dest}"
     ssh ${dbuser}@${dest} "chmod 700 /work/postgres/${dbdirnew}"
 
     # The files are transferred in "archive" mode, which ensures that symbolic links, devices, attributes, permissions,
