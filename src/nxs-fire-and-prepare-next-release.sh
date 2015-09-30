@@ -69,7 +69,7 @@ askUserForConfirmation () {
     read -p "$1[y/N] " -r
     if [[ ! $REPLY =~ ^[Yy]$ ]]
     then
-        echo "$2"
+        echo Exit script on user request
         exit 4
     fi
 }
@@ -86,7 +86,7 @@ checkGitRepo () {
         git status
 
         if [[ ! ${gitStatus} =~ " ??**" ]]; then
-            askUserForConfirmation "There are some untracked files in branch $(git rev-parse --abbrev-ref HEAD) - Do you want to proceed for releasing ?" "Exit script on user request"
+            askUserForConfirmation "There are some untracked files in branch $(git rev-parse --abbrev-ref HEAD) - Do you want to proceed for releasing ?"
         else
             echo "Cannot make release"
             exit 5
@@ -107,30 +107,33 @@ echo -n "checking maven project... "
 checkMavenProject
 echo "OK"
 
+################# DEVELOP BRANCH
 git checkout develop
 git pull origin develop
 
 checkGitRepo
 
-exit 23
-
+################# MASTER BRANCH
 git checkout master
 git pull origin master
 
 checkGitRepo
 
-exit 23
-
 git merge -X theirs develop --no-commit --no-ff
+git status
+askUserForConfirmation "Do you want to commit?"
+git commit -m "Merging develop to master for next release"
 
 checkGitRepo
 
-git add -A
-git commit -m "Merging develop to master for next release"
 git push origin master
 echo "Jenkins will fire at this point or in 5mins (but we don't wait for it to finish) we assume everything is fine :) "
+
+################# DEVELOP BRANCH
 git checkout develop
 mvn versions:set -DnewVersion=${VERSION}-SNAPSHOT -DgenerateBackupPoms=false
 git add -A
 git commit -m "Preparing next development snapshot version v${VERSION}"
+
+checkGitRepo
 git push origin develop
