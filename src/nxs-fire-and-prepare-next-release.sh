@@ -99,6 +99,20 @@ checkGitRepo () {
     fi
 }
 
+replacePomVersionDepLATESTWithRELEASE () {
+
+    pom=$(cat pom.xml)
+
+    if [[ ${pom} == *"LATEST"* ]]
+    then
+        echo -n "-- found module dependencies: replacing version 'LATEST' by 'RELEASE'... "
+        cat pom.xml | sed -e "s/LATEST/RELEASE/g" > pom.xml.tmp
+        mv pom.xml.tmp pom.xml
+        git add pom.xml
+        git commit -m "Reset module dependencies version LATEST -> RELEASE"
+    fi
+}
+
 if [ $# -lt 1 ]; then
     echo "missing version number 'MAJOR.MINOR.PATCH' (i.e: 0.2.0)"  >&2
     echoUsage; exit 6
@@ -141,7 +155,9 @@ git commit -m "Merging develop to master for next release"
 
 checkGitRepo
 
+replacePomVersionDepLATESTWithRELEASE
 git push origin master
+
 echo "-- Jenkins will fire at this point or in 5mins (but we don't wait for it to finish) we assume everything is fine :) "
 
 ################# DEVELOP BRANCH
