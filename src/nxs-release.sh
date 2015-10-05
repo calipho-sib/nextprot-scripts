@@ -59,25 +59,25 @@ getNextReleaseVersion () {
 
     if [[ ! ${devVersion} =~ [0-9]+\.[0-9]+\.[0-9]+-SNAPSHOT ]]; then
 
-        echo "WARN: cannot make ${RELEASE_NAME} v${devVersion} release (expected snapshot version)"
+        echo "WARNING: cannot make ${RELEASE_NAME} v${devVersion} release (expected snapshot version)"
         exit 0
     fi
 
     RELEASE_VERSION=${devVersion%-*}
 }
 
-read -p "The following script should be executed by Jenkins - Are you Jenkins?[y/N] " -r
+read -p "WARNING: The following script should be executed by Jenkins - Are you Jenkins?[y/N] " -r
 if [[ ! $REPLY =~ ^[Yy]$ ]]
 then
     echo "FAILS: Only Jenkins should execute this script!"
     exit 1
 fi
 
-echo -n "changing to git repository directory '${GIT_REPO}'... "
+echo -n "-- changing to git repository directory '${GIT_REPO}'... "
 cd ${GIT_REPO}
 echo "OK"
 
-echo -n "checking master git branch... "
+echo -n "-- checking master git branch... "
 currentBranch=$(git rev-parse --abbrev-ref HEAD)
 if [ ! ${currentBranch} = "master" ]; then
     echo "FAILS: cannot deploy to production nexus repository from branch ${currentBranch} (expected master branch)"
@@ -86,24 +86,24 @@ fi
 echo "OK"
 
 # get release version to prepare
-echo -n "fetching next release version to prepare... "
+echo -n "-- fetching next release version to prepare... "
 getNextReleaseVersion
 echo "OK: found v${RELEASE_VERSION}"
 
 # prepare new version
-echo "preparing new release v${RELEASE_VERSION} for ${RELEASE_NAME}... "
+echo "-- preparing new release v${RELEASE_VERSION} for ${RELEASE_NAME}... "
 mvn versions:set -DnewVersion=${RELEASE_VERSION} -DgenerateBackupPoms=false
 
 ###### Clean, test and deploy on nexus
-echo "deploying on nexus release repository... "
+echo "-- deploying on nexus release repository... "
 mvn clean deploy
 
 ###### Add, commit and push to master
-echo "adding and committing in git... "
+echo "-- adding and committing in git... "
 git add -A
 git commit -m "New release version ${RELEASE_VERSION}"
 
-echo "tagging and pushing to origin master... "
+echo "-- tagging and pushing to origin master... "
 git tag -a v${RELEASE_VERSION} -m "tag v${RELEASE_VERSION}"
 git push origin master --tags
 
