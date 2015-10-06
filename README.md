@@ -24,11 +24,11 @@ Options:
 
 [diagram](doc/fire-and-prepare-next-release.html)
  
-### nxs-open-hotfix.sh
+### nxs-checkout-hotfix-branch.sh
 
 ```
-$ nxs-open-hotfix.sh -h
-usage: nxs-open-hotfix.sh [repo]
+$ nxs-checkout-hotfix-branch.sh -h
+usage: nxs-checkout-hotfix-branch.sh [repo]
 This script prepares and inits the next hotfix branch coming from master and checkout to it (after it, you can start fixing it :))
 Params:
  <repo> optional maven project git repository
@@ -36,13 +36,13 @@ Options:
  -h print usage
 ```
 
-[diagram](doc/open-hotfix.html)
+[diagram](doc/checkout-hotfix-branch.html)
 
-### nxs-close-hotfix.sh
+### nxs-fire-patch-release.sh
 
 ```
-$ nxs-close-hotfix.sh -h
-usage: /Users/fnikitin/Projects/nextprot-scripts/src/nxs-close-hotfix.sh [repo]
+$ nxs-fire-patch-release.sh -h
+usage: nxs-fire-patch-release.sh [repo]
 This script closes the next hotfix branch coming from master, push to develop (pom version kept as in develop) and to master to make a new patch release (jenkins will executes nxs-release.sh)
 Params:
  <repo> optional maven project git repository
@@ -50,4 +50,4 @@ Options:
  -h print usage
 ```
 
-[diagram](doc/close-hotfix.html)
+[diagram](doc/fire-patch-release.html)

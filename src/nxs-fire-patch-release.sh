@@ -1,6 +1,6 @@
 #!/bin/bash
 
-# ex1: bash -x nxs-close-hotfix.sh ~/Projects/nx-test-deploy-module
+# ex1: bash -x nxs-fire-patch-release.sh ~/Projects/nx-test-deploy-module
 
 #set -o errexit  # make your script exit when a command fails.
 set -o pipefail # prevents errors in a pipeline from being masked. If any command in a pipeline fails, that return code will be used as the return code of the whole pipeline.
