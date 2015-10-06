@@ -1,8 +1,6 @@
 #!/bin/bash
 
-# This script fires indirectly a new production release (through jenkins) and prepares next development release
-
-# ex1: bash -x nxs-create-hotfix.sh ~/Projects/nx-test-deploy-module
+# ex1: bash -x nxs-init-hotfix-branch.sh ~/Projects/nx-test-deploy-module
 
 set -o errexit  # make your script exit when a command fails.
 set -o pipefail # prevents errors in a pipeline from being masked. If any command in a pipeline fails, that return code will be used as the return code of the whole pipeline.
@@ -10,7 +8,7 @@ set -o nounset  # exit when your script tries to use undeclared variables.
 
 function echoUsage() {
     echo "usage: $0 [repo]" >&2
-    echo "This script fires indirectly a new production release (through jenkins) and prepares next development release with the given version (-SNAPSHOT is added automatically)"
+    echo "This script prepares and inits the next hotfix branch coming from master and checkout to it (after it, you can start fixing it :))"
     echo "Params:"
     echo " <repo> optional maven project git repository"
     echo "Options:"
@@ -40,18 +38,18 @@ getNextFixVersion () {
     if [ ! -f "pom.xml" ]; then
 
         echo "FAILS: pom.xml was not found (not a maven project)"
-        exit 3
+        exit 2
     fi
 
     relVersion=`mvn org.apache.maven.plugins:maven-help-plugin:2.1.1:evaluate -Dexpression=project.version | grep -Ev '(^\[|Download\w+:)'`
-    RELEASE_NAME=`mvn org.apache.maven.plugins:maven-help-plugin:2.1.1:evaluate -Dexpression=project.name | grep -Ev '(^\[|Download\w+:)'`
 
     if [[ ${relVersion} =~ ([0-9]+\.[0-9]+)\.([0-9]+) ]]; then
         MINOR_VERSION=$((${BASH_REMATCH[2]}+1))
         VERSION=${BASH_REMATCH[1]}.${MINOR_VERSION}
     else
-        echo "WARNING: cannot create fix for ${RELEASE_NAME} v${relVersion} (expected release version)"
-        exit 0
+        projectName=`mvn org.apache.maven.plugins:maven-help-plugin:2.1.1:evaluate -Dexpression=project.name | grep -Ev '(^\[|Download\w+:)'`
+        echo "WARNING: cannot create fix for ${projectName} v${relVersion} (expected release version)"
+        exit 3
     fi
 }
 
@@ -91,13 +89,8 @@ echo v${VERSION}
 
 checkoutAndPushFixBranch "hotfix-${VERSION}"
 
-exit 23
+git status
 
-echo "-- creating new fix v${VERSION}... "
+echo "-- you can now fix your bug in the current branch hotfix-${VERSION}"
+exit 0
 
-# finishing fix branch
-git checkout develop
-git merge hotfix --no-ff
-
-git checkout master
-git merge hotfix --no-ff
