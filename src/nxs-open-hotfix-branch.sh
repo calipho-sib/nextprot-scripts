@@ -70,7 +70,7 @@ checkoutAndPushFixBranch () {
         echo "-- changing pom.xml version to v${VERSION}... "
         mvn versions:set -DnewVersion=${VERSION}-SNAPSHOT -DgenerateBackupPoms=false
 
-        git add pom.xml
+        git add -A
         git commit -m "preparing fix version v${VERSION}"
         git push -u origin ${fixBranch}
     fi
