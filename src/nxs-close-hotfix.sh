@@ -8,7 +8,7 @@ set -o nounset  # exit when your script tries to use undeclared variables.
 
 function echoUsage() {
     echo "usage: $0 [repo]" >&2
-    echo "This script closes the next hotfix branch coming from master and checkout to it (after it, you can start fixing it :))"
+    echo "This script closes the next hotfix branch coming from master, push to develop (pom version kept as in develop) and to master to make a new patch release (jenkins will executes nxs-release.sh)"
     echo "Params:"
     echo " <repo> optional maven project git repository"
     echo "Options:"
@@ -142,7 +142,7 @@ getNextFixVersion
 echo v${VERSION}
 
 checkoutToNextFixBranch "hotfix-${VERSION}"
-git pull
+git pull origin hotfix-${VERSION}
 
 echo "-- merging branch hotfix-${VERSION} to master... "
 mergeToMaster
