@@ -82,17 +82,14 @@ fi
 
 echo "-- checking out to branch master... "
 git checkout master
-
-git pull
+git pull origin master
 
 echo -n "-- fetching next version... "
 getNextFixVersion
 echo v${VERSION}
 
 checkoutAndPushFixBranch "hotfix-${VERSION}"
-
-git pull
-
+git pull hotfix-${VERSION}
 git status
 
 echo "-- you can now fix your bug in the current branch hotfix-${VERSION}"
