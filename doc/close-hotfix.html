@@ -1,0 +1,32 @@
+<script src="js/jquery-min.js"></script>
+<script src="js/raphael-min.js"></script>
+<script src="js/underscore-min.js"></script>
+<script src="js/sequence-diagram-min.js"></script>
+
+<div class="diagram">
+
+    Note over local#master: git checkout master
+    Note over local#master: git pull origin develop
+    Note over local#master: fetching release version/incrementing to next patch (x.y.z+1)
+    local#master-->local#hotfix: git checkout hotfix-x.y.z+1
+    Note over local#hotfix: git pull
+    local#hotfix-->local#master: git checkout master
+    Note over local#master: git pull
+    Note over local#master: git merge -X theirs hotfix-x.y.z+1 --no-commit
+    Note over local#master: resolving conflicts
+    Note over local#master: git commit -m "Merging hotfix-x.y.z+1 to master for next patch release"
+    Note over local#master: git push origin master
+    local#master-->jenkins: JENKINS will fire (5 min)
+    Note over jenkins: Runs nxs-release.sh \n deploy / commit / tag / push in master
+    local#master-->local#develop: git checkout develop
+    Note over local#develop: git pull
+    Note over local#develop: git merge hotfix-x.y.z+1 --no-commit
+    Note over local#develop: git checkout --ours pom.xml **/pom.xml (keeping develop version)
+    Note over local#develop: git add -A
+    Note over local#develop: git commit
+    Note over local#develop: potential other conflicts to resolve manually
+</div>
+
+<script>
+    $(".diagram").sequenceDiagram({theme: 'hand'});
+</script>
