@@ -71,7 +71,7 @@ checkoutAndPushFixBranch () {
         mvn versions:set -DnewVersion=${VERSION}-SNAPSHOT -DgenerateBackupPoms=false
 
         git add -A
-        git commit -m "preparing fix version v${VERSION}"
+        git commit -m "preparing patch version v${VERSION}"
         git push -u origin ${fixBranch}
     fi
 }
