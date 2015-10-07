@@ -59,6 +59,8 @@ checkMavenProject () {
     if [[ ${devVersion} = ${VERSION}-SNAPSHOT ]]; then
 
         echo "FAILS: cannot prepare the next development release with the same version number v${VERSION}-SNAPSHOT"
+        echo "Choose another <next-snapshot-version>"
+        echoUsage
         exit 13
     fi
 }
