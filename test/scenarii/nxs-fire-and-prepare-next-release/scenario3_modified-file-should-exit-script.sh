@@ -10,5 +10,5 @@ if [ $? != 5 ]; then
     exit 13
 fi
 
-# reverting to clean git repo
+echo "reverting to clean git repo..."
 git checkout -- README.md

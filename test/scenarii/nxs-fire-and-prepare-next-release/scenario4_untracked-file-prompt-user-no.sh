@@ -10,5 +10,5 @@ if [ $? != 4 ]; then
     exit 14
 fi
 
-# reverting to clean git repo
+echo "reverting to clean git repo..."
 rm yo
