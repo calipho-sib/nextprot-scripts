@@ -48,7 +48,7 @@ git clone https://github.com/calipho-sib/nextprot-scripts.git
 
 echo "-- testing different use/cases... "
 
-source ${NX_SCENARIO}/scenario1_snapshot-version-should-be-valid.sh
-source ${NX_SCENARIO}/scenario2_snapshot-version-should-be-different.sh
-
+for useCaseScript in `ls ${NX_SCENARIO}/*.sh`; do
+    source ${useCaseScript} ${TMP}
+done
 
