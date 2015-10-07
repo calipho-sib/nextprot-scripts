@@ -71,9 +71,16 @@ checkMavenProject () {
 
 askUserForConfirmation () {
 
-    read -p "$1[y/N] " -r
+    question=$1
+    noteBeforeExit=$2
+
+    echo -en "${question}"
+    read -p "[y/N] " -r
     if [[ ! $REPLY =~ ^[Yy]$ ]]
     then
+        if [[ ${noteBeforeExit} ]]; then
+            echo "** ${noteBeforeExit}"
+        fi
         echo "-- Exit script on user request"
         exit 4
     fi
@@ -88,10 +95,10 @@ checkGitRepo () {
     else
         echo "git working directory should be clean!"
 
-        git status
+        git status -s
 
         if [[ ! ${gitStatus} =~ " ??**" ]]; then
-            askUserForConfirmation "There are some untracked files in branch $(git rev-parse --abbrev-ref HEAD) - Do you want to proceed for releasing ?"
+            askUserForConfirmation "!! There are some untracked files in branch $(git rev-parse --abbrev-ref HEAD)\n-- Do you want to proceed for releasing anyway ?" "use 'git add' to track"
         else
             echo "FAILS: cannot make release"
             exit 5
@@ -150,7 +157,7 @@ checkGitRepo
 
 git merge -X theirs develop --no-commit
 git status
-askUserForConfirmation "Do you want to commit?"
+askUserForConfirmation "Do you want to finalize the merge? " "Note: execute 'git merge --abort' to cancel the merge"
 git commit -m "Merging develop to master for next release"
 
 checkGitRepo
