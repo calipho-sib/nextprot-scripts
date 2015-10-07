@@ -97,12 +97,14 @@ checkGitRepo () {
 
         git status -s
 
-        if [[ ! ${gitStatus} =~ " ??**" ]]; then
-            askUserForConfirmation "!! There are some untracked files in branch $(git rev-parse --abbrev-ref HEAD)\n-- Do you want to proceed for releasing anyway ?" "use 'git add' to track"
-        else
-            echo "FAILS: cannot make release"
-            exit 5
-        fi
+        while read -r line; do
+            if [[ ! ${line} =~ \?\?.* ]]; then
+                echo "FAILS: cannot make release (please fix the following file status: ${line})"
+                exit 5
+            fi
+        done <<< "${gitStatus}"
+
+        askUserForConfirmation "!! There are some untracked files in branch $(git rev-parse --abbrev-ref HEAD)\n-- Do you want to proceed for releasing anyway ?" "use 'git add' to track"
     fi
 }
 
