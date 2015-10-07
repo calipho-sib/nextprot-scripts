@@ -9,3 +9,6 @@ if [ $? != 4 ]; then
     echo "Assertion failed" >&2
     exit 15
 fi
+
+# reverting to clean git repo
+rm yo

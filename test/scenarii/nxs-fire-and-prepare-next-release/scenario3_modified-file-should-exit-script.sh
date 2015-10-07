@@ -9,3 +9,6 @@ if [ $? != 5 ]; then
     echo "Assertion failed" >&2
     exit 13
 fi
+
+# reverting to clean git repo
+git checkout -- README.md
