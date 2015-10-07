@@ -44,21 +44,6 @@ checkSnapshotVersion () {
     fi
 }
 
-checkSnapshotMajorMinorVersion () {
-
-    if [[ ! $1 =~ [0-9]+\.[0-9]+ ]]; then
-
-        echo "FAILS: invalid version format (expect version format:'MAJOR.MINOR')"
-        exit 2
-    fi
-
-    if [[ $1 =~ ([0-9]+\.[0-9]+)\.([0-9]+) ]]; then
-        VERSION=${BASH_REMATCH[1]}.0
-        echo "WARN: patch number '${BASH_REMATCH[2]}' in '$1' will be set to 0"
-        echo -n "Reset version to ${VERSION} "
-    fi
-}
-
 checkMavenProject () {
 
     # check it is a maven project
@@ -66,6 +51,15 @@ checkMavenProject () {
 
         echo "FAILS: pom.xml was not found (not a maven project)"
         exit 3
+    fi
+
+    # get develop version (http://stackoverflow.com/questions/3545292/how-to-get-maven-project-version-to-the-bash-command-line)
+    devVersion=`mvn org.apache.maven.plugins:maven-help-plugin:2.1.1:evaluate -Dexpression=project.version | grep -Ev '(^\[|Download\w+:)'`
+
+    if [[ ${devVersion} = ${VERSION}-SNAPSHOT ]]; then
+
+        echo "FAILS: cannot prepare the next development release with the same version number v${VERSION}-SNAPSHOT"
+        exit 13
     fi
 }
 
