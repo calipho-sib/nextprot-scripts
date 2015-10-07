@@ -1,6 +1,5 @@
 #!/bin/bash
 
-set -o errexit  # make your script exit when a command fails.
 set -o pipefail # prevents errors in a pipeline from being masked. If any command in a pipeline fails, that return code will be used as the return code of the whole pipeline.
 set -o nounset  # exit when your script tries to use undeclared variables.
 
@@ -33,9 +32,33 @@ if [ $# -lt 1 ]; then
 fi
 
 TMP=$1
+REPO_WO_DEP=${TMP}/repo/nx-test-deploy-module
+REPO_W_DEP=${TMP}/repo/nx-test-deploy-with-dep
+NX_SCRIPTS=${TMP}/repo/nextprot-scripts
 
 cd ${TMP}
-mkdir -p ${TMP}/scenario
-cd ${TMP}/scenario
+rm -rf ${TMP}/*
+mkdir -p ${TMP}/repo
+cd ${TMP}/repo
 git clone https://github.com/calipho-sib/nx-test-deploy-module.git
 git clone https://github.com/calipho-sib/nx-test-deploy-with-dep.git
+git clone https://github.com/calipho-sib/nextprot-scripts.git
+
+cd ${REPO_WO_DEP}
+git checkout develop
+ls
+
+# scenario 1: bad snapshot version format: should exit 2
+bash -x ${NX_SCRIPTS}/src/nxs-fire-and-prepare-next-release.sh koko
+if [ $? != 2 ]; then
+    echo "Assertion failed" >&2
+    exit 3
+fi
+
+# scenario 2: same snapshot version: should exit directly
+currentDevVersion=`mvn org.apache.maven.plugins:maven-help-plugin:2.1.1:evaluate -Dexpression=project.version | grep -Ev '(^\[|Download\w+:)'`
+bash -x ${NX_SCRIPTS}/src/nxs-fire-and-prepare-next-release.sh ${currentDevVersion%-SNAPSHOT}
+if [ $? != 13 ]; then
+    echo "Assertion failed" >&2
+    exit 4
+fi
