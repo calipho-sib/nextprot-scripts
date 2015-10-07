@@ -31,13 +31,26 @@ if [ $# -lt 1 ]; then
     echoUsage; exit 2
 fi
 
+calcNextDevVersion () {
+
+    relVersion=`mvn org.apache.maven.plugins:maven-help-plugin:2.1.1:evaluate -Dexpression=project.version | grep -Ev '(^\[|Download\w+:)'`
+
+    if [[ ${relVersion} =~ ([0-9]+)\.([0-9]+)\.[0-9]+ ]]; then
+        major=${BASH_REMATCH[1]}
+        nextMinor=$((${BASH_REMATCH[2]}+1))
+        nextVersion=${major}.${nextMinor}.0
+    else
+        exit 3
+    fi
+}
+
 TMP=$1
 REPO_WO_DEP=${TMP}/repo/nx-test-deploy-module
 REPO_W_DEP=${TMP}/repo/nx-test-deploy-with-dep
 NX_SCRIPTS=${TMP}/repo/nextprot-scripts
 NX_SCENARIO=${NX_SCRIPTS}/test/scenarii/nxs-fire-and-prepare-next-release
 
-echo "-- cloning repositories..."
+echo "== cloning repositories..."
 cd ${TMP}
 rm -rf ${TMP}/*
 mkdir -p ${TMP}/repo
@@ -46,9 +59,29 @@ git clone https://github.com/calipho-sib/nx-test-deploy-module.git
 git clone https://github.com/calipho-sib/nx-test-deploy-with-dep.git
 git clone https://github.com/calipho-sib/nextprot-scripts.git
 
-echo "-- testing different use/cases... "
+echo "== fetching infos..."
+cd ${REPO_W_DEP}
+git checkout develop
+CURRENT_REPO_W_DEP_VERSION_DEVELOP=`mvn org.apache.maven.plugins:maven-help-plugin:2.1.1:evaluate -Dexpression=project.version | grep -Ev '(^\[|Download\w+:)'`
+calcNextDevVersion
+NEXT_REPO_W_DEP_VERSION_DEVELOP=${nextVersion}
+
+cd ${REPO_WO_DEP}
+git checkout develop
+CURRENT_REPO_WO_DEP_VERSION_DEVELOP=`mvn org.apache.maven.plugins:maven-help-plugin:2.1.1:evaluate -Dexpression=project.version | grep -Ev '(^\[|Download\w+:)'`
+calcNextDevVersion
+NEXT_REPO_WO_DEP_VERSION_DEVELOP=${nextVersion}
+
+echo "-- current develop version for nx-test-deploy-module: ${CURRENT_REPO_WO_DEP_VERSION_DEVELOP}"
+echo "-- next develop version for nx-test-deploy-module: ${NEXT_REPO_WO_DEP_VERSION_DEVELOP}"
+echo "-- current develop version for nx-test-deploy-with-dep: ${CURRENT_REPO_W_DEP_VERSION_DEVELOP}"
+echo "-- next develop version for nx-test-deploy-with-dep: ${NEXT_REPO_W_DEP_VERSION_DEVELOP}"
+
+echo "== testing different use/cases... "
 
 for useCaseScript in `ls ${NX_SCENARIO}/*.sh`; do
+    echo "-- testing ${useCaseScript}... "
     source ${useCaseScript} ${TMP}
+    echo "-- PASSED"
 done
 
