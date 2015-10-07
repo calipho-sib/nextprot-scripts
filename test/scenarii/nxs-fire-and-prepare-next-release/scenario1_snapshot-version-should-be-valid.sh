@@ -8,4 +8,3 @@ if [ $? != 2 ]; then
     echo "Assertion failed" >&2
     exit 3
 fi
-echo "TEST PASSED"
