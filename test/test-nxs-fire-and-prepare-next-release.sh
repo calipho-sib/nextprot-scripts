@@ -35,7 +35,9 @@ TMP=$1
 REPO_WO_DEP=${TMP}/repo/nx-test-deploy-module
 REPO_W_DEP=${TMP}/repo/nx-test-deploy-with-dep
 NX_SCRIPTS=${TMP}/repo/nextprot-scripts
+NX_SCENARIO=${NX_SCRIPTS}/test/scenarii/nxs-fire-and-prepare-next-release
 
+echo "-- cloning repositories..."
 cd ${TMP}
 rm -rf ${TMP}/*
 mkdir -p ${TMP}/repo
@@ -44,21 +46,9 @@ git clone https://github.com/calipho-sib/nx-test-deploy-module.git
 git clone https://github.com/calipho-sib/nx-test-deploy-with-dep.git
 git clone https://github.com/calipho-sib/nextprot-scripts.git
 
-cd ${REPO_WO_DEP}
-git checkout develop
-ls
+echo "-- testing different use/cases... "
 
-# scenario 1: bad snapshot version format: should exit 2
-bash -x ${NX_SCRIPTS}/src/nxs-fire-and-prepare-next-release.sh koko
-if [ $? != 2 ]; then
-    echo "Assertion failed" >&2
-    exit 3
-fi
+source ${NX_SCENARIO}/scenario1_snapshot-version-should-be-valid.sh
+source ${NX_SCENARIO}/scenario2_snapshot-version-should-be-different.sh
 
-# scenario 2: same snapshot version: should exit directly
-currentDevVersion=`mvn org.apache.maven.plugins:maven-help-plugin:2.1.1:evaluate -Dexpression=project.version | grep -Ev '(^\[|Download\w+:)'`
-bash -x ${NX_SCRIPTS}/src/nxs-fire-and-prepare-next-release.sh ${currentDevVersion%-SNAPSHOT}
-if [ $? != 13 ]; then
-    echo "Assertion failed" >&2
-    exit 4
-fi
+
