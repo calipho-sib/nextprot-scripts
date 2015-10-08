@@ -51,3 +51,9 @@ Options:
 ```
 
 [diagram](doc/fire-patch-release.html)
+
+## Test workflow
+
+Each time a push is done on master jenkins execute all tests in test/ directory
+
+[diagram](doc/test-workflow.html)

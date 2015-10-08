@@ -1,0 +1,16 @@
+<script src="js/jquery-min.js"></script>
+<script src="js/raphael-min.js"></script>
+<script src="js/underscore-min.js"></script>
+<script src="js/sequence-diagram-min.js"></script>
+
+<div class="diagram">
+
+    Note over local#master: edit / add sources
+    local#master-->origin#master: git push origin master
+    origin#master-->miniwatt#jenkins: JENKINS will fire (<= 5 min)
+    Note over miniwatt#jenkins: Runs job nextprot-scripts-tests \n cd test/ ; run all tests
+</div>
+
+<script>
+    $(".diagram").sequenceDiagram({theme: 'hand'});
+</script>
