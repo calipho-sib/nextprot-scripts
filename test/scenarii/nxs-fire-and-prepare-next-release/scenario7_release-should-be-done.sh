@@ -2,7 +2,7 @@
 
 cd ${REPO_WO_DEP_PATH}
 
-printf 'y\n' | bash ${NX_SCRIPTS_PATH}/src/nxs-fire-and-prepare-next-release.sh ${NEXT_REPO_WO_DEP_VERSION_DEVELOP}
+yes y | bash ${NX_SCRIPTS_PATH}/src/nxs-fire-and-prepare-next-release.sh ${NEXT_REPO_WO_DEP_VERSION_DEVELOP}
 
 if [ $? != 0 ]; then
     TEST_RESULT+="failed"
