@@ -7,7 +7,7 @@ bash ${NX_SCRIPTS_PATH}/src/nxs-fire-and-prepare-next-release.sh koko
 
 if [ $? != 2 ]; then
     TEST_RESULT+="failed"
-    NUM_OF_FAILED_TESTS+=($0)
+    FAILED_TESTS+=($0)
 else
     TEST_RESULT+="passed"
 fi

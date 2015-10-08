@@ -8,7 +8,7 @@ bash ${NX_SCRIPTS_PATH}/src/nxs-fire-and-prepare-next-release.sh ${NEXT_REPO_WO_
 
 if [ $? != 5 ]; then
     TEST_RESULT+="failed"
-    NUM_OF_FAILED_TESTS+=($0)
+    FAILED_TESTS+=($0)
 else
     TEST_RESULT+="passed"
 fi
