@@ -104,9 +104,28 @@ echo "-- next develop version for nx-test-deploy-with-dep: ${NEXT_REPO_W_DEP_VER
 
 echo "== testing different use/cases... "
 
+TEST_RESULTS=()
+NUM_OF_FAILED_TESTS=()
 for useCaseScript in `ls ${NX_SCENARIO_PATH}/*.sh`; do
-    echo "-- testing ${useCaseScript}... "
+    testName=$(basename ${useCaseScript%.sh})
+    echo "-- testing ${testName}... "
+
+    TEST_RESULT="${testName}:"
     source ${useCaseScript} ${TMP_PATH}
-    echo "-- PASSED"
+
+    echo ${TEST_RESULT}
+    TEST_RESULTS+=(${TEST_RESULT})
 done
 
+NUM_OF_PASSED_TESTS=$((${#TEST_RESULTS[*]}-${#NUM_OF_FAILED_TESTS[*]}))
+
+echo
+echo "=> ${NUM_OF_PASSED_TESTS}/${#TEST_RESULTS[*]} tests passed"
+
+printf '%s\n' "${TEST_RESULTS[@]}"
+
+if [ ${#NUM_OF_FAILED_TESTS[*]} == 0 ]; then
+    exit 0
+else
+    exit 2
+fi
