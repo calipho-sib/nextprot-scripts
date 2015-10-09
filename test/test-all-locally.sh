@@ -36,7 +36,9 @@ TMP=$1
 
 NX_SCRIPTS_PATH="$( cd "$( dirname "${BASH_SOURCE[0]}" )" && pwd )"
 
-for i in `ls ${NX_SCRIPTS_PATH}/*.sh | grep -v "test-all.sh"`;  do
+scripts=$(ls ${NX_SCRIPTS_PATH}/*.sh | grep -v $(basename $0))
+
+for i in ${scripts}; do
     echo "executing local test $i..."
     bash ${i} -l ${TMP};
 done
