@@ -108,7 +108,7 @@ TEST_RESULTS=()
 FAILED_TESTS=()
 for useCaseScript in `ls ${NX_SCENARIO_PATH}/*.sh`; do
     testName=$(basename ${useCaseScript%.sh})
-    echo "-- testing ${testName}... "
+    echo "** RUNNING TEST ${testName}... "
 
     TEST_RESULT="${testName}:"
     source ${useCaseScript} ${TMP_PATH}
