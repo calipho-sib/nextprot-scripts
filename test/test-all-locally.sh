@@ -6,11 +6,10 @@ set -o nounset  # exit when your script tries to use undeclared variables.
 
 function echoUsage() {
     echo "usage: $0 <tmp>" >&2
-    echo "Execute all bash script tests locally"
+    echo "Execute all bash script tests from local nextprot-scripts repo"
     echo "Params:"
     echo " <tmp> temporary directory"
     echo "Options:"
-    echo " -l execute tests from local nextprot-scripts repo"
     echo " -h print usage"
 }
 
