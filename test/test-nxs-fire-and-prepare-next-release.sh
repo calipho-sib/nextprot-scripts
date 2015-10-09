@@ -106,12 +106,15 @@ echo "== testing different use/cases... "
 
 TEST_RESULTS=()
 FAILED_TESTS=()
-for useCaseScript in `ls ${NX_SCENARIO_PATH}/*.sh`; do
-    testName=$(basename ${useCaseScript%.sh})
-    echo "** RUNNING TEST ${testName}... "
 
-    TEST_RESULT="${testName}:"
-    source ${useCaseScript} ${TMP_PATH}
+scenarii=$(ls ${NX_SCENARIO_PATH}/*.sh)
+
+for scenario in ${scenarii}; do
+    scenarioName=$(basename ${scenario%.sh})
+    echo "** RUNNING TEST ${scenarioName}... "
+
+    TEST_RESULT="${scenarioName}:"
+    source ${scenario} ${TMP_PATH}
 
     echo ${TEST_RESULT}
     TEST_RESULTS+=(${TEST_RESULT})
