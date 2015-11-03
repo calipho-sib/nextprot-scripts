@@ -124,7 +124,7 @@ mergeToDevelop () {
     git checkout --ours pom.xml
     git checkout --ours **/pom.xml
     git add -A
-    git commit
+    git commit -m "Merging hotfix-${VERSION} to develop"
 
     git status
 }

@@ -6,12 +6,12 @@
 <div class="diagram">
 
     Note over local#master: git checkout master
-    Note over local#master: git pull origin develop
+    Note over local#master: git pull origin master
     Note over local#master: fetching release version/incrementing to next patch (x.y.z+1)
     local#master-->local#hotfix: git checkout -b hotfix-x.y.z+1
-    Note over local#hotfix: changing pom.xml version to v x.y.z+1
+    Note over local#hotfix: changing pom.xml version to version x.y.z+1
     Note over local#hotfix: git add -A
-    Note over local#hotfix: git commit -m "git commit -m "preparing patch version v x.y.z+1"
+    Note over local#hotfix: git commit -m "git commit -m "preparing patch version version x.y.z+1"
     Note over local#hotfix: git push -u origin hotfix-x.y.z+1
     Note over local#hotfix: implementing fix here (or create new branches from here for each issue to fix)
 

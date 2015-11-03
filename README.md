@@ -2,12 +2,11 @@
 
 Contains scripts for installation and deployment of nextprot apps and databases.
 
-## Of releases and patches
+## Preparing new releases
 
-The scripts below should be executed by humans to make new releases and hot-fixes.
+The script below should be executed by a human to make a new release.
 
-Each of them will eventually merge into master, thus triggering the execution of nxs-release.sh by jenkins 
-to create a new releases.
+It will eventually merge into master, thus triggering the execution of `nxs-release.sh` by jenkins to create a new release.
 
 ### nxs-fire-and-prepare-next-release.sh
 
@@ -23,8 +22,24 @@ Options:
 ```
 
 [diagram](doc/fire-and-prepare-next-release.html)
- 
-### nxs-checkout-hotfix-branch.sh
+
+## Preparing new patches
+
+The scripts below should be executed by humans to publish hot-fixes.
+
+Like `nxs-fire-and-prepare-next-release.sh` the second one will eventually merges branch into develop and master thus
+triggering the execution of `nxs-release.sh` by jenkins to create a new patch releases.
+
+This delicate operation should be handled partly by scripts (first and last steps):
+
+### Step 1: Creating and initializing a new `hotfix` branch
+
+The script `nxs-checkout-hotfix-branch.sh` is dedicated for this task and should be executed.
+
+It creates a branch named `hotfix-x.y.z+1` from branch master.
+Then it checkout to this branch, updates pom.xml file(s) version to `x.y.z+1`, commits and pushes to the hotfix branch.
+
+Here is the usage:
 
 ```
 $ nxs-checkout-hotfix-branch.sh -h
@@ -36,9 +51,15 @@ Options:
  -h print usage
 ```
 
-[diagram](doc/checkout-hotfix-branch.html)
+See also the [diagram](doc/checkout-hotfix-branch.html) for a graphic view of the tasks.
 
-### nxs-fire-patch-release.sh
+### Step 2: Fixing the bug...
+
+This step should be handled by the programmer responsible of fixing the bug.
+
+### Step 3: Finalizing the hot fix
+
+Once the fix is done, another script automatically merges the proper hotfix branch back to develop and to master branches:
 
 ```
 $ nxs-fire-patch-release.sh -h
@@ -50,10 +71,11 @@ Options:
  -h print usage
 ```
 
-[diagram](doc/fire-patch-release.html)
+Note that there are multiple check points where user is asked to validate some git actions.
 
-## Test workflow
+If everything goes ok, the terminal points to the develop branch with a git status output
+notifying that "Your branch is ahead of 'origin/develop' by n commits."
 
-Each time a push is done on master jenkins execute all tests in test/ directory
+The last step is to check that everything is ok and push to origin develop manually.
 
-[diagram](doc/test-workflow.html)
+See also the [diagram](doc/fire-patch-release.html) for a graphic view of the tasks.

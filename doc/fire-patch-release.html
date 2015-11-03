@@ -6,8 +6,8 @@
 <div class="diagram">
 
     Note over local#master: git checkout master
-    Note over local#master: git pull origin develop
-    Note over local#master: fetching release version/incrementing to next patch (x.y.z+1)
+    Note over local#master: git pull origin master
+    Note over local#master: fetching last hotfix version (x.y.z+1)
     local#master-->local#hotfix: git checkout hotfix-x.y.z+1
     Note over local#hotfix: git pull
     local#hotfix-->local#master: git checkout master
