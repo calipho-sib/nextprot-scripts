@@ -21,7 +21,7 @@ Options:
  -h print usage
 ```
 
-[diagram](doc/fire-and-prepare-next-release.png)
+![diagram](doc/export/fire-and-prepare-next-release.png)
 
 ## Preparing new patches
 
@@ -52,7 +52,7 @@ Options:
  -h print usage
 ```
 
-See also the [diagram](doc/checkout-hotfix-branch.png) for a graphic view of the tasks.
+![diagram](doc/export/checkout-hotfix-branch.png)
 
 ### Step 2: Fixing the bug...
 
@@ -85,4 +85,4 @@ notifying that "Your branch is ahead of 'origin/develop' by n commits."
 
 Then the programmer has to check that everything is ok before pushing to origin/develop manually.
 
-See also the [diagram](doc/fire-patch-release.png) for a graphic view of the tasks.
+![diagram](doc/export/fire-patch-release.png)
