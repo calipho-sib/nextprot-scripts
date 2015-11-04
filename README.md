@@ -4,11 +4,12 @@ Contains scripts for installation and deployment of nextprot apps and databases.
 
 ## Preparing new releases
 
-The script below should be executed by a human to make a new release.
+The script `nxs-fire-and-prepare-next-release.sh` executes the following instructions:
 
-It will eventually merge into master, thus triggering the execution of `nxs-release.sh` by jenkins to create a new release.
+1. it merges branch develop into master (triggering the execution of `nxs-release.sh` by jenkins to create a new release)
+2. it prepare the next development snapshot in develop
 
-### nxs-fire-and-prepare-next-release.sh
+Here is the usage:
 
 ```
 $ nxs-fire-and-prepare-next-release.sh -h
@@ -21,16 +22,16 @@ Options:
  -h print usage
 ```
 
+#### Sequence diagram
+
 ![diagram](doc/export/fire-and-prepare-next-release.png)
 
 ## Preparing new patches
 
-The scripts below should be executed by humans to publish hot-fixes.
+This delicate operation is handled partly by scripts:
 
-Like `nxs-fire-and-prepare-next-release.sh` the second one will eventually merges branch into develop and master thus
-triggering the execution of `nxs-release.sh` by jenkins to create a new patch releases.
-
-This delicate operation should be handled partly by scripts (first and last steps):
+1. the first one creates and prepares a new hotfix branch from master
+2. the last one merges back to master and to develop once the developer made the fix on hotfix branch
 
 ### Step 1: Creating and initializing a new `hotfix` branch
 
@@ -51,6 +52,8 @@ Params:
 Options:
  -h print usage
 ```
+
+#### Sequence diagram
 
 ![diagram](doc/export/checkout-hotfix-branch.png)
 
@@ -84,5 +87,7 @@ If everything goes ok, the terminal points to the develop branch with a git stat
 notifying that "Your branch is ahead of 'origin/develop' by n commits."
 
 Then the programmer has to check that everything is ok before pushing to origin/develop manually.
+
+#### Sequence diagram
 
 ![diagram](doc/export/fire-patch-release.png)
