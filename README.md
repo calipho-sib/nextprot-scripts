@@ -21,7 +21,7 @@ Options:
  -h print usage
 ```
 
-[diagram](doc/fire-and-prepare-next-release.html)
+[diagram](doc/fire-and-prepare-next-release.png)
 
 ## Preparing new patches
 
@@ -34,10 +34,11 @@ This delicate operation should be handled partly by scripts (first and last step
 
 ### Step 1: Creating and initializing a new `hotfix` branch
 
-The script `nxs-checkout-hotfix-branch.sh` is dedicated for this task and should be executed.
+The script `nxs-checkout-hotfix-branch.sh` executes the following instructions:
 
-It creates a branch named `hotfix-x.y.z+1` from branch master.
-Then it checkout to this branch, updates pom.xml file(s) version to `x.y.z+1`, commits and pushes to the hotfix branch.
+1. it creates a branch named `hotfix-x.y.z+1` from branch master version x.y.z
+2. it updates the patch version in all pom.xml files
+3. it commits and pushes those changes in the hotfix branch
 
 Here is the usage:
 
@@ -51,20 +52,26 @@ Options:
  -h print usage
 ```
 
-See also the [diagram](doc/checkout-hotfix-branch.html) for a graphic view of the tasks.
+See also the [diagram](doc/checkout-hotfix-branch.png) for a graphic view of the tasks.
 
 ### Step 2: Fixing the bug...
 
 This step should be handled by the programmer responsible of fixing the bug.
 
-### Step 3: Finalizing the hot fix
+### Step 3: Finalizing and publishing the hot fix
 
-Once the fix is done, another script automatically merges the proper hotfix branch back to develop and to master branches:
+Once the fix is done, `nxs-fire-patch-release.sh` automatically merges the proper hotfix branch back to master and to develop branches:
+
+1. it fetches the last hotfix version `x.y.z+1` from master (version x.y.z)
+2. it merges and push hotfix branch back to master
+3. it merges hotfix branch to develop without pushing to origin/develop
 
 ```
 $ nxs-fire-patch-release.sh -h
-usage: nxs-fire-patch-release.sh [repo]
-This script closes the next hotfix branch coming from master, push to develop (pom version kept as in develop) and to master to make a new patch release (jenkins will executes nxs-release.sh)
+usage: nxs-fire-patch-release.sh [-h][repo]
+This script makes a new patch release.
+It merges the hotfix branch back to master, merges to develop with pom.xml versions kept as in develop.
+Once it is pushed to origin/master jenkins will publish the new patch with script 'nxs-release.sh'
 Params:
  <repo> optional maven project git repository
 Options:
@@ -76,6 +83,6 @@ Note that there are multiple check points where user is asked to validate some g
 If everything goes ok, the terminal points to the develop branch with a git status output
 notifying that "Your branch is ahead of 'origin/develop' by n commits."
 
-The last step is to check that everything is ok and push to origin develop manually.
+Then the programmer has to check that everything is ok before pushing to origin/develop manually.
 
-See also the [diagram](doc/fire-patch-release.html) for a graphic view of the tasks.
+See also the [diagram](doc/fire-patch-release.png) for a graphic view of the tasks.

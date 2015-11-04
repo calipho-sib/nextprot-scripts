@@ -7,8 +7,10 @@ set -o pipefail # prevents errors in a pipeline from being masked. If any comman
 set -o nounset  # exit when your script tries to use undeclared variables.
 
 function echoUsage() {
-    echo "usage: $0 [repo]" >&2
-    echo "This script closes the next hotfix branch coming from master, push to develop (pom version kept as in develop) and to master to make a new patch release (jenkins will executes nxs-release.sh)"
+    echo "usage: $0 [-h][repo]" >&2
+    echo "This script makes a new patch release.
+It merges the hotfix branch back to master, merges to develop with pom.xml versions kept as in develop.
+Once it is pushed to origin/master jenkins will publish the new patch with script 'nxs-release.sh'"
     echo "Params:"
     echo " <repo> optional maven project git repository"
     echo "Options:"
@@ -102,7 +104,7 @@ checkoutToNextFixBranch () {
 mergeToMaster () {
 
     git checkout master
-    git pull origin master
+    #git pull origin master (already done at previous step)
     git merge -X theirs hotfix-${VERSION} --no-commit
     git status
     askUserForConfirmation "Do you want to commit?"
@@ -116,10 +118,8 @@ mergeToMaster () {
 mergeToDevelop () {
 
     git checkout develop
-    git pull origin develop
-
+    #git pull origin develop (already done at previous step)
     git merge hotfix-${VERSION} --no-commit
-
     echo "fixing conflicts... "
     git checkout --ours pom.xml
     git checkout --ours **/pom.xml
@@ -136,6 +136,8 @@ fi
 
 echo "-- checking out to branch master... "
 git checkout master
+echo "-- git pull origin master... "
+git pull origin master
 
 echo -n "-- fetching next version... "
 getNextFixVersion

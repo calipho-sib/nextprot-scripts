@@ -4,22 +4,19 @@
 <script src="js/sequence-diagram-min.js"></script>
 
 <div class="diagram">
-
     Note over local#master: git checkout master
     Note over local#master: git pull origin master
-    Note over local#master: fetching last hotfix version (x.y.z+1)
+    Note over local#master: fetching last master version (x.y.z)
     local#master-->local#hotfix: git checkout hotfix-x.y.z+1
-    Note over local#hotfix: git pull
+    Note over local#hotfix: git pull origin hotfix-x.y.z+1
     local#hotfix-->local#master: git checkout master
-    Note over local#master: git pull
     Note over local#master: git merge -X theirs hotfix-x.y.z+1 --no-commit
     Note over local#master: resolving conflicts
     Note over local#master: git commit -m "Merging hotfix-x.y.z+1 to master for next patch release"
     Note over local#master: git push origin master
     local#master-->jenkins: JENKINS will fire (5 min)
-    Note over jenkins: Runs nxs-release.sh \n deploy / commit / tag / push in master
+    Note over jenkins: Runs nxs-release.sh \n deploy / commit / tag / push patch in master
     local#master-->local#develop: git checkout develop
-    Note over local#develop: git pull
     Note over local#develop: git merge hotfix-x.y.z+1 --no-commit
     Note over local#develop: git checkout --ours pom.xml **/pom.xml (keeping develop version)
     Note over local#develop: git add -A
