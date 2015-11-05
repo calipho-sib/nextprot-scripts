@@ -89,7 +89,6 @@ getNextFixVersion
 echo v${VERSION}
 
 checkoutAndPushFixBranch "hotfix-${VERSION}"
-git pull hotfix-${VERSION}
 git status
 
 echo "-- you can now fix your bug in the current branch hotfix-${VERSION}"
