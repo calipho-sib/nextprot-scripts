@@ -69,19 +69,29 @@ function backupSite() {
     echo "backup site at ${host}:${archive}"
     if ssh ${host} ! test -d ${archive}; then
         ssh ${host} mkdir ${archive}
-    else
-        echo "${archive} already exists at ${host}"
     fi
     baseDir=$(ssh ${host} basename ${path})
-    ssh ${host} tar -zcvf "${archive}/${baseDir}_$(date +%Y-%m-%d_%H%M%S).tar.gz" ${path}
+    echo "backing up ${archive}/${baseDir}_$(date +%Y-%m-%d_%H%M%S).tar.gz"
+    ssh ${host} tar -zcf "${archive}/${baseDir}_$(date +%Y-%m-%d_%H%M%S).tar.gz" -C ${path} .
 }
 
 BUILD_DIR=/tmp/build/nx-search-ui-${NX_ENV}
 rm -rf $BUILD_DIR
 mkdir -p $BUILD_DIR
 cd $BUILD_DIR
-wget http://miniwatt:8900/view/cont-dev-deployment/job/nextprot-dev-search-cont-deployment/lastSuccessfulBuild/artifact/nextprot-dev-search.tgz -O ns.tgz
-tar -zxvf ns.tgz
+
+MASTER_URL=http://miniwatt:8900/view/master-builds/job/nextprot-master-search-build/lastSuccessfulBuild/artifact/nextprot-master-search.tgz
+DEV_URL=http://miniwatt:8900/view/cont-dev-deployment/job/nextprot-dev-search-cont-deployment/lastSuccessfulBuild/artifact/nextprot-dev-search.tgz
+
+if [ ${SNAPSHOT} ]; then
+  echo "Taking SNAPSHOT version"
+  wget ${DEV_URL} -O ns.tgz
+else
+  echo "Taking PRODUCTION version"
+  wget ${MASTER_URL} -O ns.tgz
+fi
+
+tar -zxf ns.tgz
 rm ns.tgz
 
 replaceEnvToken="s/NX_ENV/${NX_ENV}/g"
@@ -102,7 +112,7 @@ mv tmp.dat js/app.js
 
 echo "deploying to ${NX_ENV} ${NX_HOST}:${NX_PATH}"
 
-#backupSite ${NX_HOST} ${NX_PATH}
-rsync -auv * ${NX_HOST}:${NX_PATH}
+backupSite ${NX_HOST} ${NX_PATH}
+rsync --delete-before -auv * ${NX_HOST}:${NX_PATH}
 
 cd -
