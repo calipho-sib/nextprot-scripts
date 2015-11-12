@@ -101,15 +101,12 @@ replaceTrackingTokenIfProd="s/IS_PRODUCTION/true/g"
 echo "replacing NX_ENV -> ${NX_ENV} in js/app.js"
 sed ${replaceEnvToken} js/app.js > tmp.dat
 
-#if [ ${NX_ENV} = "pro" ]; then
-#    sed ${replaceTrackingTokenIfProd} tmp3.dat > tmp4.dat
-#    echo "replacing IS_PRODUCTION -> true in build/js/app.js"
-#    mv tmp4.dat build/js/app.js
-#else
-#    mv tmp3.dat build/js/app.js
-#fi
-#rm tmp*.dat
-mv tmp.dat js/app.js
+if [ ${NX_ENV} = "pro" ]; then
+    sed ${replaceTrackingTokenIfProd} tmp.dat > js/app.js
+    echo "replacing IS_PRODUCTION -> true in build/js/app.js"
+else
+    mv tmp.dat js/app.js
+fi
 
 echo "deploying to ${NX_ENV} ${NX_HOST}:${NX_PATH}"
 
