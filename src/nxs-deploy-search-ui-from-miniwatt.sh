@@ -91,7 +91,8 @@ else
   wget ${MASTER_URL} -O ns.tgz
 fi
 
-tar -zxf ns.tgz
+#Keep the m option to set a new date
+tar -m -zxf ns.tgz
 rm ns.tgz
 
 replaceEnvToken="s/NX_ENV/${NX_ENV}/g"
@@ -113,6 +114,6 @@ mv tmp.dat js/app.js
 echo "deploying to ${NX_ENV} ${NX_HOST}:${NX_PATH}"
 
 backupSite ${NX_HOST} ${NX_PATH}
-rsync --delete-before -auv * ${NX_HOST}:${NX_PATH}
+rsync --delete-before -auv --exclude 'viewers' * ${NX_HOST}:${NX_PATH}
 
 cd -
