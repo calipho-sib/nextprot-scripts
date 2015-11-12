@@ -77,7 +77,7 @@ function backupSite() {
 }
 
 BUILD_DIR=/tmp/build/nx-search-ui-${NX_ENV}
-rm -r $BUILD_DIR
+rm -rf $BUILD_DIR
 mkdir -p $BUILD_DIR
 cd $BUILD_DIR
 wget http://miniwatt:8900/view/cont-dev-deployment/job/nextprot-dev-search-cont-deployment/lastSuccessfulBuild/artifact/nextprot-dev-search.tgz -O ns.tgz
