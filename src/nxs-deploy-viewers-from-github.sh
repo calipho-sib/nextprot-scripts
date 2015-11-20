@@ -98,6 +98,11 @@ rm ns.tgz
 echo "deploying to ${NX_ENV} ${NX_HOST}:${NX_PATH}"
 
 backupSite ${NX_HOST} ${NX_PATH}
-rsync --delete-before -auv --exclude 'viewers' * ${NX_HOST}:${NX_PATH}
+
+if [ ${SNAPSHOT} ]; then
+    rsync --delete-before -auv nextprot-viewers-develop/* ${NX_HOST}:${NX_PATH}
+else
+    rsync --delete-before -auv nextprot-viewers-master/* ${NX_HOST}:${NX_PATH}
+fi
 
 cd -
