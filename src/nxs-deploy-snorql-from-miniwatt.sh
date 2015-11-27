@@ -80,7 +80,7 @@ rm -rf $BUILD_DIR
 mkdir -p $BUILD_DIR
 cd $BUILD_DIR
 
-MASTER_URL=http://miniwatt:8900/view/master-builds/job/deploy-snorql/lastSuccessfulBuild/artifact/nextprot-master-snorql.tgz
+MASTER_URL=http://miniwatt:8900/view/master-builds/job/nextprot-master-snorql-build/lastSuccessfulBuild/artifact/nextprot-master-snorql.tgz
 DEV_URL=http://miniwatt:8900/view/cont-dev-deployment/job/nextprot-dev-snorql-cont-deployment/lastSuccessfulBuild/artifact/nextprot-dev-snorql.tgz
 
 if [ ${SNAPSHOT} ]; then
