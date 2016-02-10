@@ -77,8 +77,11 @@ function backup_setup_db_dest() {
     dbdirback=$4
     dbdirnew=$5
 
+    echo "rm /work/postgres/${dbdirback} @${dest}"
     ssh ${dbuser}@${dest} "rm -rf /work/postgres/${dbdirback}"
+    echo "backup /work/postgres/${dbdir} -> /work/postgres/${dbdirback} @${dest}"
     ssh ${dbuser}@${dest} "if [ -e "/work/postgres/${dbdir}" ]; then mv /work/postgres/${dbdir} /work/postgres/${dbdirback}; fi"
+    echo "rename /work/postgres/${dbdirnew} -> /work/postgres/${dbdir} @${dest}"
     ssh ${dbuser}@${dest} "mv /work/postgres/${dbdirnew} /work/postgres/${dbdir}"
 }
 
