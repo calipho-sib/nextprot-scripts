@@ -113,7 +113,9 @@ echo "rm -rf ${TRG_PATH_BACK}"
 ssh npteam@${TRG_HOST} "rm -rf ${TRG_PATH_BACK}"
 echo "mv ${TRG_PATH} ${TRG_PATH_BACK}"
 ssh npteam@${TRG_HOST} "if [ -e ${TRG_PATH} ] ; then  mv ${TRG_PATH} ${TRG_PATH_BACK}; fi"
-echo "mv ${TRG_PATH_NEW} ${TRG_PATH}"
+echo "rm -rf ${TRG_PATH}"
+ssh npteam@${TRG_HOST} "rm -rf ${TRG_PATH}"
+echo "mv ${TRG_PATH_NEW} ${TRG_PATH}"Re
 ssh npteam@${TRG_HOST} mv ${TRG_PATH_NEW} ${TRG_PATH}
 
 sleep 5
