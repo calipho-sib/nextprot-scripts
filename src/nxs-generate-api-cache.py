@@ -75,7 +75,7 @@ def url_chromosome_open(url, chromosome):
         try:
             dev_null.write(urllib2.urlopen(url).read())
         except urllib2.URLError as e:
-            print threading.current_thread().name+": "+str(e.reason)
+            print threading.current_thread().name+": "+str(e)
 
     print threading.current_thread().name+": cache generated for chromosome "+chromosome +" [" + str(timer.duration_in_seconds()) + " seconds]"
 
