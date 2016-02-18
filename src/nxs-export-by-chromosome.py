@@ -54,7 +54,8 @@ if __name__ == '__main__':
 
     parser = argparse.ArgumentParser(description='Export neXtProt entries')
     parser.add_argument('api', help='the api url example: build-api.nextprot.org')
-    parser.add_argument('format', choices={'ttl', 'xml'}, help='the export format')
+    #New in Python 2.7: parser.add_argument('format', choices={'ttl', 'xml'}, help='the export format')
+    parser.add_argument('format', help='the export format: ttl or xml')
     parser.add_argument('output', help='the directory where to save the output files. example /work/ttldata/chromosome-new')
     parser.add_argument('-t', '--thread', metavar='num', default=default_threads, type=int, help='the number of threads (default='+ str(default_threads) + ')')
 
