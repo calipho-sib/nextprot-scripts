@@ -74,9 +74,10 @@ def url_chromosome_open(url, chromosome):
         print threading.current_thread().name+": starting generating cache for chromosome " + chromosome +" ... "
         try:
             dev_null.write(urllib2.urlopen(url).read())
-            print threading.current_thread().name+": cache generated for chromosome "+chromosome +" [" + str(timer.duration_in_seconds()) + " seconds]"
         except urllib2.URLError as e:
             print threading.current_thread().name+": "+str(e)
+            return None
+    print threading.current_thread().name+": cache generated for chromosome "+chromosome +" [" + str(timer.duration_in_seconds()) + " seconds]"
 
 if __name__ == '__main__':
     args = parse_args()
