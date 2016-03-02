@@ -46,11 +46,13 @@ class Timer(object):
         return self.__finish - self.__start
 
 def parse_args():
-    parser = argparse.ArgumentParser(description='Create cache in neXtProt api server')
+    parser = argparse.ArgumentParser(description='Create cache in neXtProt api server (optional export)')
     parser.add_argument('api', help='nextprot api  (ie: build-api.nextprot.org)')
     parser.add_argument('-o', '--out', metavar='dir', help='output destination directory')
-    parser.add_argument('-f', '--format', help='export format: ttl or xml')
+    parser.add_argument('-f', '--format', metavar="{ttl,xml}", help='export format: ttl or xml')
     parser.add_argument('-t', '--thread', metavar='num', default=default_threads, type=int, help='number of threads (default='+ str(default_threads) + ')')
+    parser.add_argument('-n', metavar='entries', default=-1, type=int, help='export n entries only')
+
     args = parser.parse_args()
 
     # check number of thread
@@ -70,6 +72,8 @@ def parse_args():
             args.format = 'xml'
         print "  output directory : "+args.out
         print "  output format    : "+args.format
+    if args.n > 0:
+        print "  export n entries : "+str(args.n)
     print
 
     return args
@@ -115,6 +119,9 @@ if __name__ == '__main__':
 
     # get all identifiers
     all_entries = url_get_all_identifiers(host)
+
+    if args.n > 0:
+        all_entries = all_entries[0:args.n]
 
     pool = ThreadPool(args.thread)
     
