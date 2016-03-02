@@ -62,13 +62,15 @@ def parse_args():
     if args.out is not None and not os.path.isdir(args.out):
         parser.error(args.out+" is not a directory")
 
-    print "nextprot api  : " + args.api
-    print "thread number : " + str(args.thread)
+    print "Parameters"
+    print "  nextprot api     : " + args.api
+    print "  thread number    : " + str(args.thread)
     if args.out is not None:
         if args.format is None:
             args.format = 'xml'
-        print "output directory : "+args.out
-        print "output format    : "+args.format
+        print "  output directory : "+args.out
+        print "  output format    : "+args.format
+    print
 
     return args
 
@@ -119,10 +121,13 @@ if __name__ == '__main__':
     globalTimer = Timer()
     with globalTimer:
 
+        print "Running tasks..."
+
         # add a task by entry to get
         for entry in all_entries:
             output_file = open(args.out+"/"+entry+"."+args.format, 'w') if args.out is not None else dev_null
             pool.add_task(url_entry_get, host, entry, output_file, args.format)
+
         pool.wait_completion()
 
     print "\nCache generated in " + str(globalTimer.duration_in_seconds()) + " seconds"
