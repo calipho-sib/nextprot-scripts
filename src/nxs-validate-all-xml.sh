@@ -38,16 +38,25 @@ fi
 api=$1
 xsd=$2
 output=$3
+validation_file="nxs-validate-all-xml.log"
 
 echo "*** exporting all entries in xml..."
-nxs-generate-api-cache-by-entry.py ${api} -o ${output} --format xml
+nxs-generate-api-cache-by-entry.py ${api} -o ${output} --format xml -n 2
 
 echo "*** validating all entries..."
 pushd ${output}
 
 entries=`find . -type f -name '*.xml'`
+
+if [ -f ${validation_file} ] ; then
+    echo "removing ${validation_file}"
+    rm ${validation_file}
+fi
+
 for entry in "${entries[@]}"
 do
     echo "validating ${entry}..."
-    xmllint --noout --schema ${xsd} ${entry} 2>> validation.log
+    xmllint --noout --schema ${xsd} ${entry} 2>> ${validation_file}
 done
+
+popd
