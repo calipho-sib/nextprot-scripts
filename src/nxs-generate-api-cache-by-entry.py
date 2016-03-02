@@ -1,14 +1,14 @@
 #!/usr/bin/python
 
 from Queue import Queue
-import threading, json, sys
+import threading, json, sys, os
 from threading import Thread
 import urllib2, time, argparse, multiprocessing
 
-dev_null = open('/dev/null', 'w')
 
 max_thread = multiprocessing.cpu_count()*2
 default_threads = multiprocessing.cpu_count()/2
+dev_null = open('/dev/null', 'w')
 
 class Worker(Thread):
     """Thread executing tasks from a given tasks queue"""
@@ -47,8 +47,10 @@ class Timer(object):
 
 def parse_args():
     parser = argparse.ArgumentParser(description='Create cache in neXtProt api server')
-    parser.add_argument('api', help='the api url example: build-api.nextprot.org')
-    parser.add_argument('-t', '--thread', metavar='num', default=default_threads, type=int, help='the number of threads (default='+ str(default_threads) + ')')
+    parser.add_argument('api', help='nextprot api  (ie: build-api.nextprot.org)')
+    parser.add_argument('-o', '--out', metavar='dir', help='output destination directory')
+    parser.add_argument('-f', '--format', help='export format: ttl or xml')
+    parser.add_argument('-t', '--thread', metavar='num', default=default_threads, type=int, help='number of threads (default='+ str(default_threads) + ')')
     args = parser.parse_args()
 
     # check number of thread
@@ -56,6 +58,17 @@ def parse_args():
         parser.error("cannot run "+str(args.thread)+" threads (max="+str(max_thread)+")")
     elif args.thread <= 0:
         parser.error(str(args.thread)+" should be a positive number of threads")
+
+    if args.out is not None and not os.path.isdir(args.out):
+        parser.error(args.out+" is not a directory")
+
+    print "nextprot api  : " + args.api
+    print "thread number : " + str(args.thread)
+    if args.out is not None:
+        if args.format is None:
+            args.format = 'xml'
+        print "output directory : "+args.out
+        print "output format    : "+args.format
 
     return args
 
@@ -69,14 +82,25 @@ def url_get_all_identifiers(host):
         print "error getting all entries from host "+host+": "+str(e)
         sys.exit()
 
-def url_entry_get(host, entry):
-    url = host + "/entry/" + entry
+def get_url(host, entry, type):
+
+    if (type is None):
+        return host + "/entry/" + entry
+    elif (type == "xml"):
+        return host + "/export/entries.xml?query=" + entry
+    elif (type == "ttl"):
+        return host + "/export/entries.ttl?query=" + entry
+
+def url_entry_get(host, entry, outstream, type):
+
+    url = get_url(host, entry, type)
 
     timer = Timer()
     with timer:
         print threading.current_thread().name+": starting generating cache for entry " + entry +" ... "
         try:
-            dev_null.write(urllib2.urlopen(url).read())
+            #print "open "+url
+            outstream.write(urllib2.urlopen(url).read())
         except urllib2.URLError as e:
             print threading.current_thread().name+": "+str(e)
             return None
@@ -97,7 +121,8 @@ if __name__ == '__main__':
 
         # add a task by entry to get
         for entry in all_entries:
-            pool.add_task(url_entry_get, host, entry)
+            output_file = open(args.out+"/"+entry+"."+args.format, 'w') if args.out is not None else dev_null
+            pool.add_task(url_entry_get, host, entry, output_file, args.format)
         pool.wait_completion()
 
     print "\nCache generated in " + str(globalTimer.duration_in_seconds()) + " seconds"
