@@ -41,7 +41,7 @@ output=$3
 validation_file="nxs-validate-all-xml.log"
 
 echo "*** exporting all entries in xml..."
-nxs-generate-api-cache-by-entry.py ${api} -o ${output} --format xml -n 2
+nxs-generate-api-cache-by-entry.py ${api} -o ${output} --format xml
 
 echo "*** validating all entries..."
 pushd ${output}
