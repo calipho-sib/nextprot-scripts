@@ -48,15 +48,10 @@ pushd ${output}
 
 entries=`find . -type f -name '*.xml'`
 
-if [ -f ${validation_file} ] ; then
-    echo "removing ${validation_file}"
-    rm ${validation_file}
-fi
+echo "validation with xmllint..."
+time xmllint --noout --schema ${xsd} ${entries} 2> nxs-validate-all-xml.log &
+tail -f nxs-validate-all-xml.log
 
-for entry in "${entries[@]}"
-do
-    echo "validating ${entry}..."
-    xmllint --noout --schema ${xsd} ${entry} 2>> ${validation_file}
-done
+echo "Done"
 
 popd
