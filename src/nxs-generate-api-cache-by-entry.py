@@ -93,9 +93,9 @@ def get_url(host, entry, type):
     if (type is None):
         return host + "/entry/" + entry
     elif (type == "xml"):
-        return host + "/export/entries.xml?query=" + entry
+        return host + "/export/entries.xml?query=id:" + entry
     elif (type == "ttl"):
-        return host + "/export/entries.ttl?query=" + entry
+        return host + "/export/entries.ttl?query=id:" + entry
 
 def url_entry_get(host, entry, outstream, type):
 
