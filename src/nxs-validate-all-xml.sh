@@ -43,15 +43,20 @@ validation_file="nxs-validate-all-xml.log"
 echo "*** exporting all entries in xml..."
 nxs-generate-api-cache-by-entry.py ${api} -o ${output} --format xml
 
-echo "*** validating all entries..."
+echo "*** copying ${xsd} to output directory ${output}..."
 cp ${xsd} ${output}
-pushd ${output}
 
+echo "-- push directory ${output}"
+pushd ${output}
 entries=`find . -type f -name '*.xml'`
+
+echo "*** validating all entries ..."
 
 echo "validation with xmllint..."
 time xmllint --noout --schema ${xsd} ${entries} 2> nxs-validate-all-xml.log &
-tail -f nxs-validate-all-xml.log
 echo "Done"
+
 grep -v validate nxs-validate-all-xml.log|grep ':' | cut -d: -f3-6|sort|uniq > nxs-validate-all-xml.err
+
+echo "-- pop directory"
 popd
