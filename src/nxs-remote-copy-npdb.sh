@@ -46,7 +46,18 @@ function start_pg() {
 function stop_pg() {
     host=$1
     user=$2
-    ssh ${user}@${host} "pg_ctl -D /work/postgres/pg5432_nextprot/ stop -m immediate"
+
+    set +e
+    ssh ${user}@${host} "pg_ctl -D /work/postgres/pg5432_nextprot/ status"
+    rv=$?
+
+    if [ ${rv} == 0 ]; then
+        ssh ${user}@${host} "pg_ctl -D /work/postgres/pg5432_nextprot/ stop -m immediate"
+    else
+        echo "server not running"
+    fi
+
+    set -e
 }
 
 function copy_npdb() {
