@@ -49,9 +49,8 @@ function stop_pg() {
 
     set +e
     ssh ${user}@${host} "pg_ctl -D /work/postgres/pg5432_nextprot/ status"
-    rv=$?
 
-    if [ ${rv} == 0 ]; then
+    if [ $? == 0 ]; then
         ssh ${user}@${host} "pg_ctl -D /work/postgres/pg5432_nextprot/ stop -m immediate"
     else
         echo "server not running"
@@ -66,7 +65,10 @@ function copy_npdb() {
     dbuser=$3
     dbdir=$4
     dbdirnew=$5
+    dbdirback=$6
 
+    echo "rm /work/postgres/${dbdirback} @${dest}"
+    ssh ${dbuser}@${dest} "rm -rf /work/postgres/${dbdirback}"
     echo "removing new dir /work/postgres/${dbdirnew} on ${dbuser}@${dest}"
     ssh ${dbuser}@${dest} "rm -rf /work/postgres/${dbdirnew}"
     echo "making new dir /work/postgres/${dbdirnew} on ${dbuser}@${dest}"
@@ -85,11 +87,8 @@ function backup_setup_db_dest() {
     dest=$1
     dbuser=$2
     dbdir=$3
-    dbdirback=$4
-    dbdirnew=$5
+    dbdirnew=$4
 
-    echo "rm /work/postgres/${dbdirback} @${dest}"
-    ssh ${dbuser}@${dest} "rm -rf /work/postgres/${dbdirback}"
     echo "backup /work/postgres/${dbdir} -> /work/postgres/${dbdirback} @${dest}"
     ssh ${dbuser}@${dest} "if [ -e "/work/postgres/${dbdir}" ]; then mv /work/postgres/${dbdir} /work/postgres/${dbdirback}; fi"
     echo "rename /work/postgres/${dbdirnew} -> /work/postgres/${dbdir} @${dest}"
@@ -130,12 +129,12 @@ DB_DATA_DIR_NAME_BACK="${DB_DATA_DIR_NAME}.back"
 stop_pg ${SRC_HOST} ${DB_USER}
 sleep 5
 
-copy_npdb ${SRC_HOST} ${DEST_HOST} ${DB_USER} ${DB_DATA_DIR_NAME} ${DB_DATA_DIR_NAME_NEW}
+copy_npdb ${SRC_HOST} ${DEST_HOST} ${DB_USER} ${DB_DATA_DIR_NAME} ${DB_DATA_DIR_NAME_NEW} ${DB_DATA_DIR_NAME_BACK}
 start_pg ${SRC_HOST} ${DB_USER}
 
 stop_pg ${DEST_HOST} ${DB_USER}
 
-backup_setup_db_dest ${DEST_HOST} ${DB_USER} ${DB_DATA_DIR_NAME} ${DB_DATA_DIR_NAME_BACK} ${DB_DATA_DIR_NAME_NEW}
+backup_setup_db_dest ${DEST_HOST} ${DB_USER} ${DB_DATA_DIR_NAME} ${DB_DATA_DIR_NAME_NEW}
 
 start_pg ${DEST_HOST} ${DB_USER}
 check_npdb ${DEST_HOST} ${DB_USER}
