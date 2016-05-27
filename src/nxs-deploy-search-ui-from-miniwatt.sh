@@ -1,10 +1,5 @@
 #!/bin/bash
 
-# This script build and remotely copy a single page application in dev, build, alpha or pro machine
-
-# ex1: bash -x nxs-build-and-deploy-spa.sh /Users/fnikitin/Projects/nextprot-ui/ dev
-# ex2: bash nxs-build-and-deploy-spa.sh /Users/fnikitin/Projects/nextprot-snorql/ dev
-
 set -o errexit  # make your script exit when a command fails.
 set -o pipefail # prevents errors in a pipeline from being masked. If any command in a pipeline fails, that return code will be used as the return code of the whole pipeline.
 set -o nounset  # exit when your script tries to use undeclared variables.
@@ -16,10 +11,11 @@ _color='\e[0m'           # end Color
 
 function echoUsage() {
     echo "usage: $0 <env> <host> <hostpath>" >&2
-    echo "This script builds and deploys web app snapshot (actual branch by default) in dev, build, alpha or pro environment"
+    echo "This script deploys Single Page Application (SPA) in dev, build, alpha or pro environment."
+    echo "Note: SPA has to be built previously with script nxs-build-spa.sh"
     echo "Params:"
     echo " <repo> repository"
-    echo " <environment> dev|build|alpha|pro (see deploy.conf for environment to server mapping)"
+    echo " <environment> dev|build|alpha|pro"
     echo "Options:"
     echo " -h print usage"
     echo " -s get snapshot from miniwatt (release by default)"
@@ -76,9 +72,9 @@ function backupSite() {
 }
 
 BUILD_DIR=/tmp/build/nx-search-ui-${NX_ENV}
-rm -rf $BUILD_DIR
-mkdir -p $BUILD_DIR
-cd $BUILD_DIR
+rm -rf ${BUILD_DIR}
+mkdir -p ${BUILD_DIR}
+cd ${BUILD_DIR}
 
 MASTER_URL=http://miniwatt:8900/view/master-builds/job/nextprot-master-search-build/lastSuccessfulBuild/artifact/nextprot-master-search.tgz
 DEV_URL=http://miniwatt:8900/view/cont-dev-deployment/job/nextprot-dev-search-cont-deployment/lastSuccessfulBuild/artifact/nextprot-dev-search.tgz
