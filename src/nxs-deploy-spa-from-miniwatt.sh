@@ -96,7 +96,9 @@ function setTokensInAppJS() {
         mv tmp.dat js/app.js
     fi
 
-    rm tmp*.dat
+    if [ -f tmp*.dat ]; then
+        rm tmp*.dat
+    fi
 }
 
 function initBuildDir() {
