@@ -11,7 +11,7 @@ _color='\e[0m'           # end Color
 
 function echoUsage() {
     echo "usage: $0 <env> <host> <hostpath> <spa>" >&2
-    echo "This script deploys the last successfully built Single Page Application (SPA) in specified host."
+    echo "This script deploys the last successfully built Single Page Application (SPA) from miniwatt in specified host."
     echo "Params:"
     echo " <env> dev|build|alpha|pro"
     echo " <host> host where to deploy app"
@@ -132,7 +132,7 @@ function fetchLastSuccesfullyBuiltSPA() {
 echo "init build dir ${BUILD_DIR}"
 initBuildDir ${BUILD_DIR}
 
-echo "fetching las successfully built ${NX_SPA} SPA"
+echo "fetching last successfully built ${NX_SPA} SPA"
 fetchLastSuccesfullyBuiltSPA ${BUILD_DIR}
 
 echo "deploying to ${NX_ENV} ${NX_HOST}:${NX_PATH}"
