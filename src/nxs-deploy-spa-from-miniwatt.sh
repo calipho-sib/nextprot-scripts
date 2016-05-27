@@ -131,11 +131,10 @@ function fetchLastSuccesfullyBuiltSPA() {
 
 echo "init build dir ${BUILD_DIR}"
 initBuildDir ${BUILD_DIR}
+
 echo "fetching las successfully built ${NX_SPA} SPA"
 fetchLastSuccesfullyBuiltSPA ${BUILD_DIR}
 
 echo "deploying to ${NX_ENV} ${NX_HOST}:${NX_PATH}"
 backupSite ${NX_HOST} ${NX_PATH}
 rsync --delete-before -auv --exclude 'viewers' * ${NX_HOST}:${NX_PATH}
-
-cd -
