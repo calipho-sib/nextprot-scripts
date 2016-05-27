@@ -1,9 +1,6 @@
 #!/bin/bash
 
-# This script build and remotely copy a single page application in dev, build, alpha or pro machine
-
-# ex1: bash -x nxs-build-and-deploy-spa.sh /Users/fnikitin/Projects/nextprot-ui/ dev
-# ex2: bash nxs-build-and-deploy-spa.sh /Users/fnikitin/Projects/nextprot-snorql/ dev
+# TODO: Duplicate with scripts nxs-deploy-[ui|snorql]-from-miniwatt.sh
 
 set -o errexit  # make your script exit when a command fails.
 set -o pipefail # prevents errors in a pipeline from being masked. If any command in a pipeline fails, that return code will be used as the return code of the whole pipeline.

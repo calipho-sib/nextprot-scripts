@@ -1,9 +1,6 @@
 #!/bin/bash
 
-# This script build and remotely copy a single page application in dev, build, alpha or pro machine
-
-# ex1: bash -x nxs-build-and-deploy-spa.sh /Users/fnikitin/Projects/nextprot-ui/ dev
-# ex2: bash nxs-build-and-deploy-spa.sh /Users/fnikitin/Projects/nextprot-snorql/ dev
+# TODO: Duplicate with scripts nxs-deploy-[ui|viewers]-from-miniwatt.sh
 
 set -o errexit  # make your script exit when a command fails.
 set -o pipefail # prevents errors in a pipeline from being masked. If any command in a pipeline fails, that return code will be used as the return code of the whole pipeline.
@@ -16,10 +13,11 @@ _color='\e[0m'           # end Color
 
 function echoUsage() {
     echo "usage: $0 <env> <host> <hostpath>" >&2
-    echo "This script builds and deploys web app snapshot (actual branch by default) in dev, build, alpha or pro environment"
+    echo "This script deploys Single Page Application (SPA) in dev, build, alpha or pro environment."
+    echo "Note: SPA has to be built previously with script nxs-build-spa.sh"
     echo "Params:"
     echo " <repo> repository"
-    echo " <environment> dev|build|alpha|pro (see deploy.conf for environment to server mapping)"
+    echo " <environment> dev|build|alpha|pro"
     echo "Options:"
     echo " -h print usage"
     echo " -s get snapshot from miniwatt (release by default)"
@@ -47,7 +45,7 @@ shift $(($OPTIND - 1))
 args=("$*")
 
 if [ $# -lt 3 ]; then
-  echo "missing arguments: Specify the environment where to deploy [dev,build,alpha,pro] and a directory"  >&2
+  echo "missing arguments: Specify the environment where to deploy [dev,build,alpha,pro] and a git repositoy"  >&2
   echoUsage; exit 1
 fi
 
@@ -75,10 +73,44 @@ function backupSite() {
     ssh ${host} tar -zcf "${archive}/${baseDir}_$(date +%Y-%m-%d_%H%M%S).tar.gz" -C ${path} .
 }
 
+function setTokensInAppJS() {
+    nx_env=$1
+
+    echo -n "fetching build number: "
+    build_number=`git rev-list HEAD --count`
+    echo "${build_number}"
+
+    echo -n "fetching SHA-1 of current commit: "
+    git_hash=`git rev-parse --short HEAD`
+    echo "${git_hash}"
+
+    replaceEnvToken="s/NX_ENV/${nx_env}/g"
+    replaceBuildToken="s/BUILD_NUMBER/${build_number}/g"
+    replaceGitHashToken="s/GIT_HASH/${git_hash}/g"
+    replaceTrackingTokenIfProd="s/IS_PRODUCTION/true/g"
+
+    echo "replacing NX_ENV -> ${nx_env} in build/js/app.js"
+    sed ${replaceEnvToken} build/js/app.js > tmp.dat
+    echo "replacing BUILD_NUMBER -> ${build_number} in build/js/app.js"
+    sed ${replaceBuildToken} tmp.dat > tmp2.dat
+    echo "replacing GIT_HASH -> ${git_hash} in build/js/app.js"
+    sed ${replaceGitHashToken} tmp2.dat > tmp3.dat
+
+    if [ ${build_type} = "pro" ]; then
+        sed ${replaceTrackingTokenIfProd} tmp3.dat > tmp4.dat
+        echo "replacing IS_PRODUCTION -> true in build/js/app.js"
+        mv tmp4.dat build/js/app.js
+    else
+        mv tmp3.dat build/js/app.js
+    fi
+
+    rm tmp*.dat
+}
+
 BUILD_DIR=/tmp/build/nx-search-ui-${NX_ENV}
-rm -rf $BUILD_DIR
-mkdir -p $BUILD_DIR
-cd $BUILD_DIR
+rm -rf ${BUILD_DIR}
+mkdir -p ${BUILD_DIR}
+cd ${BUILD_DIR}
 
 MASTER_URL=http://miniwatt:8900/view/master-builds/job/nextprot-master-snorql-build/lastSuccessfulBuild/artifact/nextprot-master-snorql.tgz
 DEV_URL=http://miniwatt:8900/view/cont-dev-deployment/job/nextprot-dev-snorql-cont-deployment/lastSuccessfulBuild/artifact/nextprot-dev-snorql.tgz
@@ -95,18 +127,7 @@ fi
 tar -m -zxf ns.tgz
 rm ns.tgz
 
-replaceEnvToken="s/NX_ENV/${NX_ENV}/g"
-replaceTrackingTokenIfProd="s/IS_PRODUCTION/true/g"
-
-echo "replacing NX_ENV -> ${NX_ENV} in js/app.js"
-sed ${replaceEnvToken} js/app.js > tmp.dat
-
-if [ ${NX_ENV} = "pro" ]; then
-    sed ${replaceTrackingTokenIfProd} tmp.dat > js/app.js
-    echo "replacing IS_PRODUCTION -> true in build/js/app.js"
-else
-    mv tmp.dat js/app.js
-fi
+setTokensInAppJS ${NX_ENV}
 
 echo "deploying to ${NX_ENV} ${NX_HOST}:${NX_PATH}"
 
