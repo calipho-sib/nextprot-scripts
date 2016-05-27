@@ -1,7 +1,5 @@
 #!/bin/bash
 
-# TODO: Duplicate with scripts nxs-deploy-[snorql|viewers]-from-miniwatt.sh
-
 set -o errexit  # make your script exit when a command fails.
 set -o pipefail # prevents errors in a pipeline from being masked. If any command in a pipeline fails, that return code will be used as the return code of the whole pipeline.
 set -o nounset  # exit when your script tries to use undeclared variables.
@@ -12,15 +10,16 @@ warning_color='\e[1;33m' # begin warning color
 _color='\e[0m'           # end Color
 
 function echoUsage() {
-    echo "usage: $0 <env> <host> <hostpath>" >&2
-    echo "This script deploys Single Page Application (SPA) in dev, build, alpha or pro environment."
-    echo "Note: SPA has to be built previously with brunch"
+    echo "usage: $0 <env> <host> <hostpath> <spa>" >&2
+    echo "This script deploys the last successfully built Single Page Application (SPA) in specified host."
     echo "Params:"
-    echo " <repo> repository"
-    echo " <environment> dev|build|alpha|pro"
+    echo " <env> dev|build|alpha|pro"
+    echo " <host> host where to deploy app"
+    echo " <hostpath> path in host where to deploy app"
+    echo " <spa> single page application name ('search' or 'snorql')"
     echo "Options:"
     echo " -h print usage"
-    echo " -s get snapshot from miniwatt (release by default)"
+    echo " -s get snapshot from miniwatt (master by default)"
 }
 
 BACKUP_SITE=
@@ -44,14 +43,18 @@ shift $(($OPTIND - 1))
 
 args=("$*")
 
-if [ $# -lt 3 ]; then
-  echo "missing arguments: Specify the environment where to deploy [dev,build,alpha,pro] and a git repositoy"  >&2
+if [ $# -lt 4 ]; then
+  echo "missing arguments"  >&2
   echoUsage; exit 1
+elif [[ ! $4 = "search" && ! $4 = "snorql" ]]; then
+  echo "spa should only be 'search' or 'snorql'" >&2
+  echoUsage; exit 2
 fi
 
 NX_ENV=$1
 NX_HOST=$2
 NX_PATH=$3
+NX_SPA=$4
 
 function backupSite() {
     host=$1
@@ -107,13 +110,13 @@ function setTokensInAppJS() {
     rm tmp*.dat
 }
 
-BUILD_DIR=/tmp/build/nx-search-ui-${NX_ENV}
+BUILD_DIR=/tmp/build/nx-${NX_SPA}-${NX_ENV}
 rm -rf ${BUILD_DIR}
 mkdir -p ${BUILD_DIR}
 cd ${BUILD_DIR}
 
-MASTER_URL=http://miniwatt:8900/view/master-builds/job/nextprot-master-search-build/lastSuccessfulBuild/artifact/nextprot-master-search.tgz
-DEV_URL=http://miniwatt:8900/view/cont-dev-deployment/job/nextprot-dev-search-cont-deployment/lastSuccessfulBuild/artifact/nextprot-dev-search.tgz
+MASTER_URL=http://miniwatt:8900/view/master-builds/job/nextprot-master-${NX_SPA}-build/lastSuccessfulBuild/artifact/nextprot-master-${NX_SPA}.tgz
+DEV_URL=http://miniwatt:8900/view/cont-dev-deployment/job/nextprot-dev-${NX_SPA}-cont-deployment/lastSuccessfulBuild/artifact/nextprot-dev-${NX_SPA}.tgz
 
 if [ ${SNAPSHOT} ]; then
   echo "Taking SNAPSHOT version"
