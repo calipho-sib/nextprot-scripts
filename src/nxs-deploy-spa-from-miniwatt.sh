@@ -55,6 +55,9 @@ NX_ENV=$1
 NX_HOST=$2
 NX_PATH=$3
 NX_SPA=$4
+MASTER_URL=http://miniwatt:8900/view/master-builds/job/nextprot-master-${NX_SPA}-build/lastSuccessfulBuild/artifact/nextprot-master-${NX_SPA}.tgz
+DEV_URL=http://miniwatt:8900/view/cont-dev-deployment/job/nextprot-dev-${NX_SPA}-cont-deployment/lastSuccessfulBuild/artifact/nextprot-dev-${NX_SPA}.tgz
+BUILD_DIR=/tmp/build/nx-${NX_SPA}-${NX_ENV}
 
 function backupSite() {
     host=$1
@@ -83,43 +86,53 @@ function setTokensInAppJS() {
     replaceTrackingTokenIfProd="s/IS_PRODUCTION/true/g"
 
     echo "replacing NX_ENV -> ${nx_env} in build/js/app.js"
-    sed ${replaceEnvToken} build/js/app.js > tmp.dat
+    sed ${replaceEnvToken} js/app.js > tmp.dat
 
     if [ ${nx_env} = "pro" ]; then
         sed ${replaceTrackingTokenIfProd} tmp.dat > tmp2.dat
         echo "replacing IS_PRODUCTION -> true in build/js/app.js"
-        mv tmp2.dat build/js/app.js
+        mv tmp2.dat js/app.js
     else
-        mv tmp.dat build/js/app.js
+        mv tmp.dat js/app.js
     fi
 
     rm tmp*.dat
 }
 
-BUILD_DIR=/tmp/build/nx-${NX_SPA}-${NX_ENV}
-rm -rf ${BUILD_DIR}
-mkdir -p ${BUILD_DIR}
-cd ${BUILD_DIR}
+function initBuildDir() {
+    build_dir=$1
 
-MASTER_URL=http://miniwatt:8900/view/master-builds/job/nextprot-master-${NX_SPA}-build/lastSuccessfulBuild/artifact/nextprot-master-${NX_SPA}.tgz
-DEV_URL=http://miniwatt:8900/view/cont-dev-deployment/job/nextprot-dev-${NX_SPA}-cont-deployment/lastSuccessfulBuild/artifact/nextprot-dev-${NX_SPA}.tgz
+    rm -rf ${build_dir}
+    mkdir -p ${build_dir}
+}
 
-if [ ${SNAPSHOT} ]; then
-  echo "Taking SNAPSHOT version"
-  wget ${DEV_URL} -O ns.tgz
-else
-  echo "Taking PRODUCTION version"
-  wget ${MASTER_URL} -O ns.tgz
-fi
+function fetchLastSuccesfullyBuiltSPA() {
 
-#Keep the m option to set a new date
-tar -m -zxf ns.tgz
-rm ns.tgz
+    build_dir=$1
 
-setTokensInAppJS ${NX_ENV}
+    if [ ${SNAPSHOT} ]; then
+      echo "Taking SNAPSHOT version"
+      wget ${DEV_URL} -O ${build_dir}/ns.tgz
+    else
+      echo "Taking PRODUCTION version"
+      wget ${MASTER_URL} -O ${build_dir}/ns.tgz
+    fi
+
+    cd ${build_dir}
+
+    #Keep the m option to set a new date
+    tar -m -zxf ns.tgz
+    rm ns.tgz
+
+    setTokensInAppJS ${NX_ENV}
+}
+
+echo "init build dir ${BUILD_DIR}"
+initBuildDir ${BUILD_DIR}
+echo "fetching las successfully built ${NX_SPA} SPA"
+fetchLastSuccesfullyBuiltSPA ${BUILD_DIR}
 
 echo "deploying to ${NX_ENV} ${NX_HOST}:${NX_PATH}"
-
 backupSite ${NX_HOST} ${NX_PATH}
 rsync --delete-before -auv --exclude 'viewers' * ${NX_HOST}:${NX_PATH}
 
