@@ -5,7 +5,7 @@ set -o pipefail # prevents errors in a pipeline from being masked. If any comman
 set -o nounset  # exit when your script tries to use undeclared variables.
 
 function echoUsage() {
-    echo "usage: $0 <gitrepo><buildmode>" >&2
+    echo "usage: $0 <gitrepo> <buildmode>" >&2
     echo "Builds the single page application located at git repository (in dev or prod mode)"
     echo "Params:"
     echo " <gitrepo> git repository"
@@ -71,8 +71,6 @@ function npmAndBowerInstall() {
 
 function setBuildVersionInAppJS() {
 
-    build_type=$1
-
     echo -n "fetching build number: "
     build_number=`git rev-list HEAD --count`
     echo "${build_number}"
@@ -81,25 +79,14 @@ function setBuildVersionInAppJS() {
     git_hash=`git rev-parse --short HEAD`
     echo "${git_hash}"
 
-    replaceEnvToken="s/NX_ENV/${build_type}/g"
     replaceBuildToken="s/BUILD_NUMBER/${build_number}/g"
     replaceGitHashToken="s/GIT_HASH/${git_hash}/g"
-    replaceTrackingTokenIfProd="s/IS_PRODUCTION/true/g"
 
-    echo "replacing NX_ENV -> ${build_type} in build/js/app.js"
-    sed ${replaceEnvToken} build/js/app.js > tmp.dat
     echo "replacing BUILD_NUMBER -> ${build_number} in build/js/app.js"
-    sed ${replaceBuildToken} tmp.dat > tmp2.dat
+    sed ${replaceBuildToken} build/js/app.js > tmp.dat
     echo "replacing GIT_HASH -> ${git_hash} in build/js/app.js"
-    sed ${replaceGitHashToken} tmp2.dat > tmp3.dat
-
-    if [ ${build_type} = "pro" ]; then
-        sed ${replaceTrackingTokenIfProd} tmp3.dat > tmp4.dat
-        echo "replacing IS_PRODUCTION -> true in build/js/app.js"
-        mv tmp4.dat build/js/app.js
-    else
-        mv tmp3.dat build/js/app.js
-    fi
+    sed ${replaceGitHashToken} tmp.dat > tmp2.dat
+    mv tmp2.dat build/js/app.js
 
     rm tmp*.dat
 }
@@ -114,7 +101,7 @@ cd ${REPO}
 checkBranchRepo ${BUILD_TYPE}
 
 npmAndBowerInstall ${BUILD_TYPE}
-setBuildVersionInAppJS ${BUILD_TYPE}
+setBuildVersionInAppJS
 
 
 

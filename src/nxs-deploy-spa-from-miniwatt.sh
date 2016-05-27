@@ -79,32 +79,18 @@ function backupSite() {
 function setTokensInAppJS() {
     nx_env=$1
 
-    echo -n "fetching build number: "
-    build_number=`git rev-list HEAD --count`
-    echo "${build_number}"
-
-    echo -n "fetching SHA-1 of current commit: "
-    git_hash=`git rev-parse --short HEAD`
-    echo "${git_hash}"
-
     replaceEnvToken="s/NX_ENV/${nx_env}/g"
-    replaceBuildToken="s/BUILD_NUMBER/${build_number}/g"
-    replaceGitHashToken="s/GIT_HASH/${git_hash}/g"
     replaceTrackingTokenIfProd="s/IS_PRODUCTION/true/g"
 
     echo "replacing NX_ENV -> ${nx_env} in build/js/app.js"
     sed ${replaceEnvToken} build/js/app.js > tmp.dat
-    echo "replacing BUILD_NUMBER -> ${build_number} in build/js/app.js"
-    sed ${replaceBuildToken} tmp.dat > tmp2.dat
-    echo "replacing GIT_HASH -> ${git_hash} in build/js/app.js"
-    sed ${replaceGitHashToken} tmp2.dat > tmp3.dat
 
-    if [ ${build_type} = "pro" ]; then
-        sed ${replaceTrackingTokenIfProd} tmp3.dat > tmp4.dat
+    if [ ${nx_env} = "pro" ]; then
+        sed ${replaceTrackingTokenIfProd} tmp.dat > tmp2.dat
         echo "replacing IS_PRODUCTION -> true in build/js/app.js"
-        mv tmp4.dat build/js/app.js
+        mv tmp2.dat build/js/app.js
     else
-        mv tmp3.dat build/js/app.js
+        mv tmp.dat build/js/app.js
     fi
 
     rm tmp*.dat
