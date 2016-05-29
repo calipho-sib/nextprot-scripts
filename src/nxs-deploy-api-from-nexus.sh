@@ -104,13 +104,11 @@ function start_jetty() {
 
 stop_jetty ${HOST}
 
-echo -e "${info_color}removing cache ${_color} on ${HOST}"
-
 if [ ! ${KEEP_CACHE} ]; then
-    echo -e "${info_color}delete /work/jetty/cache${_color}"
+    echo -e "${info_color}removing cache: delete /work/jetty/cache${_color}"
     ssh npteam@${HOST} "rm -r /work/jetty/cache"
 else
-    echo -e "${info_color}keeping /work/jetty/cache${_color}"
+    echo -e "${info_color}keeping cache: /work/jetty/cache${_color}"
 fi
 
 echo -e "${info_color}removing log files ${_color}"
