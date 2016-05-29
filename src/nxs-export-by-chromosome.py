@@ -5,8 +5,10 @@ import urllib2, time, argparse
 import multiprocessing
 
 url_path = "/export/entries"
-max_thread = multiprocessing.cpu_count()
-default_threads = multiprocessing.cpu_count()/2
+#max_thread = multiprocessing.cpu_count()
+#default_threads = multiprocessing.cpu_count()/2
+max_thread = 1
+default_threads = 1
 
 class Worker(Thread):
     """Thread executing tasks from a given tasks queue"""
