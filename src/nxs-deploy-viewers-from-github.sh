@@ -1,10 +1,5 @@
 #!/bin/bash
 
-# This script build and remotely copy a single page application in dev, build, alpha or pro machine
-
-# ex1: bash -x nxs-build-and-deploy-spa.sh /Users/fnikitin/Projects/nextprot-ui/ dev
-# ex2: bash nxs-build-and-deploy-spa.sh /Users/fnikitin/Projects/nextprot-snorql/ dev
-
 set -o errexit  # make your script exit when a command fails.
 set -o pipefail # prevents errors in a pipeline from being masked. If any command in a pipeline fails, that return code will be used as the return code of the whole pipeline.
 set -o nounset  # exit when your script tries to use undeclared variables.
@@ -16,13 +11,15 @@ _color='\e[0m'           # end Color
 
 function echoUsage() {
     echo "usage: $0 <env> <host> <hostpath>" >&2
-    echo "This script builds and deploys nextprot viewers snapshot (actual branch by default) in dev, build, alpha or pro environment"
+    echo "This script deploys the last successfully built Single Page Application (SPA) from github in specified host."
     echo "Params:"
-    echo " <repo> repository"
-    echo " <environment> dev|build|alpha|pro"
+    echo " <env> dev|build|alpha|pro"
+    echo " <host> host where to deploy app"
+    echo " <hostpath> path in host where to deploy app"
+    echo " <spa> single page application name ('search' or 'snorql')"
     echo "Options:"
     echo " -h print usage"
-    echo " -s get snapshot from miniwatt (release by default)"
+    echo " -s get snapshot from miniwatt (master by default)"
 }
 
 BACKUP_SITE=
