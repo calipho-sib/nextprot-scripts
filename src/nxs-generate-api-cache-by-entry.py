@@ -65,13 +65,13 @@ def parse_arguments():
     :return: a parsed arguments object
     """
     parser = argparse.ArgumentParser(description='Create cache for all entries in neXtProt api server (with'
-                                                 ' optional export)')
+                                                 ' an optional export feature)')
     parser.add_argument('api', help='nextprot api uri (ie: build-api.nextprot.org)')
     parser.add_argument('-o', '--export_out', metavar='dir',
                         help='export destination directory (default export format: xml)')
     parser.add_argument('-f', '--export_format', metavar="{ttl,xml}", help='export format: ttl or xml')
     parser.add_argument('-t', '--thread', metavar='num', default=default_threads, type=int,
-                        help='number of threads (default='+ str(default_threads) + ')')
+                        help='number of threads (default=' + str(default_threads) + ')')
     parser.add_argument('-n', metavar='entries', default=-1, type=int, help='export n entries only')
 
     arguments = parser.parse_args()
