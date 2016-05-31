@@ -131,6 +131,11 @@ if [ ${SNAPSHOT} ]; then
 fi
 
 echo -e "${info_color} fetching version ${WAR_VERSION} ${WAR}${_color}"
-ssh npteam@${HOST} "wget -qO /work/jetty/webapps/nextprot-api-web.war \"${WAR}\""
+ssh npteam@${HOST} "wget -qO /work/jetty/webapps/nextprot-api-web.war \"${WAR}\" --content-disposition"
+
+# param --content-disposition:
+# when deploying snapshot from nexus, sometimes nexus does not rebuild metadata
+# see https://support.sonatype.com/hc/en-us/articles/213464638-Why-are-the-latest-and-release-tags-in-maven-metadata-xml-not-being-updated-after-deploying-artifacts-
+# and https://support.sonatype.com/hc/en-us/articles/213465488-How-can-I-retrieve-a-snapshot-if-I-don-t-know-the-exact-filename-
 
 start_jetty ${HOST}
