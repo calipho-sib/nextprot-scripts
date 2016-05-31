@@ -22,13 +22,13 @@ DELETE_CACHE=
 SNAPSHOT=
 WAR_VERSION=
 
-while getopts 'hcsw:' OPTION
+while getopts 'hdsw:' OPTION
 do
     case ${OPTION} in
     h) echoUsage
         exit 0
         ;;
-    c) DELETE_CACHE=1
+    d) DELETE_CACHE=1
         ;;
     s) SNAPSHOT=1
         ;;
