@@ -12,13 +12,13 @@ function echoUsage() {
     echo " <host> machine to install nexprot-api on"
     echo "Options:"
     echo " -h print usage"
-    echo " -c keep jetty cache/"
+    echo " -d delete jetty cache/"
     echo " -s get nextprot-api from nexus snapshot repository"
     echo " -w war-version specific war version to be installed"
 }
 
 PROD_HOST='jung'
-KEEP_CACHE=
+DELETE_CACHE=
 SNAPSHOT=
 WAR_VERSION=
 
@@ -28,7 +28,7 @@ do
     h) echoUsage
         exit 0
         ;;
-    c) KEEP_CACHE=1
+    c) DELETE_CACHE=1
         ;;
     s) SNAPSHOT=1
         ;;
@@ -104,7 +104,7 @@ function start_jetty() {
 
 stop_jetty ${HOST}
 
-if [ ! ${KEEP_CACHE} ]; then
+if [ ${DELETE_CACHE} ]; then
     echo -e "${info_color}removing cache: delete /work/jetty/cache${_color}"
     ssh npteam@${HOST} "rm -r /work/jetty/cache"
 else
