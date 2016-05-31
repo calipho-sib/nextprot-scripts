@@ -11,7 +11,26 @@ set -o nounset  # exit when your script tries to use undeclared variables.
 
 function echoUsage() {
     echo "usage: $0 <src_host> <dest_host>" >&2
+    echo "Params:"
+    echo " <src_host> [kant, crick, uat-web2, jung]"
+    echo " <dest_host> [kant, crick, uat-web2, jung]"
+    echo "Options:"
+    echo " -h print usage"
 }
+
+while getopts 'h' OPTION
+do
+    case ${OPTION} in
+    h) echoUsage
+        exit 0
+        ;;
+    ?) echoUsage
+        exit 1
+        ;;
+    esac
+done
+
+shift $(($OPTIND - 1))
 
 args=("$*")
 
