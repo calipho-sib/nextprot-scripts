@@ -131,7 +131,7 @@ if [ ${SNAPSHOT} ]; then
 fi
 
 echo -e "${info_color} fetching version ${WAR_VERSION} ${WAR}${_color}"
-ssh npteam@${HOST} "wget -qO /work/jetty/webapps/nextprot-api-web.war \"${WAR}\" --content-disposition"
+ssh npteam@${HOST} "wget -qO /work/jetty/webapps/nextprot-api-web.war \"${WAR}\""
 
 # param --content-disposition:
 # when deploying snapshot from nexus, sometimes nexus does not rebuild metadata
