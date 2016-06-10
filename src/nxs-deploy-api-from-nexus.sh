@@ -133,11 +133,11 @@ fi
 echo -e "${info_color} fetching version ${WAR_VERSION} ${WAR}${_color}"
 # jung cannot access miniwatt !
 #ssh npteam@${HOST} "wget -qO /work/jetty/webapps/nextprot-api-web.war \"${WAR}\""
-echo ssh npteam@miniwatt "wget -O /tmp/nextprot-api-web.war \"${WAR}\""
-ssh npteam@miniwatt "wget -O /tmp/nextprot-api-web.war \"${WAR}\""
+echo wget -O /tmp/nextprot-api-web.war "${WAR}"
+wget -O /tmp/nextprot-api-web.war "${WAR}"
 
-echo scp npteam@miniwatt:/tmp/nextprot-api-web.war npteam@${HOST}:/work/jetty/webapps/nextprot-api-web.war
-scp npteam@miniwatt:/tmp/nextprot-api-web.war npteam@${HOST}:/work/jetty/webapps/nextprot-api-web.war
+echo scp /tmp/nextprot-api-web.war npteam@${HOST}:/work/jetty/webapps/nextprot-api-web.war
+scp /tmp/nextprot-api-web.war npteam@${HOST}:/work/jetty/webapps/nextprot-api-web.war
 
 # param --content-disposition:
 # when deploying snapshot from nexus, sometimes nexus does not rebuild metadata
