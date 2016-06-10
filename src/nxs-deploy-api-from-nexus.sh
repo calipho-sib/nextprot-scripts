@@ -1,26 +1,20 @@
 #!/usr/bin/env bash
 
-info_color='\e[1;34m'    # begin info color
-error_color='\e[1;32m'   # begin error color
-warning_color='\e[1;33m' # begin warning color
-_color='\e[0m'           # end Color
-
 function echoUsage() {
     echo "Install the latest nextprot-api fetched from nexus (release or snapshot) at <host>:/work/jetty/ as npteam user."
     echo "usage: $0 [-hds][-w war-version] <host>"
     echo "Params:"
-    echo " <host> machine to install nexprot-api on (crick, kant or uat-web2)"
+    echo " <host> machine to install nexprot-api on (crick, kant, uat-web2 or jung)"
     echo "Options:"
     echo " -h print usage"
     echo " -d delete jetty cache/"
     echo " -s get nextprot-api from nexus snapshot repository"
-    echo " -w war-version specific war version to be installed"
 }
 
 PROD_HOST='jung'
 DELETE_CACHE=
 SNAPSHOT=
-WAR_VERSION=
+TMP_PATH="/tmp/nextprot-api-web.war"
 
 while getopts 'hdsw:' OPTION
 do
@@ -31,8 +25,6 @@ do
     d) DELETE_CACHE=1
         ;;
     s) SNAPSHOT=1
-        ;;
-    w) WAR_VERSION=${OPTARG}
         ;;
     ?) echoUsage
         exit 1
@@ -61,34 +53,34 @@ if [ ${HOST} == ${PROD_HOST} ]; then
         echo
         if [ "${answer}" != "Y" ] && [ "${answer}" != "y" ]; then
             echo "Release installation to production server (${HOST}) was cancelled."
-            exit 3
+            exit 2
         fi
     else
         echo "Cannot install a snapshot in production server (${HOST}) - operation aborted."
-        exit 4
+        exit 3
     fi
 fi
 
 function stop_jetty() {
   host=$1
   if ! ssh npteam@${host} test -f /work/jetty/jetty.pid; then
-      echo -e "${warning_color}Jetty was not running at $host ${_color}"
+      echo -e "${warning_color}Jetty was not running at $host "
       return 0
   fi
 
   ssh npteam@${host} "/work/jetty/bin/jetty.sh stop > /dev/null 2>&1 &"
-  echo -e "${info_color}Stopping jetty at ${host}...${_color}"
+  echo -e "Stopping jetty at ${host}..."
 
   while ssh npteam@${host} test -f /work/jetty/jetty.pid; do
       sleep 1
       echo -n .
   done
 
-  echo -e "${info_color}Jetty has been correctly stopped at ${host} ${_color}"
+  echo -e "Jetty has been correctly stopped at ${host} "
 }
 
 function start_jetty() {
-  echo -e "${info_color}Starting jetty at ${host}...${_color}"
+  echo -e "Starting jetty at ${host}..."
   host=$1
   # for jung:
   # $ ssh npteam@jung
@@ -99,49 +91,84 @@ function start_jetty() {
       sleep 1
       echo -n .
   done
-  echo -e "${info_color}Jetty has been correctly started at ${host} ${_color}"
+  echo -e "Jetty has been correctly started at ${host} "
+}
+
+function clean_jetty_host() {
+
+    host=$1
+
+    echo -e "removing log files on ${host}"
+    ssh npteam@${host} "rm -r /work/jetty/logs/*"
+
+    echo -e "removing nextprot-api-web.war on ${host}"
+    ssh npteam@${host} "rm /work/jetty/webapps/nextprot-api-web.war"
+
+    if [ ${DELETE_CACHE} ]; then
+        echo -e "removing cache: delete /work/jetty/cache"
+        ssh npteam@${HOST} "rm -r /work/jetty/cache"
+    else
+        echo -e "keeping cache: /work/jetty/cache"
+    fi
+}
+
+function check_war_size() {
+    war=$1
+    dest=$2
+    downloaded_war_size=$3
+    host=$4
+
+    echo -e "fetching ${war} in temporary path $(hostname):${dest}"
+    # cast to integer
+    declare -i nexus_war_size=$(curl -LsI "${war}" 2>&1 | grep Content-Length | awk '{print $2}' | tail -1 | tr -d '\r')
+
+    echo "nextprot-api-web.war size:"
+    echo "  downloaded : ${downloaded_war_size} bytes"
+    echo "  expected   : ${nexus_war_size} bytes"
+
+    if (( ${downloaded_war_size} != ${nexus_war_size} )) ; then
+        echo "Error while fetching nextprot-api-web.war: ${downloaded_war_size} bytes (expected ${nexus_war_size} bytes)"
+        echo "restarting jetty..."
+        start_jetty ${host}
+        exit 4
+    fi
+}
+
+function fetch_war_from_nexus() {
+
+    snapshot=$1
+    host=$2
+    dest=$3
+
+    if [ ${snapshot} ]; then
+        war="http://miniwatt:8800/nexus/service/local/artifact/maven/redirect?r=nextprot-snapshot-repo&g=org.nextprot&a=nextprot-api-web&v=LATEST&p=war"
+    else
+        war="http://miniwatt:8800/nexus/service/local/artifact/maven/redirect?r=nextprot-repo&g=org.nextprot&a=nextprot-api-web&v=RELEASE&p=war"
+    fi
+
+    echo curl -L "${war}" -o ${dest}
+    curl -L "${war}" -o ${dest}
+
+    downloaded_war_size=$(wc -c ${dest} | awk '{print $1}')
+
+    check_war_size ${war} ${dest} ${downloaded_war_size} ${host}
+}
+
+function deploy_war_to_host() {
+
+    source_path=$1
+    host=$2
+
+    echo deploy ${source_path} to npteam@${host}:/work/jetty/webapps/nextprot-api-web.war
+    scp ${source_path} npteam@${host}:/work/jetty/webapps/nextprot-api-web.war
 }
 
 stop_jetty ${HOST}
 
-if [ ${DELETE_CACHE} ]; then
-    echo -e "${info_color}removing cache: delete /work/jetty/cache${_color}"
-    ssh npteam@${HOST} "rm -r /work/jetty/cache"
-else
-    echo -e "${info_color}keeping cache: /work/jetty/cache${_color}"
-fi
+fetch_war_from_nexus ${SNAPSHOT} ${HOST} ${TMP_PATH}
 
-echo -e "${info_color}removing log files ${_color}"
-ssh npteam@${HOST} "rm -r /work/jetty/logs/*"
+clean_jetty_host ${HOST}
 
-echo -e "${info_color}removing nextprot-api-web.war${_color}"
-ssh npteam@${HOST} "rm /work/jetty/webapps/nextprot-api-web.war"
-
-if [ ! ${WAR_VERSION} ]; then
-    if [ ${SNAPSHOT} ]; then
-        WAR_VERSION="LATEST"
-    else
-        WAR_VERSION="RELEASE"
-    fi
-fi
-
-WAR="http://miniwatt:8800/nexus/service/local/artifact/maven/redirect?r=nextprot-repo&g=org.nextprot&a=nextprot-api-web&v=${WAR_VERSION}&p=war"
-if [ ${SNAPSHOT} ]; then
-    WAR="http://miniwatt:8800/nexus/service/local/artifact/maven/redirect?r=nextprot-snapshot-repo&g=org.nextprot&a=nextprot-api-web&v=${WAR_VERSION}&p=war"
-fi
-
-echo -e "${info_color} fetching version ${WAR_VERSION} ${WAR}${_color}"
-# jung cannot access miniwatt !
-#ssh npteam@${HOST} "wget -qO /work/jetty/webapps/nextprot-api-web.war \"${WAR}\""
-echo wget -O /tmp/nextprot-api-web.war "${WAR}"
-wget -O /tmp/nextprot-api-web.war "${WAR}"
-
-echo scp /tmp/nextprot-api-web.war npteam@${HOST}:/work/jetty/webapps/nextprot-api-web.war
-scp /tmp/nextprot-api-web.war npteam@${HOST}:/work/jetty/webapps/nextprot-api-web.war
-
-# param --content-disposition:
-# when deploying snapshot from nexus, sometimes nexus does not rebuild metadata
-# see https://support.sonatype.com/hc/en-us/articles/213464638-Why-are-the-latest-and-release-tags-in-maven-metadata-xml-not-being-updated-after-deploying-artifacts-
-# and https://support.sonatype.com/hc/en-us/articles/213465488-How-can-I-retrieve-a-snapshot-if-I-don-t-know-the-exact-filename-
+deploy_war_to_host ${TMP_PATH} ${HOST}
 
 start_jetty ${HOST}
