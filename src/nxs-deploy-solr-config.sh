@@ -3,21 +3,24 @@
 function echoUsage() {
 	echo "---"
 	echo ""
-	echo "usage: $0 arg1 arg2"
+	echo "usage: $0 <target> <action>"
 	echo ""
-	echo "arg1 specifies the target of the deployment"
+	echo "<target> specifies the target of the deployment"
 	echo ""
-	echo "arg1=build  : sync svn source to target solr server on kant  (build machine) "
-	echo "arg1=dev    : sync svn source to target solr server on crick (dev machine) "
-    echo "arg1=alpha  : sync svn source to target solr server on uat-web2 (alpha machine) "
+	echo "build  : sync svn source to target solr server on kant  (build machine) "
+	echo "dev    : sync svn source to target solr server on crick (dev machine) "
+    echo "alpha  : sync svn source to target solr server on uat-web2 (alpha machine) "
 	echo ""
-	echo "arg2 specifies the action to perform"
+	echo "<action> specifies the action to perform"
 	echo ""
-	echo "arg2=diff   : show diff between source and target"
-	echo "arg2=update : actually perform sync from source to target"
+	echo "diff   : show diff between source and target"
+	echo "update : actually perform sync from source to target"
 	echo ""
+	echo "typical use: $0 build update"
+	echo ""	
 	echo "---"
 }
+
 
 if [ "$1" = "pam" ]; then
 	SERVER_SOLR="/Users/pmichel/tools/solr-4.5.0/example/solr"
