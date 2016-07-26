@@ -138,16 +138,15 @@ function fetch_war_from_nexus() {
 
     snapshot=$1
     host=$2
-    dest=$3
 
     if [ ${snapshot} ]; then
-        war="'http://miniwatt:8800/nexus/service/local/artifact/maven/redirect?r=nextprot-snapshot-repo&g=org.nextprot&a=nextprot-api-web&v=LATEST&p=war'"
+        war="http://miniwatt:8800/nexus/service/local/artifact/maven/redirect?r=nextprot-snapshot-repo&g=org.nextprot&a=nextprot-api-web&v=LATEST&p=war"
     else
-        war="'http://miniwatt:8800/nexus/service/local/artifact/maven/redirect?r=nextprot-repo&g=org.nextprot&a=nextprot-api-web&v=RELEASE&p=war'"
+        war="http://miniwatt:8800/nexus/service/local/artifact/maven/redirect?r=nextprot-repo&g=org.nextprot&a=nextprot-api-web&v=RELEASE&p=war"
     fi
 
-    echo curl -L "${war}" -o ${dest}
-    curl -L ${war} -o ${dest}
+    echo curl -L "${war}" -o ${TMP_PATH}
+    curl -L "${war}" -o ${TMP_PATH}
 
     downloaded_war_size=$(wc -c ${dest} | awk '{print $1}')
 
@@ -165,7 +164,7 @@ function deploy_war_to_host() {
 
 stop_jetty ${HOST}
 
-fetch_war_from_nexus ${SNAPSHOT} ${HOST} ${TMP_PATH}
+fetch_war_from_nexus ${SNAPSHOT} ${HOST}
 
 clean_jetty_host ${HOST}
 
