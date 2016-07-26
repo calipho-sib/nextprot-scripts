@@ -165,6 +165,8 @@ function deploy_war_to_host() {
 
 stop_jetty ${HOST}
 
+echo "tmp path=${TMP_PATH}..."
+
 fetch_war_from_nexus ${SNAPSHOT} ${HOST} ${TMP_PATH}
 
 clean_jetty_host ${HOST}
