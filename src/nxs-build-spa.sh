@@ -45,7 +45,7 @@ function checkBranchRepo() {
     if [ ${build_type} = "pro" ]; then
         branch=$(git rev-parse --abbrev-ref HEAD)
         if [ ! ${branch} = "master" ]; then
-            echo "ERROR: please change to master branch first before deploying to production server"
+            echo "ERROR: cannot deploy from branch '${branch}'; please change to master branch first before deploying to production server"
             exit 3
         fi
     fi
