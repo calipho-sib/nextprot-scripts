@@ -9,11 +9,13 @@ set -o pipefail # prevents errors in a pipeline from being masked. If any comman
 set -o nounset  # exit when your script tries to use undeclared variables.
 
 function echoUsage() {
-    echo "usage: $0 <next-snapshot-version> [repo]" >&2
-    echo "This script fires indirectly a new production release (through jenkins) and prepares next development release with the given version (-SNAPSHOT is added automatically)"
+    echo "usage: $0 <next-develop-version> [repo]" >&2
+    echo "This script does 2 things:"
+    echo " 1. it first prepares a release of 'repo' ready for production (merge develop->master) -> this will fire indirectly (through jenkins) the releasing itself (see nxs-release.sh)"
+    echo " 2. it then prepares the next development version of 'repo' specified by the argument"
     echo "Params:"
-    echo " <next-snapshot-version> next snapshot version (MAJOR.MINOR.PATCH)"
-    echo " <repo> optional maven project git repository"
+    echo " <next-develop-version> next develop version (MAJOR.MINOR.PATCH)"
+    echo " <repo> optional maven project git repository (current directory by default)"
     echo "Options:"
     echo " -h print usage"
 }
