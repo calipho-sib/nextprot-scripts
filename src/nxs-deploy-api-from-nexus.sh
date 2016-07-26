@@ -146,8 +146,8 @@ function fetch_war_from_nexus() {
         war="http://miniwatt:8800/nexus/service/local/artifact/maven/redirect?r=nextprot-repo&g=org.nextprot&a=nextprot-api-web&v=RELEASE&p=war"
     fi
 
-    echo curl -L "${war}" -o ${dest}
-    curl -L "${war}" -o ${dest}
+    echo curl -L "${war} -o ${dest}"
+    curl -L "${war} -o ${dest}"
 
     downloaded_war_size=$(wc -c ${dest} | awk '{print $1}')
 
