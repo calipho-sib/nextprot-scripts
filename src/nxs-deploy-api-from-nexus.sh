@@ -148,9 +148,9 @@ function fetch_war_from_nexus() {
     echo curl -L "${war}" -o ${TMP_PATH}
     curl -L "${war}" -o ${TMP_PATH}
 
-    downloaded_war_size=$(wc -c ${dest} | awk '{print $1}')
+    downloaded_war_size=$(wc -c ${TMP_PATH} | awk '{print $1}')
 
-    check_war_size ${war} ${dest} ${downloaded_war_size} ${host}
+    check_war_size ${war} ${TMP_PATH} ${downloaded_war_size} ${host}
 }
 
 function deploy_war_to_host() {
