@@ -160,6 +160,8 @@ function deploy_war_to_host() {
 
     echo deploy ${source_path} to npteam@${host}:/work/jetty/webapps/nextprot-api-web.war
     scp ${source_path} npteam@${host}:/work/jetty/webapps/nextprot-api-web.war
+    echo rm ${source_path}
+    rm ${source_path}
 }
 
 stop_jetty ${HOST}
