@@ -136,10 +136,9 @@ function check_war_size() {
 
 function fetch_war_from_nexus() {
 
-    snapshot=$1
-    host=$2
+    host=$1
 
-    if [ ${snapshot} ]; then
+    if [ ${SNAPSHOT} ]; then
         war="http://miniwatt:8800/nexus/service/local/artifact/maven/redirect?r=nextprot-snapshot-repo&g=org.nextprot&a=nextprot-api-web&v=LATEST&p=war"
     else
         war="http://miniwatt:8800/nexus/service/local/artifact/maven/redirect?r=nextprot-repo&g=org.nextprot&a=nextprot-api-web&v=RELEASE&p=war"
@@ -166,7 +165,7 @@ function deploy_war_to_host() {
 
 stop_jetty ${HOST}
 
-fetch_war_from_nexus ${SNAPSHOT} ${HOST}
+fetch_war_from_nexus ${HOST}
 
 clean_jetty_host ${HOST}
 
