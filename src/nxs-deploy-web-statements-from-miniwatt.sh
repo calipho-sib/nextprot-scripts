@@ -23,7 +23,7 @@ NX_PATH=/work/projects/
 
 function stop-web-statements() {
 
-    ws_pid=$(ps aux | grep play | cut -d" " -f4)
+    ws_pid=$(ps aux | grep play | grep stage |  cut -d" " -f4)
     if [ -x ${ws_pid} ];then
     echo "web statements was not running"
     else
