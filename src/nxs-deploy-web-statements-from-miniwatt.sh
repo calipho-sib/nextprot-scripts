@@ -40,7 +40,7 @@ function get-web-statements() {
 
     wget ${URL} -O ws.zip 
 
-    unzip ws.zip web-statements-new
+    unzip ws.zip -d web-statements-new
 
     rm ws.zip
 
