@@ -25,9 +25,9 @@ function stop-web-statements() {
 
     ws_pid=$(ps aux | grep play | cut -d" " -f4)
     if [ -x ${ws_pid} ];then
-    echo "web statements was not running on ${host}"
+    echo "web statements was not running"
     else
-    echo "killing web statements process ${ws_pid} on ${host}"
+    echo "killing web statements process ${ws_pid}"
     kill ${ws_pid}
     fi
 }
