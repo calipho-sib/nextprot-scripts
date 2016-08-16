@@ -1,6 +1,6 @@
 #!/bin/bash
 
-# This script build and remotely copy a single page application in dev, build, alpha or pro machine
+# This script deploy web statements application from an artifact in miniwatt
 
 # ex1: bash -x nxs-build-and-deploy-spa.sh /Users/fnikitin/Projects/nextprot-ui/ dev
 # ex2: bash nxs-build-and-deploy-spa.sh /Users/fnikitin/Projects/nextprot-snorql/ dev
@@ -19,7 +19,7 @@ export PATH=/share/sib/apps/linux/64/jdk1.8.0_74/bin:$PATH
 export JAVA_HOME=/share/sib/apps/linux/64/jdk1.8.0_74/
 export JAVA_PATH=/share/sib/apps/linux/64/jdk1.8.0_74/bin
 
-NX_PATH=/work/projects/web-statements
+NX_PATH=/work/projects/
 
 function stop-web-statements() {
 
@@ -28,7 +28,7 @@ function stop-web-statements() {
     echo "web statements was not running on ${host}"
     else
     echo "killing web statements process ${ws_pid} on ${host}"
-    ssh npteam@${host} kill ${ws_pid}
+    kill ${ws_pid}
     fi
 }
 
@@ -36,31 +36,31 @@ function get-web-statements() {
 
     URL=http://miniwatt:8900/job/web-statements/lastSuccessfulBuild/artifact/web-statements.zip
 
+    mkdir web-statements-new
 
-    wget ${URL} -O ws.zip
+    wget ${URL} -O ws.zip 
 
     unzip ws.zip web-statements-new
 
     rm ws.zip
-    echo "deploying ${NX_PATH}"
 
+    echo "extracting to web statements new"
 
 }
 
 function rename-web-statements() {
 
     mv web-statements /tmp/web-statements-old-$(date +%s)
-    mv web-statements-old web-statements
+    mv web-statements-new web-statements
     
 }
 
 
 function start-web-statements() {
 
-
     echo "restarting web statements"
 
-    nohup target/universal/stage/bin/web-statements &
+    nohup web-statements/target/universal/stage/bin/web-statements &
 
 }
 
