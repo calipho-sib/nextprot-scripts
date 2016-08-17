@@ -47,6 +47,6 @@ if [ $# -eq 3 ]; then
 fi
 
 echo "starting solr on ${host} port ${port}"
-ssh npteam@${host} "sh -c 'cd ${path}/example; nohup java -Dnextprot.solr -Xmx1524m -jar -Djetty.port=${port} start.jar  > solr.log 2>&1  &'"
+ssh npteam@${host} "sh -c 'cd ${path}/example; nohup java -Dnextprot.solr -Xmx2048m -jar -Djetty.port=${port} start.jar  > solr.log 2>&1  &'"
 
 
