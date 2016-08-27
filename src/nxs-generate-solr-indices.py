@@ -8,8 +8,8 @@ import sys
 max_thread = multiprocessing.cpu_count()
 default_threads = multiprocessing.cpu_count()/2
 
-print "max threads    :" + max_thread
-print "default threads:" + default_threads
+print "max threads    :" + str(max_thread)
+print "default threads:" + str(default_threads)
 
 class Worker(Thread):
     """Thread executing tasks from a given tasks queue"""
