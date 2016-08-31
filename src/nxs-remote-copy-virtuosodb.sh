@@ -80,7 +80,7 @@ function copyDb() {
     src=$1
     dest=$2
 
-    ssh npteam@${src} "rsync -avz /var/lib/virtuoso/db/* ${dest}:/var/lib/virtuoso/db"
+    ssh npteam@${src} "rsync -av /var/lib/virtuoso/db/* ${dest}:/var/lib/virtuoso/db"
     ssh npteam@${dest} "rm /var/lib/virtuoso/db/virtuoso.trx"
     ssh npteam@${dest} "cp /home/npteam/tmp/virtuoso.ini /var/lib/virtuoso/db"
     ssh npteam@${dest} "rm -rf /home/npteam/tmp"
