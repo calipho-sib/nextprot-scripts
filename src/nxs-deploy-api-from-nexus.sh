@@ -56,8 +56,8 @@ if [ ${HOST} == ${PROD_HOST} ]; then
             exit 2
         fi
     else
-        echo "Cannot install a snapshot in production server (${HOST}) - operation aborted."
-        exit 3
+        echo "Warning: you are installing a snapshot in production server (${HOST}) - I hope you know what you do."
+        #exit 3
     fi
 fi
 
