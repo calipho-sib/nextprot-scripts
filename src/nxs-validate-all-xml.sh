@@ -4,12 +4,11 @@ set -o pipefail # prevents errors in a pipeline from being masked. If any comman
 set -o nounset  # exit when your script tries to use undeclared variables.
 
 function echoUsage() {
-    echo "usage: $0 <api> <xsd> <output>" >&2
-    echo "This script exports all nextprot entries via API and then run xml validation"
+    echo "usage: $0 <xsd> <dir>" >&2
+    echo "This script validates all xml files found in path dir"
     echo "Params:"
-    echo " <api> nextprot api host (ie: build-api.nextprot.org)"
     echo " <xsd> xml schema of a nextprot entry"
-    echo " <output> directory where to export all xml entries"
+    echo " <dir> directory where xml are located"
     echo "Options:"
     echo " -h print usage"
 }
@@ -30,33 +29,24 @@ shift $(($OPTIND - 1))
 
 args=("$*")
 
-if [ $# -lt 3 ]; then
+if [ $# -lt 2 ]; then
   echo "missing arguments"  >&2
   echoUsage; exit 1
 fi
 
-api=$1
-xsd=$2
-output=$3
-validation_file="nxs-validate-all-xml.log"
+xsd=$1
+dir=$2
+validation_file="nxs-validate-all-xml"_with_$(basename ${xsd})
 
-echo "*** exporting all entries in xml..."
-nxs-generate-api-cache-by-entry.py ${api} -o ${output} --format xml
-
-echo "*** copying ${xsd} to output directory ${output}..."
-cp ${xsd} ${output}
-
-echo "-- push directory ${output}"
-pushd ${output}
+echo "-- push directory ${dir}"
+pushd ${dir}
 entries=`find . -type f -name '*.xml'`
 
-echo "*** validating all entries ..."
+echo -n "validation with xmllint..."
+xmllint --noout --schema ${xsd} ${entries} 2> ${validation_file}.log
+echo " Done"
 
-echo "validation with xmllint..."
-time xmllint --noout --schema ${xsd} ${entries} 2> nxs-validate-all-xml.log &
-echo "Done"
-
-grep -v validate nxs-validate-all-xml.log|grep ':' | cut -d: -f3-6|sort|uniq > nxs-validate-all-xml.err
+grep -v validate ${validation_file}.log | grep ':' | cut -d: -f3-6|sort|uniq > ${validation_file}.err
 
 echo "-- pop directory"
 popd
