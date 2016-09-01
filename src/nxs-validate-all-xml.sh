@@ -39,10 +39,10 @@ dir=$2
 validation_file="xmllint"_with_$(basename ${xsd})
 
 pushd ${dir} > /dev/null
-echo "-- searching xml files in directory '${dir}' ..."
+echo "-- searching xml files in directory '${dir}'"
 entries=`find . -type f \( -iname "*.xml" \)`
 
-echo -n "-- running xmllint on files "${entries}...
+echo -n "-- running xmllint on files "${entries}"... "
 xmllint --noout --timing --stream --schema ${xsd} ${entries} 2> ${validation_file}.out
 echo " done"
 
