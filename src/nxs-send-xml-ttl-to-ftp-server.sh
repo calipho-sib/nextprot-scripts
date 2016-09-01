@@ -1,7 +1,7 @@
 #!/bin/bash
 
 if [ "$1" = "?" ]; then 
-  echo "usage: $0 [MMDDhhmm] "
+  echo "usage: $(basename $0) [MMDDhhmm] "
   echo "where MMDDhhmm determines month, day, hour, minutes for timestamp of target files"  
   echo "exiting now"
   exit

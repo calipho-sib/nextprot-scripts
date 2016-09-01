@@ -9,7 +9,7 @@ set -o pipefail # prevents errors in a pipeline from being masked. If any comman
 set -o nounset  # exit when your script tries to use undeclared variables.
 
 function echoUsage() {
-    echo "usage: $0 <next-develop-version> [repo]" >&2
+    echo "usage: $(basename $0) <next-develop-version> [repo]" >&2
     echo "This script does 2 things:"
     echo " 1. it first prepares a release of 'repo' ready for production (merge develop->master) -> this will fire indirectly (through jenkins) the releasing itself (see nxs-release.sh)"
     echo " 2. it then prepares the next development version of 'repo' specified by the argument"

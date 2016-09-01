@@ -7,7 +7,7 @@ set -o pipefail # prevents errors in a pipeline from being masked. If any comman
 set -o nounset  # exit when your script tries to use undeclared variables.
 
 function echoUsage() {
-    echo "usage: $0 [repo]" >&2
+    echo "usage: $(basename $0) [repo]" >&2
     echo "This script prepares and inits the next hotfix branch coming from master and checkout to it (after it, you can start fixing it :))"
     echo "Params:"
     echo " <repo> optional maven project git repository"

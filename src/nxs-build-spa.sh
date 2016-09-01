@@ -5,7 +5,7 @@ set -o pipefail # prevents errors in a pipeline from being masked. If any comman
 set -o nounset  # exit when your script tries to use undeclared variables.
 
 function echoUsage() {
-    echo "usage: $0 <gitrepo> <buildmode>" >&2
+    echo "usage: $(basename $0) <gitrepo> <buildmode>" >&2
     echo "Builds the single page application located at git repository (in dev or prod mode)"
     echo "Params:"
     echo " <gitrepo> git repository"

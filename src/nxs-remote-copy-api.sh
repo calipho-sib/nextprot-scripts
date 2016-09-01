@@ -10,7 +10,7 @@ set -o pipefail # prevents errors in a pipeline from being masked. If any comman
 set -o nounset  # exit when your script tries to use undeclared variables.
 
 function echoUsage() {
-    echo "usage: $0 <src_host> <dest_host>" >&2
+    echo "usage: $(basename $0) <src_host> <dest_host>" >&2
     echo "Params:"
     echo " <src_host> [kant, crick, uat-web2, jung]"
     echo " <dest_host> [kant, crick, uat-web2, jung]"

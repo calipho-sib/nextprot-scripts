@@ -4,7 +4,7 @@ set -o pipefail # prevents errors in a pipeline from being masked. If any comman
 set -o nounset  # exit when your script tries to use undeclared variables.
 
 function echoUsage() {
-    echo "usage: $0 <xsd> <xml-dir>" >&2
+    echo "usage: $(basename $0) <xsd> <xml-dir>" >&2
     echo "This script validates xml files found in given directory and produces an xmllint output file"
     echo "Params:"
     echo " <xsd> xml schema of a nextprot entry"

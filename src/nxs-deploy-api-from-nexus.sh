@@ -2,7 +2,7 @@
 
 function echoUsage() {
     echo "Install the latest nextprot-api fetched from nexus (release or snapshot) at <host>:/work/jetty/ as npteam user."
-    echo "usage: $0 [-hds][-w war-version] <host>"
+    echo "usage: $(basename $0) [-hds][-w war-version] <host>"
     echo "Params:"
     echo " <host> machine to install nexprot-api on (crick, kant, uat-web2 or jung)"
     echo "Options:"

@@ -13,7 +13,7 @@ set -o nounset  # exit when your script tries to use undeclared variables.
 
 function echoUsage() {
     echo "ONLY JENKINS SHOULD EXECUTE THIS SCRIPT. It prepares and deploys a new release on nexus repository."
-    echo "usage: $0 [-h] [repo]"
+    echo "usage: $(basename $0) [-h] [repo]"
     echo "Params:"
     echo " <repo> optional maven project git repository"
     echo "Options:"

@@ -8,7 +8,7 @@ set -o errexit  # make your script exit when a command fails.
 set -o nounset  # exit when your script tries to use undeclared variables.
 
 function echoUsage() {
-    echo "usage: $0 [-h] <host> [<solr_path> <solr_port>]"
+    echo "usage: $(basename $0) [-h] <host> [<solr_path> <solr_port>]"
     echo "Params:"
     echo " <host> remote host on which solr is to be started"
     echo "[<solr_path> default: /work/devtools/solr-4.5.0]"
