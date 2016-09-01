@@ -40,7 +40,7 @@ validation_file="nxs-validate-all-xml"_with_$(basename ${xsd})
 
 echo "-- push directory ${dir}"
 pushd ${dir}
-entries=`find . -type f -name '*.xml'`
+entries=`find . -type f \( -iname "*.xml" ! -iname "nextprot_all.xml" \)`
 
 echo -n "validation with xmllint..."
 xmllint --noout --schema ${xsd} ${entries} 2> ${validation_file}.log
