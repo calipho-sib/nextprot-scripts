@@ -10,7 +10,7 @@ warning_color='\e[1;33m' # begin warning color
 _color='\e[0m'           # end Color
 
 function echoUsage() {
-    echo "usage: $0 <env> <host> <hostpath> <spa>" >&2
+    echo "usage: $(basename $0) <env> <host> <hostpath> <spa>" >&2
     echo "This script deploys the last successfully built Single Page Application (SPA) from miniwatt in specified host."
     echo "Params:"
     echo " <env> dev|build|alpha|pro|vit"

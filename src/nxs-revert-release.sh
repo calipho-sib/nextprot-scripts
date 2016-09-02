@@ -7,7 +7,7 @@ set -x
 
 function echoUsage() {
     echo "This script revert master branch to the latest release of the git repository"
-    echo "usage: $0 [-h] <repo>"
+    echo "usage: $(basename $0) [-h] <repo>"
     echo "Params:"
     echo " <repo> git repository"
     echo "Options:"

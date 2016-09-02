@@ -7,7 +7,7 @@ set -o pipefail # prevents errors in a pipeline from being masked. If any comman
 set -o nounset  # exit when your script tries to use undeclared variables.
 
 function echoUsage() {
-    echo "usage: $0 [-h][repo]" >&2
+    echo "usage: $(basename $0) [-h][repo]" >&2
     echo "This script makes a new patch release.
 It merges the hotfix branch back to master, merges to develop with pom.xml versions kept as in develop.
 Once it is pushed to origin/master jenkins will publish the new patch with script 'nxs-release.sh'"

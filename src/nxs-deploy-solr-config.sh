@@ -3,7 +3,7 @@
 function echoUsage() {
 	echo "---"
 	echo ""
-	echo "usage: $0 <target> <action>"
+	echo "usage: $(basename $0) <target> <action>"
 	echo ""
 	echo "<target> specifies the target of the deployment"
 	echo ""

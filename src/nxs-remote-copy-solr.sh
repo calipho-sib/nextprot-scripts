@@ -13,7 +13,7 @@ set -o errexit  # make your script exit when a command fails.
 set -o nounset  # exit when your script tries to use undeclared variables.
 
 function echoUsage() {
-    echo "usage: $0 [-h] <src_host> <dest_host> [<dest_path> <dest_jetty_port>]"
+    echo "usage: $(basename $0) [-h] <src_host> <dest_host> [<dest_path> <dest_jetty_port>]"
     echo "Params:"
     echo " <src_host> source host"
     echo " <dest_host> destination host"

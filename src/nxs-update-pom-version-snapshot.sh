@@ -6,7 +6,7 @@ set -o nounset  # exit when your script tries to use undeclared variables.
 
 function echoUsage() {
     echo "This script changes maven project version snapshot in branch develop"
-    echo "usage: $0 [-h] <repo> <version>"
+    echo "usage: $(basename $0) [-h] <repo> <version>"
     echo "Params:"
     echo " <repo> maven project git repository"
     echo " <version> pom version (ie. 1.0.2)"
