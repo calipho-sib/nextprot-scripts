@@ -13,7 +13,7 @@ function echoUsage() {
     echo "usage: $0 <env> <host> <hostpath> <spa>" >&2
     echo "This script deploys the last successfully built Single Page Application (SPA) from miniwatt in specified host."
     echo "Params:"
-    echo " <env> dev|build|alpha|pro"
+    echo " <env> dev|build|alpha|pro|vit"
     echo " <host> host where to deploy app"
     echo " <hostpath> path in host where to deploy app"
     echo " <spa> single page application name ('search' or 'snorql')"
