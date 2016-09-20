@@ -109,11 +109,11 @@ def get_all_nextprot_entries(api_host):
         api_host: the host where nextprot API is located
     :return:
     """
-    url_all_identifiers = api_host + "/master-identifiers.json"
+    url_all_identifiers = api_host + "/entry-accessions.json"
 
     try:
         response = urllib2.urlopen(url_all_identifiers)
-        return json.loads(response.read())['stringList']
+        return json.loads(response.read())
     except urllib2.URLError as e:
         print "error getting all entries from neXtProt API host "+api_host+": "+str(e)
         sys.exit()
