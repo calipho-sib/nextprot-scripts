@@ -12,6 +12,8 @@ max_thread = multiprocessing.cpu_count()*2
 # default number of thread
 default_threads = multiprocessing.cpu_count()/2
 
+thread_lock = threading.Lock()
+
 
 class Worker(Thread):
     """Thread executing tasks from a given tasks queue"""
@@ -118,7 +120,7 @@ def get_all_nextprot_entries(api_host):
         return json.loads(response.read())
     except urllib2.URLError as e:
         print "error getting all entries from neXtProt API host "+api_host+": "+str(e)
-        sys.exit()
+        sys.exit(1)
 
 
 def build_nextprot_entry_url(api_host, np_entry, export_type):
@@ -151,9 +153,13 @@ def fetch_nextprot_entry(api_host, np_entry, export_type, export_dir):
     with timer:
         try:
             outstream.write(urllib2.urlopen(url).read())
+            print "SUCCESS: "+ threading.current_thread().name + " has generated cache for /entry/"+np_entry + " and /entry/" + np_entry + "/page-display in " + str(datetime.timedelta(seconds=timer.duration_in_seconds())) + " seconds"
         except urllib2.URLError as e:
-            print threading.current_thread().name+": "+str(e)
-    print threading.current_thread().name + " has generated cache for /entry/"+np_entry + " and /entry/" + np_entry + "/page-display in " + str(datetime.timedelta(seconds=timer.duration_in_seconds())) + " seconds"
+            print "FAILURE: "+threading.current_thread().name+" throws '"+str(e)+"' for entry "+np_entry
+            thread_lock.acquire()
+            global error_counter
+            error_counter += 1
+            thread_lock.release()
 
 
 def build_output_stream(export_dir, np_entry, export_format):
@@ -179,6 +185,9 @@ if __name__ == '__main__':
 
     pool = ThreadPool(args.thread)
 
+    # global variable to count errors
+    error_counter = 0
+    
     globalTimer = Timer()
     with globalTimer:
         print "Running tasks..."
@@ -192,7 +201,8 @@ if __name__ == '__main__':
                           export_dir=args.export_out)
         pool.wait_completion()
 
-    print "\nCache generated in " + str(datetime.timedelta(seconds=globalTimer.duration_in_seconds())) + " seconds"
+    print "\nCache generated with " + str(error_counter) + " error" + ('s' if error_counter>1 else '') +\
+          " in " + str(datetime.timedelta(seconds=globalTimer.duration_in_seconds())) + " seconds"
 
     # TODO: Add seo site-map cache generation
     # TODO: Add /gene-names cache generation
