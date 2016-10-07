@@ -192,7 +192,7 @@ if __name__ == '__main__':
                           export_dir=args.export_out)
         pool.wait_completion()
 
-    print "\nCache generated in " + str(globalTimer.duration_in_seconds()) + " seconds"
+    print "\nCache generated in " + str(datetime.timedelta(seconds=globalTimer.duration_in_seconds())) + " seconds"
 
     # TODO: Add seo site-map cache generation
     # TODO: Add /gene-names cache generation
