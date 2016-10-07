@@ -177,7 +177,7 @@ def call_api_service(url, outstream, service_name):
             global error_counter
             error_counter += 1
             thread_lock.release()
-    print " in " + str(datetime.timedelta(seconds=timer.duration_in_seconds())) + " seconds"
+    print " [" + str(datetime.timedelta(seconds=timer.duration_in_seconds())) + " seconds]"
 
 
 def build_output_stream(export_dir, np_entry, export_format):
@@ -197,7 +197,6 @@ if __name__ == '__main__':
     args = parse_arguments()
 
     all_nextprot_entries = get_all_nextprot_entries(api_host=args.api)
-    #all_nextprot_entries = ["kokolasticot", "NX_P01308"]
 
     if args.n > 0:
         all_nextprot_entries = all_nextprot_entries[0:args.n]
@@ -209,7 +208,7 @@ if __name__ == '__main__':
     
     globalTimer = Timer()
     with globalTimer:
-        print "*** Generating cache for services /entry/{entry} and /entry/{entry}/page-display (" + str(len(all_nextprot_entries)) + " nextprot entries) ..."
+        print "* Generating cache for services /entry/{entry} and /entry/{entry}/page-display (" + str(len(all_nextprot_entries)) + " nextprot entries)..."
 
         # add a task by entry to get
         for nextprot_entry in all_nextprot_entries:
@@ -220,12 +219,16 @@ if __name__ == '__main__':
                           export_dir=args.export_out)
         pool.wait_completion()
 
-    print "\n*** Generating cache for service /gene-names ..."
+    print "["+str(len(all_nextprot_entries)-error_counter) + "/" + str(len(all_nextprot_entries)) + " task"+ ('s' if error_counter>1 else '')\
+          + " executed in " + str(datetime.timedelta(seconds=globalTimer.duration_in_seconds())) + " seconds]"
+
+    print "\n* Generating cache for service /gene-names..."
     fetch_gene_names(args.api)
 
     # TODO: Add seo site-map cache generation
     #print "\n*** Generating cache for ..."
     #fetch_site_map(args.api)
 
-    print "Cache generated with " + str(error_counter) + " error" + ('s' if error_counter>1 else '') + \
+    print "\n-------------------------------------------------------------------------------------"
+    print "Overall cache generated with " + str(error_counter) + " error" + ('s' if error_counter>1 else '') + \
       " in " + str(datetime.timedelta(seconds=globalTimer.duration_in_seconds())) + " seconds"
