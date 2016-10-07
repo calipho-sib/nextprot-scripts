@@ -149,13 +149,30 @@ def fetch_nextprot_entry(api_host, np_entry, export_type, export_dir):
     url = build_nextprot_entry_url(api_host, np_entry, export_type)
     outstream = build_output_stream(export_dir=export_dir, np_entry=np_entry,
                                     export_format=export_type)
+    call_api_service(url=url, outstream=outstream, service_name="/entry/"+np_entry)
+
+
+def fetch_gene_names(api_host):
+    """Get nextprot gene names
+    :param api_host: the API url
+    """
+    call_api_service(url=api_host + "/gene-names", outstream=open('/dev/null', 'w'), service_name="/gene-names")
+
+
+def call_api_service(url, outstream, service_name):
+    """Make a get API request and time execution
+    :param url: the API url
+    :param outstream: the output to put answer
+    :param service_name: the API service name
+    """
+
     timer = Timer()
     with timer:
         try:
             outstream.write(urllib2.urlopen(url).read())
-            sys.stdout.write("SUCCESS: " + threading.current_thread().name + " has generated cache for /entry/"+np_entry + " and /entry/" + np_entry + "/page-display")
+            sys.stdout.write("SUCCESS: " + threading.current_thread().name + " has generated cache for "+service_name)
         except urllib2.URLError as e:
-            sys.stdout.write("FAILURE: " + threading.current_thread().name+" throws '"+str(e)+"' for entry "+np_entry)
+            sys.stdout.write("FAILURE: " + threading.current_thread().name+" failed with error '"+str(e)+"' for "+service_name)
             thread_lock.acquire()
             global error_counter
             error_counter += 1
@@ -192,7 +209,7 @@ if __name__ == '__main__':
     
     globalTimer = Timer()
     with globalTimer:
-        print "*** Generating cache for " + str(len(all_nextprot_entries)) + " nextprot entries ..."
+        print "*** Generating cache for services /entry/{entry} and /entry/{entry}/page-display (" + str(len(all_nextprot_entries)) + " nextprot entries) ..."
 
         # add a task by entry to get
         for nextprot_entry in all_nextprot_entries:
@@ -203,11 +220,12 @@ if __name__ == '__main__':
                           export_dir=args.export_out)
         pool.wait_completion()
 
-    print "\nCache generated with " + str(error_counter) + " error" + ('s' if error_counter>1 else '') +\
-          " in " + str(datetime.timedelta(seconds=globalTimer.duration_in_seconds())) + " seconds"
+    print "\n*** Generating cache for service /gene-names ..."
+    fetch_gene_names(args.api)
 
     # TODO: Add seo site-map cache generation
+    #print "\n*** Generating cache for ..."
+    #fetch_site_map(args.api)
 
-    # TODO: Add /gene-names cache generation
-    # print "*** Generating cache for gene-names..."
-
+    print "Cache generated with " + str(error_counter) + " error" + ('s' if error_counter>1 else '') + \
+      " in " + str(datetime.timedelta(seconds=globalTimer.duration_in_seconds())) + " seconds"
