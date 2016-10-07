@@ -6,6 +6,8 @@ from threading import Thread
 import urllib2, time, argparse, multiprocessing
 
 # maximum number of thread
+import datetime
+
 max_thread = multiprocessing.cpu_count()*2
 # default number of thread
 default_threads = multiprocessing.cpu_count()/2
@@ -18,7 +20,7 @@ class Worker(Thread):
         self.tasks = tasks
         self.daemon = True
         self.start()
-    
+
     def run(self):
         while True:
             func, args, kargs = self.tasks.get()
@@ -126,9 +128,9 @@ def build_nextprot_entry_url(api_host, np_entry, export_type):
     :param export_type: the export type of None if export disabled
     :return:
     """
-
+    # 2 caches generated: /entry/{entry} + /entry/{entry}/page-display
     if export_type is None:
-        return api_host + "/entry/" + np_entry
+        return api_host + "/entry/" + np_entry + "/page-display"
     elif export_type == "xml":
         return api_host + "/export/entries.xml?query=id:" + np_entry
     elif export_type == "ttl":
@@ -147,12 +149,11 @@ def fetch_nextprot_entry(api_host, np_entry, export_type, export_dir):
                                     export_format=export_type)
     timer = Timer()
     with timer:
-        print threading.current_thread().name+": starting generating cache for entry " + np_entry + " ... "
         try:
             outstream.write(urllib2.urlopen(url).read())
         except urllib2.URLError as e:
             print threading.current_thread().name+": "+str(e)
-    print threading.current_thread().name + ": cache generated for entry "+np_entry + " [" + str(timer.duration_in_seconds()) + " seconds]"
+    print threading.current_thread().name + " has generated cache for /entry/"+np_entry + " and /entry/" + np_entry + "/page-display in " + str(datetime.timedelta(seconds=timer.duration_in_seconds())) + " seconds"
 
 
 def build_output_stream(export_dir, np_entry, export_format):
@@ -192,3 +193,6 @@ if __name__ == '__main__':
         pool.wait_completion()
 
     print "\nCache generated in " + str(globalTimer.duration_in_seconds()) + " seconds"
+
+    # TODO: Add seo site-map cache generation
+    # TODO: Add /gene-names cache generation
