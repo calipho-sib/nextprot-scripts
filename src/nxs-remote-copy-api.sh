@@ -12,8 +12,8 @@ set -o nounset  # exit when your script tries to use undeclared variables.
 function echoUsage() {
     echo "usage: $(basename $0) <src_host> <dest_host>" >&2
     echo "Params:"
-    echo " <src_host> [kant, crick, uat-web2, jung]"
-    echo " <dest_host> [kant, crick, uat-web2, jung]"
+    echo " <src_host> [kant, crick, uat-web2, jung, nextp-vm2a.vital-it.ch]"
+    echo " <dest_host> [kant, crick, uat-web2, jung, nextp-vm2a.vital-it.ch]"
     echo "Options:"
     echo " -h print usage"
 }
