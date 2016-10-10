@@ -159,6 +159,13 @@ def fetch_gene_names(api_host):
     call_api_service(url=api_host + "/gene-names", outstream=open('/dev/null', 'w'), service_name="/gene-names")
 
 
+def fetch_sitemap(api_host):
+    """Get sitemap
+    :param api_host: the API url
+    """
+    call_api_service(url=api_host + "/seo/sitemap", outstream=open('/dev/null', 'w'), service_name="/seo/sitemap")
+
+
 def call_api_service(url, outstream, service_name):
     """Make a get API request and time execution
     :param url: the API url
@@ -169,15 +176,20 @@ def call_api_service(url, outstream, service_name):
     timer = Timer()
     with timer:
         try:
+            thread_lock.acquire()
             outstream.write(urllib2.urlopen(url).read())
             sys.stdout.write("SUCCESS: " + threading.current_thread().name + " has generated cache for "+service_name)
+            thread_lock.release()
         except urllib2.URLError as e:
-            sys.stdout.write("FAILURE: " + threading.current_thread().name+" failed with error '"+str(e)+"' for "+service_name)
             thread_lock.acquire()
+            sys.stdout.write("FAILURE: " + threading.current_thread().name+" failed with error '"+str(e)+"' for "+service_name)
             global error_counter
             error_counter += 1
             thread_lock.release()
+
+    thread_lock.acquire()
     print " [" + str(datetime.timedelta(seconds=timer.duration_in_seconds())) + " seconds]"
+    thread_lock.release()
 
 
 def build_output_stream(export_dir, np_entry, export_format):
@@ -225,9 +237,11 @@ if __name__ == '__main__':
     print "\n* Generating cache for service /gene-names..."
     fetch_gene_names(args.api)
 
-    # TODO: Add seo site-map cache generation
-    #print "\n*** Generating cache for ..."
-    #fetch_site_map(args.api)
+    #TODO: CACHE HAS TO BE FIRST CONFIGURED IN API
+    #TODO: Add seo site-map cache generation
+    # print "\n* Generating cache for resource /seo/sitemap..."
+    # fetch_sitemap(args.api)
+    #TODO: Add seo tags cache generation
 
     print "\n-------------------------------------------------------------------------------------"
     print "Overall cache generated with " + str(error_counter) + " error" + ('s' if error_counter>1 else '') + \
