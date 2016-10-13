@@ -12,7 +12,7 @@ function echoUsage() {
 It merges the hotfix branch back to master, merges to develop with pom.xml versions kept as in develop.
 Once it is pushed to origin/master jenkins will publish the new patch with script 'nxs-release.sh'"
     echo "Params:"
-    echo " <repo> optional maven project git repository"
+    echo " <repo> git maven project (optional parameter)"
     echo "Options:"
     echo " -h print usage"
 }

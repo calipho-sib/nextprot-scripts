@@ -8,9 +8,9 @@ set -o nounset  # exit when your script tries to use undeclared variables.
 
 function echoUsage() {
     echo "usage: $(basename $0) [repo]" >&2
-    echo "This script prepares and inits the next hotfix branch coming from master and checkout to it (after it, you can start fixing it :))"
+    echo "This script prepares and inits the next hotfix branch coming from master and checkout to it (after it, you can start working on your fix)"
     echo "Params:"
-    echo " <repo> optional maven project git repository"
+    echo " <repo> git maven project (optional parameter)"
     echo "Options:"
     echo " -h print usage"
 }
