@@ -82,6 +82,7 @@ fi
 
 echo "-- checking out to branch master... "
 git checkout master
+echo "-- pull origin master..."
 git pull origin master
 
 echo -n "-- fetching next version... "
