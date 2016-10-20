@@ -7,21 +7,26 @@ set -o pipefail # prevents errors in a pipeline from being masked. If any comman
 set -o nounset  # exit when your script tries to use undeclared variables.
 
 function echoUsage() {
-    echo "usage: $(basename $0) [-h][repo]" >&2
+    echo "usage: $(basename $0) [-hn][repo]" >&2
     echo "This script makes a new patch release.
-It merges the hotfix branch back to master, merges to develop with pom.xml versions kept as in develop.
+It merges the hotfix branch back to master, optionally merges to develop with pom.xml versions kept as in develop.
 Once it is pushed to origin/master jenkins will publish the new patch with script 'nxs-release.sh'"
     echo "Params:"
     echo " <repo> git maven project (optional parameter)"
     echo "Options:"
+    echo " -n no hotfix merge to develop in case of a nextprot dependency changed (ex: new nextprot-queries release)"
     echo " -h print usage"
 }
 
-while getopts 'h' OPTION
+DO_NOT_MERGE_TO_DEVELOP_BRANCH=
+
+while getopts 'hn' OPTION
 do
     case ${OPTION} in
     h) echoUsage
         exit 0
+        ;;
+    n) DO_NOT_MERGE_TO_DEVELOP_BRANCH=1
         ;;
     ?) echoUsage
         exit 1
@@ -149,5 +154,9 @@ git pull origin hotfix-${VERSION}
 echo "-- merging branch hotfix-${VERSION} to master... "
 mergeToMaster
 
-echo "-- merging branch hotfix-${VERSION} to develop... "
-mergeToDevelop
+if [ ${DO_NOT_MERGE_TO_DEVELOP_BRANCH} ]; then
+    echo "-- skipping merge of branch hotfix-${VERSION} to develop"
+else
+    echo "-- merging branch hotfix-${VERSION} to develop... "
+    mergeToDevelop
+fi
