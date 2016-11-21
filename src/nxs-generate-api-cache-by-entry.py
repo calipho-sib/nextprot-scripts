@@ -176,20 +176,16 @@ def call_api_service(url, outstream, service_name):
     timer = Timer()
     with timer:
         try:
-            thread_lock.acquire()
             outstream.write(urllib2.urlopen(url).read())
             sys.stdout.write("SUCCESS: " + threading.current_thread().name + " has generated cache for "+service_name)
-            thread_lock.release()
         except urllib2.URLError as e:
-            thread_lock.acquire()
             sys.stdout.write("FAILURE: " + threading.current_thread().name+" failed with error '"+str(e)+"' for "+service_name)
+            thread_lock.acquire()
             global error_counter
             error_counter += 1
             thread_lock.release()
 
-    thread_lock.acquire()
     print " [" + str(datetime.timedelta(seconds=timer.duration_in_seconds())) + " seconds]"
-    thread_lock.release()
 
 
 def build_output_stream(export_dir, np_entry, export_format):

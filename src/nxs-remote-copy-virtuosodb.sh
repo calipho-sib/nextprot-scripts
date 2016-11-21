@@ -97,7 +97,7 @@ SRC_HOST=$1
 DEST_HOST=$2
 
 check-virtuoso-is-up ${SRC_HOST}
-check-virtuoso-is-up ${DEST_HOST}
+#check-virtuoso-is-up ${DEST_HOST}
 
 ssh npteam@${SRC_HOST} isql 1111 dba dba exec="checkpoint;"
 
