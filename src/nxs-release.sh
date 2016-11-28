@@ -96,7 +96,7 @@ mvn versions:set -DnewVersion=${RELEASE_VERSION} -DgenerateBackupPoms=false
 
 ###### Clean, test and deploy on nexus
 echo "-- deploying on nexus release repository... "
-mvn clean deploy
+mvn clean deploy -DskipTests
 
 ###### Add, commit and push to master
 echo "-- adding and committing in git... "
