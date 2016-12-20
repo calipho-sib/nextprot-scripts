@@ -5,6 +5,7 @@ from pprint import pprint
 from Queue import Queue
 from threading import Thread
 
+# ./nxs-test-blast-api.py localhost:8080 request.json --repeat-blast 2 --out /tmp/blast.out
 
 def parse_arguments():
     """Parse arguments
