@@ -5,7 +5,11 @@ from pprint import pprint
 from Queue import Queue
 from threading import Thread
 
-# ./nxs-test-blast-api.py localhost:8080 request.json --repeat-blast 2 --out /tmp/blast.out
+default_threads = multiprocessing.cpu_count()/2
+
+# Search given sequences with blast via API sequencially and in parallel then check correctness of results
+# Example:
+# ./nxs-test-blast-api.py localhost:8080 request.json --repeat-blast 2 --out /tmp/blast.out --threads 16
 
 def parse_arguments():
     """Parse arguments
@@ -18,6 +22,8 @@ def parse_arguments():
                         help='file path to flush json output responses')
     parser.add_argument('-r', '--repeat-blast', metavar='num', default=1, type=int,
                         help='blast sequences n times (default=1)')
+    parser.add_argument('-t', '--threads', metavar='num', default=default_threads, type=int,
+                        help='number of threads (default=' + str(default_threads) + ')')
 
     arguments = parser.parse_args()
 
@@ -28,8 +34,10 @@ def parse_arguments():
     print "Parameters"
     print "  API host         : " + arguments.host
     print "  JSON input file  : " + arguments.json_file
-    print "  blasts sequence  : " + str(arguments.repeat_blast) + " times"
     print "  JSON output file : " + arguments.out
+    print
+    print "  blast sequence   : " + str(arguments.repeat_blast) + " times"
+    print "  threads number   : " + str(arguments.threads)
     print "-------------------------------------------------------------------------------------"
 
     return arguments
@@ -93,9 +101,9 @@ class Timer(object):
         return self.__finish - self.__start
 
 
-def run_requests_parallel(blast_api, sequences, results):
+def run_requests_parallel(blast_api, sequences, results, threads_num):
 
-    pool = ThreadPool(multiprocessing.cpu_count()*2)
+    pool = ThreadPool(threads_num)
 
     for sequence in sequences:
 
@@ -146,7 +154,7 @@ if __name__ == '__main__':
     duration = timer.duration_in_seconds()
     duration_per_seconds = len(sequences) / duration
     print "Sequential execution in "+str(datetime.timedelta(seconds=duration)) + " seconds [" + \
-          str(duration_per_seconds) + " sequence/seconds]"
+          str(duration_per_seconds) + " sequences/second]"
 
     time.sleep(2)
 
@@ -154,13 +162,13 @@ if __name__ == '__main__':
     timer = Timer()
 
     with timer:
-        run_requests_parallel(blast_api, sequences, parallel_results)
+        run_requests_parallel(blast_api, sequences, parallel_results, args.threads)
 
     duration = timer.duration_in_seconds()
     duration_per_seconds = len(sequences) / duration
 
     print "Parallel execution in "+str(datetime.timedelta(seconds=duration)) + " seconds [" + \
-          str(duration_per_seconds) + " sequence/seconds]"
+          str(duration_per_seconds) + " sequences/second]"
 
     compare_json_results(sequential_results, parallel_results)
 
