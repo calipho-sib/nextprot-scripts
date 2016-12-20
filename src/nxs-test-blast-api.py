@@ -7,9 +7,11 @@ from threading import Thread
 
 default_threads = multiprocessing.cpu_count()/2
 
-# Search given sequences with blast via API sequencially and in parallel then check correctness of results
+# Blast given sequences (from json file) via neXtProt API sequencially + in parallel then check correctness of responses
+#
 # Example:
 # ./nxs-test-blast-api.py localhost:8080 request.json --repeat-blast 2 --out /tmp/blast.out --threads 16
+
 
 def parse_arguments():
     """Parse arguments
