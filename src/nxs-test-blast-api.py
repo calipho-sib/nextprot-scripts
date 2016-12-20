@@ -13,7 +13,10 @@ def parse_arguments():
     parser = argparse.ArgumentParser(description='Testing neXtProt API blast')
     parser.add_argument('host', help='API host (ie: build-api.nextprot.org)')
     parser.add_argument('json_file', help='input json file containing queries and expected results')
-    parser.add_argument('-o', '--out', metavar='path', default='output.json', help='export json output dictionary')
+    parser.add_argument('-o', '--out', metavar='path', default='output.json',
+                        help='file path to flush json output responses')
+    parser.add_argument('-r', '--repeat-blast', metavar='num', default=1, type=int,
+                        help='blast sequences n times (default=1)')
 
     arguments = parser.parse_args()
 
@@ -22,9 +25,10 @@ def parse_arguments():
         arguments.host = 'http://' + arguments.host
 
     print "Parameters"
-    print "  API host            : " + arguments.host
-    print "  JSON input file     : " + arguments.json_file
-    print "  JSON output file    : " + arguments.out
+    print "  API host         : " + arguments.host
+    print "  JSON input file  : " + arguments.json_file
+    print "  blasts sequence  : " + str(arguments.repeat_blast) + " times"
+    print "  JSON output file : " + arguments.out
     print "-------------------------------------------------------------------------------------"
 
     return arguments
@@ -127,7 +131,7 @@ if __name__ == '__main__':
     args = parse_arguments()
     blast_api = args.host + '/blast/sequence/'
 
-    sequences = json.loads(open(args.json_file).read())
+    sequences = json.loads(open(args.json_file).read()) * args.repeat_blast
 
     print "Blasting "+str(len(sequences)) + " sequences to " + args.host + "..."
 
@@ -160,7 +164,10 @@ if __name__ == '__main__':
     compare_json_results(sequential_results, parallel_results)
 
     f = open(args.out, 'w')
-    pprint(parallel_results, stream=f)
+    all_results = dict()
+    all_results["sequencial"] = sequential_results
+    all_results["parallel"] = parallel_results
+    f.write(json.dumps(all_results))
     f.close()
 
 # example of json file
