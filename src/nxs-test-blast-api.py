@@ -54,9 +54,9 @@ def run_request(blast_api, sequence):
     try:
         response = urllib2.urlopen(url).read()
         return json.loads(response)
-    except:
+    except urllib2.URLError:
         thread.interrupt_main()
-        sys.exit(str(url)+": cannot connect to nextprot API")
+        sys.exit("cannot connect to nextprot API " + url)
 
 
 def run_requests_parallel(blast_api, sequences, results, threads_num):
