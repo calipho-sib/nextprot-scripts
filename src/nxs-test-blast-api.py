@@ -1,7 +1,7 @@
 #!/usr/bin/python
 
 from nxs_utils import ThreadPool, Timer
-import argparse, json, urllib2, multiprocessing, time, threading, sys, datetime
+import argparse, json, urllib2, multiprocessing, time, threading, thread, sys, datetime
 from pprint import pprint
 
 default_threads = multiprocessing.cpu_count()/2
@@ -55,6 +55,7 @@ def run_request(blast_api, sequence):
         response = urllib2.urlopen(url).read()
         return json.loads(response)
     except:
+        thread.interrupt_main()
         sys.exit(str(url)+": cannot connect to nextprot API")
 
 
@@ -140,6 +141,7 @@ if __name__ == '__main__':
 
     sequential_results = search_blast_sequential(blast_api=blast_api, sequences=sequences)
 
+    print "sleeping..."
     time.sleep(2)
 
     parallel_results = search_blast_parallel(blast_api=blast_api, sequences=sequences)
