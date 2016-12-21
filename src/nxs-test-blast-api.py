@@ -35,9 +35,11 @@ def parse_arguments():
     if not arguments.json_file.endswith(".json"):
         raise ValueError(arguments.json_file+": invalid json file name")
 
+    arguments.sequences = json.loads(open(arguments.json_file).read())
+
     print "Parameters"
     print "  API host         : " + arguments.host
-    print "  JSON input file  : " + arguments.json_file
+    print "  JSON input file  : " + arguments.json_file + " (found "+str(len(arguments.sequences))+" sequences)"
     print "  JSON output file : " + arguments.out
     print
     print "  repeat blast     : " + str(arguments.repeat_blast) + " times"
@@ -47,7 +49,7 @@ def parse_arguments():
     return arguments
 
 
-def run_request(blast_api, sequence):
+def call_blast(blast_api, sequence):
 
     url = blast_api + sequence+".json"
 
@@ -59,25 +61,25 @@ def run_request(blast_api, sequence):
         sys.exit("cannot connect to nextprot API " + url)
 
 
-def run_requests_parallel(blast_api, sequences, results, threads_num):
+def test_parallel_run(blast_api, sequences, expected_results, threads_num):
 
     pool = ThreadPool(threads_num)
 
     for sequence in sequences:
-
-        pool.add_task(func=call_blast_service,
+        pool.add_task(func=blast_and_test_correctness,
                       blast_api=blast_api,
                       sequence=sequence,
-                      results=results)
+                      expected_results=expected_results)
     pool.wait_completion()
 
 
-def call_blast_service(blast_api, sequence, results):
+def blast_and_test_correctness(blast_api, sequence, expected_results):
 
     local_timer = Timer()
     with local_timer:
         try:
-            results[sequence] = run_request(blast_api, sequence)
+            result = call_blast(blast_api, sequence)
+            compare_json_results(expected_results[sequence], result)
             sys.stdout.write("SUCCESS: " + threading.current_thread().name)
         except urllib2.URLError as e:
             sys.stdout.write("FAILURE: " + threading.current_thread().name+" failed with error '"+str(e))
@@ -92,7 +94,7 @@ def compare_json_results(sequential_results, parallel_results):
                          pprint(parallel_results))
 
 
-def search_blast_sequential(blast_api, sequences):
+def blast_sequences_sequential(blast_api, sequences):
 
     print "Blasting "+str(len(sequences)) + " sequences to " + args.host + "..."
 
@@ -102,7 +104,7 @@ def search_blast_sequential(blast_api, sequences):
 
     with local_timer:
         for sequence in sequences:
-            results[sequence] = run_request(blast_api, sequence)
+            results[sequence] = call_blast(blast_api, sequence)
 
     duration = local_timer.duration_in_seconds()
     duration_per_seconds = len(sequences) / duration
@@ -112,16 +114,14 @@ def search_blast_sequential(blast_api, sequences):
     return results
 
 
-def search_blast_parallel(blast_api, sequences):
-
-    results = {}
+def test_parallel_run_time(blast_api, sequences, expected_results):
 
     sequences *= args.repeat_blast
 
     local_timer = Timer()
 
     with local_timer:
-        run_requests_parallel(blast_api, sequences, results, args.thread)
+        test_parallel_run(blast_api, sequences, expected_results, args.thread)
 
     duration = local_timer.duration_in_seconds()
     duration_per_seconds = len(sequences) / duration
@@ -129,30 +129,21 @@ def search_blast_parallel(blast_api, sequences):
     print "Parallel execution in "+str(datetime.timedelta(seconds=duration)) + " seconds [" + \
           str(duration_per_seconds) + " sequences/second]"
 
-    return results
-
 
 if __name__ == '__main__':
 
     args = parse_arguments()
     blast_api = args.host + '/blast/sequence/'
 
-    sequences = json.loads(open(args.json_file).read())
-
-    sequential_results = search_blast_sequential(blast_api=blast_api, sequences=sequences)
+    sequential_results = blast_sequences_sequential(blast_api=blast_api, sequences=args.sequences)
 
     print "sleeping..."
     time.sleep(2)
 
-    parallel_results = search_blast_parallel(blast_api=blast_api, sequences=sequences)
-
-    compare_json_results(sequential_results, parallel_results)
+    test_parallel_run_time(blast_api=blast_api, sequences=args.sequences, expected_results=sequential_results)
 
     f = open(args.out, 'w')
-    all_results = dict()
-    all_results["sequencial"] = sequential_results
-    all_results["parallel"] = parallel_results
-    f.write(json.dumps(all_results))
+    f.write(json.dumps(sequential_results))
     f.close()
 
 # example of json file
