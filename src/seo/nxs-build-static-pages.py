@@ -17,17 +17,20 @@ xmlUrls = xmldoc.getElementsByTagName('loc')
 # Gets a list of urls
 urls = [url.firstChild.nodeValue for url in xmlUrls]
 
-print urls
+cnt = 0
 
 for url in urls:
+    cnt += 1
     htmlfile = urllib.URLopener()
     filename = url.replace(siteBase, "")
     if(filename):
         directoryname = os.path.dirname(filename)
         if not os.path.exists(directoryname):
             os.makedirs(directoryname)
+        print str(cnt) + " creating file " + filename + " " 
         htmlfile.retrieve(url + "?_escaped_fragment_=", filename)
     else:
+        print str(cnt) + " creating index.html" 
         htmlfile.retrieve(url + "?_escaped_fragment_=", "index.html")
 
         
