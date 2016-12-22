@@ -34,7 +34,7 @@ def getSitmapUrls():
     return [url.firstChild.nodeValue for url in xmlUrls]
 
 
-@retry(urllib2.URLError, tries=4, delay=3, backoff=2)
+@retry(urllib2.URLError, tries=10, delay=3, backoff=2)
 def getUrlAsContent(url):
     print "asking for " + url
     return urllib2.urlopen(url + "?_escaped_fragment_=", timeout=60).read()
