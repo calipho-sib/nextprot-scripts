@@ -14,14 +14,13 @@ ctx.check_hostname = False
 ctx.verify_mode = ssl.CERT_NONE
 """
 
-WORKERS = 1
+WORKERS = 5
 
 siteBase = "https://bed-search.nextprot.org/"
 #siteBase = "https://www.nextprot.org/" # Important to add the / at the end
 sitemapUrl = siteBase + "sitemap.xml"
 #Where to save static site
 dirlocation = "/tmp/static-site/"
-
 
 def saveToFile (content, filename):
     text_file = open(filename, "w")

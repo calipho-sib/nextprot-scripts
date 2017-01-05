@@ -8,12 +8,13 @@ import sys
 from selenium import webdriver
 from selenium.webdriver.common.desired_capabilities import DesiredCapabilities
 
-DRIVER = webdriver.Remote(command_executor='http://dockerdev.vital-it.ch:32768/wd/hub', desired_capabilities=DesiredCapabilities.CHROME)
-
 def getPageUsingSelenium(url):
-    DRIVER.get(url)
+    driver = webdriver.Remote(command_executor='http://dockerdev.vital-it.ch:32768/wd/hub', desired_capabilities=DesiredCapabilities.CHROME)
+    driver.get(url)
     print "getting with selenium " + url
-    return DRIVER.page_source
+    content =  driver.page_source.encode("UTF-8")
+    driver.quit()
+    return content
 
 """
     Use it like this: 
