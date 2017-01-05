@@ -12,7 +12,7 @@ def getPageUsingSelenium(url):
     driver = webdriver.Remote(command_executor='http://dockerdev.vital-it.ch:32768/wd/hub', desired_capabilities=DesiredCapabilities.CHROME)
     driver.get(url)
     print "getting with selenium " + url
-    content =  driver.page_source.encode("UTF-8")
+    content =  driver.page_source
     driver.quit()
     return content
 
