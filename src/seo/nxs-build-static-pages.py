@@ -12,7 +12,7 @@ ctx = ssl.create_default_context()
 ctx.check_hostname = False
 ctx.verify_mode = ssl.CERT_NONE
 
-WORKERS = 5
+WORKERS = 1
 
 siteBase = "https://bed-search.nextprot.org/"
 #siteBase = "https://www.nextprot.org/" # Important to add the / at the end
@@ -44,7 +44,7 @@ def getSitmapUrls():
     xmlUrls = xmldoc.getElementsByTagName('loc')
 
     # Gets a list of urls
-    return [url.firstChild.nodeValue for url in xmlUrls]
+    return [url.firstChild.nodeValue.replace("https://www.nextprot.org/", siteBase) for url in xmlUrls]
 
 
 @retry(urllib2.URLError, tries=10, delay=2, backoff=2)
@@ -64,7 +64,6 @@ def getUrlAsContentWithPhantomJs(url):
     print "asking for " + url
     proc = subprocess.Popen(["./phantomjs-mac --ignore-ssl-errors=true print-html-content.js " +  url], stdout=subprocess.PIPE, shell=True)
     (out, err) = proc.communicate()
-    print out
     return out
 
 
@@ -83,7 +82,7 @@ def incrementCounter():
 
 def getPage(url, filename):
 #    try:
-    content = getUrlAsContentWithPhantomJs(url)
+    content = getUrlAsContentWithSelenium(url)
     saveToFile(content, filename)
 #    except:
 #        print "FAILED FOR " + url

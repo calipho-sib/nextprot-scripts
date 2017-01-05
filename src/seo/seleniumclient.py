@@ -10,7 +10,7 @@ from selenium.webdriver.common.desired_capabilities import DesiredCapabilities
 
 
 def getPageUsingSelenium(url):
-    print "getting " + url
+    print "getting with selenium " + url
     DRIVER = webdriver.Remote(
     command_executor='http://dockerdev.vital-it.ch:32768/wd/hub',
     desired_capabilities=DesiredCapabilities.CHROME)
