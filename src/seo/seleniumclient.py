@@ -8,14 +8,11 @@ import sys
 from selenium import webdriver
 from selenium.webdriver.common.desired_capabilities import DesiredCapabilities
 
+DRIVER = webdriver.Remote(command_executor='http://dockerdev.vital-it.ch:32768/wd/hub', desired_capabilities=DesiredCapabilities.CHROME)
 
 def getPageUsingSelenium(url):
-    print "getting with selenium " + url
-    DRIVER = webdriver.Remote(
-    command_executor='http://dockerdev.vital-it.ch:32768/wd/hub',
-    desired_capabilities=DesiredCapabilities.CHROME)
-
     DRIVER.get(url)
+    print "getting with selenium " + url
     return DRIVER.page_source
 
 """

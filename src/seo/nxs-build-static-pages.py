@@ -8,9 +8,11 @@ import seleniumclient
 
 import xml.etree.ElementTree as ET
 
+"""
 ctx = ssl.create_default_context()
 ctx.check_hostname = False
 ctx.verify_mode = ssl.CERT_NONE
+"""
 
 WORKERS = 1
 
@@ -23,7 +25,7 @@ dirlocation = "/tmp/static-site/"
 
 def saveToFile (content, filename):
     text_file = open(filename, "w")
-    text_file.write(content)
+    text_file.write(content.encode('UTF-8'))
     text_file.close()
     print str(incrementCounter()) + " creating file " + filename + " " 
 
@@ -50,7 +52,7 @@ def getSitmapUrls():
 @retry(urllib2.URLError, tries=10, delay=2, backoff=2)
 def getUrlAsContentWithPrerender(url):
     print "asking for " + url
-    return urllib2.urlopen(url + "?_escaped_fragment_=", timeout=60, context=ctx).read()
+    return urllib2.urlopen(url + "?_escaped_fragment_=", timeout=60).read()
 
 
 @retry(urllib2.URLError, tries=10, delay=2, backoff=2)
