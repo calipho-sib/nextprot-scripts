@@ -1,0 +1,11 @@
+CONSTRUCT  {?iso :allNegativeExpression ?stat }
+  FROM <http://nextprot.org/rdf>
+WHERE {
+?tissue a :NextprotTissues. 
+?iso :negativeExpression ?stat.
+ ?stat :in ?tissue.
+ FILTER NOT EXISTS{
+  ?iso :expression/:in/:childOf* ?tissue.
+ }
+}
+
