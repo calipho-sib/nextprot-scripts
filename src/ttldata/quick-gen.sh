@@ -7,7 +7,7 @@ if [ "$actions" = "" ] ; then
   echo " "
   echo Usage $0 \"action1 ... actionN\" [MMdd]
   echo " "
-  echo where actions is a space separated list ot these possible items: \"cache ttl xml solr gz\"
+  echo where actions is a space separated list ot these possible items: \"cache ttl xml solr gz rdfhelp\"
   echo and MMdd is a month/date used to touch xml and ttl files when gz action is in action list. 
   echo " "
   exit 1
@@ -33,6 +33,13 @@ for action in $actions; do
 
   if [ "$action" = "cache" ] ; then
     nohup nxs-generate-api-cache-by-entry.py build-api.nextprot.org < /dev/null > nxs-generate-api-cache-by-entry-$(date "+%Y%m%d-%H%M").log 2>&1
+  fi
+
+# generate cache for rdfhelp (to be run after ttl are generated and loaded) 
+
+  if [ "$action" = "rdfhelp" ] ; then
+    urlbase="http://localhost:8080/nextprot-api-web"
+    wget --timeout=7200 --output-document=rdfhelp-$(date "+%Y%m%d-%H%M").json "$urlbase/rdf/help/type/all.json"
   fi
 
 
