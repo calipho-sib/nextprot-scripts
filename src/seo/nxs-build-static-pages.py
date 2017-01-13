@@ -6,7 +6,7 @@ from subprocess import call
 import subprocess
 import seleniumclient
 import xml.etree.ElementTree as ET
-import lxml
+import re, lxml
 from lxml.html.clean import Cleaner
 
 WORKERS = 1
@@ -19,7 +19,7 @@ dirlocation = "/work/tmp/static-site/"
 
 cleaner = Cleaner()
 #cleaner.scripts = True # This is True because we want to activate the javascript filter
-cleaner.javascript = True # This is True because we want to activate the javascript filter
+cleaner.scripts = True # This is True because we want to activate the javascript filter
 
 
 def saveToFile (content, filename):
@@ -86,9 +86,9 @@ def getPage(url, filename):
     try:
         if not os.path.exists(filename):
             content = getUrlAsContentWithSelenium(url)
-	    dataclean = cleaner.clean_html(content)
-            #contentCleaned = lxml.html.tostring(dataclean)
-            saveToFile(dataclean, filename)
+            content = re.sub(r"<script(.|\n)*?<\/script>", "" ,content)
+	    #dataclean = cleaner.clean_html(content)
+            saveToFile(content, filename)
         else: 
             incrementCounter()
             #print "skipping " + filename + "and counting " + str(incrementCounter())
