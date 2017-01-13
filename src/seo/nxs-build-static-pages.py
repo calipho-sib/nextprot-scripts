@@ -5,28 +5,29 @@ from nxs_utils import ThreadPool, Timer
 from subprocess import call
 import subprocess
 import seleniumclient
-
 import xml.etree.ElementTree as ET
+import lxml
+from lxml.html.clean import Cleaner
 
-"""
-ctx = ssl.create_default_context()
-ctx.check_hostname = False
-ctx.verify_mode = ssl.CERT_NONE
-"""
-
-WORKERS = 5
+WORKERS = 1
 
 siteBase = "https://bed-search.nextprot.org/"
-#siteBase = "https://www.nextprot.org/" # Important to add the / at the end
 sitemapUrl = siteBase + "sitemap.xml"
 #Where to save static site
-dirlocation = "/tmp/static-site/"
+dirlocation = "/work/tmp/static-site/"
+
+
+cleaner = Cleaner()
+#cleaner.scripts = True # This is True because we want to activate the javascript filter
+cleaner.javascript = True # This is True because we want to activate the javascript filter
+
 
 def saveToFile (content, filename):
     text_file = open(filename, "w")
     text_file.write(content.encode('UTF-8'))
     text_file.close()
     print str(incrementCounter()) + " creating file " + filename + " " 
+    sys.stdout.flush()
 
 def createDirectoryStructureIfNeeded(URLS):
     for url in URLS:
@@ -82,12 +83,21 @@ def incrementCounter():
     return COUNT
 
 def getPage(url, filename):
-#    try:
-    content = getUrlAsContentWithSelenium(url)
-    saveToFile(content, filename)
-#    except:
-#        print "FAILED FOR " + url
-#        print("Unexpected error:", sys.exc_info()[0])
+    try:
+        if not os.path.exists(filename):
+            content = getUrlAsContentWithSelenium(url)
+	    dataclean = cleaner.clean_html(content)
+            #contentCleaned = lxml.html.tostring(dataclean)
+            saveToFile(dataclean, filename)
+        else: 
+            incrementCounter()
+            #print "skipping " + filename + "and counting " + str(incrementCounter())
+    except Exception as e:
+        print "FAILED FOR " + url
+        exc_type, exc_obj, exc_tb = sys.exc_info()
+        fname = os.path.split(exc_tb.tb_frame.f_code.co_filename)[1]
+        print(exc_type, fname, exc_tb.tb_lineno)
+        print "Unexpected error: ", sys.exc_info()[0], sys.exc_info()[1]
 
     
 def getAllPagesInParallel(URLS):
@@ -96,6 +106,7 @@ def getAllPagesInParallel(URLS):
         pool.add_task(func=getPage,
                       url=url,
                       filename=getFilename(url))
+    print "done with " + str(COUNT) + " files"
     pool.wait_completion()
     
 if __name__ == '__main__':
