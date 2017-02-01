@@ -53,9 +53,10 @@ rm $con_dir/*
 rm $fus_dir/fuseki-tdb.log
 
 cd $scripts_dir
+echo restatring fuseki at $(date)
 ./restart-fuseki
-echo "sleeping 10 seconds to make sure fuseki is ready..."
-sleep 10
+echo "sleeping 30 seconds to make sure fuseki is ready..."
+sleep 30
 
 for f in $first_files
 do
@@ -89,9 +90,9 @@ done
 #mv mystats.opt $tdb_dir/stats.opt
 
 cd $scripts_dir
-./restart-fuseki
-echo "sleeping 5 seconds..."
-sleep 5
+#./restart-fuseki
+#echo "sleeping 5 seconds..."
+#sleep 5
 
 post_cnt=$(grep -c "POST" $fus_dir/fuseki-tdb.log)
 get_cnt=$(grep -c "GET" $fus_dir/fuseki-tdb.log)
