@@ -75,7 +75,7 @@ def count_annotations_for_entry(api_host, np_entry, dico):
     url = api_host + "/entry/" + np_entry + "/annotation-count.json"
     dico[np_entry] = int(call_api_service(url=url, service_name="/entry/"+np_entry))
     if len(dico) % 100 == 0:
-        sys.stdout.write("INFO: " + str(len(dico)) + " entries processed")
+        sys.stdout.write(str(len(dico)) + " ... ")
 
 
 def call_api_service(url, service_name):
@@ -91,7 +91,7 @@ def call_api_service(url, service_name):
             return count
         except urllib2.URLError as e:
             sys.stdout.write("FAILURE: " + threading.current_thread().name+" failed with error '"+str(e)+"' for "
-                             + service_name+"/n")
+                             + service_name)
 
     print " [" + str(datetime.timedelta(seconds=timer.duration_in_seconds())) + " seconds]/n"
 
