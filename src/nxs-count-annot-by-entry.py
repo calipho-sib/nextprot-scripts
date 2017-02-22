@@ -19,10 +19,10 @@ def parse_arguments():
     """
     parser = argparse.ArgumentParser(description='Count number of annotations for all entries from neXtProt api server')
     parser.add_argument('api', help='nextprot api uri (ie: build-api.nextprot.org)')
-    parser.add_argument('-o', '--export_out', metavar='dir', default="/tmp/", help='export destination directory')
+    parser.add_argument('-o', '--output', metavar='csv', default="/tmp/count-annotation.csv", help='csv file')
     parser.add_argument('-t', '--thread', metavar='num', default=default_threads, type=int,
                         help='number of threads (default=' + str(default_threads) + ')')
-    parser.add_argument('-n', metavar='entries', default=-1, type=int, help='export n entries only')
+    parser.add_argument('-n', metavar='entries', default=-1, type=int, help='export n first entries')
 
     arguments = parser.parse_args()
 
@@ -32,19 +32,19 @@ def parse_arguments():
     elif arguments.thread <= 0:
         parser.error(str(arguments.thread)+" should be a positive number of threads")
 
-    if arguments.export_out is not None and not os.path.isdir(arguments.export_out):
-        parser.error(arguments.export_out+" is not a directory")
-
     if not arguments.api.startswith("http"):
         arguments.api = 'http://' + arguments.api
+
+    arguments.entries = get_all_nextprot_entries(api_host=arguments.api)
+
+    if arguments.n > 0:
+        arguments.entries = arguments.entries[0:arguments.n]
 
     print "Parameters"
     print "  nextprot api host : " + arguments.api
     print "  thread number     : " + str(arguments.thread)
-    if arguments.export_out is not None:
-        print "  output directory : "+arguments.export_out
-    if arguments.n > 0:
-        print "  export n entries : "+str(arguments.n)
+    print "  output file       : " + arguments.output
+    print "  export n entries  : " + str(len(arguments.entries))
     print
 
     return arguments
@@ -99,11 +99,6 @@ def call_api_service(url, service_name):
 if __name__ == '__main__':
     args = parse_arguments()
 
-    all_nextprot_entries = get_all_nextprot_entries(api_host=args.api)
-
-    if args.n > 0:
-        all_nextprot_entries = all_nextprot_entries[0:args.n]
-
     pool = ThreadPool(args.thread)
 
     # global variable to count errors
@@ -115,7 +110,7 @@ if __name__ == '__main__':
     with globalTimer:
 
         # add a task by entry to get
-        for nextprot_entry in all_nextprot_entries:
+        for nextprot_entry in args.entries:
             pool.add_task(func=count_annotations_for_entry,
                           api_host=args.api,
                           np_entry=nextprot_entry,
@@ -124,7 +119,7 @@ if __name__ == '__main__':
 
     count_annotations_items = sorted(count_annotations.items(), key=operator.itemgetter(1), reverse=True)
 
-    with open(args.export_out+'count-annotation.csv', 'wb') as csv_file:
+    with open(args.output, 'wb') as csv_file:
         writer = csv.writer(csv_file)
         for key, value in count_annotations_items:
             writer.writerow([key, value])
