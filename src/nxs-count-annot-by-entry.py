@@ -19,7 +19,7 @@ def parse_arguments():
     """
     parser = argparse.ArgumentParser(description='Count number of annotations for all entries from neXtProt api server')
     parser.add_argument('api', help='nextprot api uri (ie: build-api.nextprot.org)')
-    parser.add_argument('-o', '--export_out', metavar='dir', default="/tmp", help='export destination directory')
+    parser.add_argument('-o', '--export_out', metavar='dir', default="/tmp/", help='export destination directory')
     parser.add_argument('-t', '--thread', metavar='num', default=default_threads, type=int,
                         help='number of threads (default=' + str(default_threads) + ')')
     parser.add_argument('-n', metavar='entries', default=-1, type=int, help='export n entries only')
