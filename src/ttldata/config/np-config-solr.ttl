@@ -1,0 +1,106 @@
+## Example of a TDB dataset and text index published using Fuseki
+
+@prefix :        <#> .
+@prefix fuseki:  <http://jena.apache.org/fuseki#> .
+@prefix rdf:     <http://www.w3.org/1999/02/22-rdf-syntax-ns#> .
+@prefix rdfs:    <http://www.w3.org/2000/01/rdf-schema#> .
+@prefix tdb:     <http://jena.hpl.hp.com/2008/tdb#> .
+@prefix ja:      <http://jena.hpl.hp.com/2005/11/Assembler#> .
+@prefix text:    <http://jena.apache.org/text#> .
+
+@prefix dc:        <http://purl.org/dc/elements/1.1/> .
+@prefix vcard:     <http://www.w3.org/2001/vcard-rdf/3.0#> .
+@prefix ns:        <http://example.org/ns#> .
+
+@prefix np:        <http://nextprot.org/rdf/> .
+@prefix pred: <http://nextprot.org/rdf/pred/> .
+
+[] rdf:type fuseki:Server ;
+   # Timeout - server-wide default: milliseconds.
+   # Format 1: "1000" -- 1 second timeout
+   # Format 2: "10000,60000" -- 10s timeout to first result, then 60s timeout to for rest of query.
+   # See java doc for ARQ.queryTimeout
+   # ja:context [ ja:cxtName "arq:queryTimeout" ;  ja:cxtValue "10000" ] ;
+   # ja:loadClass "your.code.Class" ;
+
+   fuseki:services (
+     <#service_text_tdb>
+   ) .
+
+# TDB
+[] ja:loadClass "com.hp.hpl.jena.tdb.TDB" .
+tdb:DatasetTDB  rdfs:subClassOf  ja:RDFDataset .
+tdb:GraphTDB    rdfs:subClassOf  ja:Model .
+
+# Text
+[] ja:loadClass "org.apache.jena.query.text.TextQuery" .
+text:TextDataset      rdfs:subClassOf   ja:RDFDataset .
+#pam
+text:TextIndexSolr    rdfs:subClassOf   text:TextIndex .
+#text:TextIndexLucene  rdfs:subClassOf   text:TextIndex .
+
+## ---------------------------------------------------------------
+
+<#service_text_tdb> rdf:type fuseki:Service ;
+    rdfs:label                      "TDB/text service" ;
+    fuseki:name                     "ds" ;
+    fuseki:serviceQuery             "query" ;
+    fuseki:serviceQuery             "sparql" ;
+    fuseki:serviceUpdate            "update" ;
+    fuseki:serviceUpload            "upload" ;
+    fuseki:serviceReadGraphStore    "get" ;
+    fuseki:serviceReadWriteGraphStore    "data" ;
+    fuseki:dataset                  <#text_dataset> ;
+    .
+
+<#text_dataset> rdf:type     text:TextDataset ;
+    text:dataset   <#dataset> ;
+    #pam
+    text:index   <#indexSolr> ;
+    #text:index     <#indexLucene> ;
+    .
+
+<#dataset> rdf:type      tdb:DatasetTDB ;
+    tdb:location "dbnp1" ;
+    ##tdb:unionDefaultGraph true ;
+    .
+
+<#indexSolr> a text:TextIndexSolr ;
+    text:server <http://localhost:8985/solr/rdf1> ;
+    #text:server <embedded:SolrARQ> ;
+    text:entityMap <#entMap> ;
+    .
+
+<#indexLucene> a text:TextIndexLucene ;
+    text:directory <file:dbnp1/lucene> ;
+    ##text:directory "mem" ;
+    text:entityMap <#entMap> ;
+    .
+
+<#entMap> a text:EntityMap ;
+    text:entityField      "uri" ;
+    text:defaultField     "text" ;        ## Should be defined in the text:map.
+    text:map (
+[ text:field "text" ; text:predicate pred:name ]
+[ text:field "antibody_ac" ; text:predicate pred:antibody-ac ]
+[ text:field "cv_ac" ; text:predicate pred:cv-ac ]
+[ text:field "cv_name" ; text:predicate pred:cv-name ]
+[ text:field "cv_synonym" ; text:predicate pred:cv-synonym ]
+[ text:field "cv_term_category" ; text:predicate pred:cv-term-category ]
+[ text:field "description" ; text:predicate pred:description ]
+[ text:field "evidences" ; text:predicate pred:evidences ]
+[ text:field "family_name_family_region" ; text:predicate pred:family-name-family-region ]
+[ text:field "first_pos" ; text:predicate pred:first-pos ]
+[ text:field "integration_level" ; text:predicate pred:integration-level ]
+[ text:field "last_pos" ; text:predicate pred:last-pos ]
+[ text:field "original_sequence" ; text:predicate pred:original-sequence ]
+[ text:field "positive_evidences" ; text:predicate pred:positive-evidences ]
+[ text:field "quality" ; text:predicate pred:quality ]
+[ text:field "sequence_caution_conflict_type" ; text:predicate pred:sequence-caution-conflict-type ]
+[ text:field "sequence_caution_position" ; text:predicate pred:sequence-caution-position ]
+[ text:field "sequence_variant_disease" ; text:predicate pred:sequence-variant-disease ]
+[ text:field "sequence_variant_mutation_aa" ; text:predicate pred:sequence-variant-mutation-aa ]
+[ text:field "subcellular_location_orientation" ; text:predicate pred:subcellular-location-orientation ]
+[ text:field "subcellular_location_topology" ; text:predicate pred:subcellular-location-topology ]
+[ text:field "variant_sequence" ; text:predicate pred:variant-sequence ]
+         ) .

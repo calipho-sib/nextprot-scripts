@@ -1,0 +1,40 @@
+scripts_dir=/work/ttldata
+ttl_dir=/work/ttldata/tuto
+tdb_dir=/work/tdbdata
+fus_dir=/work/devtools/jena/jena-fuseki
+jen_dir=/work/devtools/jena/apache-jena/bin
+
+cfg_file=/work/ttldata/config/config-tdb.ttl
+
+first_files="resource.ttl ontology.ttl"
+
+#read -p "Ready to delete triplestore $tdb_dir and rebuild it (y/n) ? " yn
+#case $yn in
+#  [Yy]* ) ;;
+#   * ) exit;;
+#esac
+
+# ------------------------------
+# if [ "a" == "b" ]
+# then
+# ------------------------------
+
+d1=$(date)
+rm $tdb_dir/*
+
+cd $scripts_dir
+./restart-fuseki
+echo "sleeping 5 seconds to make sure fuseki is ready..."
+sleep 6
+
+for f in $first_files
+do
+  echo "posting $ttl_dir/$f..."
+  $fus_dir/s-post http://localhost:3030/np/data default $ttl_dir/$f
+done
+
+d2=$(date)
+echo "started at $d1"
+echo "ended   at $d2"
+
+

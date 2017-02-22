@@ -1,0 +1,6 @@
+CONSTRUCT  {?isoform :lowExpression ?stats }
+  FROM <http://nextprot.org/rdf>
+WHERE {
+   ?isoform :expression ?stats.
+   ?stats :evidence/:expressionLevel :Low
+}

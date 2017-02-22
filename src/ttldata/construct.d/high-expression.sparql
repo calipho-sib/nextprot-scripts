@@ -1,0 +1,7 @@
+CONSTRUCT  {?isoform :highExpression ?stats }
+  FROM <http://nextprot.org/rdf>
+WHERE {
+   ?isoform :expression ?stats.
+   ?stats :evidence/:expressionLevel :High
+}
+

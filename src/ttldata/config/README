@@ -1,0 +1,1 @@
+./fuseki-server --update --config np-config-solr.ttl

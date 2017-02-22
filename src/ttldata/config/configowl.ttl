@@ -1,0 +1,72 @@
+## Example of a TDB dataset and text index published using Fuseki
+
+@prefix :        <#> .
+@prefix fuseki:  <http://jena.apache.org/fuseki#> .
+@prefix rdf:     <http://www.w3.org/1999/02/22-rdf-syntax-ns#> .
+@prefix rdfs:    <http://www.w3.org/2000/01/rdf-schema#> .
+@prefix tdb:     <http://jena.hpl.hp.com/2008/tdb#> .
+@prefix ja:      <http://jena.hpl.hp.com/2005/11/Assembler#> .
+@prefix text:    <http://jena.apache.org/text#> .
+
+@prefix dc:        <http://purl.org/dc/elements/1.1/> .
+@prefix vcard:     <http://www.w3.org/2001/vcard-rdf/3.0#> .
+@prefix ns:        <http://example.org/ns#> .
+
+@prefix np:        <http://nextprot.org/rdf/> .
+@prefix pred: <http://nextprot.org/rdf/pred/> .
+
+[] rdf:type fuseki:Server ;
+   # Timeout - server-wide default: milliseconds.
+   # Format 1: "1000" -- 1 second timeout
+   # Format 2: "10000,60000" -- 10s timeout to first result, then 60s timeout to for rest of query.
+   # See java doc for ARQ.queryTimeout
+   # ja:context [ ja:cxtName "arq:queryTimeout" ;  ja:cxtValue "10000" ] ;
+   # ja:loadClass "your.code.Class" ;
+
+   fuseki:services (
+     <#my_service>
+   ) .
+
+# TDB
+[] ja:loadClass "com.hp.hpl.jena.tdb.TDB" .
+tdb:DatasetTDB  rdfs:subClassOf  ja:RDFDataset .
+tdb:GraphTDB    rdfs:subClassOf  ja:Model .
+
+## ---------------------------------------------------------------
+
+<#my_service> rdf:type fuseki:Service ;
+    rdfs:label                      "TDB/my_service" ;
+    fuseki:name                     "np" ;
+    fuseki:serviceQuery             "query" ;
+    fuseki:serviceQuery             "sparql" ;
+    fuseki:serviceUpdate            "update" ;
+    fuseki:serviceUpload            "upload" ;
+    fuseki:serviceReadGraphStore    "get" ;
+    fuseki:serviceReadWriteGraphStore    "data" ;
+    fuseki:dataset                  <#dataset> ;
+    .
+
+<#dataset> rdf:type       ja:RDFDataset ;
+    ja:defaultGraph       <#model_inf> ;
+     .
+
+<#model_inf> a ja:InfModel ;
+     ja:baseModel <#tdbGraph> ;
+     ja:reasoner [
+         ja:reasonerURL <http://jena.hpl.hp.com/2003/OWLMicroFBRuleReasoner>
+#         ja:reasonerURL <http://jena.hpl.hp.com/2003/RDFSExptRuleReasoner>
+     ] .
+
+<#tdbGraph> rdf:type tdb:GraphTDB ;
+    tdb:dataset <#tdbDataset> .
+
+<#tdbDataset> rdf:type tdb:DatasetTDB ;
+    tdb:location "/work/tdbdataowl" ;
+    .
+
+#         [ ja:reasonerURL <http://jena.hpl.hp.com/2003/RDFSExptRuleReasoner> ]
+#         [ ja:reasonerURL <http://jena.hpl.hp.com/2003/TransitiveReasoner> ]
+#         [ ja:reasonerURL <http://jena.hpl.hp.com/2003/OWLMicroFBRuleReasoner> ]
+#         [ ja:reasonerURL <http://jena.hpl.hp.com/2003/OWLMiniFBRuleReasoner> ]
+#         [ ja:reasonerURL <http://jena.hpl.hp.com/2003/OWLFBRuleReasoner> ]
+#         [ ja:reasonerURL <http://jena.hpl.hp.com/2003/GenericRuleReasoner> ]
