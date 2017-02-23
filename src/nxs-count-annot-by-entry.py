@@ -18,8 +18,8 @@ def parse_arguments():
     :return: a parsed arguments object
     """
     parser = argparse.ArgumentParser(description='Count number of annotations for all entries from neXtProt api server')
-    parser.add_argument('api', help='nextprot api uri (ie: build-api.nextprot.org)')
-    parser.add_argument('-o', '--output', metavar='csv', default="/tmp/count-annotation.csv", help='csv file')
+    parser.add_argument('--api', metavar='uri', default="build-api.nextprot.org", help='nextprot api uri')
+    parser.add_argument('--csv', metavar='path', default="/tmp/count-annotation.csv", help='output csv file path')
     parser.add_argument('-t', '--thread', metavar='num', default=default_threads, type=int,
                         help='number of threads (default=' + str(default_threads) + ')')
     parser.add_argument('-n', metavar='entries', default=-1, type=int, help='export n first entries')
@@ -43,7 +43,7 @@ def parse_arguments():
     print "Parameters"
     print "  nextprot api host : " + arguments.api
     print "  thread number     : " + str(arguments.thread)
-    print "  output file       : " + arguments.output
+    print "  output file (csv) : " + arguments.csv
     print "  export n entries  : " + str(len(arguments.entries))
     print
 
@@ -93,8 +93,6 @@ def call_api_service(url, service_name):
             sys.stdout.write("FAILURE: " + threading.current_thread().name+" failed with error '"+str(e)+"' for "
                              + service_name)
 
-    print " [" + str(datetime.timedelta(seconds=timer.duration_in_seconds())) + " seconds]/n"
-
 
 if __name__ == '__main__':
     args = parse_arguments()
@@ -119,7 +117,7 @@ if __name__ == '__main__':
 
     count_annotations_items = sorted(count_annotations.items(), key=operator.itemgetter(1), reverse=True)
 
-    with open(args.output, 'wb') as csv_file:
+    with open(args.csv, 'wb') as csv_file:
         writer = csv.writer(csv_file)
         for key, value in count_annotations_items:
             writer.writerow([key, value])
