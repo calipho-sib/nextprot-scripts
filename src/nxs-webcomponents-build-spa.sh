@@ -72,7 +72,7 @@ function npmAndBowerInstall() {
 function installNextprotElements() {
 
     cd app/assets/webcomponents/
-    ../../../node_modules/.bin/bower install
+    ../../../node_modules/.bin/bower update
     cd ../../..
 }
 
