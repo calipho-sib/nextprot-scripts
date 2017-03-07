@@ -67,13 +67,7 @@ function npmAndBowerInstall() {
     else
         ./node_modules/.bin/brunch build
     fi
-}
-
-function installNextprotElements() {
-
-    cd app/assets/webcomponents/
-    ../../../node_modules/.bin/bower update
-    cd ../../..
+    ./node_modules/.bin/gulp
 }
 
 function setBuildVersionInAppJS() {
@@ -108,5 +102,4 @@ cd ${REPO}
 checkBranchRepo ${BUILD_TYPE}
 
 npmAndBowerInstall ${BUILD_TYPE}
-installNextprotElements
 setBuildVersionInAppJS
