@@ -21,10 +21,11 @@ function check-virtuoso-is-up() {
     host=$1
 
     if ! ssh npteam@${host} "pgrep virtuoso-t"; then
-        echo "virtuoso on ${host} is unexpectedly down"
-        return 1
+        echo "WARNING: virtuoso on ${host} was down"
+    else 
+        echo "virtuoso on ${host} is up as expected, performing a checkpoint"
+        ssh npteam@${SRC_HOST} isql 1111 dba dba exec="checkpoint;"
     fi
-    echo "virtuoso on ${host} is up as expected"
 
     return 0
 }
@@ -96,10 +97,13 @@ fi
 SRC_HOST=$1
 DEST_HOST=$2
 
+# if up will perform a checkpoint
 check-virtuoso-is-up ${SRC_HOST}
-#check-virtuoso-is-up ${DEST_HOST}
 
-ssh npteam@${SRC_HOST} isql 1111 dba dba exec="checkpoint;"
+# next check not necessary
+#check-virtuoso-is-up ${DEST_HOST} 
+
+
 
 # stop virtuoso servers
 stop-virtuoso ${SRC_HOST}
