@@ -24,7 +24,7 @@ function check-virtuoso-is-up() {
         echo "WARNING: virtuoso on ${host} was down"
     else 
         echo "virtuoso on ${host} is up as expected, performing a checkpoint"
-        ssh npteam@${SRC_HOST} isql 1111 dba dba exec="checkpoint;"
+        ssh npteam@${host} isql 1111 dba dba exec="checkpoint;"
     fi
 
     return 0
