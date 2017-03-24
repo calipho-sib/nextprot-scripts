@@ -23,8 +23,11 @@ function check-virtuoso-is-up() {
     if ! ssh npteam@${host} "pgrep virtuoso-t"; then
         echo "WARNING: virtuoso on ${host} was down"
     else 
-        echo "virtuoso on ${host} is up as expected, performing a checkpoint"
+        echo "virtuoso on ${host} is up as expected, sleeping 20 seconds"
+        sleep 20
+        echo "performing a checkpoint"
         ssh npteam@${host} isql 1111 dba dba exec="checkpoint;"
+        echo "checkpoint done, virtuoso on ${host} is up"
     fi
 
     return 0
@@ -97,17 +100,23 @@ fi
 SRC_HOST=$1
 DEST_HOST=$2
 
+echo "-"
+echo "--- Step 1 --- performing checkpoint on source server"
+echo "-"
+
 # if up will perform a checkpoint
 check-virtuoso-is-up ${SRC_HOST}
 
-# next check not necessary
-#check-virtuoso-is-up ${DEST_HOST} 
+echo "-"
+echo "--- Step 2 --- stopping source and target servers"
+echo "-"
 
-
-
-# stop virtuoso servers
 stop-virtuoso ${SRC_HOST}
 stop-virtuoso ${DEST_HOST}
+
+echo "-"
+echo "--- Step 3 --- copying data to target server"
+echo "-"
 
 # clear the remote virtuoso directory but keep virtuoso.ini
 clear-virtuoso ${DEST_HOST}
@@ -115,7 +124,13 @@ clear-virtuoso ${DEST_HOST}
 # copy db from source to dest host
 time copyDb ${SRC_HOST} ${DEST_HOST}
 
-# restart virtuoso servers
+echo "-"
+echo "--- Step 4 --- restarting source and target servers"
+echo "-"
+
 start-virtuoso ${SRC_HOST}
 start-virtuoso ${DEST_HOST}
 
+echo "-"
+echo "--- DONE ---"
+echo "-"
