@@ -8,3 +8,4 @@ MANIFEST.MF
 *.pyc
 .idea
 release.properties
+/src/seo/venv/
