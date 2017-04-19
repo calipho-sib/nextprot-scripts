@@ -23,8 +23,8 @@ function check-virtuoso-is-up() {
     if ! ssh npteam@${host} "pgrep virtuoso-t"; then
         echo "WARNING: virtuoso on ${host} was down"
     else 
-        echo "virtuoso on ${host} is up as expected, sleeping 20 seconds"
-        sleep 20
+        echo "virtuoso on ${host} is up as expected, sleeping 30 seconds"
+        sleep 30
         echo "performing a checkpoint"
         ssh npteam@${host} isql 1111 dba dba exec="checkpoint;"
         echo "checkpoint done, virtuoso on ${host} is up"
