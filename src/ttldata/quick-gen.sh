@@ -1,5 +1,26 @@
 #!/bin/bash
 
+function solrPubli() {
+  wget --timeout=7200 --output-document=tasks-solr-publications-reindex-$(date "+%Y%m%d-%H%M").log "${apibase}/tasks/solr/publications/reindex"
+}
+
+function solrTerm() {
+  wget --timeout=7200 --output-document=tasks-solr-terminologies-reindex-$(date "+%Y%m%d-%H%M").log "${apibase}/tasks/solr/terminologies/reindex"
+}
+
+function solrEntries() {
+  indexname=$1
+  chromosomes="1 2 3 4 5 6 7 8 9 0 10 11 12 13 14 15 16 17 18 19 20 21 22 MT X Y unknown"
+  wget --timeout=7200 --output-document=tasks-solr-entries-init-$(date "+%Y%m%d-%H%M").log ${apibase}/tasks/solr/${indexname}/init
+  for chrname in $chromosomes; do
+    logfile="tasks-solr-${indexname}-${chrname}-$(date "+%Y%m%d-%H%M").log"
+    url="${apibase}/tasks/solr/${indexname}/index/chromosome/${chrname}"
+    wget --timeout=7200 --output-document=$logfile "$url"
+  done
+}
+
+apibase="http://localhost:8080/nextprot-api-web"
+
 actions=$1
 touchdate=$2
 
@@ -7,7 +28,7 @@ if [ "$actions" = "" ] ; then
   echo " "
   echo Usage $0 \"action1 ... actionN\" [MMdd]
   echo " "
-  echo where actions is a space separated list ot these possible items: \"cache ttl xml solr gz rdfhelp runrq\"
+  echo where actions is a space separated list ot these possible items: \"cache ttl xml solr solr-publi solr-term solr-entries solr-gold-entries gz rdfhelp runrq\"
   echo and MMdd is a month/date used to touch xml and ttl files when gz action is in action list. 
   echo " "
   exit 1
@@ -38,16 +59,14 @@ for action in $actions; do
 # generate cache for rdfhelp (to be run after ttl are generated and loaded) 
 
   if [ "$action" = "rdfhelp" ] ; then
-    urlbase="http://localhost:8080/nextprot-api-web"
-    wget --timeout=7200 --output-document=rdfhelp-$(date "+%Y%m%d-%H%M").json "$urlbase/rdf/help/type/all.json"
+    wget --timeout=7200 --output-document=rdfhelp-$(date "+%Y%m%d-%H%M").json "${apibase}/rdf/help/type/all.json"
   fi
 
 
 # run the list of SPARQL tutorial queries 
 
   if [ "$action" = "runrq" ] ; then
-    urlbase="http://localhost:8080/nextprot-api-web"
-    wget --timeout=7200 --output-document=run-sparql-queries-$(date "+%Y%m%d-%H%M").tsv "$urlbase/run/query/direct/tags/tutorial"
+    wget --timeout=7200 --output-document=run-sparql-queries-$(date "+%Y%m%d-%H%M").tsv "${apibase}/run/query/direct/tags/tutorial"
   fi
 
 
@@ -73,7 +92,7 @@ for action in $actions; do
     rm -rf /work/ttldata/nobackup/export-xml/*
     rm -rf /work/ttldata/nobackup/xml-compressed/*
     nohup nxs-export-by-chromosome.py -t1 build-api.nextprot.org xml /work/ttldata/nobackup/export-xml > nxs-export-by-chromosome-xml-$(date "+%Y%m%d-%H%M").log 2>&1
-    nohup wget --output-document=/work/ttldata/export-xml/nextprot_all.xml http://localhost:8080/nextprot-api-web/export/entries/all.xml
+    nohup wget --output-document=/work/ttldata/export-xml/nextprot_all.xml ${apibase}/export/entries/all.xml
     nohup wget --output-document=/work/ttldata/export-xml/nextprot-export-v2.xsd http://build-api.nextprot.org/nextprot-export-v2.xsd
     nohup /work/ttldata/check-xml-files.sh > check-xml-files-$(date "+%Y%m%d-%H%M").log
     nohup nxs-validate-all-xml.sh /work/ttldata/nobackup/export-xml/nextprot-export-v2.xsd /work/ttldata/nobackup/export-xml/ > nxs-validate-all-xml-$(date "+%Y%m%d-%H%M").log 2>&1 
@@ -86,29 +105,28 @@ for action in $actions; do
 # generate solr indices
 
   if [ "$action" = "solr" ] ; then
-    urlbase="http://localhost:8080/nextprot-api-web"
-    chromosomes="1 2 3 4 5 6 7 8 9 0 10 11 12 13 14 15 16 17 18 19 20 21 22 MT X Y unknown"
-
-    wget --timeout=7200 --output-document=tasks-solr-terminologies-reindex-$(date "+%Y%m%d-%H%M").log "$urlbase/tasks/solr/terminologies/reindex"
-
-    wget --timeout=7200 --output-document=tasks-solr-publications-reindex-$(date "+%Y%m%d-%H%M").log "$urlbase/tasks/solr/publications/reindex"
-
-    indexname=entries
-    wget --timeout=7200 --output-document=tasks-solr-entries-init-$(date "+%Y%m%d-%H%M").log ${urlbase}/tasks/solr/${indexname}/init
-    for chrname in $chromosomes; do
-      logfile="tasks-solr-${indexname}-${chrname}-$(date "+%Y%m%d-%H%M").log"
-      url="${urlbase}/tasks/solr/${indexname}/index/chromosome/${chrname}"
-      wget --timeout=7200 --output-document=$logfile "$url"
-    done
-
-    indexname=gold-entries
-    wget --timeout=7200 --output-document=tasks-solr-entries-init-$(date "+%Y%m%d-%H%M").log ${urlbase}/tasks/solr/${indexname}/init
-    for chrname in $chromosomes; do
-      logfile="tasks-solr-${indexname}-${chrname}-$(date "+%Y%m%d-%H%M").log"
-      url="${urlbase}/tasks/solr/${indexname}/index/chromosome/${chrname}"
-      wget --timeout=7200 --output-document=$logfile "$url"
-    done
+    solrTerm
+    solrPubli
+    solrEntries entries
+    solrEntries gold-entries
   fi
+
+  if [ "$action" = "solr-term" ] ; then
+    solrTerm
+  fi
+
+  if [ "$action" = "solr-publi" ] ; then
+    solrPubli
+  fi
+
+  if [ "$action" = "solr-entries" ] ; then
+    solrEntries entries
+  fi
+
+  if [ "$action" = "solr-gold-entries" ] ; then
+    solrEntries gold-entries
+  fi
+
 
 
 # prepare xml & ttl for ftp: compress, rename & touch
