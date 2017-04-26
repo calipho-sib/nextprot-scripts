@@ -132,8 +132,9 @@ for action in $actions; do
 # prepare xml & ttl for ftp: compress, rename & touch
 
   if [ "$action" = "gz" ] ; then
-    nohup /work/ttldata/compress-and-rename-xml-files.sh 12020200 > compress-and-rename-xml-files-$(date "+%Y%m%d-%H%M").log 2>&1 
-    nohup /work/ttldata/compress-and-rename-ttl-files.sh 12020200 > compress-and-rename-ttl-files-$(date "+%Y%m%d-%H%M").log 2>&1
+    
+    nohup /work/ttldata/compress-and-rename-xml-files.sh ${touchdate}0200 > compress-and-rename-xml-files-$(date "+%Y%m%d-%H%M").log 2>&1 
+    nohup /work/ttldata/compress-and-rename-ttl-files.sh ${touchdate}0200 > compress-and-rename-ttl-files-$(date "+%Y%m%d-%H%M").log 2>&1
   fi
 
 
