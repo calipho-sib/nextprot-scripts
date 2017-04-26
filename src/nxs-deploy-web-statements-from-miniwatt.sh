@@ -68,6 +68,7 @@ cd $NX_PATH
 
 get-web-statements
 stop-web-statements
+sleep 2s
 rename-web-statements
 start-web-statements
 
