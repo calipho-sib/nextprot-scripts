@@ -1,6 +1,5 @@
 #!/usr/bin/python
 
-from __future__ import print_function
 import threading, json, sys, os
 from nxs_utils import ThreadPool, Timer
 import urllib2, argparse, multiprocessing
@@ -47,17 +46,17 @@ def parse_arguments():
     if not arguments.api.startswith("http"):
         arguments.api = 'http://' + arguments.api
 
-    print("Parameters")
-    print( "  nextprot api host : " + arguments.api)
-    print( "  thread number     : " + str(arguments.thread))
+    print "Parameters"
+    print "  nextprot api host : " + arguments.api
+    print "  thread number     : " + str(arguments.thread)
     if arguments.export_out is not None:
         if arguments.export_format is None:
             arguments.export_format = 'xml'
-        print( "  output directory : "+arguments.export_out)
-        print( "  output format    : "+arguments.export_format)
+        print "  output directory : "+arguments.export_out
+        print "  output format    : "+arguments.export_format
     if arguments.n > 0:
-        print( "  export n entries : "+str(arguments.n))
-    print()
+        print "  export n entries : "+str(arguments.n)
+    print
 
     return arguments
 
@@ -68,17 +67,18 @@ def get_all_nextprot_entries(api_host):
         api_host: the host where nextprot API is located
     :return:
     """
-    print("* Getting all nextprot entries... ", end='')
+    sys.stdout.write("* Getting all nextprot entries... ")
+    sys.stdout.flush()
 
     url_all_identifiers = api_host + "/entry-accessions.json"
 
     try:
         response = urllib2.urlopen(url_all_identifiers)
         npe_list = json.loads(response.read())
-        print(len(npe_list))
+        print len(npe_list)
         return npe_list
     except urllib2.URLError as e:
-        print("error getting all entries from neXtProt API host "+api_host+": "+str(e))
+        print "error getting all entries from neXtProt API host "+api_host+": "+str(e)
         sys.exit(1)
 
 
@@ -88,17 +88,18 @@ def get_all_chromosome_entries(api_host):
         api_host: the host where nextprot API is located
     :return:
     """
-    print("* Getting all chromosome entries... ", end='')
+    sys.stdout.write("* Getting all chromosome entries... ")
+    sys.stdout.flush()
 
     url_all_identifiers = api_host + "/chromosome-names.json"
 
     try:
         response = urllib2.urlopen(url_all_identifiers)
-        ce_list =  json.loads(response.read())
-        print(len(ce_list))
+        ce_list = json.loads(response.read())
+        print len(ce_list)
         return ce_list
     except urllib2.URLError as e:
-        print("error getting all chromosome names from neXtProt API host "+api_host+": "+str(e))
+        print "error getting all chromosome names from neXtProt API host "+api_host+": "+str(e)
         sys.exit(2)
 
 
@@ -144,7 +145,7 @@ def fetch_gene_names(api_host):
     """Get nextprot gene names
     :param api_host: the API url
     """
-    print("\n* Caching service /gene-names...")
+    print "\n* Caching service /gene-names..."
 
     global api_call_error_counter
     api_call_error_counter = 0
@@ -158,7 +159,7 @@ def fetch_sitemap(api_host):
     """Get sitemap
     :param api_host: the API url
     """
-    print("\n* Caching resource /seo/sitemap...")
+    print "\n* Caching resource /seo/sitemap..."
 
     global api_call_error_counter
     api_call_error_counter = 0
@@ -180,14 +181,16 @@ def call_api_service(url, outstream, service_name):
         try:
             outstream.write(urllib2.urlopen(url).read())
             sys.stdout.write("SUCCESS: " + threading.current_thread().name + " has generated cache for "+service_name)
+            sys.stdout.flush()
         except urllib2.URLError as e:
             sys.stdout.write("FAILURE: " + threading.current_thread().name+" failed with error '"+str(e)+"' for "+service_name)
+            sys.stdout.flush()
             thread_lock.acquire()
             global api_call_error_counter
             api_call_error_counter += 1
             thread_lock.release()
 
-    print(" [" + str(datetime.timedelta(seconds=timer.duration_in_seconds())) + " seconds]")
+    print " [" + str(datetime.timedelta(seconds=timer.duration_in_seconds())) + " seconds]"
 
 
 def fetch_nextprot_entries(arguments, nextprot_entries):
@@ -197,7 +200,7 @@ def fetch_nextprot_entries(arguments, nextprot_entries):
     :param nextprot_entries: a list of protein entries
     :return: the number of API call errors
     """
-    print("* Caching services /entry/{entry} and /entry/{entry}/page-display (" + str(len(nextprot_entries)) + " nextprot entries)...")
+    print "* Caching services /entry/{entry} and /entry/{entry}/page-display (" + str(len(nextprot_entries)) + " nextprot entries)..."
 
     pool = ThreadPool(arguments.thread)
 
@@ -212,9 +215,9 @@ def fetch_nextprot_entries(arguments, nextprot_entries):
                       export_dir=arguments.export_out)
     pool.wait_completion()
 
-    print("["+str(len(nextprot_entries)-api_call_error_counter) + "/" + str(len(nextprot_entries)) + " task" + \
+    print "["+str(len(nextprot_entries)-api_call_error_counter) + "/" + str(len(nextprot_entries)) + " task" + \
           ('s' if api_call_error_counter>1 else '') + " executed in " + \
-          str(datetime.timedelta(seconds=globalTimer.duration_in_seconds())) + " seconds]")
+          str(datetime.timedelta(seconds=globalTimer.duration_in_seconds())) + " seconds]"
 
     return api_call_error_counter
 
@@ -226,8 +229,8 @@ def fetch_chromosome_reports(arguments, chromosome_entries):
     :param chromosome_entries: a list of chromosome entries
     :return: the number of API call errors
     """
-    print("* Caching service /chromosome-report/{chromosome_entry} (" + str(len(chromosome_entries)) \
-          + " chromosome entries)...")
+    print "* Caching service /chromosome-report/{chromosome_entry} (" + str(len(chromosome_entries)) \
+          + " chromosome entries)..."
 
     pool = ThreadPool(arguments.thread)
 
@@ -240,8 +243,8 @@ def fetch_chromosome_reports(arguments, chromosome_entries):
                       chromosome_entry=chromosome_entry)
     pool.wait_completion()
 
-    print("["+str(len(chromosome_entries)-api_call_error_counter) + "/" + str(len(chromosome_entries)) + " task"+ ('s' if api_call_error_counter>1 else '') \
-          + " executed in " + str(datetime.timedelta(seconds=globalTimer.duration_in_seconds())) + " seconds]")
+    print "["+str(len(chromosome_entries)-api_call_error_counter) + "/" + str(len(chromosome_entries)) + " task"+ ('s' if api_call_error_counter>1 else '') \
+          + " executed in " + str(datetime.timedelta(seconds=globalTimer.duration_in_seconds())) + " seconds]"
 
     return api_call_error_counter
 
@@ -280,6 +283,6 @@ if __name__ == '__main__':
 
         # fetch_sitemap(args.api)
 
-    print("\n-------------------------------------------------------------------------------------")
-    print("Overall cache generated with " + str(count_errors) + " error" + ('s' if count_errors > 1 else '') \
-          + " in " + str(datetime.timedelta(seconds=globalTimer.duration_in_seconds())) + " seconds")
+    print "\n-------------------------------------------------------------------------------------"
+    print "Overall cache generated with " + str(count_errors) + " error" + ('s' if count_errors > 1 else '') \
+          + " in " + str(datetime.timedelta(seconds=globalTimer.duration_in_seconds())) + " seconds"
