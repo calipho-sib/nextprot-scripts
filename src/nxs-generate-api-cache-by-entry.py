@@ -202,6 +202,8 @@ def fetch_nextprot_entries(arguments, nextprot_entries):
     """
     print "* Caching services /entry/{entry} and /entry/{entry}/page-display (" + str(len(nextprot_entries)) + " nextprot entries)..."
 
+    global globalTimer
+
     pool = ThreadPool(arguments.thread)
 
     global api_call_error_counter
@@ -231,6 +233,8 @@ def fetch_chromosome_reports(arguments, chromosome_entries):
     """
     print "* Caching service /chromosome-report/{chromosome_entry} (" + str(len(chromosome_entries)) \
           + " chromosome entries)..."
+
+    global globalTimer
 
     pool = ThreadPool(arguments.thread)
 
