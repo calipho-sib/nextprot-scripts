@@ -200,28 +200,28 @@ def fetch_nextprot_entries(arguments, nextprot_entries):
     :param nextprot_entries: a list of protein entries
     :return: the number of API call errors
     """
-    print "* Caching services /entry/{entry} and /entry/{entry}/page-display (" + str(len(nextprot_entries)) + " nextprot entries)..."
-
-    global globalTimer
+    print "* Caching services /entry/{entry} and /entry/{entry}/page-display (" + str(len(nextprot_entries)) \
+          + " nextprot entries)..."
 
     pool = ThreadPool(arguments.thread)
 
     global api_call_error_counter
     api_call_error_counter = 0
 
-    for nextprot_entry in nextprot_entries:
-        pool.add_task(func=fetch_nextprot_entry,
-                      api_host=arguments.api,
-                      np_entry=nextprot_entry,
-                      export_type=arguments.export_format,
-                      export_dir=arguments.export_out)
-    pool.wait_completion()
+    timer = Timer()
+    with timer:
+        for nextprot_entry in nextprot_entries:
+            pool.add_task(func=fetch_nextprot_entry,
+                          api_host=arguments.api,
+                          np_entry=nextprot_entry,
+                          export_type=arguments.export_format,
+                          export_dir=arguments.export_out)
+        pool.wait_completion()
 
     sys.stdout.write("["+str(len(nextprot_entries)-api_call_error_counter) + "/" + str(len(nextprot_entries)) + " task"
                      + ('s' if api_call_error_counter > 1 else ''))
-    sys.stdout.flush()
     sys.stdout.write(" executed in " +
-                     str(datetime.timedelta(seconds=globalTimer.duration_in_seconds())) + " seconds]\n")
+                     str(datetime.timedelta(seconds=timer.duration_in_seconds())) + " seconds]\n")
     sys.stdout.flush()
 
     return api_call_error_counter
@@ -237,24 +237,23 @@ def fetch_chromosome_reports(arguments, chromosome_entries):
     print "* Caching service /chromosome-report/{chromosome_entry} (" + str(len(chromosome_entries)) \
           + " chromosome entries)..."
 
-    global globalTimer
-
     pool = ThreadPool(arguments.thread)
 
     global api_call_error_counter
     api_call_error_counter = 0
 
-    for chromosome_entry in chromosome_entries:
-        pool.add_task(func=fetch_chromosome_report,
-                      api_host=arguments.api,
-                      chromosome_entry=chromosome_entry)
-    pool.wait_completion()
+    timer = Timer()
+    with timer:
+        for chromosome_entry in chromosome_entries:
+            pool.add_task(func=fetch_chromosome_report,
+                          api_host=arguments.api,
+                          chromosome_entry=chromosome_entry)
+        pool.wait_completion()
 
     sys.stdout.write("["+str(len(chromosome_entries)-api_call_error_counter) + "/" + str(len(chromosome_entries))
                      + " task" + ('s' if api_call_error_counter > 1 else ''))
-    sys.stdout.flush()
     sys.stdout.write(" executed in " +
-                     str(datetime.timedelta(seconds=globalTimer.duration_in_seconds())) + " seconds]\n")
+                     str(datetime.timedelta(seconds=timer.duration_in_seconds())) + " seconds]\n")
     sys.stdout.flush()
 
     return api_call_error_counter
@@ -280,6 +279,7 @@ if __name__ == '__main__':
     globalTimer = Timer()
 
     count_errors = 0
+
     with globalTimer:
         all_nextprot_entries = get_all_nextprot_entries(api_host=args.api)
         all_chromosome_entries = get_all_chromosome_entries(api_host=args.api)
