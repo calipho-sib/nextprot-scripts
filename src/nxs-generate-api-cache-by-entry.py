@@ -217,9 +217,12 @@ def fetch_nextprot_entries(arguments, nextprot_entries):
                       export_dir=arguments.export_out)
     pool.wait_completion()
 
-    print "["+str(len(nextprot_entries)-api_call_error_counter) + "/" + str(len(nextprot_entries)) + " task" + \
-          ('s' if api_call_error_counter>1 else '') + " executed in " + \
-          str(datetime.timedelta(seconds=globalTimer.duration_in_seconds())) + " seconds]"
+    sys.stdout.write("["+str(len(nextprot_entries)-api_call_error_counter) + "/" + str(len(nextprot_entries)) + " task"
+                     + ('s' if api_call_error_counter > 1 else ''))
+    sys.stdout.flush()
+    sys.stdout.write(" executed in " +
+                     str(datetime.timedelta(seconds=globalTimer.duration_in_seconds())) + " seconds]\n")
+    sys.stdout.flush()
 
     return api_call_error_counter
 
@@ -247,8 +250,12 @@ def fetch_chromosome_reports(arguments, chromosome_entries):
                       chromosome_entry=chromosome_entry)
     pool.wait_completion()
 
-    print "["+str(len(chromosome_entries)-api_call_error_counter) + "/" + str(len(chromosome_entries)) + " task"+ ('s' if api_call_error_counter>1 else '') \
-          + " executed in " + str(datetime.timedelta(seconds=globalTimer.duration_in_seconds())) + " seconds]"
+    sys.stdout.write("["+str(len(chromosome_entries)-api_call_error_counter) + "/" + str(len(chromosome_entries))
+                     + " task" + ('s' if api_call_error_counter > 1 else ''))
+    sys.stdout.flush()
+    sys.stdout.write(" executed in " +
+                     str(datetime.timedelta(seconds=globalTimer.duration_in_seconds())) + " seconds]\n")
+    sys.stdout.flush()
 
     return api_call_error_counter
 
