@@ -30,7 +30,7 @@ def parse_arguments():
     parser.add_argument('-f', '--export_format', metavar="{ttl,xml}", help='export format: ttl or xml')
     parser.add_argument('-t', '--thread', metavar='num', default=default_threads, type=int,
                         help='number of threads (default=' + str(default_threads) + ')')
-    parser.add_argument('-k', '--chromosomes', type=str, nargs='+', help='export entries from specified chromosomes')
+    parser.add_argument('-k', '--chromosomes', metavar='name', type=str, nargs='+', help='export entries from specified chromosomes')
     parser.add_argument('-n', metavar='entries', default=-1, type=int, help='export the n first entries')
 
     arguments = parser.parse_args()
