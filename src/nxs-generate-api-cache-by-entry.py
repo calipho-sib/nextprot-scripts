@@ -78,7 +78,7 @@ def get_all_nextprot_entries(api_host):
     try:
         response = urllib2.urlopen(url_all_identifiers)
         npe_list = json.loads(response.read())
-        print len(npe_list), " entries"
+        print len(npe_list), "entries"
         return npe_list
     except urllib2.URLError as e:
         print "error getting all entries from neXtProt API host "+api_host+": "+str(e)
@@ -114,7 +114,7 @@ def get_nextprot_entries_on_chromosome(api_host, on_chromosome):
     try:
         response = urllib2.urlopen(all_entries_on_chromosome)
         npe_list = json.loads(response.read())
-        print len(npe_list), " entries"
+        print len(npe_list), "entries"
         return npe_list
     except urllib2.URLError as e:
         print "error getting entries on chromosome "+on_chromosome + " from neXtProt API host "+api_host+": "+str(e)
@@ -135,7 +135,7 @@ def get_all_chromosomes(api_host):
     try:
         response = urllib2.urlopen(url_all_identifiers)
         ce_list = json.loads(response.read())
-        print len(ce_list), " chromosomes"
+        print len(ce_list), "chromosomes"
         return ce_list
     except urllib2.URLError as e:
         print "error getting all chromosome names from neXtProt API host "+api_host+": "+str(e)
@@ -316,7 +316,7 @@ def get_chromosomes(arguments):
 
     if arguments.chromosomes:
         return arguments.chromosomes
-    return get_nextprot_entries_on_chromosomes(api_host=arguments.api, on_chromosomes_only=arguments.chromosomes)
+    return get_all_chromosomes(api_host=arguments.api)
 
 
 def get_nextprot_entries(arguments):
