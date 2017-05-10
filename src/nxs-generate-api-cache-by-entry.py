@@ -30,7 +30,8 @@ def parse_arguments():
     parser.add_argument('-f', '--export_format', metavar="{ttl,xml}", help='export format: ttl or xml')
     parser.add_argument('-t', '--thread', metavar='num', default=default_threads, type=int,
                         help='number of threads (default=' + str(default_threads) + ')')
-    parser.add_argument('-n', metavar='entries', default=-1, type=int, help='export n entries only')
+    parser.add_argument('-k', '--chromosomes', type=str, nargs='+', help='export entries from specified chromosomes')
+    parser.add_argument('-n', metavar='entries', default=-1, type=int, help='export the n first entries')
 
     arguments = parser.parse_args()
 
@@ -54,6 +55,8 @@ def parse_arguments():
             arguments.export_format = 'xml'
         print "  output directory : "+arguments.export_out
         print "  output format    : "+arguments.export_format
+    if arguments.chromosomes:
+        print "  on chromosomes   : "+str(arguments.chromosomes)
     if arguments.n > 0:
         print "  export n entries : "+str(arguments.n)
     print
@@ -75,20 +78,56 @@ def get_all_nextprot_entries(api_host):
     try:
         response = urllib2.urlopen(url_all_identifiers)
         npe_list = json.loads(response.read())
-        print len(npe_list)
+        print len(npe_list), " entries"
         return npe_list
     except urllib2.URLError as e:
         print "error getting all entries from neXtProt API host "+api_host+": "+str(e)
         sys.exit(1)
 
 
-def get_all_chromosome_entries(api_host):
-    """Extract all chromosome entries using the nexprot API service
+def get_nextprot_entries_on_chromosomes(api_host, on_chromosomes_only):
+    """Extract all entry names in the specified chromosomes using the nexprot API service
+    :param
+        api_host: the host where nextprot API is located
+    :return:
+        all entries found on specified chromosomes
+    """
+    entries = []
+    for k in on_chromosomes_only:
+        entries.append(get_nextprot_entries_on_chromosome(api_host=api_host, on_chromosome=k))
+    return reduce(list.__add__, entries)
+
+
+def get_nextprot_entries_on_chromosome(api_host, on_chromosome):
+    """Extract entry names of the specified chromosome using the nexprot API service
+    :param    
+        api_host: the host where nextprot API is located
+    :param    
+        on_chromosome: the chromosome to get entries identifiers from 
+    :return:
+    """
+    sys.stdout.write("* Getting nextprot entries on chromosome " + on_chromosome+"... ")
+    sys.stdout.flush()
+
+    all_entries_on_chromosome = api_host + "/entry-accessions/chromosome/" + on_chromosome + ".json"
+
+    try:
+        response = urllib2.urlopen(all_entries_on_chromosome)
+        npe_list = json.loads(response.read())
+        print len(npe_list), " entries"
+        return npe_list
+    except urllib2.URLError as e:
+        print "error getting entries on chromosome "+on_chromosome + " from neXtProt API host "+api_host+": "+str(e)
+        sys.exit(3)
+
+
+def get_all_chromosomes(api_host):
+    """Extract all chromosome names using the nexprot API service
     :param
         api_host: the host where nextprot API is located
     :return:
     """
-    sys.stdout.write("* Getting all chromosome entries... ")
+    sys.stdout.write("* Getting all chromosomes... ")
     sys.stdout.flush()
 
     url_all_identifiers = api_host + "/chromosome-names.json"
@@ -96,7 +135,7 @@ def get_all_chromosome_entries(api_host):
     try:
         response = urllib2.urlopen(url_all_identifiers)
         ce_list = json.loads(response.read())
-        print len(ce_list)
+        print len(ce_list), " chromosomes"
         return ce_list
     except urllib2.URLError as e:
         print "error getting all chromosome names from neXtProt API host "+api_host+": "+str(e)
@@ -273,27 +312,44 @@ def build_output_stream(export_dir, np_entry, export_format):
     return open('/dev/null', 'w')
 
 
-if __name__ == '__main__':
-    args = parse_arguments()
+def get_chromosomes(arguments):
 
-    globalTimer = Timer()
+    if arguments.chromosomes:
+        return arguments.chromosomes
+    return get_nextprot_entries_on_chromosomes(api_host=arguments.api, on_chromosomes_only=arguments.chromosomes)
+
+
+def get_nextprot_entries(arguments):
+
+    if arguments.chromosomes:
+        return get_nextprot_entries_on_chromosomes(api_host=arguments.api, on_chromosomes_only=arguments.chromosomes)
+    return get_all_nextprot_entries(api_host=arguments.api)
+
+
+def run(arguments):
 
     count_errors = 0
 
-    with globalTimer:
-        all_nextprot_entries = get_all_nextprot_entries(api_host=args.api)
-        all_chromosome_entries = get_all_chromosome_entries(api_host=args.api)
+    global_timer = Timer()
 
-        nextprot_entries = all_nextprot_entries[0:args.n] if args.n > 0 else all_nextprot_entries
+    with global_timer:
+        chromosomes = get_chromosomes(arguments=arguments)
+        nextprot_entries = get_nextprot_entries(arguments=arguments)
 
-        count_errors = fetch_nextprot_entries(arguments=args, nextprot_entries=nextprot_entries)
-        count_errors = fetch_gene_names(args.api)
+        nextprot_entries_to_cache = nextprot_entries[0:arguments.n] if arguments.n > 0 else nextprot_entries
 
-        if len(nextprot_entries) == len(all_nextprot_entries):
-            count_errors += fetch_chromosome_reports(arguments=args, chromosome_entries=all_chromosome_entries)
+        count_errors = fetch_nextprot_entries(arguments=arguments, nextprot_entries=nextprot_entries)
+        count_errors += fetch_gene_names(arguments.api)
 
-        # fetch_sitemap(args.api)
+        if len(nextprot_entries) == len(nextprot_entries_to_cache):
+            count_errors += fetch_chromosome_reports(arguments=arguments, chromosome_entries=chromosomes)
+
+            # fetch_sitemap(args.api)
 
     print "\n-------------------------------------------------------------------------------------"
     print "Overall cache generated with " + str(count_errors) + " error" + ('s' if count_errors > 1 else '') \
-          + " in " + str(datetime.timedelta(seconds=globalTimer.duration_in_seconds())) + " seconds"
+          + " in " + str(datetime.timedelta(seconds=global_timer.duration_in_seconds())) + " seconds"
+
+
+if __name__ == '__main__':
+    run(arguments=parse_arguments())
