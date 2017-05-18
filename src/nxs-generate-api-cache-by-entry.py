@@ -232,17 +232,15 @@ def call_api_service(url, outstream, service_name):
     print " [" + str(datetime.timedelta(seconds=timer.duration_in_seconds())) + " seconds]"
 
 
-def fetch_nextprot_entries(arguments, nextprot_entries):
+def fetch_nextprot_entries(arguments, nextprot_entries, pool):
     """
     Fetch neXtProt entries from the API
     :param arguments: the program arguments
     :param nextprot_entries: a list of protein entries
     :return: the number of API call errors
     """
-    print "* Caching services /entry/{entry} and /entry/{entry}/page-display (" + str(len(nextprot_entries)) \
+    print "\n* Caching services /entry/{entry} and /entry/{entry}/page-display (" + str(len(nextprot_entries)) \
           + " nextprot entries)..."
-
-    pool = ThreadPool(arguments.thread)
 
     global api_call_error_counter
     api_call_error_counter = 0
@@ -266,17 +264,15 @@ def fetch_nextprot_entries(arguments, nextprot_entries):
     return api_call_error_counter
 
 
-def fetch_chromosome_reports(arguments, chromosome_entries):
+def fetch_chromosome_reports(arguments, chromosome_entries, pool):
     """
     Fetch chromosome reports from the API    
     :param arguments: the program arguments
     :param chromosome_entries: a list of chromosome entries
     :return: the number of API call errors
     """
-    print "* Caching service /chromosome-report/{chromosome_entry} (" + str(len(chromosome_entries)) \
+    print "\n* Caching service /chromosome-report/{chromosome_entry} (" + str(len(chromosome_entries)) \
           + " chromosome entries)..."
-
-    pool = ThreadPool(arguments.thread)
 
     global api_call_error_counter
     api_call_error_counter = 0
@@ -344,6 +340,8 @@ def run(arguments):
 
     count_errors = 0
 
+    pool = ThreadPool(arguments.thread)
+
     global_timer = Timer()
 
     with global_timer:
@@ -352,11 +350,11 @@ def run(arguments):
 
         nextprot_entries_to_cache = nextprot_entries[0:arguments.n] if arguments.n > 0 else nextprot_entries
 
-        count_errors = fetch_nextprot_entries(arguments=arguments, nextprot_entries=nextprot_entries)
+        count_errors = fetch_nextprot_entries(arguments=arguments, nextprot_entries=nextprot_entries, pool=pool)
         count_errors += fetch_gene_names(arguments.api)
 
         if len(nextprot_entries) == len(nextprot_entries_to_cache):
-            count_errors += fetch_chromosome_reports(arguments=arguments, chromosome_entries=chromosomes)
+            count_errors += fetch_chromosome_reports(arguments=arguments, chromosome_entries=chromosomes, pool=pool)
         if len(chromosomes) == len(get_all_chromosomes(api_host=arguments.api)):
             count_errors += fetch_all_chromosome_summaries(arguments.api)
 
