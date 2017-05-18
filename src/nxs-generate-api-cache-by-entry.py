@@ -298,6 +298,20 @@ def fetch_chromosome_reports(arguments, chromosome_entries):
     return api_call_error_counter
 
 
+def fetch_all_chromosome_summaries(api_host):
+    """Get all nextprot chromosome summaries
+    :param api_host: the API url
+    """
+    print "\n* Caching service /chromosomes..."
+
+    global api_call_error_counter
+    api_call_error_counter = 0
+
+    call_api_service(url=api_host + "/chromosomes", outstream=open('/dev/null', 'w'), service_name="/chromosomes")
+
+    return api_call_error_counter
+
+
 def build_output_stream(export_dir, np_entry, export_format):
     """Build the output stream based on entry name and export mode
     :param export_dir: the export directory
@@ -343,6 +357,8 @@ def run(arguments):
 
         if len(nextprot_entries) == len(nextprot_entries_to_cache):
             count_errors += fetch_chromosome_reports(arguments=arguments, chromosome_entries=chromosomes)
+        if len(chromosomes) == len(get_all_chromosomes(api_host=arguments.api)):
+            count_errors += fetch_all_chromosome_summaries(arguments.api)
 
             # fetch_sitemap(args.api)
 
