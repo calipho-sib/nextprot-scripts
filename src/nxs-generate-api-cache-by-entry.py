@@ -130,7 +130,7 @@ def get_all_chromosomes(api_host):
     sys.stdout.write("* Getting all chromosomes... ")
     sys.stdout.flush()
 
-    url_all_identifiers = api_host + "/chromosome-names.json"
+    url_all_identifiers = api_host + "/chromosomes.json"
 
     try:
         response = urllib2.urlopen(url_all_identifiers)
@@ -298,12 +298,12 @@ def fetch_all_chromosome_summaries(api_host):
     """Get all nextprot chromosome summaries
     :param api_host: the API url
     """
-    print "\n* Caching service /chromosomes..."
+    print "\n* Caching service /chromosome-reports/summary..."
 
     global api_call_error_counter
     api_call_error_counter = 0
 
-    call_api_service(url=api_host + "/chromosomes", outstream=open('/dev/null', 'w'), service_name="/chromosomes")
+    call_api_service(url=api_host + "/chromosome-reports/summary", outstream=open('/dev/null', 'w'), service_name="/chromosomes")
 
     return api_call_error_counter
 
