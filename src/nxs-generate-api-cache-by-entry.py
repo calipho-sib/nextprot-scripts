@@ -171,13 +171,25 @@ def fetch_nextprot_entry(api_host, np_entry, export_type, export_dir):
     call_api_service(url=url, outstream=outstream, service_name="/entry/"+np_entry)
 
 
-def fetch_chromosome_report(api_host, chromosome_entry):
+def fetch_chromosome_report(api_host, chromosome):
     """Get chromosome report
     :param api_host: the API url
-    :param chromosome_entry: the chromosome entry id
+    :param chromosome: the chromosome name
     """
-    url = api_host + "/chromosome-report/" + chromosome_entry + ".json"
-    call_api_service(url=url, outstream=open('/dev/null', 'w'), service_name="/chromosome-report/"+chromosome_entry)
+    service_path = "/chromosome-report/" + chromosome
+    url = api_host + service_path + ".json"
+    call_api_service(url=url, outstream=open('/dev/null', 'w'), service_name=service_path)
+
+
+def fetch_chromosome_summary_report(api_host, chromosome):
+    """Get chromosome summary report
+    :param api_host: the API url
+    :param chromosome: the chromosome name
+    """
+
+    service_path = "/chromosome-report/" + chromosome + "/summary"
+    url = api_host + service_path + ".json"
+    call_api_service(url=url, outstream=open('/dev/null', 'w'), service_name=service_path)
 
 
 def fetch_gene_names(api_host):
@@ -264,28 +276,26 @@ def fetch_nextprot_entries(arguments, nextprot_entries, pool):
     return api_call_error_counter
 
 
-def fetch_chromosome_reports(arguments, chromosome_entries, pool):
-    """
-    Fetch chromosome reports from the API    
+def _fetch_chromosome_reports_given_func(report_func, arguments, chromosome_names, pool):
+    """Fetch chromosome reports from the API
+    :param report_func: the report function
     :param arguments: the program arguments
-    :param chromosome_entries: a list of chromosome entries
+    :param chromosome_names: a list of chromosome entries
+    :param pool: the pool of reusable threads
     :return: the number of API call errors
     """
-    print "\n* Caching service /chromosome-report/{chromosome_entry} (" + str(len(chromosome_entries)) \
-          + " chromosome entries)..."
-
     global api_call_error_counter
     api_call_error_counter = 0
 
     timer = Timer()
     with timer:
-        for chromosome_entry in chromosome_entries:
-            pool.add_task(func=fetch_chromosome_report,
+        for chromosome_name in chromosome_names:
+            pool.add_task(func=report_func,
                           api_host=arguments.api,
-                          chromosome_entry=chromosome_entry)
+                          chromosome=chromosome_name)
         pool.wait_completion()
 
-    sys.stdout.write("["+str(len(chromosome_entries)-api_call_error_counter) + "/" + str(len(chromosome_entries))
+    sys.stdout.write("["+str(len(chromosome_names)-api_call_error_counter) + "/" + str(len(chromosome_names))
                      + " task" + ('s' if api_call_error_counter > 1 else ''))
     sys.stdout.write(" executed in " +
                      str(datetime.timedelta(seconds=timer.duration_in_seconds())) + " seconds]\n")
@@ -294,18 +304,35 @@ def fetch_chromosome_reports(arguments, chromosome_entries, pool):
     return api_call_error_counter
 
 
-def fetch_all_chromosome_summaries(api_host):
-    """Get all nextprot chromosome summaries
-    :param api_host: the API url
+def fetch_chromosome_reports(arguments, chromosome_names, pool):
+    """Fetch chromosome reports from the API
+    :param arguments: the program arguments
+    :param chromosome_names: a list of chromosome entries
+    :param pool: the pool of reusable threads
+    :return: the number of API call errors
     """
-    print "\n* Caching service /chromosome-reports/summary..."
+    print "\n* Caching service /chromosome-report/{chromosome} (" + str(len(chromosome_names)) \
+          + " chromosome entries)..."
 
-    global api_call_error_counter
-    api_call_error_counter = 0
+    return _fetch_chromosome_reports_given_func(report_func=fetch_chromosome_report,
+                                                arguments=arguments,
+                                                chromosome_names=chromosome_names,
+                                                pool=pool)
 
-    call_api_service(url=api_host + "/chromosome-reports/summary", outstream=open('/dev/null', 'w'), service_name="/chromosomes")
 
-    return api_call_error_counter
+def fetch_chromosome_summaries(arguments, chromosome_names, pool):
+    """Fetch chromosome summary reports from the API
+    :param arguments: the program arguments
+    :param chromosome_names: a list of chromosome entries
+    :param pool: the pool of reusable threads
+    :return: the number of API call errors
+    """
+    print "\n* Caching service /chromosome-reports/{chromosome}/summary..."
+
+    return _fetch_chromosome_reports_given_func(report_func=fetch_chromosome_summary_report,
+                                                arguments=arguments,
+                                                chromosome_names=chromosome_names,
+                                                pool=pool)
 
 
 def build_output_stream(export_dir, np_entry, export_format):
@@ -354,11 +381,8 @@ def run(arguments):
         count_errors += fetch_gene_names(arguments.api)
 
         if len(nextprot_entries) == len(nextprot_entries_to_cache):
-            count_errors += fetch_chromosome_reports(arguments=arguments, chromosome_entries=chromosomes, pool=pool)
-        if len(chromosomes) == len(get_all_chromosomes(api_host=arguments.api)):
-            count_errors += fetch_all_chromosome_summaries(arguments.api)
-
-            # fetch_sitemap(args.api)
+            count_errors += fetch_chromosome_reports(arguments=arguments, chromosome_names=chromosomes, pool=pool)
+            count_errors += fetch_chromosome_summaries(arguments=arguments, chromosome_names=chromosomes, pool=pool)
 
     print "\n-------------------------------------------------------------------------------------"
     print "Overall cache generated with " + str(count_errors) + " error" + ('s' if count_errors > 1 else '') \
