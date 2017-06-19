@@ -363,6 +363,42 @@ def get_nextprot_entries(arguments):
     return get_all_nextprot_entries(api_host=arguments.api)
 
 
+def get_all_nacetylated_entries(api_host):
+    """Extract all accessions of nacetylated entries
+    :param
+        api_host: the host where nextprot API is located
+    :return:
+    """
+    print "\n* Caching nacetylated entries... "
+
+    global api_call_error_counter
+    api_call_error_counter = 0
+
+    call_api_service(url=api_host + "/chromosome-report/export/hpp/nacetylated-entries.tsv",
+                     outstream=open('/dev/null', 'w'),
+                     service_name="/chromosome-report/export/hpp/nacetylated-entries.tsv")
+
+    return api_call_error_counter
+
+
+def get_all_phosphorylated_entries(api_host):
+    """Extract all accessions of phosphorylated entries
+    :param
+        api_host: the host where nextprot API is located
+    :return:
+    """
+    print "\n* Caching phosphorylated entries... "
+
+    global api_call_error_counter
+    api_call_error_counter = 0
+
+    call_api_service(url=api_host + "/chromosome-report/export/hpp/phosphorylated-entries.tsv",
+                     outstream=open('/dev/null', 'w'),
+                     service_name="/chromosome-report/export/hpp/phosphorylated-entries.tsv")
+
+    return api_call_error_counter
+
+
 def run(arguments):
 
     count_errors = 0
@@ -383,6 +419,9 @@ def run(arguments):
         if len(nextprot_entries) == len(nextprot_entries_to_cache):
             count_errors += fetch_chromosome_reports(arguments=arguments, chromosome_names=chromosomes, pool=pool)
             count_errors += fetch_chromosome_summaries(arguments=arguments, chromosome_names=chromosomes, pool=pool)
+
+        count_errors += get_all_nacetylated_entries(arguments.api)
+        count_errors += get_all_phosphorylated_entries(arguments.api)
 
     print "\n-------------------------------------------------------------------------------------"
     print "Overall cache generated with " + str(count_errors) + " error" + ('s' if count_errors > 1 else '') \
