@@ -376,7 +376,25 @@ def get_all_nacetylated_entries(api_host):
 
     call_api_service(url=api_host + "/chromosome-report/export/hpp/nacetylated-entries.tsv",
                      outstream=open('/dev/null', 'w'),
-                     service_name="/chromosome-report/export/hpp/nacetylated-entries.tsv")
+                     service_name="/chromosome-report/export/hpp/nacetylated-entries")
+
+    return api_call_error_counter
+
+
+def get_all_unconfirmed_ms_data_entries(api_host):
+    """Extract all accessions of unconfirmed ms data entries
+    :param
+        api_host: the host where nextprot API is located
+    :return:
+    """
+    print "\n* Caching unconfirmed ms data entries... "
+
+    global api_call_error_counter
+    api_call_error_counter = 0
+
+    call_api_service(url=api_host + "/chromosome-report/export/hpp/unconfirmed-ms-data-entries.txt",
+                     outstream=open('/dev/null', 'w'),
+                     service_name="/chromosome-report/export/hpp/unconfirmed-ms-data-entries")
 
     return api_call_error_counter
 
@@ -394,7 +412,7 @@ def get_all_phosphorylated_entries(api_host):
 
     call_api_service(url=api_host + "/chromosome-report/export/hpp/phosphorylated-entries.tsv",
                      outstream=open('/dev/null', 'w'),
-                     service_name="/chromosome-report/export/hpp/phosphorylated-entries.tsv")
+                     service_name="/chromosome-report/export/hpp/phosphorylated-entries")
 
     return api_call_error_counter
 
@@ -422,6 +440,7 @@ def run(arguments):
 
         count_errors += get_all_nacetylated_entries(arguments.api)
         count_errors += get_all_phosphorylated_entries(arguments.api)
+        count_errors += get_all_unconfirmed_ms_data_entries(arguments.api)
 
     print "\n-------------------------------------------------------------------------------------"
     print "Overall cache generated with " + str(count_errors) + " error" + ('s' if count_errors > 1 else '') \
