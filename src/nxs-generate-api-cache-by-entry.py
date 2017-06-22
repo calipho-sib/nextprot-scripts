@@ -149,9 +149,8 @@ def build_nextprot_entry_url(api_host, np_entry, export_type):
     :param export_type: the export type of None if export disabled
     :return:
     """
-    # 2 caches generated: /entry/{entry} + /entry/{entry}/page-display
     if export_type is None:
-        return api_host + "/entry/" + np_entry + "/page-display"
+        return api_host + "/entry/" + np_entry
     elif export_type == "xml":
         return api_host + "/export/entries.xml?query=id:" + np_entry
     elif export_type == "ttl":
