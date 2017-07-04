@@ -416,6 +416,27 @@ def get_all_phosphorylated_entries(api_host):
     return api_call_error_counter
 
 
+def build_all_terminology_graphs(api_host):
+    """Build all terminology graph using the nexprot API service
+    :param
+        api_host: the host where nextprot API is located
+    :return:
+    """
+    sys.stdout.write("* Building all terminology graphs... ")
+    sys.stdout.flush()
+
+    url_build_all_graphs = api_host + "/terminology-graph/build-all.json"
+
+    try:
+        response = urllib2.urlopen(url_build_all_graphs)
+        building_time_by_terminology = json.loads(response.read())
+        print (len(building_time_by_terminology)-1), "graphs built"
+        return building_time_by_terminology
+    except urllib2.URLError as e:
+        print "error getting all entries from neXtProt API host "+api_host+": "+str(e)
+        sys.exit(1)
+
+
 def run(arguments):
 
     count_errors = 0
@@ -437,9 +458,11 @@ def run(arguments):
             count_errors += fetch_chromosome_reports(arguments=arguments, chromosome_names=chromosomes, pool=pool)
             count_errors += fetch_chromosome_summaries(arguments=arguments, chromosome_names=chromosomes, pool=pool)
 
-        count_errors += get_all_nacetylated_entries(arguments.api)
-        count_errors += get_all_phosphorylated_entries(arguments.api)
-        count_errors += get_all_unconfirmed_ms_data_entries(arguments.api)
+        count_errors += get_all_nacetylated_entries(api_host=arguments.api)
+        count_errors += get_all_phosphorylated_entries(api_host=arguments.api)
+        count_errors += get_all_unconfirmed_ms_data_entries(api_host=arguments.api)
+
+    build_all_terminology_graphs(api_host=arguments.api)
 
     print "\n-------------------------------------------------------------------------------------"
     print "Overall cache generated with " + str(count_errors) + " error" + ('s' if count_errors > 1 else '') \
