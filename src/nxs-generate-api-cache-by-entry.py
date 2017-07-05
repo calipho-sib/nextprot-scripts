@@ -250,8 +250,7 @@ def fetch_nextprot_entries(arguments, nextprot_entries, pool):
     :param nextprot_entries: a list of protein entries
     :return: the number of API call errors
     """
-    print "\n* Caching services /entry/{entry} and /entry/{entry}/page-display (" + str(len(nextprot_entries)) \
-          + " nextprot entries)..."
+    print "\n* Caching service /entry/{entry} (" + str(len(nextprot_entries)) + " nextprot entries)..."
 
     global api_call_error_counter
     api_call_error_counter = 0
