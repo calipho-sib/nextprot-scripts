@@ -21,7 +21,7 @@ function solrEntries() {
 
 function chrReports() {
   chromosomes="1 2 3 4 5 6 7 8 9 0 10 11 12 13 14 15 16 17 18 19 20 21 22 MT X Y unknown"
-  logfile="generate-chr-reports-${indexname}-${chrname}-$(date "+%Y%m%d-%H%M").log"
+  logfile="generate-chr-reports-$(date "+%Y%m%d-%H%M").log"
   mkdir -p /work/ttldata/chr_reports
   rm -rf /work/ttldata/chr_reports/*
   for chrname in $chromosomes; do
@@ -40,7 +40,7 @@ if [ "$actions" = "" ] ; then
   echo " "
   echo Usage $0 \"action1 ... actionN\" [MMdd]
   echo " "
-  echo where actions is a space separated list ot these possible items: \"cache ttl xml solr solr-publi solr-term solr-entries solr-gold-entries gz rdfhelp runrq\"
+  echo where actions is a space separated list ot these possible items: \"cache ttl xml solr solr-publi solr-term solr-entries solr-gold-entries gz rdfhelp runrq chr-reports\"
   echo and MMdd is a month/date used to touch xml and ttl files when gz action is in action list. 
   echo " "
   exit 1
