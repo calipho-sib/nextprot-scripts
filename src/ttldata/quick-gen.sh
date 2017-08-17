@@ -37,19 +37,19 @@ function hppReports() {
   rm -rf /work/ttldata/hpp_reports/*
 
   url="${apibase}/chromosome-report/export/hpp/entry-count-by-pe.tsv"
-  outfile=/work/ttldata/hpp_reports/entry-count-by-pe.txt
+  outfile=/work/ttldata/hpp_reports/count-of-pe12345-by-chromosome.txt
   wget --timeout=7200 --output-document=$outfile "$url" >> $logfile 2>&1
 
   url="${apibase}/chromosome-report/export/hpp/nacetylated-entries.tsv"
-  outfile=/work/ttldata/hpp_reports/nacetylated-entries.txt
+  outfile=/work/ttldata/hpp_reports/HPP_entries_with_nacetyl_by_chromosome.txt
   wget --timeout=7200 --output-document=$outfile "$url" >> $logfile 2>&1
 
   url="${apibase}/chromosome-report/export/hpp/phosphorylated-entries.tsv"
-  outfile=/work/ttldata/hpp_reports/phosphorylated-entries.txt
+  outfile=/work/ttldata/hpp_reports/HPP_entries_with_phospho_by_chromosome.txt
   wget --timeout=7200 --output-document=$outfile "$url" >> $logfile 2>&1
 
   url="${apibase}/chromosome-report/export/hpp/unconfirmed-ms-data-entries"
-  outfile=/work/ttldata/hpp_reports/unconfirmed-ms-data-entries.txt
+  outfile=/work/ttldata/hpp_reports/HPP_entries_with_unconfirmed_MS_data.txt
   wget --timeout=7200 --output-document=$outfile "$url" >> $logfile 2>&1
 
   chromosomes="1 2 3 4 5 6 7 8 9 10 11 12 13 14 15 16 17 18 19 20 21 22 MT X Y unknown"
