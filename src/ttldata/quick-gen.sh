@@ -19,6 +19,18 @@ function solrEntries() {
   done
 }
 
+function chrReports() {
+  chromosomes="1 2 3 4 5 6 7 8 9 0 10 11 12 13 14 15 16 17 18 19 20 21 22 MT X Y unknown"
+  logfile="generate-chr-reports-${indexname}-${chrname}-$(date "+%Y%m%d-%H%M").log"
+  mkdir -p /work/ttldata/chr_reports
+  rm -rf /work/ttldata/chr_reports/*
+  for chrname in $chromosomes; do
+    url="${apibase}/chromosome-report/export/${chrname}"
+    outfile=/work/ttldata/chr_reports/nextprot_chromosome_$chrname.txt
+    wget --timeout=7200 --output-document=$outfile "$url" >> $logfile 2>&1
+  done
+}
+
 apibase="http://localhost:8080/nextprot-api-web"
 
 actions=$1
@@ -127,7 +139,10 @@ for action in $actions; do
     solrEntries gold-entries
   fi
 
-
+# generate chromosome reports
+  if [ "$action" = "chr-reports" ] ; then
+    chrReports
+  fi
 
 # prepare xml & ttl for ftp: compress, rename & touch
 
