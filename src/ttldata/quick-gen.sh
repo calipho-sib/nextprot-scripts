@@ -31,6 +31,35 @@ function chrReports() {
   done
 }
 
+function hppReports() {
+  logfile="generate-hpp-reports-$(date "+%Y%m%d-%H%M").log"
+  mkdir -p /work/ttldata/hpp_reports
+  rm -rf /work/ttldata/hpp_reports/*
+
+  url="${apibase}/chromosome-report/export/hpp/entry-count-by-pe.tsv"
+  outfile=/work/ttldata/hpp_reports/entry-count-by-pe.txt
+  wget --timeout=7200 --output-document=$outfile "$url" >> $logfile 2>&1
+
+  url="${apibase}/chromosome-report/export/hpp/nacetylated-entries.tsv"
+  outfile=/work/ttldata/hpp_reports/nacetylated-entries.txt
+  wget --timeout=7200 --output-document=$outfile "$url" >> $logfile 2>&1
+
+  url="${apibase}/chromosome-report/export/hpp/phosphorylated-entries.tsv"
+  outfile=/work/ttldata/hpp_reports/phosphorylated-entries.txt
+  wget --timeout=7200 --output-document=$outfile "$url" >> $logfile 2>&1
+
+  url="${apibase}/chromosome-report/export/hpp/unconfirmed-ms-data-entries"
+  outfile=/work/ttldata/hpp_reports/unconfirmed-ms-data-entries.txt
+  wget --timeout=7200 --output-document=$outfile "$url" >> $logfile 2>&1
+
+  chromosomes="1 2 3 4 5 6 7 8 9 10 11 12 13 14 15 16 17 18 19 20 21 22 MT X Y unknown"
+  for chrname in $chromosomes; do
+    url="${apibase}/chromosome-report/export/hpp/${chrname}.tsv"
+    outfile=/work/ttldata/hpp_reports/HPP_chromosome_${chrname}.txt
+    wget --timeout=7200 --output-document=$outfile "$url" >> $logfile 2>&1
+  done
+}
+
 apibase="http://localhost:8080/nextprot-api-web"
 
 actions=$1
@@ -40,7 +69,7 @@ if [ "$actions" = "" ] ; then
   echo " "
   echo Usage $0 \"action1 ... actionN\" [MMdd]
   echo " "
-  echo where actions is a space separated list ot these possible items: \"cache ttl xml solr solr-publi solr-term solr-entries solr-gold-entries gz rdfhelp runrq chr-reports\"
+  echo where actions is a space separated list ot these possible items: \"cache ttl xml solr solr-publi solr-term solr-entries solr-gold-entries gz rdfhelp runrq chr-reports hpp-reports\"
   echo and MMdd is a month/date used to touch xml and ttl files when gz action is in action list. 
   echo " "
   exit 1
@@ -142,6 +171,11 @@ for action in $actions; do
 # generate chromosome reports
   if [ "$action" = "chr-reports" ] ; then
     chrReports
+  fi
+
+# generate HPP reports
+  if [ "$action" = "hpp-reports" ] ; then
+    hppReports
   fi
 
 # prepare xml & ttl for ftp: compress, rename & touch
