@@ -7,8 +7,7 @@ for item in $expected_results ; do
   file=$xml_dir/$name.xml
   exp_cnt=$(echo $item | cut -d'=' -f2)
   act_cnt=$(grep -c "<entry accession=" $file)
-  dollar_cnt=$(grep  "\\$" $file | grep -cv "Functional Promoter Haplotypes Decipher")
-  #dollar_cnt=$(grep -c "\\$" $file)
+  dollar_cnt=$(grep  "\\$" $file | grep -vE "Functional Promoter|TCF|CYP46A1|LEPR and MC|SER-79" | wc -l)
   status=OK
   if [ "$act_cnt" != "$exp_cnt" ]; then status=ERROR; fi
   if [ "$dollar_cnt" != "0" ]; then status=ERROR; fi
@@ -28,8 +27,7 @@ done
 exp_cnt=$(psql -Upostgres -dnextprot -A -t -F'=' -f /work/ttldata/entry-count.sql)
 file=$xml_dir/nextprot_all.xml
 act_cnt=$(grep -c "<entry accession=" $file)
-#dollar_cnt=$(grep -c "\\$" $file)
-dollar_cnt=$(grep  "\\$" $file | grep -cv "Functional Promoter Haplotypes Decipher")
+dollar_cnt=$(grep  "\\$" $file | grep -vE "Functional Promoter|TCF|CYP46A1|LEPR and MC|SER-79" | wc -l)
 status=OK
 if [ "$act_cnt" != "$exp_cnt" ]; then status=ERROR; fi
 if [ "$dollar_cnt" != "0" ]; then status=ERROR; fi
