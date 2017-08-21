@@ -54,7 +54,7 @@ function stop-virtuoso() {
     if [ ! $? = 0 ]; then
         echo "virtuoso on ${host} was not running"
     else
-        sleep 5
+        sleep 30
     fi
 
     check-virtuoso-is-down ${host}
@@ -63,11 +63,11 @@ function stop-virtuoso() {
 function start-virtuoso() {
     host=$1
 
-    echo "restarting virtuoso on ${host} and wait 5 seconds..."
+    echo "restarting virtuoso on ${host} and wait 30 seconds..."
 
     # virtuoso-t +configfile: use alternate configuration file
     ssh npteam@${host} "/usr/bin/virtuoso-t +configfile /var/lib/virtuoso/db/virtuoso.ini"
-    sleep 5
+    sleep 30
 
     check-virtuoso-is-up ${host}
 }
