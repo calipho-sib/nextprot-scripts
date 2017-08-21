@@ -67,30 +67,19 @@ function stop_jetty() {
       echo -e "${warning_color}Jetty was not running at $host "
       return 0
   fi
-
-  ssh npteam@${host} "/work/jetty/bin/jetty.sh stop > /dev/null 2>&1 &"
   echo -e "Stopping jetty at ${host}..."
-
-  while ssh npteam@${host} test -f /work/jetty/jetty.pid; do
-      sleep 1
-      echo -n .
-  done
-
+  ssh npteam@${host} "/work/jetty/bin/jetty.sh stop"
   echo -e "Jetty has been correctly stopped at ${host} "
 }
 
 function start_jetty() {
-  echo -e "Starting jetty at ${host}..."
   host=$1
   # for jung:
   # $ ssh npteam@jung
   # $ exec /work/jetty/bin/jetty.sh start
   # type password !!!
-  ssh npteam@${host} "/work/jetty/bin/jetty.sh start > /dev/null 2>&1 &"
-  while ! ssh npteam@${host} "grep -q STARTED /work/jetty/jetty.state 2>/dev/null"; do
-      sleep 1
-      echo -n .
-  done
+  echo -e "Starting jetty at ${host}..."
+  ssh npteam@${host} "source .bash_profile; /work/jetty/bin/jetty.sh start"
   echo -e "Jetty has been correctly started at ${host} "
 }
 
