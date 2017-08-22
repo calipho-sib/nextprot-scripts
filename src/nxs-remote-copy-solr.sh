@@ -60,15 +60,16 @@ fi
 TRG_PATH_NEW="${TRG_PATH}.new/"
 TRG_PATH_BACK="${TRG_PATH}.back/"
 
+# new one
 function kill_solr() {
-
   host=$1
+  echo "killing solr process on ${host}"
   solr_pid=$(ssh npteam@${host} ps -ef | grep java | grep nextprot.solr | tr -s " " | cut -f2 -d' ')
   if [ -x ${solr_pid} ];then
     echo "solr was not running on ${host}"
   else
-    echo "killing solr process ${solr_pid} on ${host}"
     ssh npteam@${host} kill ${solr_pid}
+    echo "killed solr process ${solr_pid} on ${host}"
   fi
 }
 
@@ -82,14 +83,22 @@ function check_solr() {
   fi
 }
 
+
 function start_solr() {
   host=$1
   path=$2
   port=$3
-
-  echo "starting solr on ${host} port ${TRG_JETTY_PORT}"
-  ssh npteam@${host} "sh -c 'cd ${path}/example; nohup java -Dnextprot.solr -Xmx1024m -jar -Djetty.port=${port} start.jar  > solr.log 2>&1  &'"
+  echo "starting solr on ${host} port ${port}"
+  solr_pid=$(ssh npteam@${host} ps -ef | grep java | grep nextprot.solr | tr -s " " | cut -f2 -d' ')
+  if [ -x ${solr_pid} ];then
+    ssh npteam@${host} "source .bash_profile; cd ${path}/example; nohup java -Dnextprot.solr -Xmx2048m -jar -Djetty.port=${port} start.jar  > solr.log 2>&1  &"
+    echo "solr started on ${host}"
+  else
+    echo "solr was already running on ${host}"
+  fi
 }
+
+
 
 echo -n "checking solr is properly installed on ${SRC_HOST}... "
 check_solr ${SRC_HOST} "${SRC_PATH}/"
