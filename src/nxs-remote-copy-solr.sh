@@ -70,6 +70,7 @@ function kill_solr() {
   else
     ssh npteam@${host} kill ${solr_pid}
     echo "killed solr process ${solr_pid} on ${host}"
+    sleep 5
   fi
 }
 
@@ -93,6 +94,7 @@ function start_solr() {
   if [ -x ${solr_pid} ];then
     ssh npteam@${host} "source .bash_profile; cd ${path}/example; nohup java -Dnextprot.solr -Xmx2048m -jar -Djetty.port=${port} start.jar  > solr.log 2>&1  &"
     echo "solr started on ${host}"
+    sleep 5
   else
     echo "solr was already running on ${host}"
   fi
