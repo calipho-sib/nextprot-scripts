@@ -31,6 +31,21 @@ function chrReports() {
   done
 }
 
+function peffReports() {
+  chromosomes="1 2 3 4 5 6 7 8 9 10 11 12 13 14 15 16 17 18 19 20 21 22 MT X Y unknown"
+  logfile="generate-peff-$(date "+%Y%m%d-%H%M").log"
+  mkdir -p /work/ttldata/peff
+  rm -rf /work/ttldata/peff/*
+  for chrname in $chromosomes; do
+    url="${apibase}/export/chromosome/${chrname}"
+    outfile=/work/ttldata/peff/nextprot_chromosome_$chrname.peff
+    wget --timeout=7200 --output-document=$outfile "$url" >> $logfile 2>&1
+  done
+  url="${apibase}/export/entries.peff?query=*"
+  outfile=/work/ttldata/peff/nextprot_all.peff
+  wget --timeout=7200 --output-document=$outfile "$url" >> $logfile 2>&1
+}
+
 function hppReports() {
   logfile="generate-hpp-reports-$(date "+%Y%m%d-%H%M").log"
   mkdir -p /work/ttldata/hpp_reports
@@ -69,7 +84,7 @@ if [ "$actions" = "" ] ; then
   echo " "
   echo Usage $0 \"action1 ... actionN\" [MMdd]
   echo " "
-  echo where actions is a space separated list ot these possible items: \"cache ttl xml solr solr-publi solr-term solr-entries solr-gold-entries gz rdfhelp runrq chr-reports hpp-reports\"
+  echo where actions is a space separated list ot these possible items: \"cache ttl xml solr solr-publi solr-term solr-entries solr-gold-entries gz rdfhelp runrq chr-reports hpp-reports peff\"
   echo and MMdd is a month/date used to touch xml and ttl files when gz action is in action list. 
   echo " "
   exit 1
@@ -166,6 +181,11 @@ for action in $actions; do
 
   if [ "$action" = "solr-gold-entries" ] ; then
     solrEntries gold-entries
+  fi
+
+# generate peff files
+  if [ "$action" = "peff" ] ; then
+    peffReports
   fi
 
 # generate chromosome reports
