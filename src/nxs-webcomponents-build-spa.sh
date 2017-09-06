@@ -63,7 +63,9 @@ function npmAndBowerInstall() {
     echo "brunching modules"
     rm -rf build
     if [ ${build_type} = "pro" ]; then
-        ./node_modules/.bin/brunch build -P
+	# Could not minify since we have polymer components
+	#./node_modules/.bin/brunch build -P
+    	./node_modules/.bin/brunch build
     else
         ./node_modules/.bin/brunch build
     fi
