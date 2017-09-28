@@ -492,19 +492,24 @@ def run(arguments):
 
     with global_timer:
         chromosomes = get_chromosomes(arguments=arguments)
+
         nextprot_entries = get_nextprot_entries(arguments=arguments)
+        nextprot_entries_to_cache = nextprot_entries[0:arguments.n] if arguments.n >= 0 else nextprot_entries
 
-        nextprot_entries_to_cache = nextprot_entries[0:arguments.n] if arguments.n > 0 else nextprot_entries
-
-        count_errors = fetch_nextprot_entries(arguments=arguments, nextprot_entries=nextprot_entries, pool=pool)
+        if len(nextprot_entries_to_cache) > 0:
+            count_errors = fetch_nextprot_entries(arguments=arguments, nextprot_entries=nextprot_entries_to_cache, pool=pool)
         count_errors += fetch_gene_names(arguments.api)
 
+        # fetch chromosome report only if all entries
         if len(nextprot_entries) == len(nextprot_entries_to_cache):
             count_errors += fetch_chromosome_reports(arguments=arguments, chromosome_names=chromosomes, pool=pool)
             count_errors += fetch_chromosome_summaries(arguments=arguments, chromosome_names=chromosomes, pool=pool)
 
+        # export chromosome in peff
         if arguments.peff:
             count_errors += export_chromosomes_in_peff(arguments=arguments, chromosome_names=chromosomes, pool=pool)
+
+        # cache other infos
         count_errors += get_all_nacetylated_entries(api_host=arguments.api)
         count_errors += get_all_phosphorylated_entries(api_host=arguments.api)
         count_errors += get_all_unconfirmed_ms_data_entries(api_host=arguments.api)
