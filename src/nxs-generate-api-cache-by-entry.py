@@ -27,7 +27,7 @@ def parse_arguments():
     parser.add_argument('api', help='nextprot api uri (ie: build-api.nextprot.org)')
     parser.add_argument('-o', '--export_out', metavar='dir',
                         help='export destination directory (default export format: xml)')
-    parser.add_argument('-f', '--entry_export_format', metavar="{ttl,xml}", help='export format: ttl or xml')
+    parser.add_argument('-f', '--export_format', metavar="{ttl,xml}", help='export format: ttl or xml')
     parser.add_argument('-t', '--thread', metavar='num', default=default_threads, type=int,
                         help='number of threads (default=' + str(default_threads) + ')')
     parser.add_argument('-k', '--chromosomes', metavar='name', type=str, nargs='+', help='export entries from specified chromosomes')
@@ -42,12 +42,8 @@ def parse_arguments():
     elif arguments.thread <= 0:
         parser.error(str(arguments.thread)+" should be a positive number of threads")
 
-    if arguments.export_out is None:
-        if arguments.peff:
-            arguments.export_out = "./"
-    else:
-        if not os.path.isdir(arguments.export_out):
-            parser.error(arguments.export_out+" is not a directory")
+    if arguments.export_out is not None and not os.path.isdir(arguments.export_out):
+        parser.error(arguments.export_out+" is not a directory")
 
     if not arguments.api.startswith("http"):
         arguments.api = 'http://' + arguments.api
@@ -55,13 +51,11 @@ def parse_arguments():
     print "Parameters"
     print "  nextprot api host : " + arguments.api
     print "  thread number     : " + str(arguments.thread)
-
     if arguments.export_out is not None:
+        if arguments.export_format is None:
+            arguments.export_format = 'xml'
         print "  output directory : "+arguments.export_out
-        if arguments.entry_export_format is None and not arguments.peff:
-            arguments.entry_export_format = 'xml'
-        if arguments.entry_export_format is not None:
-            print "  entry output format    : "+arguments.entry_export_format
+        print "  output format    : "+arguments.export_format
     if arguments.chromosomes:
         print "  on chromosomes   : "+str(arguments.chromosomes)
     if arguments.n > 0:
@@ -206,6 +200,8 @@ def export_chromosome_in_peff(api_host, chromosome, export_dir):
     :param export_dir: the directory to export peff
     """
     url = api_host + "/export/chromosome/" + chromosome + ".peff"
+    if export_dir is None:
+        export_dir = "./"
     outstream = build_output_stream(export_dir=export_dir, basename=chromosome,
                                     extension="peff")
 
@@ -282,7 +278,7 @@ def fetch_nextprot_entries(arguments, nextprot_entries, pool):
             pool.add_task(func=fetch_nextprot_entry,
                           api_host=arguments.api,
                           np_entry=nextprot_entry,
-                          export_type=arguments.entry_export_format,
+                          export_type=arguments.export_format,
                           export_dir=arguments.export_out)
         pool.wait_completion()
 
