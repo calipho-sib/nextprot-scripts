@@ -27,11 +27,12 @@ def parse_arguments():
     parser.add_argument('api', help='nextprot api uri (ie: build-api.nextprot.org)')
     parser.add_argument('-o', '--export_out', metavar='dir',
                         help='export destination directory (default export format: xml)')
-    parser.add_argument('-f', '--export_format', metavar="{ttl,xml}", help='export format: ttl or xml')
+    parser.add_argument('-f', '--entry_export_format', metavar="{ttl,xml}", help='export format: ttl or xml')
     parser.add_argument('-t', '--thread', metavar='num', default=default_threads, type=int,
                         help='number of threads (default=' + str(default_threads) + ')')
     parser.add_argument('-k', '--chromosomes', metavar='name', type=str, nargs='+', help='export entries from specified chromosomes')
     parser.add_argument('-n', metavar='entries', default=-1, type=int, help='export the n first entries')
+    parser.add_argument('--peff', action='store_true', default=False, help='export chromosome in peff format')
 
     arguments = parser.parse_args()
 
@@ -41,8 +42,12 @@ def parse_arguments():
     elif arguments.thread <= 0:
         parser.error(str(arguments.thread)+" should be a positive number of threads")
 
-    if arguments.export_out is not None and not os.path.isdir(arguments.export_out):
-        parser.error(arguments.export_out+" is not a directory")
+    if arguments.export_out is None:
+        if arguments.peff:
+            arguments.export_out = "./"
+    else:
+        if not os.path.isdir(arguments.export_out):
+            parser.error(arguments.export_out+" is not a directory")
 
     if not arguments.api.startswith("http"):
         arguments.api = 'http://' + arguments.api
@@ -50,15 +55,18 @@ def parse_arguments():
     print "Parameters"
     print "  nextprot api host : " + arguments.api
     print "  thread number     : " + str(arguments.thread)
+
     if arguments.export_out is not None:
-        if arguments.export_format is None:
-            arguments.export_format = 'xml'
         print "  output directory : "+arguments.export_out
-        print "  output format    : "+arguments.export_format
+        if arguments.entry_export_format is None and not arguments.peff:
+            arguments.entry_export_format = 'xml'
+        if arguments.entry_export_format is not None:
+            print "  entry output format    : "+arguments.entry_export_format
     if arguments.chromosomes:
         print "  on chromosomes   : "+str(arguments.chromosomes)
     if arguments.n > 0:
         print "  export n entries : "+str(arguments.n)
+    print "  export chromosomes in peff : "+str(arguments.peff)
     print
 
     return arguments
@@ -165,8 +173,8 @@ def fetch_nextprot_entry(api_host, np_entry, export_type, export_dir):
     :param export_dir: the export directory
     """
     url = build_nextprot_entry_url(api_host, np_entry, export_type)
-    outstream = build_output_stream(export_dir=export_dir, np_entry=np_entry,
-                                    export_format=export_type)
+    outstream = build_output_stream(export_dir=export_dir, basename=np_entry,
+                                    extension=export_type)
     call_api_service(url=url, outstream=outstream, service_name="/entry/"+np_entry)
 
 
@@ -189,6 +197,19 @@ def fetch_chromosome_summary_report(api_host, chromosome):
     service_path = "/chromosome-report/" + chromosome + "/summary"
     url = api_host + service_path + ".json"
     call_api_service(url=url, outstream=open('/dev/null', 'w'), service_name=service_path)
+
+
+def export_chromosome_in_peff(api_host, chromosome, export_dir):
+    """Export chromosome in peff
+    :param api_host: the API url
+    :param chromosome: the chromosome name
+    :param export_dir: the directory to export peff
+    """
+    url = api_host + "/export/chromosome/" + chromosome + ".peff"
+    outstream = build_output_stream(export_dir=export_dir, basename=chromosome,
+                                    extension="peff")
+
+    call_api_service(url=url, outstream=outstream, service_name=url)
 
 
 def fetch_gene_names(api_host):
@@ -261,7 +282,7 @@ def fetch_nextprot_entries(arguments, nextprot_entries, pool):
             pool.add_task(func=fetch_nextprot_entry,
                           api_host=arguments.api,
                           np_entry=nextprot_entry,
-                          export_type=arguments.export_format,
+                          export_type=arguments.entry_export_format,
                           export_dir=arguments.export_out)
         pool.wait_completion()
 
@@ -332,16 +353,45 @@ def fetch_chromosome_summaries(arguments, chromosome_names, pool):
                                                 chromosome_names=chromosome_names,
                                                 pool=pool)
 
+def export_chromosomes_in_peff(arguments, chromosome_names, pool):
+    """Fetch chromosome reports from the API
+    :param arguments: the program arguments
+    :param chromosome_names: a list of chromosome entries
+    :param pool: the pool of reusable threads
+    :return: the number of API call errors
+    """
+    print "\n* Exporting peffs with service /export/chromosome/{chromosome}.peff..."
 
-def build_output_stream(export_dir, np_entry, export_format):
+    global api_call_error_counter
+    api_call_error_counter = 0
+
+    timer = Timer()
+    with timer:
+        for chromosome_name in chromosome_names:
+            pool.add_task(func=export_chromosome_in_peff,
+                          api_host=arguments.api,
+                          chromosome=chromosome_name,
+                          export_dir=arguments.export_out)
+        pool.wait_completion()
+
+    sys.stdout.write("["+str(len(chromosome_names)-api_call_error_counter) + "/" + str(len(chromosome_names))
+                     + " task" + ('s' if api_call_error_counter > 1 else ''))
+    sys.stdout.write(" executed in " +
+                     str(datetime.timedelta(seconds=timer.duration_in_seconds())) + " seconds]\n")
+    sys.stdout.flush()
+
+    return api_call_error_counter
+
+
+def build_output_stream(export_dir, basename, extension):
     """Build the output stream based on entry name and export mode
     :param export_dir: the export directory
-    :param np_entry: the nextprot entry id
-    :param export_format: the export type (ttl,xml or None)
+    :param basename: the basename
+    :param extension: the extension
     :return: the output stream where entry is written
     """
     if export_dir is not None:
-        return open(export_dir+"/"+np_entry+"."+export_format, 'w')
+        return open(export_dir+"/"+basename+"."+extension, 'w')
 
     # redirects output to the null device if export is disabled
     return open('/dev/null', 'w')
@@ -457,6 +507,8 @@ def run(arguments):
             count_errors += fetch_chromosome_reports(arguments=arguments, chromosome_names=chromosomes, pool=pool)
             count_errors += fetch_chromosome_summaries(arguments=arguments, chromosome_names=chromosomes, pool=pool)
 
+        if arguments.peff:
+            count_errors += export_chromosomes_in_peff(arguments=arguments, chromosome_names=chromosomes, pool=pool)
         count_errors += get_all_nacetylated_entries(api_host=arguments.api)
         count_errors += get_all_phosphorylated_entries(api_host=arguments.api)
         count_errors += get_all_unconfirmed_ms_data_entries(api_host=arguments.api)
