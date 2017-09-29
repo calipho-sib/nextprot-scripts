@@ -49,17 +49,18 @@ def parse_arguments():
         arguments.api = 'http://' + arguments.api
 
     print "Parameters"
-    print "  nextprot api host : " + arguments.api
-    print "  thread number     : " + str(arguments.thread)
+    print "----------"
+    print "  nextprot api host              : " + arguments.api
+    print "  thread number                  : " + str(arguments.thread)
     if arguments.export_out is not None:
         if arguments.export_format is None:
             arguments.export_format = 'xml'
-        print "  output directory : "+arguments.export_out
-        print "  output format    : "+arguments.export_format
+        print "  output directory           : "+arguments.export_out
+        print "  entry output format        : "+arguments.export_format
     if arguments.chromosomes:
-        print "  on chromosomes   : "+str(arguments.chromosomes)
+        print "  on chromosomes             : "+str(arguments.chromosomes)
     if arguments.n > 0:
-        print "  export n entries : "+str(arguments.n)
+        print "  export n entries           : "+str(arguments.n)
     print "  export chromosomes in peff : "+str(arguments.peff)
     print
 
