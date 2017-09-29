@@ -157,6 +157,8 @@ def build_nextprot_entry_url(api_host, np_entry, export_type):
         return api_host + "/export/entries.xml?query=id:" + np_entry
     elif export_type == "ttl":
         return api_host + "/export/entries.ttl?query=id:" + np_entry
+    elif export_type == "peff" or export_type == "fasta":
+        return api_host + "/export/entry/" + np_entry + "." + export_type
 
 
 def fetch_nextprot_entry(api_host, np_entry, export_type, export_dir):
@@ -170,6 +172,18 @@ def fetch_nextprot_entry(api_host, np_entry, export_type, export_dir):
     outstream = build_output_stream(export_dir=export_dir, basename=np_entry,
                                     extension=export_type)
     call_api_service(url=url, outstream=outstream, service_name="/entry/"+np_entry)
+
+
+def cache_nextprot_entry_for_peff(api_host, np_entry):
+    """Export nextprot entry in peff format
+    :param api_host: the API url
+    :param np_entry: the nextprot entry id
+    :param export_dir: the export directory
+    """
+    url = build_nextprot_entry_url(api_host, np_entry, "peff")
+    outstream = build_output_stream(export_dir=None, basename=np_entry,
+                                    extension="peff")
+    call_api_service(url=url, outstream=outstream, service_name="/export/entry/"+np_entry + ".peff")
 
 
 def fetch_chromosome_report(api_host, chromosome):
@@ -260,12 +274,33 @@ def call_api_service(url, outstream, service_name):
     print " [" + str(datetime.timedelta(seconds=timer.duration_in_seconds())) + " seconds]"
 
 
+def add_nextprot_entries_tasks_to_pool(arguments, nextprot_entries, pool):
+    """
+    add tasks to export and cache nextprot entries
+    :param arguments: the program arguments
+    :param nextprot_entries: a list of protein entries
+    :param pool: the task pool
+    """
+    for nextprot_entry in nextprot_entries:
+        pool.add_task(func=fetch_nextprot_entry,
+                      api_host=arguments.api,
+                      np_entry=nextprot_entry,
+                      export_type=arguments.export_format,
+                      export_dir=arguments.export_out)
+        pool.add_task(func=cache_nextprot_entry_for_peff,
+                      api_host=arguments.api,
+                      np_entry=nextprot_entry)
+
+    print "\n* Adding "+str(pool.size())+" nextprot entries tasks to the pool"
+
+
 def fetch_nextprot_entries(arguments, nextprot_entries, pool):
     """
     Fetch neXtProt entries from the API
     :param arguments: the program arguments
     :param nextprot_entries: a list of protein entries
     :return: the number of API call errors
+    :param pool: the task pool
     """
     print "\n* Caching service /entry/{entry} (" + str(len(nextprot_entries)) + " nextprot entries)..."
 
@@ -274,12 +309,7 @@ def fetch_nextprot_entries(arguments, nextprot_entries, pool):
 
     timer = Timer()
     with timer:
-        for nextprot_entry in nextprot_entries:
-            pool.add_task(func=fetch_nextprot_entry,
-                          api_host=arguments.api,
-                          np_entry=nextprot_entry,
-                          export_type=arguments.export_format,
-                          export_dir=arguments.export_out)
+        add_nextprot_entries_tasks_to_pool(arguments, nextprot_entries, pool)
         pool.wait_completion()
 
     sys.stdout.write("["+str(len(nextprot_entries)-api_call_error_counter) + "/" + str(len(nextprot_entries)) + " task"
