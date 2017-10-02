@@ -273,7 +273,7 @@ def call_api_service(url, outstream, service_name):
     print " [" + str(datetime.timedelta(seconds=timer.duration_in_seconds())) + " seconds]"
 
 
-def add_nextprot_entries_tasks_to_pool(arguments, nextprot_entries, pool):
+def exec_nextprot_entries_tasks(arguments, nextprot_entries, pool):
     """
     add tasks to export and cache nextprot entries
     :param arguments: the program arguments
@@ -289,8 +289,6 @@ def add_nextprot_entries_tasks_to_pool(arguments, nextprot_entries, pool):
         pool.add_task(func=cache_nextprot_entry_for_peff,
                       api_host=arguments.api,
                       np_entry=nextprot_entry)
-
-    print "\n* Adding "+str(pool.size())+" nextprot entries tasks to the pool"
 
 
 def fetch_nextprot_entries(arguments, nextprot_entries, pool):
@@ -308,7 +306,7 @@ def fetch_nextprot_entries(arguments, nextprot_entries, pool):
 
     timer = Timer()
     with timer:
-        add_nextprot_entries_tasks_to_pool(arguments, nextprot_entries, pool)
+        exec_nextprot_entries_tasks(arguments, nextprot_entries, pool)
         pool.wait_completion()
 
     sys.stdout.write("["+str(len(nextprot_entries)-api_call_error_counter) + "/" + str(len(nextprot_entries)) + " task"
