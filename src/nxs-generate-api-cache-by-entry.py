@@ -215,7 +215,7 @@ def export_chromosome_in_peff(api_host, chromosome, export_dir):
     url = api_host + "/export/chromosome/" + chromosome + ".peff"
     if export_dir is None:
         export_dir = "./"
-    outstream = build_output_stream(export_dir=export_dir, basename=chromosome,
+    outstream = build_output_stream(export_dir=export_dir, basename="nextprot_chromosome_"+chromosome,
                                     format="peff")
 
     call_api_service(url=url, outstream=outstream, service_name=url)
