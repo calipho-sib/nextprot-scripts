@@ -215,8 +215,20 @@ def export_chromosome_in_peff(api_host, chromosome, export_dir):
     url = api_host + "/export/chromosome/" + chromosome + ".peff"
     if export_dir is None:
         export_dir = "./"
-    outstream = build_output_stream(export_dir=export_dir, basename="nextprot_chromosome_"+chromosome,
-                                    format="peff")
+    outstream = build_output_stream(export_dir=export_dir, basename="nextprot_chromosome_"+chromosome, format="peff")
+
+    call_api_service(url=url, outstream=outstream, service_name=url)
+
+
+def export_all_chromosomes_in_peff(api_host, export_dir):
+    """Export all chromosomes in peff
+    :param api_host: the API url
+    :param export_dir: the directory to export peff
+    """
+    url = api_host + "/export/entries.peff?query=*"
+    if export_dir is None:
+        export_dir = "./"
+    outstream = build_output_stream(export_dir=export_dir, basename="nextprot_all", format="peff")
 
     call_api_service(url=url, outstream=outstream, service_name=url)
 
@@ -394,6 +406,10 @@ def export_chromosomes_in_peff(arguments, chromosome_names, pool):
             pool.add_task(func=export_chromosome_in_peff,
                           api_host=arguments.api,
                           chromosome=chromosome_name,
+                          export_dir=arguments.export_dir)
+        if len(chromosome_names) == 26:
+            pool.add_task(func=export_all_chromosomes_in_peff,
+                          api_host=arguments.api,
                           export_dir=arguments.export_dir)
         pool.wait_completion()
 
