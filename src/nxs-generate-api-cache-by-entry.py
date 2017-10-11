@@ -225,7 +225,7 @@ def export_all_chromosomes_in_peff(api_host, export_dir):
     :param api_host: the API url
     :param export_dir: the directory to export peff
     """
-    url = api_host + "/export/entries.peff?query=*"
+    url = api_host + "/export/entries/all.peff"
     if export_dir is None:
         export_dir = "./"
     outstream = build_output_stream(export_dir=export_dir, basename="nextprot_all", format="peff")
