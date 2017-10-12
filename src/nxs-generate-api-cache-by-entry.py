@@ -292,7 +292,7 @@ def add_nextprot_entries_tasks(arguments, nextprot_entries, pool):
                       api_host=arguments.api,
                       np_entry=nextprot_entry)
 
-    return pool.size()
+    return len(nextprot_entries) * 2
 
 
 def fetch_nextprot_entries(arguments, nextprot_entries, pool):

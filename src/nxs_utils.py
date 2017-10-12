@@ -29,9 +29,6 @@ class ThreadPool:
         """Add a task to the queue"""
         self.tasks.put((func, args, kargs))
 
-    def size(self):
-        return self.tasks.qsize()
-
     def wait_completion(self):
         """Wait for completion of all the tasks in the queue"""
         self.tasks.join()
