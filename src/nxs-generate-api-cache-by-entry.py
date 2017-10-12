@@ -11,8 +11,8 @@ max_thread = multiprocessing.cpu_count()*2
 # default number of thread
 default_threads = multiprocessing.cpu_count()/2
 
-# global variable to count API call errors (shared between threads)
-api_call_error_counter = 0
+# global variable collecting API call errors (shared between threads)
+api_call_errors = []
 
 # lock available to update previous global variable concurrently
 thread_lock = threading.Lock()
@@ -239,12 +239,7 @@ def fetch_gene_names(api_host):
     """
     print "\n* Caching service /gene-names..."
 
-    global api_call_error_counter
-    api_call_error_counter = 0
-
     call_api_service(url=api_host + "/gene-names", outstream=open('/dev/null', 'w'), service_name="/gene-names")
-
-    return api_call_error_counter
 
 
 def fetch_sitemap(api_host):
@@ -253,12 +248,7 @@ def fetch_sitemap(api_host):
     """
     print "\n* Caching resource /seo/sitemap..."
 
-    global api_call_error_counter
-    api_call_error_counter = 0
-
     call_api_service(url=api_host + "/seo/sitemap", outstream=open('/dev/null', 'w'), service_name="/seo/sitemap")
-
-    return api_call_error_counter
 
 
 def call_api_service(url, outstream, service_name):
@@ -278,14 +268,14 @@ def call_api_service(url, outstream, service_name):
             sys.stdout.write("FAILURE: " + threading.current_thread().name+" failed with error '"+str(e)+"' for "+service_name)
             sys.stdout.flush()
             thread_lock.acquire()
-            global api_call_error_counter
-            api_call_error_counter += 1
+            global api_call_errors
+            api_call_errors.append(url)
             thread_lock.release()
 
     print " [" + str(datetime.timedelta(seconds=timer.duration_in_seconds())) + " seconds]"
 
 
-def exec_nextprot_entries_tasks(arguments, nextprot_entries, pool):
+def add_nextprot_entries_tasks(arguments, nextprot_entries, pool):
     """
     add tasks to export and cache nextprot entries
     :param arguments: the program arguments
@@ -302,6 +292,8 @@ def exec_nextprot_entries_tasks(arguments, nextprot_entries, pool):
                       api_host=arguments.api,
                       np_entry=nextprot_entry)
 
+    return pool.size()
+
 
 def fetch_nextprot_entries(arguments, nextprot_entries, pool):
     """
@@ -313,21 +305,14 @@ def fetch_nextprot_entries(arguments, nextprot_entries, pool):
     """
     print "\n* Caching service /entry/{entry} (" + str(len(nextprot_entries)) + " nextprot entries)..."
 
-    global api_call_error_counter
-    api_call_error_counter = 0
-
     timer = Timer()
     with timer:
-        exec_nextprot_entries_tasks(arguments, nextprot_entries, pool)
+        task_count = add_nextprot_entries_tasks(arguments, nextprot_entries, pool)
         pool.wait_completion()
 
-    sys.stdout.write("["+str(len(nextprot_entries)-api_call_error_counter) + "/" + str(len(nextprot_entries)) + " task"
-                     + ('s' if api_call_error_counter > 1 else ''))
-    sys.stdout.write(" executed in " +
+    sys.stdout.write("["+str(task_count) + " tasks executed in " +
                      str(datetime.timedelta(seconds=timer.duration_in_seconds())) + " seconds]\n")
     sys.stdout.flush()
-
-    return api_call_error_counter
 
 
 def _fetch_chromosome_reports_given_func(report_func, arguments, chromosome_names, pool):
@@ -338,9 +323,6 @@ def _fetch_chromosome_reports_given_func(report_func, arguments, chromosome_name
     :param pool: the pool of reusable threads
     :return: the number of API call errors
     """
-    global api_call_error_counter
-    api_call_error_counter = 0
-
     timer = Timer()
     with timer:
         for chromosome_name in chromosome_names:
@@ -349,13 +331,9 @@ def _fetch_chromosome_reports_given_func(report_func, arguments, chromosome_name
                           chromosome=chromosome_name)
         pool.wait_completion()
 
-    sys.stdout.write("["+str(len(chromosome_names)-api_call_error_counter) + "/" + str(len(chromosome_names))
-                     + " task" + ('s' if api_call_error_counter > 1 else ''))
-    sys.stdout.write(" executed in " +
-                     str(datetime.timedelta(seconds=timer.duration_in_seconds())) + " seconds]\n")
+    sys.stdout.write("["+str(len(chromosome_names)) + " tasks executed in " +
+                             str(datetime.timedelta(seconds=timer.duration_in_seconds())) + " seconds]\n")
     sys.stdout.flush()
-
-    return api_call_error_counter
 
 
 def fetch_chromosome_reports(arguments, chromosome_names, pool):
@@ -388,6 +366,7 @@ def fetch_chromosome_summaries(arguments, chromosome_names, pool):
                                                 chromosome_names=chromosome_names,
                                                 pool=pool)
 
+
 def export_chromosomes_in_peff(arguments, chromosome_names, pool):
     """Fetch chromosome reports from the API
     :param arguments: the program arguments
@@ -396,9 +375,6 @@ def export_chromosomes_in_peff(arguments, chromosome_names, pool):
     :return: the number of API call errors
     """
     print "\n* Exporting peffs with service /export/chromosome/{chromosome}.peff..."
-
-    global api_call_error_counter
-    api_call_error_counter = 0
 
     timer = Timer()
     with timer:
@@ -413,13 +389,9 @@ def export_chromosomes_in_peff(arguments, chromosome_names, pool):
                           export_dir=arguments.export_dir)
         pool.wait_completion()
 
-    sys.stdout.write("["+str(len(chromosome_names)-api_call_error_counter) + "/" + str(len(chromosome_names))
-                     + " task" + ('s' if api_call_error_counter > 1 else ''))
-    sys.stdout.write(" executed in " +
+    sys.stdout.write("["+str(len(chromosome_names)) + " tasks executed in " +
                      str(datetime.timedelta(seconds=timer.duration_in_seconds())) + " seconds]\n")
     sys.stdout.flush()
-
-    return api_call_error_counter
 
 
 def build_output_stream(export_dir, basename, format):
@@ -458,14 +430,9 @@ def get_all_nacetylated_entries(api_host):
     """
     print "\n* Caching nacetylated entries... "
 
-    global api_call_error_counter
-    api_call_error_counter = 0
-
     call_api_service(url=api_host + "/chromosome-report/export/hpp/nacetylated-entries.tsv",
                      outstream=open('/dev/null', 'w'),
                      service_name="/chromosome-report/export/hpp/nacetylated-entries")
-
-    return api_call_error_counter
 
 
 def get_all_unconfirmed_ms_data_entries(api_host):
@@ -476,14 +443,9 @@ def get_all_unconfirmed_ms_data_entries(api_host):
     """
     print "\n* Caching unconfirmed ms data entries... "
 
-    global api_call_error_counter
-    api_call_error_counter = 0
-
     call_api_service(url=api_host + "/chromosome-report/export/hpp/unconfirmed-ms-data-entries.txt",
                      outstream=open('/dev/null', 'w'),
                      service_name="/chromosome-report/export/hpp/unconfirmed-ms-data-entries")
-
-    return api_call_error_counter
 
 
 def get_all_phosphorylated_entries(api_host):
@@ -494,14 +456,9 @@ def get_all_phosphorylated_entries(api_host):
     """
     print "\n* Caching phosphorylated entries... "
 
-    global api_call_error_counter
-    api_call_error_counter = 0
-
     call_api_service(url=api_host + "/chromosome-report/export/hpp/phosphorylated-entries.tsv",
                      outstream=open('/dev/null', 'w'),
                      service_name="/chromosome-report/export/hpp/phosphorylated-entries")
-
-    return api_call_error_counter
 
 
 def build_all_terminology_graphs(api_host):
@@ -527,8 +484,6 @@ def build_all_terminology_graphs(api_host):
 
 def run(arguments):
 
-    count_errors = 0
-
     pool = ThreadPool(arguments.thread)
 
     global_timer = Timer()
@@ -540,29 +495,31 @@ def run(arguments):
         nextprot_entries_to_cache = nextprot_entries[0:arguments.n] if arguments.n >= 0 else nextprot_entries
 
         if len(nextprot_entries_to_cache) > 0:
-            count_errors = fetch_nextprot_entries(arguments=arguments, nextprot_entries=nextprot_entries_to_cache, pool=pool)
-        count_errors += fetch_gene_names(arguments.api)
+             fetch_nextprot_entries(arguments=arguments, nextprot_entries=nextprot_entries_to_cache, pool=pool)
+        fetch_gene_names(arguments.api)
 
         # fetch chromosome report only if all entries
         if len(nextprot_entries) == len(nextprot_entries_to_cache):
-            count_errors += fetch_chromosome_reports(arguments=arguments, chromosome_names=chromosomes, pool=pool)
-            count_errors += fetch_chromosome_summaries(arguments=arguments, chromosome_names=chromosomes, pool=pool)
+            fetch_chromosome_reports(arguments=arguments, chromosome_names=chromosomes, pool=pool)
+            fetch_chromosome_summaries(arguments=arguments, chromosome_names=chromosomes, pool=pool)
 
         # export chromosome in peff
         if arguments.peff_chromosome:
-            count_errors += export_chromosomes_in_peff(arguments=arguments, chromosome_names=chromosomes, pool=pool)
+            export_chromosomes_in_peff(arguments=arguments, chromosome_names=chromosomes, pool=pool)
 
         # cache other infos
-        count_errors += get_all_nacetylated_entries(api_host=arguments.api)
-        count_errors += get_all_phosphorylated_entries(api_host=arguments.api)
-        count_errors += get_all_unconfirmed_ms_data_entries(api_host=arguments.api)
+        get_all_nacetylated_entries(api_host=arguments.api)
+        get_all_phosphorylated_entries(api_host=arguments.api)
+        get_all_unconfirmed_ms_data_entries(api_host=arguments.api)
 
     build_all_terminology_graphs(api_host=arguments.api)
 
     print "\n-------------------------------------------------------------------------------------"
-    print "Overall cache generated with " + str(count_errors) + " error" + ('s' if count_errors > 1 else '') \
+    print "Overall cache generated with " + str(len(api_call_errors)) + " error" + ('s' if len(api_call_errors) > 1 else '') \
           + " in " + str(datetime.timedelta(seconds=global_timer.duration_in_seconds())) + " seconds"
 
+    if len(api_call_errors)>0:
+        print "API call errors: " + api_call_errors
 
 if __name__ == '__main__':
     run(arguments=parse_arguments())
