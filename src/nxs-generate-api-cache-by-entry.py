@@ -471,7 +471,7 @@ def run(arguments):
           + " in " + str(datetime.timedelta(seconds=global_timer.duration_in_seconds())) + " seconds"
 
     if len(api_call_errors)>0:
-        print "API call errors: " + api_call_errors
+        print "API call errors: " + str(api_call_errors)
 
 if __name__ == '__main__':
     run(arguments=parse_arguments())
