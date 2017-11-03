@@ -183,6 +183,15 @@ def cache_nextprot_entry_for_peff(api_host, np_entry):
     call_api_service(url=url, outstream=open('/dev/null', 'w'), service_name="/export/entry/"+np_entry + ".peff")
 
 
+def cache_nextprot_entry_publications(api_host, np_entry):
+    """Export nextprot entry publications
+    :param api_host: the API url
+    :param np_entry: the nextprot entry id
+    """
+    url = api_host + "/entry-publications/" + np_entry + "/count.json"
+    call_api_service(url=url, outstream=open('/dev/null', 'w'), service_name="/entry-publications/"+np_entry + "/count.json")
+
+
 def fetch_chromosome_report(api_host, chromosome):
     """Get chromosome report
     :param api_host: the API url
@@ -260,6 +269,9 @@ def add_nextprot_entries_tasks(arguments, nextprot_entries, pool):
                       export_type=arguments.export_entry_format,
                       export_dir=arguments.export_dir)
         pool.add_task(func=cache_nextprot_entry_for_peff,
+                      api_host=arguments.api,
+                      np_entry=nextprot_entry)
+        pool.add_task(func=cache_nextprot_entry_publications,
                       api_host=arguments.api,
                       np_entry=nextprot_entry)
 
