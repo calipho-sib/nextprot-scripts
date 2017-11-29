@@ -188,8 +188,8 @@ def cache_nextprot_entry_publications(api_host, np_entry):
     :param api_host: the API url
     :param np_entry: the nextprot entry id
     """
-    url = api_host + "/entry-publications/" + np_entry + "/count.json"
-    call_api_service(url=url, outstream=open('/dev/null', 'w'), service_name="/entry-publications/"+np_entry + "/count.json")
+    url = api_host + "/entry-publications/entry/" + np_entry + "/count.json"
+    call_api_service(url=url, outstream=open('/dev/null', 'w'), service_name="/entry-publications/entry/"+np_entry + "/count.json")
 
 
 def fetch_chromosome_report(api_host, chromosome):
