@@ -79,14 +79,21 @@ function setBuildVersionInAppJS() {
     git_hash=`git rev-parse --short HEAD`
     echo "${git_hash}"
 
+    echo -n "fetching branch name of current commit: "
+    git_branch=`git rev-parse --abbrev-ref HEAD`
+    echo "${git_branch}"
+
     replaceBuildToken="s/BUILD_NUMBER/${build_number}/g"
     replaceGitHashToken="s/GIT_HASH/${git_hash}/g"
+    replaceGitBranchToken="s/BRANCH_NAME/${git_branch}/g"
 
     echo "replacing BUILD_NUMBER -> ${build_number} in build/js/app.js"
     sed ${replaceBuildToken} build/js/app.js > tmp.dat
     echo "replacing GIT_HASH -> ${git_hash} in build/js/app.js"
     sed ${replaceGitHashToken} tmp.dat > tmp2.dat
-    mv tmp2.dat build/js/app.js
+    echo "replacing BRANCH_NAME -> ${git_branch} in build/js/app.js"
+    sed ${replaceGitBranchToken} tmp2.dat > tmp3.dat
+    mv tmp3.dat build/js/app.js
 
     rm tmp*.dat
 }
