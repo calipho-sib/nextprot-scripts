@@ -1,7 +1,7 @@
 #!/usr/bin/env bash
 
 function echoUsage() {
-    echo "Deploy nextprot-api war in a given dev machine."
+    echo "Deploy nextprot-api war in a given development host."
     echo "usage: $(basename $0) [-hd] <path> <host>"
     echo "Params:"
     echo " <path> nextprot-api git repository path"
