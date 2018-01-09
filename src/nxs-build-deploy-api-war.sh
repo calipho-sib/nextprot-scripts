@@ -95,7 +95,7 @@ function deploy_war_to_host() {
 
 function build_web_app() {
 
-    mvn clean package -DskipTests -f ${NX_API_REPO}/pom.xml
+    mvn clean package install -DskipTests -f ${NX_API_REPO}/pom.xml
 }
 
 checkProjectId ${NX_API_REPO}
