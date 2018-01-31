@@ -26,8 +26,8 @@ function acLists() {
   mkdir -p /work/ttldata/ac_lists
   rm -rf /work/ttldata/ac_lists/*
   for chrname in $chromosomes; do
-    url="${apibase}/entry-accessions/chromosome/{${chrname}"
-    outfile=/work/ttldata/ac_lists/nextprot_ac_list_chromosome_$chrname.txt
+    url="${apibase}/entry-accessions/chromosome/${chrname}"
+    outfile=/work/ttldata/ac_lists/nextprot_ac_list_chromosome_${chrname}.txt
     wget --timeout=7200 --output-document=$outfile "$url" >> $logfile 2>&1
   done
 }
