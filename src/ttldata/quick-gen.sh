@@ -21,15 +21,23 @@ function solrEntries() {
 
 
 function acLists() {
+
+  logfile="generate-ac-lists-$(date "+%Y%m%d-%H%M").log"
+
+  url="${apibase}/entry-accessions.txt"
+  outfile=/work/ttldata/ac_lists/nextprot_ac_list_all.txt
+  wget --timeout=7200 --output-document=$outfile "$url" >> $logfile 2>&1
+
   chromosomes="1 2 3 4 5 6 7 8 9 10 11 12 13 14 15 16 17 18 19 20 21 22 MT X Y unknown"
   logfile="generate-ac-lists-$(date "+%Y%m%d-%H%M").log"
   mkdir -p /work/ttldata/ac_lists
   rm -rf /work/ttldata/ac_lists/*
   for chrname in $chromosomes; do
-    url="${apibase}/entry-accessions/chromosome/${chrname}"
+    url="${apibase}/entry-accessions/chromosome/${chrname}.txt"
     outfile=/work/ttldata/ac_lists/nextprot_ac_list_chromosome_${chrname}.txt
     wget --timeout=7200 --output-document=$outfile "$url" >> $logfile 2>&1
   done
+  
   declare -a params=("PROTEIN_LEVEL" "TRANSCRIPT_LEVEL" "HOMOLOGY" "PREDICTED" "UNCERTAIN")
   declare -a names=("PE1_at_protein_level" "PE2_at_transcript_level" "PE3_homology" "PE4_predicted" "PE5_uncertain")
   lng=${#params[@]}
@@ -38,6 +46,7 @@ function acLists() {
     outfile=/work/ttldata/ac_lists/nextprot_ac_list_${names[$i]}.txt
     wget --timeout=7200 --output-document=$outfile "$url" >> $logfile 2>&1
   done
+  
 
 }
 
