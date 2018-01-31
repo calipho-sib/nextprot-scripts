@@ -19,6 +19,19 @@ function solrEntries() {
   done
 }
 
+
+function acLists() {
+  chromosomes="1 2 3 4 5 6 7 8 9 10 11 12 13 14 15 16 17 18 19 20 21 22 MT X Y unknown"
+  logfile="generate-ac-lists-$(date "+%Y%m%d-%H%M").log"
+  mkdir -p /work/ttldata/ac_lists
+  rm -rf /work/ttldata/ac_lists/*
+  for chrname in $chromosomes; do
+    url="${apibase}/entry-accessions/chromosome/{${chrname}"
+    outfile=/work/ttldata/ac_lists/nextprot_ac_list_chromosome_$chrname.txt
+    wget --timeout=7200 --output-document=$outfile "$url" >> $logfile 2>&1
+  done
+}
+
 function chrReports() {
   chromosomes="1 2 3 4 5 6 7 8 9 10 11 12 13 14 15 16 17 18 19 20 21 22 MT X Y unknown"
   logfile="generate-chr-reports-$(date "+%Y%m%d-%H%M").log"
@@ -84,7 +97,7 @@ if [ "$actions" = "" ] ; then
   echo " "
   echo Usage $0 \"action1 ... actionN\" [MMdd]
   echo " "
-  echo where actions is a space separated list ot these possible items: \"cache ttl xml solr solr-publi solr-term solr-entries solr-gold-entries gz rdfhelp runrq chr-reports hpp-reports peff\"
+  echo where actions is a space separated list ot these possible items: \"cache ttl xml solr solr-publi solr-term solr-entries solr-gold-entries gz rdfhelp runrq chr-reports hpp-reports peff ac-lists\"
   echo and MMdd is a month/date used to touch xml and ttl files when gz action is in action list. 
   echo " "
   exit 1
@@ -191,6 +204,11 @@ for action in $actions; do
 # generate chromosome reports
   if [ "$action" = "chr-reports" ] ; then
     chrReports
+  fi
+
+# generate AC lists
+  if [ "$action" = "ac-lists" ] ; then
+    acLists
   fi
 
 # generate HPP reports
