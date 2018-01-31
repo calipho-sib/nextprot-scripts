@@ -34,13 +34,8 @@ function acLists() {
   declare -a names=("PE1_at_protein_level" "PE2_at_transcript_level" "PE3_homology" "PE4_predicted" "PE5_uncertain")
   lng=${#params[@]}
   for (( i=0; i<${lng}; i++ )); do
-    echo $i " / " ${lng} 
-    param=${params[$i]}
-    url="${apibase}/entry-accessions/protein-existence/${param}.txt"
-    name=${names[$i]}
-    outfile=/work/ttldata/ac_lists/nextprot_ac_list_${name}.txt
-    echo name : $name
-    wcho param: $param
+    url="${apibase}/entry-accessions/protein-existence/${params[$i]}.txt"
+    outfile=/work/ttldata/ac_lists/nextprot_ac_list_${names[$i]}.txt
     wget --timeout=7200 --output-document=$outfile "$url" >> $logfile 2>&1
   done
 
