@@ -24,7 +24,7 @@ function acLists() {
 
   logfile="generate-ac-lists-$(date "+%Y%m%d-%H%M").log"
 
-  url="${apibase}/entry-accessions.txt"
+  url="${apibase}/entry-accessions.json"
   outfile=/work/ttldata/ac_lists/nextprot_ac_list_all.txt
   wget --timeout=7200 --output-document=$outfile "$url" >> $logfile 2>&1
 
