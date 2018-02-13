@@ -49,13 +49,21 @@ function stop-virtuoso() {
     host=$1
 
     # Shut down the server resource: http://tw.rpi.edu/web/inside/endpoints/installing-virtuoso
-    ssh npteam@${host} "isql 1111 dba dba -K"
 
-    if [ ! $? = 0 ]; then
-        echo "virtuoso on ${host} was not running"
-    else
-        sleep 30
-    fi
+	if pgrep virtuoso-t; then
+	  echo "killing virtuoso and waiting 30 seconds..."
+	  kill $(pgrep virtuoso-t)
+	  sleep 30
+	else
+	  echo "virtuoso was not running"
+	fi
+
+#    ssh npteam@${host} "isql 1111 dba dba -K"
+#    if [ ! $? = 0 ]; then
+#        echo "virtuoso on ${host} was not running"
+#    else
+#        sleep 30
+#    fi
 
     check-virtuoso-is-down ${host}
 }
