@@ -1,6 +1,7 @@
 import time
 from functools import wraps
 
+#Decorator that retries a request if the HTTP call fails
 
 def retry(ExceptionToCheck, tries=4, delay=3, backoff=2, logger=None):
     """Retry calling the decorated function using an exponential backoff.
