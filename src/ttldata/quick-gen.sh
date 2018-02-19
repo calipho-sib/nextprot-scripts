@@ -54,10 +54,10 @@ function prepareFtp() {
   echo copying content of $indir ...
   cp $indir/cv-uniprot-tissue.proxied $outdir/caloha.obo    
   cp $indir/cv-uniprot-domain.proxied $outdir/cv_domain.txt    
-  cp $indir/cv-uniprot-family.proxied $outdir/cv_family.txt    
+  cp $indir/cv-nextprot-family.proxied $outdir/cv_family.txt    
   cp $indir/cv-uniprot-metal.proxied $outdir/cv_metal.txt    
-  cp $indir/cv-uniprot-modification-effect.proxied $outdir/cv_modification_effect.obo    
-  cp $indir/cv-uniprot-protein-property.proxied $outdir/cv_protein_property.obo    
+  cp $indir/cv-nextprot-modification-effect.proxied $outdir/cv_modification_effect.obo    
+  cp $indir/cv-nextprot-protein-property.proxied $outdir/cv_protein_property.obo    
   cp $indir/cv-uniprot-topology.proxied $outdir/cv_topological_domain.txt    
   cp $indir/cv-uniprot-icepo.proxied $outdir/icepo.obo    
   cp /share/sib/common/Calipho/np/cv/Caloha_readme.txt $outdir  
