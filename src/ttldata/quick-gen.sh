@@ -34,7 +34,7 @@ function prepareFtp() {
   subdirs="ac_lists chr_reports hpp_reports md5 peff ttl-compressed xml-compressed"
   for subdir in $subdirs; do
     echo copying content of $datadir/$subdir
-    cp -r $datadir/$subdir $pre_ftp_dir/
+    cp -rL $datadir/$subdir $pre_ftp_dir/
   done
  
  
