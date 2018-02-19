@@ -59,7 +59,7 @@ function prepareFtp() {
   cp $indir/cv-nextprot-modification-effect.proxied $outdir/cv_modification_effect.obo    
   cp $indir/cv-nextprot-protein-property.proxied $outdir/cv_protein_property.obo    
   cp $indir/cv-uniprot-topology.proxied $outdir/cv_topological_domain.txt    
-  cp $indir/cv-uniprot-icepo.proxied $outdir/icepo.obo    
+  cp $indir/cv-icepo.proxied $outdir/icepo.obo    
   cp /share/sib/common/Calipho/np/cv/Caloha_readme.txt $outdir  
 
 }
