@@ -32,22 +32,35 @@ function prepareFtp() {
   # get latest README for ftp 
   curl 'https://raw.githubusercontent.com/calipho-sib/nextprot-readme/master/README.txt' -o $pre_ftp_dir/README
   
-  # collect data generated earlier for further puplication on ftp server
-  # WARNING: missing dirs: controlled_vocabularies, mapping
+  # collect data generated earlier by NP2 API for further puplication on ftp server
   subdirs="ac_lists chr_reports hpp_reports md5 peff ttl-compressed xml-compressed"
   for subdir in $subdirs; do
-    echo copying content of $datadir/$subdir
+    echo copying content of $datadir/$subdir ...
     cp -rL $datadir/$subdir $pre_ftp_dir/
   done
  
-  # move hpp_reports to final directory name and add dedicated README
+  # move hpp_reports to final directory name and add dedicated HPP_README.txt
   mkdir -p $pre_ftp_dir/custom
   mv $pre_ftp_dir/hpp_reports $pre_ftp_dir/custom/hpp
   curl 'https://raw.githubusercontent.com/calipho-sib/nextprot-readme/master/HPP_README.txt' -o $pre_ftp_dir/custom/hpp/HPP_README.txt
- 
-  #logfile="generate-ac-lists-$(date "+%Y%m%d-%H%M").log"
 
-  
+  # collect data generated earlier with NP1 ant tasks for further publication on ftp server
+   
+  cvdirs=/mnt/npdata/proxy/cvterms/
+  latest=$(ls -1tr $cvdirs | grep 201 | tail -n1)
+  indir=$cvdirs/$latest
+  outdir=$pre_ftp_dir/controlled_vocabularies
+  mkdir -p $outdir
+  echo copying content of $indir ...
+  cp $indir/cv-uniprot-tissue.proxied $outdir/caloha.obo    
+  cp $indir/cv-uniprot-domain.proxied $outdir/cv_domain.txt    
+  cp $indir/cv-uniprot-family.proxied $outdir/cv_family.txt    
+  cp $indir/cv-uniprot-metal.proxied $outdir/cv_metal.txt    
+  cp $indir/cv-uniprot-modification-effect.proxied $outdir/cv_modification_effect.obo    
+  cp $indir/cv-uniprot-protein-property.proxied $outdir/cv_protein_property.obo    
+  cp $indir/cv-uniprot-topology.proxied $outdir/cv_topological_domain.txt    
+  cp $indir/cv-uniprot-icepo.proxied $outdir/icepo.obo    
+  cp /share/sib/common/Calipho/np/cv/Caloha_readme.txt $outdir  
 
 }
 
