@@ -40,9 +40,9 @@ function prepareFtp() {
     cp -rL $datadir/$subdir $pre_ftp_dir/
   done
  
-  # move hpp_reports to final place and add dedicated README
+  # move hpp_reports to final directory name and add dedicated README
   mkdir -p $pre_ftp_dir/custom
-  mv $pre_ftp_dir/hpp_reports $pre_ftp_dir/hpp
+  mv $pre_ftp_dir/hpp_reports $pre_ftp_dir/custom/hpp
   curl 'https://raw.githubusercontent.com/calipho-sib/nextprot-readme/master/HPP_README.txt' -o $pre_ftp_dir/custom/hpp/HPP_README.txt
  
   #logfile="generate-ac-lists-$(date "+%Y%m%d-%H%M").log"
