@@ -39,6 +39,13 @@ function prepareFtp() {
     cp -rL $datadir/$subdir $pre_ftp_dir/
   done
  
+  # move xml to final directory name
+  mv $pre_ftp_dir/xml-compressed $pre_ftp_dir/xml
+  
+  # move ttl to final directory name
+  mkdir -p $pre_ftp_dir/rdf
+  mv $pre_ftp_dir/ttl-compressed $pre_ftp_dir/rdf/ttl
+ 
   # move hpp_reports to final directory name and add dedicated HPP_README.txt
   mkdir -p $pre_ftp_dir/custom
   mv $pre_ftp_dir/hpp_reports $pre_ftp_dir/custom/hpp
@@ -70,6 +77,16 @@ function prepareFtp() {
   echo copying content of $indir ...
   cp $indir/*.txt $outdir/   
 
+ 
+  # copy all directories except ttl & xml to M for QC
+  qcdir=/share/sib/common/Calipho/np/FTP/current
+  mkdir -p $qcdir
+  subdirs="ac_lists chr_reports_controlled_vocabularies custom mapping md5 peff" 
+  for subdir in $subdirs; do
+    echo copying content of $datadir/$subdir for QC to $qcdir ...
+    cp -rL $pre_ftp_dir/$subdir $qc_dir/
+  done
+  
 }
 
 function acLists() {
