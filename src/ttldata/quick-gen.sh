@@ -25,18 +25,25 @@ function prepareFtp() {
   datadir=/work/ttldata
   pre_ftp_dir=/work/ttldata/nobackup/prepared_ftp/
 
+  # clean directory
   mkdir -p $pre_ftp_dir
   rm -rf $pre_ftp_dir/*
 
+  # get latest README for ftp 
   curl 'https://raw.githubusercontent.com/calipho-sib/nextprot-readme/master/README.txt' -o $pre_ftp_dir/README
   
-  # missing dirs: controlled_vocabularies, mapping
+  # collect data generated earlier for further puplication on ftp server
+  # WARNING: missing dirs: controlled_vocabularies, mapping
   subdirs="ac_lists chr_reports hpp_reports md5 peff ttl-compressed xml-compressed"
   for subdir in $subdirs; do
     echo copying content of $datadir/$subdir
     cp -rL $datadir/$subdir $pre_ftp_dir/
   done
  
+  # move hpp_reports to final place and add dedicated README
+  mkdir -p $pre_ftp_dir/custom
+  mv $pre_ftp_dir/hpp_reports $pre_ftp_dir/hpp
+  curl 'https://raw.githubusercontent.com/calipho-sib/nextprot-readme/master/HPP_README.txt' -o $pre_ftp_dir/custom/hpp/HPP_README.txt
  
   #logfile="generate-ac-lists-$(date "+%Y%m%d-%H%M").log"
 
