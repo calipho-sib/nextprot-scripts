@@ -22,13 +22,22 @@ function solrEntries() {
 
 function prepareFtp() {
 
-  pre_ftp_dir=/work/ttldata/nobackup/prepared_ftp
+  datadir=/work/ttldata
+  pre_ftp_dir=/work/ttldata/nobackup/prepared_ftp/
 
   mkdir -p $pre_ftp_dir
   rm -rf $pre_ftp_dir/*
 
   curl 'https://raw.githubusercontent.com/calipho-sib/nextprot-readme/master/README.txt' -o $pre_ftp_dir/README
-
+  
+  # missing dirs: controlled_vocabularies, mapping
+  subdirs="ac_lists chr_reports hpp_reports md5 peff ttl-compressed xml-compressed"
+  for subdir in $subdirs; do
+    echo copying content of $datadir/$subdir
+    cp -r $datadir/$subdir $pre_ftp_dir/
+  done
+ 
+ 
   #logfile="generate-ac-lists-$(date "+%Y%m%d-%H%M").log"
 
   
