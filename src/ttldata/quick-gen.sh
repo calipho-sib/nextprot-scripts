@@ -20,6 +20,21 @@ function solrEntries() {
 }
 
 
+function prepareFtp() {
+
+  pre_ftp_dir=/work/ttldata/nobackup/prepared_ftp
+
+  mkdir -p $pre_ftp_dir
+  rm -rf $pre_ftp_dir/*
+
+  curl 'https://raw.githubusercontent.com/calipho-sib/nextprot-readme/master/README.txt' -o $pre_ftp_dir/README
+
+  #logfile="generate-ac-lists-$(date "+%Y%m%d-%H%M").log"
+
+  
+
+}
+
 function acLists() {
 
   mkdir -p /work/ttldata/ac_lists
@@ -125,7 +140,7 @@ if [ "$actions" = "" ] ; then
   echo " "
   echo Usage $0 \"action1 ... actionN\" [MMdd]
   echo " "
-  echo where actions is a space separated list ot these possible items: \"cache ttl xml solr solr-publi solr-term solr-entries solr-gold-entries gz rdfhelp runrq chr-reports hpp-reports peff ac-lists iso-md5\"
+  echo where actions is a space separated list ot these possible items: \"cache ttl xml solr solr-publi solr-term solr-entries solr-gold-entries gz rdfhelp runrq chr-reports hpp-reports peff ac-lists iso-md5 prepare-ftp\"
   echo and MMdd is a month/date used to touch xml and ttl files when gz action is in action list. 
   echo " "
   exit 1
@@ -256,6 +271,13 @@ for action in $actions; do
     nohup /work/ttldata/compress-and-rename-xml-files.sh ${touchdate}0200 > compress-and-rename-xml-files-$(date "+%Y%m%d-%H%M").log 2>&1 
     nohup /work/ttldata/compress-and-rename-ttl-files.sh ${touchdate}0200 > compress-and-rename-ttl-files-$(date "+%Y%m%d-%H%M").log 2>&1
   fi
+
+
+# prepare content for ftp
+  if [ "$action" = "prepare-ftp" ] ; then
+    prepareFtp
+  fi
+
 
 
 done
