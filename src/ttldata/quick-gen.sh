@@ -81,10 +81,12 @@ function prepareFtp() {
   # copy all directories except ttl & xml to M for QC
   qcdir=/share/sib/common/Calipho/np/FTP/current
   mkdir -p $qcdir
-  subdirs="ac_lists chr_reports_controlled_vocabularies custom mapping md5 peff" 
+  rm -rf $qcdir/*
+  subdirs="ac_lists chr_reports controlled_vocabularies custom mapping md5 peff" 
+  cp $pre_ftp_dir/README $qcdir
   for subdir in $subdirs; do
-    echo copying content of $datadir/$subdir for QC to $qcdir ...
-    cp -rL $pre_ftp_dir/$subdir $qc_dir/
+    echo copying content of $pre_ftp_dir/$subdir for QC to $qcdir ...
+    cp -rL $pre_ftp_dir/$subdir $qcdir/
   done
   
 }
