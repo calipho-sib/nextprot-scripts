@@ -46,6 +46,7 @@ function prepareFtp() {
 
   # collect data generated earlier with NP1 ant tasks for further publication on ftp server
    
+  # copy of NP1 controlled vocabularies
   cvdirs=/mnt/npdata/proxy/cvterms/
   latest=$(ls -1tr $cvdirs | grep 201 | tail -n1)
   indir=$cvdirs/$latest
@@ -61,6 +62,13 @@ function prepareFtp() {
   cp $indir/cv-uniprot-topology.proxied $outdir/cv_topological_domain.txt    
   cp $indir/cv-icepo.proxied $outdir/icepo.obo    
   cp /share/sib/common/Calipho/np/cv/Caloha_readme.txt $outdir  
+
+  # copy of NP1 mapping directory
+  indir=/mnt/npdata/export/mapping/
+  outdir=$pre_ftp_dir/mapping
+  mkdir -p $outdir
+  echo copying content of $indir ...
+  cp $indir/*.txt $outdir/   
 
 }
 
