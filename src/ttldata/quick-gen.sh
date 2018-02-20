@@ -255,12 +255,13 @@ if [ "$actions" = "" ] ; then
   echo " "
   echo Usage $0 \"action1 ... actionN\" [MMdd]
   echo " "
-  echo where actions is a space separated list of items
+  echo "  where actions is a space separated list of items"
   echo " "
-  echo and MMdd is a month/date used to touch xml and ttl files when gz or publish-ftp 
-  echo action is in action list. 
+  echo "  and MMdd is a month/date used to touch xml and ttl files when gz or publish-ftp"
+  echo "  action is in action list."
   echo " "
   echo "Action items"
+  echo " "
   echo "- cache:" 
   echo "  builds the API cache for all entries and stats"
   echo " "
