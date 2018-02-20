@@ -52,7 +52,7 @@ function stop-virtuoso() {
 
 	if pgrep virtuoso-t; then
 	  echo "killing virtuoso and waiting 30 seconds..."
-	  kill $(pgrep virtuoso-t)
+	  ssh npteam@$host 'process=$(pgrep virtuoso-t); echo killing process $process at $host; kill $process'
 	  sleep 30
 	else
 	  echo "virtuoso was not running"
