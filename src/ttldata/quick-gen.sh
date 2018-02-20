@@ -48,7 +48,7 @@ function publishFtp() {
    ssh $ftp_server rm -rf $target_dir/*
    scp -r $pre_ftp_dir/* $ftp_server:$target_dir
    ssh $ftp_server touch -t${touchdate}0200 $target_dir
-   ssh $ftp_server find $target_dir -name "*" touch -t${touchdate}0200 {} \;
+   ssh $ftp_server "find $target_dir -name '*' -exec touch -t${touchdate}0200 {} \;"
    
 }
 
