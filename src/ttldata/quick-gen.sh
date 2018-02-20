@@ -28,7 +28,7 @@ function publishFtp() {
     exit 1
   fi 
   
-  # echo going on...
+  echo dollar1:$1
   # skip archiving if explicitiely specified in argument 2
   # publish
   
@@ -383,7 +383,7 @@ for action in $actions; do
 
 # publish current ftp release
   if [ "$action" = "publish-ftp" ] ; then
-    publishFtp
+    publishFtp hi
   fi
 
 
