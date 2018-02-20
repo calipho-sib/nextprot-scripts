@@ -31,7 +31,7 @@ function archiveFtp() {
   tarname=/local/ftpnextprot/root/pub/previous_releases/nextprot_release_$dt.tar
   ssh $ftp_server "test -e $tarname"
   tar_exists=$?
-  echo tar_exists:$tar_exists
+  # 0 means, yes, it exists !!!
   if (( $tar_exists == 0 )); then
     echo tar exists !
     postfix=$(date +%Y%m%d.%H%M)
