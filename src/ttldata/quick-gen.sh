@@ -19,6 +19,16 @@ function solrEntries() {
   done
 }
 
+function archiveFtp() {
+
+  ftp_server=ftp.nextprot.org
+  ftp_root=/local/ftpnextprot/root/pub
+  
+  # get date of current release
+  dt=$(ssh $ftp_server "stat -c %y $ftp_root/current_release | cut -d' ' -f1")
+  echo current release $dt will be archived
+
+}
 
 function prepareFtp() {
 
@@ -196,7 +206,7 @@ if [ "$actions" = "" ] ; then
   echo " "
   echo Usage $0 \"action1 ... actionN\" [MMdd]
   echo " "
-  echo where actions is a space separated list ot these possible items: \"cache ttl xml solr solr-publi solr-term solr-entries solr-gold-entries gz rdfhelp runrq chr-reports hpp-reports peff ac-lists iso-md5 prepare-ftp\"
+  echo where actions is a space separated list ot these possible items: \"cache ttl xml solr solr-publi solr-term solr-entries solr-gold-entries gz rdfhelp runrq chr-reports hpp-reports peff ac-lists iso-md5 prepare-ftp archive-ftp\"
   echo and MMdd is a month/date used to touch xml and ttl files when gz action is in action list. 
   echo " "
   exit 1
@@ -332,6 +342,11 @@ for action in $actions; do
 # prepare content for ftp
   if [ "$action" = "prepare-ftp" ] ; then
     prepareFtp
+  fi
+
+# archive current ftp release
+  if [ "$action" = "archive-ftp" ] ; then
+    archiveFtp
   fi
 
 
