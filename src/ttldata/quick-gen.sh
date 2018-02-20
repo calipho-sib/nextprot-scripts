@@ -31,11 +31,9 @@ function archiveFtp() {
   tarname=/local/ftpnextprot/root/pub/previous_releases/nextprot_release_$dt.tar
   ssh $ftp_server test -e tarname
   tar_exists=$?
-  
-  
   if (( $tar_exists == 1 )); then
     postfix=$(date +%Y%m%d.%H%M)
-    tarname=/local/ftpnextprot/root/pub/previous_releases/nextprot_release_$dt_created_at_$postfix.tar
+    tarname=/local/ftpnextprot/root/pub/previous_releases/nextprot_release_$dt.created_at_$postfix.tar
   fi
   
   ssh $ftp_server "cd $ftp_root/current_release; tar cf $tarname ."
