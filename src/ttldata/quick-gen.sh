@@ -29,10 +29,11 @@ function archiveFtp() {
   echo current release $dt on ftp server will be archived
 
   tarname=/local/ftpnextprot/root/pub/previous_releases/nextprot_release_$dt.tar
-  ssh $ftp_server test -e $tarname
-  tar_exists=$?
-  echo tar_exists:$tar_exists
-  if (( $tar_exists == 1 )); then
+#  ssh $ftp_server "test -e $tarname"
+#  tar_exists=$?
+#  echo tar_exists:$tar_exists
+#  if (( $tar_exists == 0 )); then
+   if [[ ssh $ftp_server "test -e $tarname" ]]; then
     echo tar exists !
     postfix=$(date +%Y%m%d.%H%M)
     tarname=/local/ftpnextprot/root/pub/previous_releases/nextprot_release_$dt.created_at_$postfix.tar
