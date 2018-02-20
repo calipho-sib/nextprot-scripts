@@ -29,7 +29,7 @@ function archiveFtp() {
   echo current release $dt on ftp server will be archived
 
   tarname=nextprot_release_$dt.tar
-  ssh $ftp_server "cd $ftp_root/current_release; tar cf ../previous_releases/$tarname"
+  ssh $ftp_server "cd $ftp_root/current_release; tar cf ../previous_releases/$tarname ."
 
 }
 
