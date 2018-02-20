@@ -50,9 +50,10 @@ function stop-virtuoso() {
 
     # Shut down the server resource: http://tw.rpi.edu/web/inside/endpoints/installing-virtuoso
 
-	if pgrep virtuoso-t; then
-	  echo "killing virtuoso and waiting 30 seconds..."
+    if ssh npteam@${host} "pgrep virtuoso-t"; then
+	  echo "killing virtuoso..."
 	  ssh npteam@$host 'process=$(pgrep virtuoso-t); echo killing process $process at $host; kill $process'
+	  echo "waiting 30 seconds..."
 	  sleep 30
 	else
 	  echo "virtuoso was not running"
