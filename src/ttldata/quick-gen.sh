@@ -23,7 +23,8 @@ function publishFtp() {
 
   # check that we have a timestamp in argument 1
   if [ "$touchdate" = "" ] ; then
-  	echo "Exiting, no touch date defined for ftp release"
+  	echo $(date) - ERROR: no touch date defined for ftp release
+  	echo $(date) - All actions cancelled
     exit 1
   fi 
   
