@@ -21,15 +21,22 @@ function solrEntries() {
 
 function publishFtp() {
 
-  # check that we have a timestamp in argument 1
+  # check that we have a touchdate
   if [ "$touchdate" = "" ] ; then
   	echo $(date) - ERROR: no touch date defined for ftp release
   	echo $(date) - All actions cancelled
     exit 1
   fi 
   
+  # skip archiving if explicitly specified in argument 1
+  if [ "$1" = "skip-archive" ] ; then
+  	echo $(date) - skipped archiving of previous release
+  else
+  	echo $(date) - archiving of previous release
+  fi 
+  
   echo dollar1:$1
-  # skip archiving if explicitiely specified in argument 2
+
   # publish
   
 }
@@ -384,6 +391,11 @@ for action in $actions; do
 # publish current ftp release
   if [ "$action" = "publish-ftp" ] ; then
     publishFtp
+  fi
+
+# publish current ftp release without archiving previous release
+  if [ "$action" = "publish-ftp-skip-archive" ] ; then
+    publishFtp skip-archive
   fi
 
 
