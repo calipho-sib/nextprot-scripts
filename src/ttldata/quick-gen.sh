@@ -21,7 +21,7 @@ function solrEntries() {
 
 function publishFtp() {
 
-  # check that we have a touchdate
+  # check that we have a touch date for the ftp release files and directories
   if [ "$touchdate" = "" ] ; then
   	echo $(date) - ERROR: no touch date defined for ftp release
   	echo $(date) - All actions cancelled
@@ -30,37 +30,47 @@ function publishFtp() {
   
   # skip archiving if explicitly specified in argument 1
   if [ "$1" = "skip-archive" ] ; then
-  	echo $(date) - skipped archiving of previous release
+  	echo $(date) - Skipped archiving of previous release
   else
-  	echo $(date) - archiving of previous release
+  	echo $(date) - Archiving of previous release
+  	archiveFtp
   fi 
   
-  echo dollar1:$1
-
   # publish
-  
+#  ftp_server=pmichel@ftp.nextprot.org
+#  ftp_root=/local/ftpnextprot/root/pub
+#  pre_ftp_dir=/work/ttldata/nobackup/prepared_ftp
+ 
+   #target_dir=$ftp_root/current_release
+   target_dir=$ftp_root/previous_releases/test
+ 
+   ssh $ftp_server mkdir -p $target_dir
+   ssh $ftp_server rm -rf $target_dir/*
+   scp -r $pre_ftp_dir/* $ftp_server:$target_dir
+   ssh $ftp_server touch -t${touchdate}0200 $target_dir
+   ssh $ftp_server find $target_dir -name "*" touch -t${touchdate}0200 {} \;
+   
 }
 
 function archiveFtp() {
-
-  ftp_server=pmichel@ftp.nextprot.org
-  ftp_root=/local/ftpnextprot/root/pub
   
   # get date of current release
   dt=$(ssh $ftp_server "stat -c %y $ftp_root/current_release | cut -d' ' -f1")
-  echo current release $dt on ftp server will be archived
+  echo $(date) - Current release $dt on ftp server will be archived
 
+  # build name for tar file
   tarname=/local/ftpnextprot/root/pub/previous_releases/nextprot_release_$dt.tar
   ssh $ftp_server "test -e $tarname"
   tar_exists=$?
   # 0 means, yes, it exists !!!
   # if file exists we don't want to erase it so we create a unique name for the tar file...
   if (( $tar_exists == 0 )); then
-    echo tar exists !
+    echo  $(date) - Tar file exists !
     postfix=$(date +%Y%m%d.%H%M)
     tarname=/local/ftpnextprot/root/pub/previous_releases/nextprot_release_$dt.created_at_$postfix.tar
   fi
   
+  # archive files of current release in the tar file
   ssh $ftp_server "cd $ftp_root/current_release; tar cf $tarname ."
 
 }
@@ -68,7 +78,6 @@ function archiveFtp() {
 function prepareFtp() {
 
   datadir=/work/ttldata
-  pre_ftp_dir=/work/ttldata/nobackup/prepared_ftp/
 
   # clean directory
   mkdir -p $pre_ftp_dir
@@ -237,6 +246,9 @@ function hppReports() {
 # - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - 
 
 apibase="http://localhost:8080/nextprot-api-web"
+ftp_server=pmichel@ftp.nextprot.org
+ftp_root=/local/ftpnextprot/root/pub
+pre_ftp_dir=/work/ttldata/nobackup/prepared_ftp
 
 actions=$1
 touchdate=$2
