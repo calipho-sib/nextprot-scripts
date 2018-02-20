@@ -19,6 +19,20 @@ function solrEntries() {
   done
 }
 
+function publishFtp() {
+
+  # check that we have a timestamp in argument 1
+  if [ "$touchdate" = "" ] ; then
+  	echo "Exiting, no touch date defined for ftp release"
+    exit 1
+  fi 
+  
+  # echo going on...
+  # skip archiving if explicitiely specified in argument 2
+  # publish
+  
+}
+
 function archiveFtp() {
 
   ftp_server=pmichel@ftp.nextprot.org
@@ -210,6 +224,10 @@ function hppReports() {
   done
 }
 
+# - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - 
+# main program
+# - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - 
+
 apibase="http://localhost:8080/nextprot-api-web"
 
 actions=$1
@@ -219,8 +237,8 @@ if [ "$actions" = "" ] ; then
   echo " "
   echo Usage $0 \"action1 ... actionN\" [MMdd]
   echo " "
-  echo where actions is a space separated list ot these possible items: \"cache ttl xml solr solr-publi solr-term solr-entries solr-gold-entries gz rdfhelp runrq chr-reports hpp-reports peff ac-lists iso-md5 prepare-ftp archive-ftp\"
-  echo and MMdd is a month/date used to touch xml and ttl files when gz action is in action list. 
+  echo where actions is a space separated list ot these possible items: \"cache ttl xml solr solr-publi solr-term solr-entries solr-gold-entries gz rdfhelp runrq chr-reports hpp-reports peff ac-lists iso-md5 prepare-ftp archive-ftp publish-ftp\"
+  echo and MMdd is a month/date used to touch xml and ttl files when gz or publish-ftp action is in action list. 
   echo " "
   exit 1
 fi
@@ -360,6 +378,11 @@ for action in $actions; do
 # archive current ftp release
   if [ "$action" = "archive-ftp" ] ; then
     archiveFtp
+  fi
+
+# publish current ftp release
+  if [ "$action" = "publish-ftp" ] ; then
+    publishFtp
   fi
 
 
