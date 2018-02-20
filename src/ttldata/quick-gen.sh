@@ -383,7 +383,7 @@ for action in $actions; do
 
 # publish current ftp release
   if [ "$action" = "publish-ftp" ] ; then
-    publishFtp hi
+    publishFtp
   fi
 
 
