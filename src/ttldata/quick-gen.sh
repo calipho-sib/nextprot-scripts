@@ -37,18 +37,14 @@ function publishFtp() {
   fi 
   
   # publish
-#  ftp_server=pmichel@ftp.nextprot.org
-#  ftp_root=/local/ftpnextprot/root/pub
-#  pre_ftp_dir=/work/ttldata/nobackup/prepared_ftp
- 
-   #target_dir=$ftp_root/current_release
-   target_dir=$ftp_root/previous_releases/test
- 
-   ssh $ftp_server mkdir -p $target_dir
-   ssh $ftp_server rm -rf $target_dir/*
-   scp -r $pre_ftp_dir/* $ftp_server:$target_dir
-   ssh $ftp_server touch -t${touchdate}0200 $target_dir
-   ssh $ftp_server "find $target_dir -name '*' -exec touch -t${touchdate}0200 {} \;"
+  # some variables used in there are defined at the top of the main program
+  # target_dir=$ftp_root/previous_releases/test # value used for testing
+  target_dir=$ftp_root/current_release
+  ssh $ftp_server mkdir -p $target_dir
+  ssh $ftp_server rm -rf $target_dir/*
+  scp -r $pre_ftp_dir/* $ftp_server:$target_dir
+  ssh $ftp_server touch -t${touchdate}0200 $target_dir
+  ssh $ftp_server "find $target_dir -name '*' -exec touch -t${touchdate}0200 {} \;"
    
 }
 
