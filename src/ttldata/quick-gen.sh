@@ -28,8 +28,13 @@ function archiveFtp() {
   dt=$(ssh $ftp_server "stat -c %y $ftp_root/current_release | cut -d' ' -f1")
   echo current release $dt on ftp server will be archived
 
-  tarname=nextprot_release_$dt.tar
-  ssh $ftp_server "cd $ftp_root/current_release; tar cf ../previous_releases/$tarname ."
+  tarname=/local/ftpnextprot/root/pub/previous_releases/nextprot_release_$dt.tar
+  if [ -f  $tarname ]; then
+    postfix=$(date +%Y%m%d.%H%M)
+    tarname=/local/ftpnextprot/root/pub/previous_releases/nextprot_release_$dt_created_at_$postfix.tar
+  fi
+  
+  ssh $ftp_server "cd $ftp_root/current_release; tar cf $tarname ."
 
 }
 
