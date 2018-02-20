@@ -21,7 +21,7 @@ function solrEntries() {
 
 function archiveFtp() {
 
-  ftp_server=ftp.nextprot.org
+  ftp_server=pmichel@ftp.nextprot.org
   ftp_root=/local/ftpnextprot/root/pub
   
   # get date of current release
