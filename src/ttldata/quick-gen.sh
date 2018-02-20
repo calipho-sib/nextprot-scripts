@@ -32,6 +32,7 @@ function archiveFtp() {
   ssh $ftp_server test -e tarname
   tar_exists=$?
   
+  
   if (( $tar_exists == 1 )); then
     postfix=$(date +%Y%m%d.%H%M)
     tarname=/local/ftpnextprot/root/pub/previous_releases/nextprot_release_$dt_created_at_$postfix.tar
