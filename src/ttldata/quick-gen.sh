@@ -32,6 +32,7 @@ function archiveFtp() {
   ssh $ftp_server "test -e $tarname"
   tar_exists=$?
   # 0 means, yes, it exists !!!
+  # if file exists we don't want to erase it so we create a unique name for the tar file...
   if (( $tar_exists == 0 )); then
     echo tar exists !
     postfix=$(date +%Y%m%d.%H%M)
