@@ -496,6 +496,4 @@ def run(arguments):
 
 
 if __name__ == '__main__':
-    args = parse_arguments()
-    #run(arguments=args)
-    build_release_stats(api_host=args.api)
+    run(arguments=parse_arguments())
