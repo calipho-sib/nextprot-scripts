@@ -80,8 +80,8 @@ function prepareFtp() {
   rm -rf $pre_ftp_dir/*
 
   # get latest README for ftp 
-  curl 'https://raw.githubusercontent.com/calipho-sib/nextprot-readme/master/README.txt' -o $pre_ftp_dir/README
-  
+  curl 'https://raw.githubusercontent.com/calipho-sib/nextprot-readme/master/README' -o $pre_ftp_dir/README
+
   # collect data generated earlier by NP2 API for further puplication on ftp server
   subdirs="ac_lists chr_reports hpp_reports md5 peff ttl-compressed xml-compressed"
   for subdir in $subdirs; do
