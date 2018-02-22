@@ -79,7 +79,7 @@ function copy_npdb() {
     # The files are transferred in "archive" mode, which ensures that symbolic links, devices, attributes, permissions,
     # ownerships, etc. are preserved in the transfer.  Additionally, compression will be used to reduce the size of data
     # portions of the transfer.
-    ssh ${dbuser}@${src} "rsync -avz /work/postgres/${dbdir}/* ${dbuser}@${dest}:/work/postgres/${dbdirnew}"
+    ssh npdb@${src} "rsync -avz /work/postgres/${dbdir}/* ${dbuser}@${dest}:/work/postgres/${dbdirnew}"
 }
 
 function backup_setup_db_dest() {
@@ -126,11 +126,11 @@ DB_DATA_DIR_NAME="pg5432_nextprot"
 DB_DATA_DIR_NAME_NEW="${DB_DATA_DIR_NAME}.new"
 DB_DATA_DIR_NAME_BACK="${DB_DATA_DIR_NAME}.back"
 
-stop_pg ${SRC_HOST} ${DB_USER}
+stop_pg ${SRC_HOST} npdb
 sleep 5
 
 copy_npdb ${SRC_HOST} ${DEST_HOST} ${DB_USER} ${DB_DATA_DIR_NAME} ${DB_DATA_DIR_NAME_NEW} ${DB_DATA_DIR_NAME_BACK}
-start_pg ${SRC_HOST} ${DB_USER}
+start_pg ${SRC_HOST} npdb
 
 stop_pg ${DEST_HOST} ${DB_USER}
 

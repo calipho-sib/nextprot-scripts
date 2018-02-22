@@ -434,7 +434,27 @@ def build_all_terminology_graphs(api_host):
         print (len(building_time_by_terminology)-1), "graphs built"
         return building_time_by_terminology
     except urllib2.URLError as e:
-        print "error getting all entries from neXtProt API host "+api_host+": "+str(e)
+        print "error building all terminologies from neXtProt API host "+api_host+": "+str(e)
+        sys.exit(1)
+
+
+def build_release_stats(api_host):
+    """Build release info stats using the nextprot API service
+    :param
+        api_host: the host where nextprot API is located
+    :return:
+    """
+    sys.stdout.write("* Building release info stats... ")
+    sys.stdout.flush()
+
+    url = api_host + "/release-stats.json"
+
+    try:
+        response = urllib2.urlopen(url)
+        release_stats = json.loads(response.read())
+        print len(release_stats["releaseStats"]["tagStatistics"]), "statistics built"
+    except urllib2.URLError as e:
+        print "error Building release info stats from neXtProt API host "+api_host+": "+str(e)
         sys.exit(1)
 
 
@@ -465,6 +485,7 @@ def run(arguments):
         get_all_unconfirmed_ms_data_entries(api_host=arguments.api)
 
     build_all_terminology_graphs(api_host=arguments.api)
+    build_release_stats(api_host=arguments.api)
 
     print "\n-------------------------------------------------------------------------------------"
     print "Overall cache generated with " + str(len(api_call_errors)) + " error" + ('s' if len(api_call_errors) > 1 else '') \
@@ -472,6 +493,7 @@ def run(arguments):
 
     if len(api_call_errors)>0:
         print "API call errors: " + str(api_call_errors)
+
 
 if __name__ == '__main__':
     run(arguments=parse_arguments())
