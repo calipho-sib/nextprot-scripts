@@ -80,6 +80,21 @@ function copy_npdb() {
     # ownerships, etc. are preserved in the transfer.  Additionally, compression will be used to reduce the size of data
     # portions of the transfer.
     ssh npdb@${src} "rsync -avz /work/postgres/${dbdir}/* ${dbuser}@${dest}:/work/postgres/${dbdirnew}"
+
+    if [ ${dest} == "nextp-vm2a" ]; then
+        ssh ${user}@${host} "pg_ctl -D /work/postgres/pg5432_nextprot/ stop -m immediate"
+    else
+        echo "server not running"
+    fi
+
+    # fixing links on prod (was postgresql.conf -> /u01/postgres/config/postgresql_5432.conf)
+    if [[ ${dest} = "nextp-vm2a"* ]]; then
+        echo "fixing symbolic links on ${dest}..."
+        echo "ln -fs /work/postgres/config/pg_hba.conf"
+        ssh ${user}@${host} "ln -fs /work/postgres/config/pg_hba.conf"
+        echo "ln -fs /work/postgres/config/postgresql.conf"
+        ssh ${user}@${host} "ln -fs /work/postgres/config/postgresql.conf"
+    fi
 }
 
 function backup_setup_db_dest() {
