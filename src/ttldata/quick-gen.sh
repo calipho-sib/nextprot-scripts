@@ -204,7 +204,7 @@ function peffReports() {
     outfile=/work/ttldata/peff/nextprot_chromosome_$chrname.peff
     wget --timeout=7200 --output-document=$outfile "$url" >> $logfile 2>&1
   done
-  url="${apibase}/export/entries.peff?query=*"
+  url="${apibase}/export/entries/all.peff"
   outfile=/work/ttldata/peff/nextprot_all.peff
   wget --timeout=7200 --output-document=$outfile "$url" >> $logfile 2>&1
 }
