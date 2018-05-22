@@ -245,9 +245,9 @@ function compressPeff() {
     mkdir -p $peffgz_dir
 	rm -rf $peffgz_dir/*
 	cp /work/ttldata/peff/*  $peffgz_dir/
-	touch $peffgz_dir/* $tdate
+	touch -t$tdate $peffgz_dir/* 
 	gzip $peffgz_dir/*
-	touch $peffgz_dir/* $tdate
+	touch -t$tdate $peffgz_dir/*
 
 }
 
