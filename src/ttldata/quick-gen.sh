@@ -238,6 +238,20 @@ function hppReports() {
   done
 }
 
+function compressPeff() {
+
+	tdate=$1
+	peffgz_dir= /work/ttldata/peff-compressed
+    mkdir -p $peffgz_dir
+	rm -rf $peffgz_dir/*
+	cp /work/ttldata/peff/*  $peffgz_dir/
+	touch $peffgz_dir/* $tdate
+	gzip $peffgz_dir/*
+	touch $peffgz_dir/* $tdate
+
+}
+
+
 # - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - 
 # main program
 # - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - 
@@ -450,6 +464,15 @@ for action in $actions; do
     
     nohup /work/ttldata/compress-and-rename-xml-files.sh ${touchdate}0200 > compress-and-rename-xml-files-$(date "+%Y%m%d-%H%M").log 2>&1 
     nohup /work/ttldata/compress-and-rename-ttl-files.sh ${touchdate}0200 > compress-and-rename-ttl-files-$(date "+%Y%m%d-%H%M").log 2>&1
+  fi
+
+
+# compress peff files
+
+  if [ "$action" = "gz-peff" ] ; then
+
+	compressPeff ${touchdate}0200
+    
   fi
 
 
