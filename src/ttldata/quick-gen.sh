@@ -242,13 +242,10 @@ function compressPeff() {
 
 	tdate=$1
 	peffgz_dir=/work/ttldata/peff-compressed
-    mkdir -p $peffgz_dir
 	rm -rf $peffgz_dir/*
 	cp /work/ttldata/peff/*  $peffgz_dir/
 	touch -t$tdate $peffgz_dir/* 
 	gzip $peffgz_dir/*
-	touch -t$tdate $peffgz_dir/*
-
 }
 
 
