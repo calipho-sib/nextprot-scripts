@@ -268,7 +268,7 @@ if [ "$actions" = "" ] ; then
   echo Usage $0 \"action1 ... actionN\" [MMdd]
   echo " "
   echo "  where actions is a space separated list of items"
-  echo "  and MMdd is a month/date used to touch xml and ttl files when gz or publish-ftp"
+  echo "  and MMdd is a month/date used to touch xml, ttl and peff files when gz or publish-ftp"
   echo "  action is in action list."
   echo " "
   echo "Action items"
@@ -301,7 +301,7 @@ if [ "$actions" = "" ] ; then
   echo "  account only gold content" 
   echo " "
   echo "- gz:"
-  echo "  touches the xml and ttl files with the given date and then compress them individually"
+  echo "  touches the xml, ttl and peff files with the given date and then compress them individually"
   echo "  and store them in xml-compressed and ttl-compressed directories" 
   echo " "
   echo "- runrq:"
@@ -461,6 +461,7 @@ for action in $actions; do
     
     nohup /work/ttldata/compress-and-rename-xml-files.sh ${touchdate}0200 > compress-and-rename-xml-files-$(date "+%Y%m%d-%H%M").log 2>&1 
     nohup /work/ttldata/compress-and-rename-ttl-files.sh ${touchdate}0200 > compress-and-rename-ttl-files-$(date "+%Y%m%d-%H%M").log 2>&1
+    compressPeff ${touchdate}0200
   fi
 
 
