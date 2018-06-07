@@ -153,11 +153,7 @@ def build_nextprot_entry_url(api_host, np_entry, export_type):
     """
     if export_type is None:
         return api_host + "/entry/" + np_entry
-    elif export_type == "xml":
-        return api_host + "/export/entries.xml?query=id:" + np_entry
-    elif export_type == "ttl":
-        return api_host + "/export/entries.ttl?query=id:" + np_entry
-    elif export_type == "peff" or export_type == "fasta":
+    elif export_type == "xml" or export_type == "ttl" or export_type == "peff" or export_type == "fasta":
         return api_host + "/export/entry/" + np_entry + "." + export_type
 
 
