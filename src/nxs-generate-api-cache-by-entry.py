@@ -216,6 +216,7 @@ def fetch_gene_names(api_host):
     print "\n* Caching service /gene-names..."
 
     call_api_service(url=api_host + "/gene-names", outstream=open('/dev/null', 'w'), service_name="/gene-names")
+    call_api_service(url=api_host + "/entry-gene-names.json", outstream=open('/dev/null', 'w'), service_name="/entry-gene-names")
 
 
 def fetch_sitemap(api_host):
@@ -346,6 +347,19 @@ def fetch_chromosome_summaries(arguments, chromosome_names, pool):
                                                 pool=pool)
 
 
+def fetch_overall_publication_stats(api_host):
+    """Caching overall publication stats from the API
+    :param
+        api_host: the host where nextprot API is located
+    :return:
+    """
+    print "\n* Caching overall publication stats... "
+
+    return call_api_service(url=api_host + "/publications/stats.json",
+                            outstream=open('/dev/null', 'w'),
+                            service_name="/publications/stats")
+
+
 def build_output_stream(export_dir, basename, format):
     """Build the output stream based on entry name and export mode
     :param export_dir: the export directory
@@ -470,6 +484,9 @@ def run(arguments):
              fetch_nextprot_entries(arguments=arguments, nextprot_entries=nextprot_entries_to_cache, pool=pool)
         fetch_gene_names(arguments.api)
 
+        # fetch publications
+        fetch_overall_publication_stats(arguments.api)
+
         # fetch chromosome report only if all entries
         if len(nextprot_entries) == len(nextprot_entries_to_cache):
             fetch_chromosome_reports(arguments=arguments, chromosome_names=chromosomes, pool=pool)
@@ -483,7 +500,7 @@ def run(arguments):
     build_all_terminology_graphs(api_host=arguments.api)
     build_release_stats(api_host=arguments.api)
 
-    print "\n-------------------------------------------------------------------------------------"
+print "\n-------------------------------------------------------------------------------------"
     print "Overall cache generated with " + str(len(api_call_errors)) + " error" + ('s' if len(api_call_errors) > 1 else '') \
           + " in " + str(datetime.timedelta(seconds=global_timer.duration_in_seconds())) + " seconds"
 
