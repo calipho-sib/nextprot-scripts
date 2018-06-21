@@ -213,7 +213,7 @@ def fetch_gene_names(api_host):
     """Get nextprot gene names
     :param api_host: the API url
     """
-    print "\n* Caching service /gene-names..."
+    print "\n* Caching gene names..."
 
     call_api_service(url=api_host + "/gene-names", outstream=open('/dev/null', 'w'), service_name="/gene-names")
     call_api_service(url=api_host + "/entry-gene-names.json", outstream=open('/dev/null', 'w'), service_name="/entry-gene-names")
@@ -323,7 +323,7 @@ def fetch_chromosome_reports(arguments, chromosome_names, pool):
     :param pool: the pool of reusable threads
     :return: the number of API call errors
     """
-    print "\n* Caching service /chromosome-report/{chromosome} (" + str(len(chromosome_names)) \
+    print "\n* Caching /chromosome-report/{chromosome} (" + str(len(chromosome_names)) \
           + " chromosome entries)..."
 
     return _fetch_chromosome_reports_given_func(report_func=fetch_chromosome_report,
@@ -339,7 +339,7 @@ def fetch_chromosome_summaries(arguments, chromosome_names, pool):
     :param pool: the pool of reusable threads
     :return: the number of API call errors
     """
-    print "\n* Caching service /chromosome-reports/{chromosome}/summary..."
+    print "\n* Caching /chromosome-reports/{chromosome}/summary..."
 
     return _fetch_chromosome_reports_given_func(report_func=fetch_chromosome_summary_report,
                                                 arguments=arguments,
@@ -500,7 +500,7 @@ def run(arguments):
     build_all_terminology_graphs(api_host=arguments.api)
     build_release_stats(api_host=arguments.api)
 
-print "\n-------------------------------------------------------------------------------------"
+    print "\n-------------------------------------------------------------------------------------"
     print "Overall cache generated with " + str(len(api_call_errors)) + " error" + ('s' if len(api_call_errors) > 1 else '') \
           + " in " + str(datetime.timedelta(seconds=global_timer.duration_in_seconds())) + " seconds"
 
