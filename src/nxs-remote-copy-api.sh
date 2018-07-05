@@ -75,27 +75,25 @@ stop_jetty ${SRC_HOST}
 
 dirs="webapps cache"
 for dir in ${dirs}; do
-  echo -e "${color}Copying directory ${dir} to ${TRG_HOST}${_color}"
-  echo "ssh npteam@${TRG_HOST} mkdir -p /work/jetty/${dir}.new"
-  ssh npteam@${TRG_HOST} "mkdir -p /work/jetty/${dir}.new"
-  echo -e "${color}Cleaning folder ${dir}.new in ${TRG_HOST}${_color}"
-  ssh npteam@${TRG_HOST} "rm /work/jetty/${dir}.new/*"
-
-  echo -e "${color}Creating directory ${dir}.sos in ${TRG_HOST}${_color}"
-  ssh npteam@${TRG_HOST} "mkdir -p /work/jetty/${dir}.sos"
-  echo -e "${color}Removing cache files in ${dir}.sos in ${TRG_HOST}${_color}"
-  ssh npteam@${TRG_HOST} "rm /work/jetty/${dir}.sos/*"
-
   if ssh npteam@${SRC_HOST} test -d /work/jetty/${dir}; then
+      ## preparing folders
+      echo -e "${color}Cleaning previous folder ${dir}.new in ${TRG_HOST}${_color}"
+      ssh npteam@${TRG_HOST} "rm -rf /work/jetty/${dir}.new"
+      echo "ssh npteam@${TRG_HOST} mkdir /work/jetty/${dir}.new"
+      ssh npteam@${TRG_HOST} "mkdir /work/jetty/${dir}.new"
+
+      echo -e "${color}Cleaning previous folder ${dir}.sos in ${TRG_HOST}${_color}"
+      ssh npteam@${TRG_HOST} "rm -rf /work/jetty/${dir}.sos"
+      echo "ssh npteam@${TRG_HOST} mkdir /work/jetty/${dir}.sos"
+      ssh npteam@${TRG_HOST} "mkdir /work/jetty/${dir}.sos"
+
       echo "ssh npteam@${SRC_HOST} scp /work/jetty/${dir}/* npteam@${TRG_HOST}:/work/jetty/${dir}.new/..."
       ssh npteam@${SRC_HOST} "scp /work/jetty/${dir}/* npteam@${TRG_HOST}:/work/jetty/${dir}.new/"
       echo -e "${color}Backing-up directory ${dir}.new in ${TRG_HOST}${_color}"
-      ssh npteam@${TRG_HOST} "cp /work/jetty/${dir}.new/* /work/jetty/${dir}.sos"
-  elif [ ${dir} = "webapps" ]; then
-      echo -e "${error_color}ERROR: /work/jetty/${dir} is missing at ${host} ${_color}"
-      exit 2
+      ssh npteam@${TRG_HOST} "cp /work/jetty/${dir}.new/* /work/jetty/${dir}.sos/"
   else
-      echo -e "${warning_color}WARNING: /work/jetty/${dir} is missing at ${host} ${_color}"
+      echo -e "${warning_color}ERROR: /work/jetty/${dir} is missing at ${host} ${_color}"
+      exit 3
   fi
 done
 
@@ -104,6 +102,8 @@ start_jetty ${SRC_HOST}
 stop_jetty ${TRG_HOST}
 
 for dir in ${dirs}; do
+  echo -e "${color}Removing directory ${dir} in ${TRG_HOST}${_color}"
+  ssh npteam@${TRG_HOST} "rm -rf /work/jetty/${dir}"
   echo -e "${color}Finalizing directory ${dir} in ${TRG_HOST}${_color}"
   ssh npteam@${TRG_HOST} "mv /work/jetty/${dir}.new /work/jetty/${dir}"
 done
