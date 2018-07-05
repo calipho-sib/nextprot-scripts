@@ -76,6 +76,7 @@ stop_jetty ${SRC_HOST}
 dirs="webapps cache"
 for dir in ${dirs}; do
   if ssh npteam@${SRC_HOST} test -d /work/jetty/${dir}; then
+      echo -e "${color}Copying ${dir} in ${TRG_HOST}...${_color}"
       ## preparing folders
       echo -e "${color}Cleaning previous folder ${dir}.new in ${TRG_HOST}${_color}"
       ssh npteam@${TRG_HOST} "rm -rf /work/jetty/${dir}.new"
@@ -89,10 +90,10 @@ for dir in ${dirs}; do
 
       echo "ssh npteam@${SRC_HOST} scp /work/jetty/${dir}/* npteam@${TRG_HOST}:/work/jetty/${dir}.new/..."
       ssh npteam@${SRC_HOST} "scp /work/jetty/${dir}/* npteam@${TRG_HOST}:/work/jetty/${dir}.new/"
-      echo -e "${color}Backing-up directory ${dir}.new in ${TRG_HOST}${_color}"
+      echo -e "${color}Backing-up directory ${dir}.sos in ${TRG_HOST}${_color}"
       ssh npteam@${TRG_HOST} "cp /work/jetty/${dir}.new/* /work/jetty/${dir}.sos/"
   else
-      echo -e "${warning_color}ERROR: /work/jetty/${dir} is missing at ${host} ${_color}"
+      echo -e "${error_color}ERROR: /work/jetty/${dir} is missing at ${host} ${error_color}"
       exit 3
   fi
 done
