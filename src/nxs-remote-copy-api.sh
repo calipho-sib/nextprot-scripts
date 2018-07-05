@@ -60,19 +60,37 @@ function start_jetty() {
 SRC_HOST=$1
 TRG_HOST=$2
 
+# Check that .index exist else exit with an error
+echo -e "${color}Searching cache index files in ${SRC_HOST}${_color}"
+count=`ssh npteam@${SRC_HOST} "ls -1 /work/jetty/cache/*.index 2>/dev/null | wc -l"`
+
+if [ ${count} == 0 ]; then
+    echo -e "${color}Error: missing cache index files in folder ${SRC_HOST}:/work/jetty/cache ${_color}"
+    exit 2
+else
+    echo -e "${color}Success: cache index files found in folder ${SRC_HOST}:/work/jetty/cache ${_color}"
+fi
+
 stop_jetty ${SRC_HOST}
 
 dirs="webapps cache"
 for dir in ${dirs}; do
   echo -e "${color}Copying directory ${dir} to ${TRG_HOST}${_color}"
-  echo "ssh npteam@${TRG_HOST} rm -rf /work/jetty/${dir}.new"
-  ssh npteam@${TRG_HOST} "rm -rf /work/jetty/${dir}.new"
-  echo "ssh npteam@${TRG_HOST} mkdir /work/jetty/${dir}.new"
-  ssh npteam@${TRG_HOST} "mkdir /work/jetty/${dir}.new"
+  echo "ssh npteam@${TRG_HOST} mkdir -p /work/jetty/${dir}.new"
+  ssh npteam@${TRG_HOST} "mkdir -p /work/jetty/${dir}.new"
+  echo -e "${color}Cleaning folder ${dir}.new in ${TRG_HOST}${_color}"
+  ssh npteam@${TRG_HOST} "rm /work/jetty/${dir}.new/*"
+
+  echo -e "${color}Creating directory ${dir}.sos in ${TRG_HOST}${_color}"
+  ssh npteam@${TRG_HOST} "mkdir -p /work/jetty/${dir}.sos"
+  echo -e "${color}Removing cache files in ${dir}.sos in ${TRG_HOST}${_color}"
+  ssh npteam@${TRG_HOST} "rm /work/jetty/${dir}.sos/*"
 
   if ssh npteam@${SRC_HOST} test -d /work/jetty/${dir}; then
       echo "ssh npteam@${SRC_HOST} scp /work/jetty/${dir}/* npteam@${TRG_HOST}:/work/jetty/${dir}.new/..."
       ssh npteam@${SRC_HOST} "scp /work/jetty/${dir}/* npteam@${TRG_HOST}:/work/jetty/${dir}.new/"
+      echo -e "${color}Backing-up directory ${dir}.new in ${TRG_HOST}${_color}"
+      ssh npteam@${TRG_HOST} "cp /work/jetty/${dir}.new/* /work/jetty/${dir}.sos"
   elif [ ${dir} = "webapps" ]; then
       echo -e "${error_color}ERROR: /work/jetty/${dir} is missing at ${host} ${_color}"
       exit 2
@@ -86,14 +104,8 @@ start_jetty ${SRC_HOST}
 stop_jetty ${TRG_HOST}
 
 for dir in ${dirs}; do
-  echo -e "${color}Removing directory ${dir}.bak in ${TRG_HOST}${_color}"
-  ssh npteam@${TRG_HOST} "rm -rf /work/jetty/${dir}.bak"
-  if ssh npteam@${TRG_HOST} test -d /work/jetty/${dir}; then
-    echo -e "${color}Backing up directory ${dir} in ${TRG_HOST}${_color}"
-    ssh npteam@${TRG_HOST} "mv /work/jetty/${dir} /work/jetty/${dir}.bak "
-  fi
   echo -e "${color}Finalizing directory ${dir} in ${TRG_HOST}${_color}"
-  ssh npteam@${TRG_HOST} "mv /work/jetty/${dir}.new /work/jetty/${dir} "
+  ssh npteam@${TRG_HOST} "mv /work/jetty/${dir}.new /work/jetty/${dir}"
 done
 
 start_jetty ${TRG_HOST}
