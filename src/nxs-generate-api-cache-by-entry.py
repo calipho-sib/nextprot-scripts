@@ -188,6 +188,15 @@ def cache_nextprot_entry_publications(api_host, np_entry):
     call_api_service(url=url, outstream=open('/dev/null', 'w'), service_name="/entry-publications/entry/"+np_entry + "/count.json")
 
 
+def cache_nextprot_entry_isoform_mappings(api_host, np_entry):
+    """Export isoform mapping for nextprot entry
+    :param api_host: the API url
+    :param np_entry: the nextprot entry id
+    """
+    url = api_host + "/entry/" + np_entry + "/isoform/mapping.json"
+    call_api_service(url=url, outstream=open('/dev/null', 'w'), service_name="/entry/"+np_entry + "/isoform/mapping.json")
+
+
 def fetch_chromosome_report(api_host, chromosome):
     """Get chromosome report
     :param api_host: the API url
@@ -271,8 +280,11 @@ def add_nextprot_entries_tasks(arguments, nextprot_entries, pool):
         pool.add_task(func=cache_nextprot_entry_publications,
                       api_host=arguments.api,
                       np_entry=nextprot_entry)
+        pool.add_task(func=cache_nextprot_entry_isoform_mappings,
+                      api_host=arguments.api,
+                      np_entry=nextprot_entry)
 
-    return len(nextprot_entries) * 2
+    return len(nextprot_entries) * 4
 
 
 def fetch_nextprot_entries(arguments, nextprot_entries, pool):
