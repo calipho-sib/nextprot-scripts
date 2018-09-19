@@ -60,15 +60,15 @@ function start_jetty() {
 SRC_HOST=$1
 TRG_HOST=$2
 
-# Check that .index exist else exit with an error
-echo -e "${color}Searching cache index files in ${SRC_HOST}${_color}"
-count=`ssh npteam@${SRC_HOST} "ls -1 /work/jetty/cache/*.index 2>/dev/null | wc -l"`
+# Check that cache files exist else exit with an error
+echo -e "${color}Searching cache files in ${SRC_HOST}${_color}"
+count=`ssh npteam@${SRC_HOST} "ls -1 /work/jetty/cache/* 2>/dev/null | wc -l"`
 
 if [ ${count} == 0 ]; then
-    echo -e "${color}Error: missing cache index files in folder ${SRC_HOST}:/work/jetty/cache ${_color}"
+    echo -e "${color}Error: missing cache files in folder ${SRC_HOST}:/work/jetty/cache ${_color}"
     exit 2
 else
-    echo -e "${color}Success: cache index files found in folder ${SRC_HOST}:/work/jetty/cache ${_color}"
+    echo -e "${color}Success: cache files found in folder ${SRC_HOST}:/work/jetty/cache ${_color}"
 fi
 
 stop_jetty ${SRC_HOST}
