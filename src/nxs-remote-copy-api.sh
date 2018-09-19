@@ -50,6 +50,21 @@ function stop_jetty() {
   echo -e "${color}Jetty has been correctly stopped at ${host} ${_color}"
 }
 
+function check_cache_index_files() {
+  host=$1
+  # Check that cache index files exist else exit with an error
+  echo -e "${color}Searching cache index files in ${host}${_color}"
+  count=`ssh npteam@${host} "ls -1 /work/jetty/cache/*.index 2>/dev/null | wc -l"`
+
+  if [ ${count} == 0 ]; then
+    echo -e "${color}Error: missing index cache files in folder ${host}:/work/jetty/cache ${_color}"
+    exit 2
+  else
+    echo -e "${color}Success: cache index files found in folder ${host}:/work/jetty/cache ${_color}"
+  fi
+}
+
+
 function start_jetty() {
   host=$1
   echo -e "${color}Starting jetty at ${host}...${_color}"
@@ -60,18 +75,10 @@ function start_jetty() {
 SRC_HOST=$1
 TRG_HOST=$2
 
-# Check that cache files exist else exit with an error
-echo -e "${color}Searching cache files in ${SRC_HOST}${_color}"
-count=`ssh npteam@${SRC_HOST} "ls -1 /work/jetty/cache/* 2>/dev/null | wc -l"`
-
-if [ ${count} == 0 ]; then
-    echo -e "${color}Error: missing cache files in folder ${SRC_HOST}:/work/jetty/cache ${_color}"
-    exit 2
-else
-    echo -e "${color}Success: cache files found in folder ${SRC_HOST}:/work/jetty/cache ${_color}"
-fi
-
 stop_jetty ${SRC_HOST}
+
+check_cache_index_files ${SRC_HOST}
+
 
 dirs="webapps cache"
 for dir in ${dirs}; do
