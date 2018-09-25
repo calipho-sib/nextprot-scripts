@@ -48,6 +48,9 @@ function stop_jetty() {
   echo -e "${color}Stopping jetty at ${host}...${_color}"
   ssh npteam@${host} "/work/jetty/bin/jetty.sh stop"
   echo -e "${color}Jetty has been correctly stopped at ${host} ${_color}"
+  
+  # it seems that jetty.sh stop returns before writing cache index files is completed
+  sleep 60
 }
 
 function check_cache_index_files() {
