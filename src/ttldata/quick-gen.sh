@@ -200,7 +200,7 @@ function peffReports() {
   mkdir -p /work/ttldata/peff
   rm -rf /work/ttldata/peff/*
   for chrname in $chromosomes; do
-    url="${apibase}/export/chromosome/${chrname}"
+    url="${apibase}/export/chromosome/${chrname}.peff"
     outfile=/work/ttldata/peff/nextprot_chromosome_$chrname.peff
     wget --timeout=7200 --output-document=$outfile "$url" >> $logfile 2>&1
   done
