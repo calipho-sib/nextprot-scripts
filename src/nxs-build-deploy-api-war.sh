@@ -44,7 +44,7 @@ checkProjectId () {
     fi
 
     # get artifact id (http://stackoverflow.com/questions/3545292/how-to-get-maven-project-version-to-the-bash-command-line)
-    artifactId=`mvn org.apache.maven.plugins:maven-help-plugin:2.1.1:evaluate -Dexpression=project.artifactId -f ${path}/pom.xml | grep -Ev '(^\[|Download\w+:)'`
+    artifactId=`mvn help:evaluate -Dexpression=project.artifactId -q -DforceStdout`
 
     if [ ${artifactId} != "nextprot-api-master" ]; then
 
@@ -95,7 +95,8 @@ function deploy_war_to_host() {
 
 function build_web_app() {
 
-    mvn clean package install -DskipTests -f ${NX_API_REPO}/pom.xml
+    # -U force update of snapshot dependencies.
+    mvn clean install -U -DskipTests -f ${NX_API_REPO}/pom.xml
 }
 
 checkProjectId ${NX_API_REPO}
