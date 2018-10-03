@@ -398,7 +398,7 @@ for action in $actions; do
     nohup wget --output-document=/work/ttldata/export-xml/nextprot_all.xml ${apibase}/export/entries/all.xml
     nohup wget --output-document=/work/ttldata/export-xml/nextprot-export-v2.xsd http://build-api.nextprot.org/nextprot-export-v2.xsd
     nohup /work/ttldata/check-xml-files.sh > check-xml-files-$(date "+%Y%m%d-%H%M").log
-    nohup nxs-validate-all-xml.sh /work/ttldata/nobackup/export-xml/nextprot-export-v2.xsd /work/ttldata/nobackup/export-xml/ > nxs-validate-all-xml-$(date "+%Y%m%d-%H%M").log 2>&1 
+    nohup nxs-validate-all-xml.sh /work/ttldata/nobackup/export-xml/nextprot-export-v2.xsd /work/ttldata/nobackup/export-xml > nxs-validate-all-xml-$(date "+%Y%m%d-%H%M").log 2>&1 
   fi
 
 

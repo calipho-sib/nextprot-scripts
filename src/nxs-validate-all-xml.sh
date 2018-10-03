@@ -36,23 +36,29 @@ fi
 
 xsd=$1
 dir=$2
-validation_file="xmllint"_with_$(basename ${xsd})
+infiles="1 2 3 4 5 6 7 8 9 0 10 11 12 13 14 15 16 17 18 19 20 21 22 X Y MT unknown nextprot_all"
+#infiles="Y MT"
 
-pushd ${dir} > /dev/null
-echo "-- searching xml files in directory '${dir}'"
-entries=`find . -type f \( -iname "*.xml" \)`
+global_result=0
+for item in $infiles; do
+  xml=$dir/$item.xml
+  echo --------------------------------------------------------------------------------------------------------------------------------------
+  echo Validating $xml with schema $xsd  
+  echo --------------------------------------------------------------------------------------------------------------------------------------
+  xmllint --noout --schema $xsd $xml
+  result=$?
+  let "global_result += $result"
+  if [ "$result" = "0" ]; then
+    echo Summary: Validation of $xml status: OK
+  else
+    echo Summary: Validation of $xml status: ERROR
+  fi
+done
 
-echo -n "-- running xmllint on files "${entries}"... "
-xmllint --noout --timing --stream --schema ${xsd} ${entries} 2> ${validation_file}.out
-echo " done"
-
-grep -v validate ${validation_file}.out | grep ':' | cut -d: -f3-6|sort|uniq > ${validation_file}.err
-
-if [ -s ${validation_file}.err ]; then
-  echo "[validation failed]: error in file '${validation_file}.err'"  >&2
-  exit 2
+echo --------------------------------
+if [ "$global_result" = "0" ]; then
+  echo Summary: Global validation status: OK
 else
-  echo "[validation succeed]: output in file '${validation_file}.out'"
+  echo Summary: Global validation status: ERROR
 fi
-
-popd > /dev/null
+echo --------------------------------
