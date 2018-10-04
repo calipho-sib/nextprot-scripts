@@ -7,20 +7,23 @@ for item in $expected_results ; do
   exp_cnt=$(echo $item | cut -d'=' -f2)
   act_cnt=$(grep -c "a :Entry" $file)
   dollar_cnt=$(grep -c "\\$" $file)
+  unrefpub_cnt=$(grep -c "publication:-1" $file)
   status=OK
   if [ "$act_cnt" != "$exp_cnt" ]; then status=ERROR; fi
   if [ "$dollar_cnt" != "0" ]; then status=ERROR; fi
+  if [ "$unrefpub_cnt" != "0" ]; then status=ERROR; fi
   echo "-------------------------------------------------------------"
   echo $file - $status
   echo "-------------------------------------------------------------"
   echo "entry actual count...: $act_cnt"
   echo "entry expected count.: $exp_cnt"
   echo "dollar count.........: $dollar_cnt"
+  echo "unrefpub count.......: $unrefpub_cnt"
   if [ "$status" == "ERROR" ] && [ "$act_cnt" != "0" ]; then
     echo "Three last entries...:"
     grep "a :Entry" $file | tail -n3
   fi
-  echo ""  
+  echo ""
 done
 for item in experimentalcontext.ttl publication.ttl terminology.ttl schema.ttl; do
   file=$ttl_dir/$item
