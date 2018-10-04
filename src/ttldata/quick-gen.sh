@@ -339,6 +339,8 @@ if [ "$actions" = "" ] ; then
   echo "  touched with date chosen by user" 
   echo "- publish-ftp-skip-archive:"
   echo "  same as publish-ftp but skipy the archiving of previous-relese so USE WITH CARE" 
+  echo "- clear-sparql-cache:"
+  echo "  stops the API and deletes the jetty cache files related to sparql queries" 
   echo " "
   exit 1
 fi
@@ -379,8 +381,6 @@ for action in $actions; do
   fi
 
 
-
-
 # generate ttl
 
   if [ "$action" = "ttl" ] ; then
@@ -392,6 +392,13 @@ for action in $actions; do
     nohup /work/ttldata/generate-inferred-ttl-files-from-fuseki.sh> generate-inferred-ttl-files-from-fuseki-$(date "+%Y%m%d-%H%M").log 2>&1
     nohup /work/ttldata/load-base-ttl-files-to-virtuoso.sh > load-base-ttl-files-to-virtuoso-$(date "+%Y%m%d-%H%M").log 2>&1
     nohup /work/ttldata/load-inferred-ttl-files-to-virtuoso.sh > load-inferred-ttl-files-to-virtuoso-$(date "+%Y%m%d-%H%M").log 2>&1
+  fi
+
+
+# clear sparql cache
+
+  if [ "$action" = "clear-sparql-cache" ] ; then
+  	nohup nxs-clear-sparql-cache.sh kant > nxs-clear-sparql-cache-$(date "+%Y%m%d-%H%M").log 2>&1
   fi
 
 
