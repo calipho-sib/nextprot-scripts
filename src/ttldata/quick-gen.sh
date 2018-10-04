@@ -82,8 +82,11 @@ function prepareFtp() {
 
   # get latest README for ftp 
   curl 'https://raw.githubusercontent.com/calipho-sib/nextprot-readme/master/README' -o $pre_ftp_dir/README
-
+  
+  # - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
   # collect data generated earlier by NP2 API for further puplication on ftp server
+  # - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
+  
   subdirs="ac_lists chr_reports hpp_reports md5 peff ttl-compressed xml-compressed"
   for subdir in $subdirs; do
     echo copying content of $datadir/$subdir ...
@@ -102,8 +105,10 @@ function prepareFtp() {
   mv $pre_ftp_dir/hpp_reports $pre_ftp_dir/custom/hpp
   curl 'https://raw.githubusercontent.com/calipho-sib/nextprot-readme/master/HPP_README.txt' -o $pre_ftp_dir/custom/hpp/HPP_README.txt
 
+  # - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
   # collect data generated earlier with NP1 ant tasks for further publication on ftp server
-   
+  # - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
+     
   # copy of NP1 controlled vocabularies
   cvdirs=/mnt/npdata/proxy/cvterms/
   latest=$(ls -1tr $cvdirs | grep 201 | tail -n1)
@@ -128,8 +133,9 @@ function prepareFtp() {
   echo copying content of $indir ...
   cp $indir/*.txt $outdir/   
 
- 
+  # - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
   # copy all directories except ttl & xml to M for QC
+  # - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
   qcdir=/share/sib/common/Calipho/np/FTP/current
   mkdir -p $qcdir
   rm -rf $qcdir/*
