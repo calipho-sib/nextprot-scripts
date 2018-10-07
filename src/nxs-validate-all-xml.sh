@@ -45,7 +45,7 @@ for item in $infiles; do
   echo --------------------------------------------------------------------------------------------------------------------------------------
   echo Validating $xml with schema $xsd  
   echo --------------------------------------------------------------------------------------------------------------------------------------
-  xmllint --noout --schema $xsd $xml
+  xmllint --stream --noout --schema $xsd $xml
   result=$?
   let "global_result += $result"
   if [ "$result" = "0" ]; then
