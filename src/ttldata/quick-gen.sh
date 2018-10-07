@@ -1,5 +1,42 @@
 #!/bin/bash
 
+function remoteCopyStuffToTarget() {
+ 
+	# stuff can be either npdb api solr virtuoso 
+	stuff=$1
+	 
+	# target ca be either alpha prod
+	target=$2
+ 
+	if [ "$stuff" != "npdb" ] && [ "$stuff" != "api" ] && [ "$stuff" != "solr" ] && [ "$stuff" != "virtuoso" ]
+	then
+	  echo "remoteCopyStuffToTarget: invalid parameter 1: <$stuff> should be either npdb, api, solr, virtuoso. Exiting"
+	  return
+	fi
+
+	script=nxs-remote-copy-$stuff.sh
+	target_host=""
+  
+	if [ "$target" = "alpha" ] ; then
+		target_host=uat-web2
+	elif [ "$target" = "prod" ] ; then
+		if  [ "$stuff" = "virtuoso" ]; then
+			target_host=nextp-vm3.vital-it.ch
+		else
+			target_host=nextp-vm2a.vital-it.ch
+		fi
+	else 
+	  echo "remoteCopyStuffToTarget: invalid parameter 2: <$target> should be either alpha, prod. Exiting"
+	  return
+	fi
+
+	echo "remoteCopyStuffToTarget: will call $script with target host $target_host"
+
+    logfile=nxs-remote-copy-$stuff-$(date "+%Y%m%d-%H%M").log
+	#script="ls -ltra"
+    $script > $logfile 2>&1 
+}
+
 function solrPubli() {
   wget --timeout=7200 --output-document=tasks-solr-publications-reindex-$(date "+%Y%m%d-%H%M").log "${apibase}/tasks/solr/publications/reindex"
 }
@@ -368,9 +405,10 @@ for action in $actions; do
   fi
 
 # generate cache for rdfhelp (to be run after ttl are generated and loaded) 
+# timeout: set to 3 hours
 
   if [ "$action" = "rdfhelp" ] ; then
-    wget --timeout=7200 --output-document=rdfhelp-$(date "+%Y%m%d-%H%M").json "${apibase}/rdf/help/type/all.json"
+    wget --timeout=10800 --output-document=rdfhelp-$(date "+%Y%m%d-%H%M").json "${apibase}/rdf/help/type/all.json"
   fi
 
 
@@ -508,6 +546,25 @@ for action in $actions; do
   fi
 
 
+# remote copy to ALPHA
+  if [ "$action" = "remote-copy-npdb-alpha" ] ; then
+	remoteCopyStuffToTarget npdb alpha
+  fi
+  if [ "$action" = "remote-copy-api-alpha" ] ; then
+	remoteCopyStuffToTarget api alpha
+  fi
+  if [ "$action" = "remote-copy-solr-alpha" ] ; then
+	remoteCopyStuffToTarget solr alpha
+  fi
+  if [ "$action" = "remote-copy-virtuoso-alpha" ] ; then
+	remoteCopyStuffToTarget virtuoso alpha
+  fi
+
+# to be removed
+  if [ "$action" = "test-mex" ] ; then
+    remoteCopyStuffToTarget npdb alpha
+    remoteCopyStuffToTarget solr alpha
+  fi
 
 done
 echo $(date) - Finished
