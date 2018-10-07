@@ -15,7 +15,7 @@ function remoteCopyStuffToTarget() {
 	  echo "remoteCopyStuffToTarget: invalid parameter 1: <$stuff> should be either npdb, api, solr, virtuoso. Exiting"
 	  return
 	fi
-	if [ "$stuff" != "npdb" ] ; then
+	if [ "$stuff" = "npdb" ] ; then
 	  dbuser=npdb
 	fi
 	
