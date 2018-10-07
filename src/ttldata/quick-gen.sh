@@ -8,12 +8,17 @@ function remoteCopyStuffToTarget() {
 	# target ca be either alpha prod
 	target=$2
  
+ 	dbuser=""
+ 
 	if [ "$stuff" != "npdb" ] && [ "$stuff" != "api" ] && [ "$stuff" != "solr" ] && [ "$stuff" != "virtuoso" ]
 	then
 	  echo "remoteCopyStuffToTarget: invalid parameter 1: <$stuff> should be either npdb, api, solr, virtuoso. Exiting"
 	  return
 	fi
-
+	if [ "$stuff" != "npdb" ] ; then
+	  dbuser=npdb
+	fi
+	
 	script=nxs-remote-copy-$stuff.sh
 	target_host=""
   
@@ -34,7 +39,7 @@ function remoteCopyStuffToTarget() {
 
     logfile=nxs-remote-copy-$stuff-$(date "+%Y%m%d-%H%M").log
 	#script="ls -ltra"
-    $script kant $target_host < /dev/null > $logfile 2>&1 
+    $script kant $target_host $dbuser < /dev/null > $logfile 2>&1 
 }
 
 function solrPubli() {
