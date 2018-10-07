@@ -2,7 +2,7 @@
 
 function remoteCopyStuffToTarget() {
  
-	# stuff can be either npdb api solr virtuoso 
+	# stuff can be either npdb api solr virtuosodb 
 	stuff=$1
 	 
 	# target ca be either alpha prod
@@ -10,9 +10,9 @@ function remoteCopyStuffToTarget() {
  
  	dbuser=""
  
-	if [ "$stuff" != "npdb" ] && [ "$stuff" != "api" ] && [ "$stuff" != "solr" ] && [ "$stuff" != "virtuoso" ]
+	if [ "$stuff" != "npdb" ] && [ "$stuff" != "api" ] && [ "$stuff" != "solr" ] && [ "$stuff" != "virtuosodb" ]
 	then
-	  echo "remoteCopyStuffToTarget: invalid parameter 1: <$stuff> should be either npdb, api, solr, virtuoso. Exiting"
+	  echo "remoteCopyStuffToTarget: invalid parameter 1: <$stuff> should be either npdb, api, solr, virtuosodb. Exiting"
 	  return
 	fi
 	if [ "$stuff" = "npdb" ] ; then
@@ -25,7 +25,7 @@ function remoteCopyStuffToTarget() {
 	if [ "$target" = "alpha" ] ; then
 		target_host=uat-web2
 	elif [ "$target" = "prod" ] ; then
-		if  [ "$stuff" = "virtuoso" ]; then
+		if  [ "$stuff" = "virtuosodb" ]; then
 			target_host=nextp-vm3.vital-it.ch
 		else
 			target_host=nextp-vm2a.vital-it.ch
@@ -561,8 +561,8 @@ for action in $actions; do
   if [ "$action" = "remote-copy-solr-alpha" ] ; then
 	remoteCopyStuffToTarget solr alpha
   fi
-  if [ "$action" = "remote-copy-virtuoso-alpha" ] ; then
-	remoteCopyStuffToTarget virtuoso alpha
+  if [ "$action" = "remote-copy-virtuosodb-alpha" ] ; then
+	remoteCopyStuffToTarget virtuosodb alpha
   fi
 
 # to be removed
