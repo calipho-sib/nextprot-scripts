@@ -21,9 +21,9 @@ trg_dir=/work/ttldata/xml-compressed
 latest_release=$(ls -1tr /mnt/npdata/dump/release/ | grep 20 | tail -n1)
 qc_dir=/share/sib/common/Calipho/np/FTP/${latest_release}/xml
 
-echo "latest release : $latest_release"
-echo "target dir     : $trg_dir"
-echo "qc dir        : $qc_dir"
+echo "latest release (unused) : $latest_release"
+echo "target dir              : $trg_dir"
+echo "qc dir         (unused) : $qc_dir"
 
 
 # clear target directories
@@ -74,7 +74,9 @@ echo "DONE"
 exit 0
 
 # ----------------------------------------------------------------------------------
+# Not done, see exit above,
 # what follows is performed in worksheet integration export of NP1 deployment
+# ----------------------------------------------------------------------------------
 
 echo "copying compressed files to qc directory $qc_dir"
 cp $trg_dir/* $qc_dir/
