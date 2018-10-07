@@ -34,7 +34,7 @@ function remoteCopyStuffToTarget() {
 
     logfile=nxs-remote-copy-$stuff-$(date "+%Y%m%d-%H%M").log
 	#script="ls -ltra"
-    $script > $logfile 2>&1 
+    $script kant $target_host < /dev/null > $logfile 2>&1 
 }
 
 function solrPubli() {
