@@ -565,11 +565,20 @@ for action in $actions; do
 	remoteCopyStuffToTarget virtuosodb alpha
   fi
 
-# to be removed
-  if [ "$action" = "test-mex" ] ; then
-    remoteCopyStuffToTarget npdb alpha
-    remoteCopyStuffToTarget solr alpha
+# remote copy to PROD
+  if [ "$action" = "remote-copy-npdb-prod" ] ; then
+	remoteCopyStuffToTarget npdb prod
   fi
+  if [ "$action" = "remote-copy-api-prod" ] ; then
+	remoteCopyStuffToTarget api prod
+  fi
+  if [ "$action" = "remote-copy-solr-prod" ] ; then
+	remoteCopyStuffToTarget solr prod
+  fi
+  if [ "$action" = "remote-copy-virtuosodb-prod" ] ; then
+	remoteCopyStuffToTarget virtuosodb prod
+  fi
+
 
 done
 echo $(date) - Finished
