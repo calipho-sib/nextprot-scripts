@@ -49,18 +49,18 @@ SOLR_PATH="/work/devtools/solr-4.5.0/example"
 CORE_PATH="${SOLR_PATH}/solr/$CORE"
 
 TRG_CORE_BACK="${SOLR_PATH}/${CORE}.back"
-TRG_CORE_NEW="${CORE_PATH}.new/"
+TRG_CORE_NEW="${SOLR_PATH}/${CORE}.new"
 
-# new one
 function kill_solr() {
   host=$1
   echo "killing solr process on ${host}"
   solr_pid=$(ssh npteam@${host} ps -ef | grep java | grep nextprot.solr | tr -s " " | cut -f2 -d' ')
-  if [[ -x ${solr_pid} ]];then
+  if [[ -z ${solr_pid} ]];then
     echo "solr was not running on ${host}"
   else
+    echo -n "killed solr process ${solr_pid} on ${host}..."
     ssh npteam@${host} kill ${solr_pid}
-    echo "killed solr process ${solr_pid} on ${host}"
+    echo " done"
     sleep 5
   fi
 }
@@ -81,7 +81,7 @@ function start_solr() {
   port=$3
   echo "starting solr on ${host} port ${port}"
   solr_pid=$(ssh npteam@${host} ps -ef | grep java | grep nextprot.solr | tr -s " " | cut -f2 -d' ')
-  if [[ -x ${solr_pid} ]];then
+  if [ -x ${solr_pid} ];then
     ssh npteam@${host} "source .bash_profile; cd ${path}/example; nohup java -Dnextprot.solr -Xmx2048m -jar -Djetty.port=${port} start.jar  > solr.log 2>&1  &"
     echo "solr started on ${host}"
     sleep 5
