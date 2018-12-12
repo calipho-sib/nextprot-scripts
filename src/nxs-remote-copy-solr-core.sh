@@ -5,8 +5,6 @@
 
 # ex: bash nxs-remote-copy-solr-core.sh kant crick npcvs1
 
-# Warning: This script assumes that the solr config / indexes are up-to-date on <src_host>.
-
 set -o errexit  # make your script exit when a command fails.
 set -o nounset  # exit when your script tries to use undeclared variables.
 
@@ -45,7 +43,8 @@ SRC_HOST=$1
 TRG_HOST=$2
 CORE=$3
 
-SOLR_PATH="/work/devtools/solr-4.5.0/example"
+SOLR_HOME="/work/devtools/solr-4.5.0"
+SOLR_PATH="${SOLR_HOME}/example"
 CORE_PATH="${SOLR_PATH}/solr/$CORE"
 
 TRG_CORE_BACK="${SOLR_PATH}/${CORE}.back"
@@ -117,9 +116,9 @@ echo "mv ${TRG_CORE_NEW} ${CORE_PATH} in ${TRG_HOST}"
 ssh npteam@${TRG_HOST} mv ${TRG_CORE_NEW} ${CORE_PATH}
 
 sleep 5
-start_solr ${SRC_HOST} "/work/devtools/solr-4.5.0" 8983
+start_solr ${SRC_HOST} ${SOLR_HOME} 8983
 sleep 5
-start_solr ${TRG_HOST} "/work/devtools/solr-4.5.0" 8983
+start_solr ${TRG_HOST} ${SOLR_HOME} 8983
 
 echo "end"
 
