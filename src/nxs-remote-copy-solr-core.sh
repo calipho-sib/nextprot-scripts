@@ -43,10 +43,12 @@ fi
 
 SRC_HOST=$1
 TRG_HOST=$2
+CORE=$3
 
-CORE_PATH="/work/devtools/solr-4.5.0/example/solr/$3"
+SOLR_PATH="/work/devtools/solr-4.5.0/example"
+CORE_PATH="${SOLR_PATH}/solr/$CORE"
 
-TRG_CORE_BACK="${CORE_PATH}.back/"
+TRG_CORE_BACK="${SOLR_PATH}/${CORE}.back"
 TRG_CORE_NEW="${CORE_PATH}.new/"
 
 # new one
@@ -54,7 +56,7 @@ function kill_solr() {
   host=$1
   echo "killing solr process on ${host}"
   solr_pid=$(ssh npteam@${host} ps -ef | grep java | grep nextprot.solr | tr -s " " | cut -f2 -d' ')
-  if [ -x ${solr_pid} ];then
+  if [[ -x ${solr_pid} ]];then
     echo "solr was not running on ${host}"
   else
     ssh npteam@${host} kill ${solr_pid}
@@ -79,7 +81,7 @@ function start_solr() {
   port=$3
   echo "starting solr on ${host} port ${port}"
   solr_pid=$(ssh npteam@${host} ps -ef | grep java | grep nextprot.solr | tr -s " " | cut -f2 -d' ')
-  if [ -x ${solr_pid} ];then
+  if [[ -x ${solr_pid} ]];then
     ssh npteam@${host} "source .bash_profile; cd ${path}/example; nohup java -Dnextprot.solr -Xmx2048m -jar -Djetty.port=${port} start.jar  > solr.log 2>&1  &"
     echo "solr started on ${host}"
     sleep 5
@@ -100,24 +102,24 @@ sleep 10
 echo "making new solr core dir ${TRG_CORE_NEW} on ${TRG_HOST}"
 ssh npteam@${TRG_HOST} mkdir -p ${TRG_CORE_NEW}
 
-echo "copying solr from ${CORE_PATH}/* to ${TRG_CORE_NEW}"
+echo "copying solr from ${SRC_HOST}:${CORE_PATH}/* to ${TRG_HOST}:${TRG_CORE_NEW}"
 ssh npteam@${SRC_HOST} scp -r ${CORE_PATH}/* ${TRG_HOST}:${TRG_CORE_NEW}
 
 echo "Kill solr on ${TRG_HOST}"
 kill_solr ${TRG_HOST}
 
-echo "rm -rf ${TRG_CORE_BACK}"
+echo "rm -rf ${TRG_HOST}:${TRG_CORE_BACK}"
 ssh npteam@${TRG_HOST} "rm -rf ${TRG_CORE_BACK}"
 
-echo "mv ${CORE_PATH} ${TRG_CORE_BACK}"
+echo "mv ${CORE_PATH} ${TRG_CORE_BACK} in ${TRG_HOST}"
 ssh npteam@${TRG_HOST} "if [ -e ${CORE_PATH} ] ; then  mv ${CORE_PATH} ${TRG_CORE_BACK}; fi"
-echo "mv ${TRG_CORE_NEW} ${CORE_PATH}"
+echo "mv ${TRG_CORE_NEW} ${CORE_PATH} in ${TRG_HOST}"
 ssh npteam@${TRG_HOST} mv ${TRG_CORE_NEW} ${CORE_PATH}
 
 sleep 5
-start_solr ${SRC_HOST} "/work/devtools/solr-4.5.0/example/solr" 8983
+start_solr ${SRC_HOST} "/work/devtools/solr-4.5.0" 8983
 sleep 5
-start_solr ${TRG_HOST} "/work/devtools/solr-4.5.0/example/solr" 8983
+start_solr ${TRG_HOST} "/work/devtools/solr-4.5.0" 8983
 
 echo "end"
 
