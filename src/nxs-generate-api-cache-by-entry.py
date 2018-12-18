@@ -480,6 +480,26 @@ def build_release_stats(api_host):
         sys.exit(1)
 
 
+def evaluate_place_holders(api_host):
+    """Compute place holders stats using the nextprot API service
+    :param
+        api_host: the host where nextprot API is located
+    :return:
+    """
+    sys.stdout.write("* Evaluating placeholders... ")
+    sys.stdout.flush()
+
+    url = api_host + "/placeholder-stats.json"
+
+    try:
+        response = urllib2.urlopen(url)
+        placeholders = json.loads(response.read())
+        print len(placeholders), "placeholders evaluated"
+    except urllib2.URLError as e:
+        print "error evaluating placeholders from neXtProt API host "+api_host+": "+str(e)
+        sys.exit(1)
+
+
 def run(arguments):
 
     pool = ThreadPool(arguments.thread)
@@ -511,6 +531,7 @@ def run(arguments):
 
     build_all_terminology_graphs(api_host=arguments.api)
     build_release_stats(api_host=arguments.api)
+    evaluate_place_holders(api_host=arguments.api)
 
     print "\n-------------------------------------------------------------------------------------"
     print "Overall cache generated with " + str(len(api_call_errors)) + " error" + ('s' if len(api_call_errors) > 1 else '') \
