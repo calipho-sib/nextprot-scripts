@@ -43,7 +43,8 @@ function remoteCopyStuffToTarget() {
 }
 
 function solrPubli() {
-  wget --timeout=7200 --output-document=tasks-solr-publications-reindex-$(date "+%Y%m%d-%H%M").log "${apibase}/tasks/solr/publications/reindex"
+# timeout = 4 hours because may last more than 2 hours!
+  wget --timeout=14400 --output-document=tasks-solr-publications-reindex-$(date "+%Y%m%d-%H%M").log "${apibase}/tasks/solr/publications/reindex"
 }
 
 function solrTerm() {
