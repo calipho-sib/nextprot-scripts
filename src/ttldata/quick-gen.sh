@@ -130,7 +130,7 @@ function prepareFtp() {
   # collect data generated earlier by NP2 API for further puplication on ftp server
   # - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
   
-  subdirs="ac_lists chr_reports hpp_reports md5 peff-comppressed ttl-compressed xml-compressed"
+  subdirs="ac_lists chr_reports hpp_reports md5 peff-compressed ttl-compressed xml-compressed"
   for subdir in $subdirs; do
     echo copying content of $datadir/$subdir ...
     cp -rL $datadir/$subdir $pre_ftp_dir/
