@@ -10,13 +10,14 @@ warning_color='\e[1;33m' # begin warning color
 _color='\e[0m'           # end Color
 
 function echoUsage() {
-    echo "usage: $(basename $0) <env> <host> <hostpath> <spa>" >&2
+    echo "usage: $(basename $0) <env> <host> <hostpath> <spa> <branch>" >&2
     echo "This script deploys the last successfully built Single Page Application (SPA) from miniwatt in specified host."
     echo "Params:"
     echo " <env> dev|build|alpha|pro|vit"
     echo " <host> host where to deploy app"
     echo " <hostpath> path in host where to deploy app"
     echo " <spa> single page application name ('search' or 'snorql')"
+    echo " <branch> branch name"
     echo "Options:"
     echo " -h print usage"
     echo " -s get snapshot from miniwatt (master by default)"
@@ -55,8 +56,14 @@ NX_ENV=$1
 NX_HOST=$2
 NX_PATH=$3
 NX_SPA=$4
+BRANCH=$5
 MASTER_URL=http://miniwatt:8900/view/master-builds/job/nextprot-master-${NX_SPA}-build/lastSuccessfulBuild/artifact/nextprot-master-${NX_SPA}.tgz
 DEV_URL=http://miniwatt:8900/view/cont-dev-deployment/job/nextprot-dev-${NX_SPA}-cont-deployment/lastSuccessfulBuild/artifact/nextprot-dev-${NX_SPA}.tgz
+
+if [[ ! $BRANCH  && ! $NX_SPA = "snorql" ]];
+    DEV_URL=http://miniwatt:8900/view/deployment/job/nextprot-ui-build-from-branch-and-deploy/lastSuccessfulBuild/artifact/nextprot-${NX_SPA}-${BRANCH}.tgz
+fi
+
 BUILD_DIR=/tmp/build/nx-${NX_SPA}-${NX_ENV}
 
 function backupSite() {
