@@ -56,12 +56,12 @@ NX_ENV=$1
 NX_HOST=$2
 NX_PATH=$3
 NX_SPA=$4
-BRANCH=$5
+
 MASTER_URL=http://miniwatt:8900/view/master-builds/job/nextprot-master-${NX_SPA}-build/lastSuccessfulBuild/artifact/nextprot-master-${NX_SPA}.tgz
 DEV_URL=http://miniwatt:8900/view/cont-dev-deployment/job/nextprot-dev-${NX_SPA}-cont-deployment/lastSuccessfulBuild/artifact/nextprot-dev-${NX_SPA}.tgz
 
-if [[ ! $BRANCH  && ! $NX_SPA = "snorql" ]];
-    DEV_URL=http://miniwatt:8900/view/deployment/job/nextprot-ui-build-from-branch-and-deploy/lastSuccessfulBuild/artifact/nextprot-${NX_SPA}-${BRANCH}.tgz
+if [[ $# -eq 5   && ! $5 = "develop" && ! $NX_SPA = "snorql" ]]; then
+    DEV_URL=http://miniwatt:8900/view/deployment/job/nextprot-ui-build-from-branch-and-deploy/lastSuccessfulBuild/artifact/nextprot-${NX_SPA}-$5.tgz
 fi
 
 BUILD_DIR=/tmp/build/nx-${NX_SPA}-${NX_ENV}
