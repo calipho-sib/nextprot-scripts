@@ -43,7 +43,8 @@ function remoteCopyStuffToTarget() {
 }
 
 function solrPubli() {
-  wget --timeout=7200 --output-document=tasks-solr-publications-reindex-$(date "+%Y%m%d-%H%M").log "${apibase}/tasks/solr/publications/reindex"
+# timeout = 4 hours because may last more than 2 hours!
+  wget --timeout=14400 --output-document=tasks-solr-publications-reindex-$(date "+%Y%m%d-%H%M").log "${apibase}/tasks/solr/publications/reindex"
 }
 
 function solrTerm() {
@@ -129,11 +130,14 @@ function prepareFtp() {
   # collect data generated earlier by NP2 API for further puplication on ftp server
   # - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
   
-  subdirs="ac_lists chr_reports hpp_reports md5 peff ttl-compressed xml-compressed"
+  subdirs="ac_lists chr_reports hpp_reports md5 peff-compressed ttl-compressed xml-compressed"
   for subdir in $subdirs; do
     echo copying content of $datadir/$subdir ...
     cp -rL $datadir/$subdir $pre_ftp_dir/
   done
+ 
+  # move peff to final directory name
+  mv $pre_ftp_dir/peff-compressed $pre_ftp_dir/peff
  
   # move xml to final directory name
   mv $pre_ftp_dir/xml-compressed $pre_ftp_dir/xml
@@ -141,7 +145,7 @@ function prepareFtp() {
   # move ttl to final directory name
   mkdir -p $pre_ftp_dir/rdf
   mv $pre_ftp_dir/ttl-compressed $pre_ftp_dir/rdf/ttl
- 
+  
   # move hpp_reports to final directory name and add dedicated HPP_README.txt
   mkdir -p $pre_ftp_dir/custom
   mv $pre_ftp_dir/hpp_reports $pre_ftp_dir/custom/hpp
