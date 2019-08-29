@@ -414,17 +414,18 @@ for action in $actions; do
   fi
 
 # generate cache for rdfhelp (to be run after ttl are generated and loaded) 
-# timeout: set to 3 hours
+# timeout: set to 5 hours
 
   if [ "$action" = "rdfhelp" ] ; then
-    wget --timeout=10800 --output-document=rdfhelp-$(date "+%Y%m%d-%H%M").json "${apibase}/rdf/help/type/all.json"
+    wget --timeout=18000 --output-document=rdfhelp-$(date "+%Y%m%d-%H%M").json "${apibase}/rdf/help/type/all.json"
   fi
 
 
 # run the list of SPARQL tutorial queries 
+# timeout: set to 4 hours
 
   if [ "$action" = "runrq" ] ; then
-    wget --timeout=7200 --output-document=run-sparql-queries-$(date "+%Y%m%d-%H%M").tsv "${apibase}/run/query/direct/tags/tutorial"
+    wget --timeout=14400 --output-document=run-sparql-queries-$(date "+%Y%m%d-%H%M").tsv "${apibase}/run/query/direct/tags/tutorial"
   fi
 
 
