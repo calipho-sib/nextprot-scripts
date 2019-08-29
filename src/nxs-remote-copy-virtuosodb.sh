@@ -50,21 +50,16 @@ function stop-virtuoso() {
 
     # Shut down the server resource: http://tw.rpi.edu/web/inside/endpoints/installing-virtuoso
 
-    if ssh npteam@${host} "pgrep virtuoso-t"; then
-	  echo "killing virtuoso..."
-	  ssh npteam@$host 'process=$(pgrep virtuoso-t); echo killing process $process at $host; kill $process'
-	  echo "waiting 30 seconds..."
-	  sleep 30
-	else
-	  echo "virtuoso was not running"
-	fi
+	ssh npteam@$host /work/ttldata/stop-virtuoso.sh
 
-#    ssh npteam@${host} "isql 1111 dba dba -K"
-#    if [ ! $? = 0 ]; then
-#        echo "virtuoso on ${host} was not running"
-#    else
-#        sleep 30
-#    fi
+#    if ssh npteam@${host} "pgrep virtuoso-t"; then
+#	  echo "killing virtuoso..."
+#	  ssh npteam@$host 'process=$(pgrep virtuoso-t); echo killing process $process at $host; kill $process'
+#	  echo "waiting 30 seconds..."
+#	  sleep 30
+#	else
+#	  echo "virtuoso was not running"
+#	fi
 
     check-virtuoso-is-down ${host}
 }
@@ -72,11 +67,12 @@ function stop-virtuoso() {
 function start-virtuoso() {
     host=$1
 
-    echo "restarting virtuoso on ${host} and wait 30 seconds..."
+	ssh npteam@$host /work/ttldata/restart-virtuoso
 
-    # virtuoso-t +configfile: use alternate configuration file
-    ssh npteam@${host} "/usr/bin/virtuoso-t +configfile /var/lib/virtuoso/db/virtuoso.ini"
-    sleep 30
+#    echo "restarting virtuoso on ${host} and wait 30 seconds..."
+#    # virtuoso-t +configfile: use alternate configuration file
+#    ssh npteam@${host} "/usr/bin/virtuoso-t +configfile /var/lib/virtuoso/db/virtuoso.ini"
+#    sleep 30
 
     check-virtuoso-is-up ${host}
 }
