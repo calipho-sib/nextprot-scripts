@@ -1,13 +1,41 @@
 #!/bin/sh
 
 if pgrep virtuoso-t; then
-  echo "killing virtuoso and wait 5 seconds..."
-  kill $(pgrep virtuoso-t)
+
+  echo "$(date) virtuoso is running on $(hostname)"
+  echo "$(date) requesting checkpoint..."
+  isql 1111 dba dba exec="checkpoint;"
+
+  echo "$(date) requesting shutdown..."
+  isql 1111 dba dba exec="shutdown;"
+
+  echo "$(date) virtuoso stopped on $(hostname)"
   sleep 5
 else
-  echo "virtuoso was not running"
+  echo "$(date) virtuoso was not running on $(hostname)"
 fi
 
-echo "restarting virtuoso and wait 5 seconds..."
+echo "$(date) restarting virtuoso ..."
 /usr/bin/virtuoso-t +configfile /var/lib/virtuoso/db/virtuoso.ini
-sleep 5
+
+echo -n "$(date) checking virtuoso listening on 1111 "
+while true; do
+  echo -n "."
+  isqlok=$(netstat -plant 2> /dev/null | grep 1111 | grep virtuoso | grep LISTEN | wc -l)
+  if [ "$isqlok" == "1" ]; then break; fi
+  sleep 5
+done
+echo " OK"
+
+echo -n "$(date) checking virtuoso listening on 8890 "
+while true; do
+  echo -n "."
+  webok=$(netstat -plant 2> /dev/null | grep 8890 | grep virtuoso  | wc -l)
+  if [ "$webok" == "1" ]; then break; fi
+  sleep 5
+done
+echo " OK"
+
+echo "$(date) virtuoso restarted on $(hostname)"
+
+
