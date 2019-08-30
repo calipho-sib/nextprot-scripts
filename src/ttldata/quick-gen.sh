@@ -43,8 +43,8 @@ function remoteCopyStuffToTarget() {
 }
 
 function solrPubli() {
-# timeout = 4 hours because may last more than 2 hours!
-  wget --timeout=14400 --output-document=tasks-solr-publications-reindex-$(date "+%Y%m%d-%H%M").log "${apibase}/tasks/solr/publications/reindex"
+# timeout = 8 hours because may last more than 2 hours!
+  wget --timeout=28800 --output-document=tasks-solr-publications-reindex-$(date "+%Y%m%d-%H%M").log "${apibase}/tasks/solr/publications/reindex"
 }
 
 function solrTerm() {
@@ -54,11 +54,11 @@ function solrTerm() {
 function solrEntries() {
   indexname=$1
   chromosomes="1 2 3 4 5 6 7 8 9 10 11 12 13 14 15 16 17 18 19 20 21 22 MT X Y unknown"
-  wget --timeout=7200 --output-document=tasks-solr-entries-init-$(date "+%Y%m%d-%H%M").log ${apibase}/tasks/solr/${indexname}/init
+  wget --timeout=14400 --output-document=tasks-solr-entries-init-$(date "+%Y%m%d-%H%M").log ${apibase}/tasks/solr/${indexname}/init
   for chrname in $chromosomes; do
     logfile="tasks-solr-${indexname}-${chrname}-$(date "+%Y%m%d-%H%M").log"
     url="${apibase}/tasks/solr/${indexname}/index/chromosome/${chrname}"
-    wget --timeout=7200 --output-document=$logfile "$url"
+    wget --timeout=14400 --output-document=$logfile "$url"
   done
 }
 
