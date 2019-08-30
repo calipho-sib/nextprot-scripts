@@ -157,7 +157,7 @@ function prepareFtp() {
      
   # copy of NP1 controlled vocabularies
   cvdirs=/mnt/npdata/proxy/cvterms/
-  latest=$(ls -1tr $cvdirs | grep 201 | tail -n1)
+  latest=$(ls -1 $cvdirs | grep -E "^[0-9]{8}$" | tail -n1)
   indir=$cvdirs/$latest
   outdir=$pre_ftp_dir/controlled_vocabularies
   mkdir -p $outdir
