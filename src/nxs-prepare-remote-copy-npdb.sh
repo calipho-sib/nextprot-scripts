@@ -67,7 +67,7 @@ function copy_npdb() {
     dbdirnew=$5
     dbdirback=$6
 
-    echo "deleting /work/postgres/${dbdirback} on target server @${dest}"
+    echo "deleting /work/postgres/${dbdirback} on target server ${dest}"
     ssh ${dbuser}@${dest} "rm -rf /work/postgres/${dbdirback}"
     
     echo "deleting /work/postgres/${dbdirnew} on target server ${dest}"
