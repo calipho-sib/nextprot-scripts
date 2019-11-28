@@ -530,8 +530,8 @@ def run(arguments):
         get_all_unconfirmed_ms_data_entries(api_host=arguments.api)
 
     build_all_terminology_graphs(api_host=arguments.api)
-    build_release_stats(api_host=arguments.api)
-    evaluate_place_holders(api_host=arguments.api)
+    # build_release_stats(api_host=arguments.api)
+    # evaluate_place_holders(api_host=arguments.api)
 
     print "\n-------------------------------------------------------------------------------------"
     print "Overall cache generated with " + str(len(api_call_errors)) + " error" + ('s' if len(api_call_errors) > 1 else '') \
