@@ -529,9 +529,12 @@ def run(arguments):
         get_all_phosphorylated_entries(api_host=arguments.api)
         get_all_unconfirmed_ms_data_entries(api_host=arguments.api)
 
+    print "Starting build_all_terminology_graphs at " + str(datetime.datetime.now()) + " ..."
     build_all_terminology_graphs(api_host=arguments.api)
-    # build_release_stats(api_host=arguments.api)
-    # evaluate_place_holders(api_host=arguments.api)
+    print "Starting build_release_stats at " + str(datetime.datetime.now()) + " ..."
+    build_release_stats(api_host=arguments.api)
+    print "Starting evaluate_place_holders at " + str(datetime.datetime.now()) + " ..."
+    evaluate_place_holders(api_host=arguments.api)
 
     print "\n-------------------------------------------------------------------------------------"
     print "Overall cache generated with " + str(len(api_call_errors)) + " error" + ('s' if len(api_call_errors) > 1 else '') \
