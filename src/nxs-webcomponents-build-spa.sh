@@ -53,6 +53,9 @@ function checkBranchRepo() {
 
 function npmAndBowerInstall() {
 
+    # Clean up the previous build dir
+    rm -rf build
+
     build_type=$1
 
     echo "npm install"
