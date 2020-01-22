@@ -59,6 +59,8 @@ function npmAndBowerInstall() {
     npm install
     echo "bower install"
     ./node_modules/.bin/bower install
+    echo "bower update"
+    ./node_modules/.bin/bower update
 
     echo "brunching modules"
     rm -rf build
