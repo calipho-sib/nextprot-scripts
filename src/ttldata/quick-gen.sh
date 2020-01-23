@@ -417,10 +417,10 @@ for action in $actions; do
   fi
 
 # generate cache for rdfhelp (to be run after ttl are generated and loaded) 
-# timeout: set to 5 hours
+# timeout: set to 8 hours
 
   if [ "$action" = "rdfhelp" ] ; then
-    wget --timeout=18000 --output-document=rdfhelp-$(date "+%Y%m%d-%H%M").json "${apibase}/rdf/help/type/all.json"
+    wget --timeout=28800 --output-document=rdfhelp-$(date "+%Y%m%d-%H%M").json "${apibase}/rdf/help/type/all.json"
   fi
 
   if [ "$action" = "release-stats" ] ; then
