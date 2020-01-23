@@ -53,12 +53,17 @@ function checkBranchRepo() {
 
 function npmAndBowerInstall() {
 
+    # Clean up the previous build dir
+    rm -rf build
+
     build_type=$1
 
     echo "npm install"
     npm install
     echo "bower install"
     ./node_modules/.bin/bower install
+    echo "bower update"
+    ./node_modules/.bin/bower update
 
     echo "brunching modules"
     rm -rf build
