@@ -25,8 +25,8 @@ do
 		subject="$(hostname) - virtuoso service status has changed from $previous_state to $state"
 		echo "$(date) - sending mail to tell status is now $state"
 		isql_status=$(isql 1111 dba dba exec='status()')
-		body="$body \n\n $isql_status"
-		echo -e "$body" | mail -s "$subject" "$recipients"
+		full_body="$body \n\n $isql_status"
+		echo -e "$full_body" | mail -s "$subject" "$recipients"
 	fi
 	previous_state=$state
 	sleep $sleep_time
