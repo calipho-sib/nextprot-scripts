@@ -3,6 +3,7 @@
 from nxs_utils import ThreadPool, Timer
 import urllib2, argparse
 import multiprocessing
+import sys
 
 url_path = "/export/entries"
 max_thread = multiprocessing.cpu_count()
@@ -10,13 +11,16 @@ default_threads = multiprocessing.cpu_count()/2
 
 print "max threads    :" + str(max_thread)
 print "default threads:" + str(default_threads)
+sys.stdout.flush()
 
 def export(url, filename):
     tim = Timer()
     with tim:
         print "fetching " + url + "\n"
+        sys.stdout.flush()
         file(filename, "w").write(urllib2.urlopen(url).read())
     print url + " saved in " + filename + " done in " + str(tim.duration_in_seconds()) + "\n"
+    sys.stdout.flush()
 
 if __name__ == '__main__':
 
@@ -57,3 +61,4 @@ if __name__ == '__main__':
 
         pool.wait_completion()
     print "Process finished in " + str(globalTimer.duration_in_seconds()) + "\n"
+    sys.stdout.flush()
