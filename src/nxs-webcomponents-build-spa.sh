@@ -59,6 +59,7 @@ function npmAndBowerInstall() {
     build_type=$1
 
     echo "npm install"
+    rm -rf node_modules
     npm install
     echo "bower install"
     ./node_modules/.bin/bower install
