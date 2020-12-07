@@ -159,6 +159,7 @@ function prepareFtp() {
   cvdirs=/mnt/npdata/proxy/cvterms/
   latest=$(ls -1 $cvdirs | grep -E "^[0-9]{8}$" | tail -n1)
   indir=$cvdirs/$latest
+  giturl=https://raw.githubusercontent.com/calipho-sib/controlled-vocabulary/master
   outdir=$pre_ftp_dir/controlled_vocabularies
   mkdir -p $outdir
   echo copying content of $indir ...
@@ -169,8 +170,9 @@ function prepareFtp() {
   cp $indir/cv-nextprot-modification-effect.proxied $outdir/cv_modification_effect.obo    
   cp $indir/cv-nextprot-protein-property.proxied $outdir/cv_protein_property.obo    
   cp $indir/cv-uniprot-topology.proxied $outdir/cv_topological_domain.txt    
-  cp $indir/cv-icepo.proxied $outdir/icepo.obo    
-  cp /share/sib/common/Calipho/np/cv/Caloha_readme.txt $outdir  
+  cp $indir/cv-icepo.proxied $outdir/icepo.obo 
+  curl $giturl/Caloha_readme.txt -o $outdir/Caloha_readme.txt   
+  curl $giturl/Bgee_caloha.tsv -o $outdir/Bgee_caloha.tsv
 
   # copy of NP1 mapping directory
   indir=/mnt/npdata/export/mapping/
