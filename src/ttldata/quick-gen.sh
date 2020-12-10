@@ -180,6 +180,8 @@ function prepareFtp() {
   mkdir -p $outdir
   echo copying content of $indir ...
   cp $indir/*.txt $outdir/   
+  # we don't want the following one
+  rm -f $/outdir/nextprot_refseq-ftp.txt 
 
   # - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
   # copy all directories except ttl & xml to M for QC
