@@ -183,6 +183,9 @@ function prepareFtp() {
   # we don't want the following one
   rm -f $/outdir/nextprot_refseq-ftp.txt
 
+  # add files in pre ftp mapping directory with NP2-generated mapping files
+  getNP2Mappings
+
   # - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
   # copy all directories except ttl & xml to M for QC
   # - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
@@ -202,8 +205,8 @@ function getNP2Mappings() {
   url="${apibase}/mapping/nextprot_refseq.tsv"
   outdir=$pre_ftp_dir/mapping
   mkdir -p $outdir  
-  outfile=$outdir/mapping/nextprot_refseq.txt
-  wget --timeout=7200 --output-document=$outfile "$url" >> $logfile 2>&1
+  outfile=$outdir/nextprot_refseq.txt
+  wget --timeout=7200 --output-document=$outfile "$url"
 
 }
 
