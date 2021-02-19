@@ -181,7 +181,7 @@ function prepareFtp() {
   echo copying content of $indir ...
   cp $indir/*.txt $outdir/   
   # we don't want the following one
-  rm -f $/outdir/nextprot_refseq-ftp.txt 
+  rm -f $/outdir/nextprot_refseq-ftp.txt
 
   # - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
   # copy all directories except ttl & xml to M for QC
@@ -196,6 +196,15 @@ function prepareFtp() {
     cp -rL $pre_ftp_dir/$subdir $qcdir/
   done
   
+}
+
+function getNP2Mappings() {
+  url="${apibase}/mapping/nextprot_refseq.tsv"
+  outdir=$pre_ftp_dir/mapping
+  mkdir -p $outdir  
+  outfile=$outdir/mapping/nextprot_refseq.txt
+  wget --timeout=7200 --output-document=$outfile "$url" >> $logfile 2>&1
+
 }
 
 function acLists() {
@@ -569,30 +578,34 @@ for action in $actions; do
 
 # remote copy to ALPHA
   if [ "$action" = "remote-copy-npdb-alpha" ] ; then
-	remoteCopyStuffToTarget npdb alpha
+	  remoteCopyStuffToTarget npdb alpha
   fi
   if [ "$action" = "remote-copy-api-alpha" ] ; then
-	remoteCopyStuffToTarget api alpha
+	  remoteCopyStuffToTarget api alpha
   fi
   if [ "$action" = "remote-copy-solr-alpha" ] ; then
-	remoteCopyStuffToTarget solr alpha
+	  remoteCopyStuffToTarget solr alpha
   fi
   if [ "$action" = "remote-copy-virtuosodb-alpha" ] ; then
-	remoteCopyStuffToTarget virtuosodb alpha
+	  remoteCopyStuffToTarget virtuosodb alpha
   fi
 
 # remote copy to PROD
   if [ "$action" = "remote-copy-npdb-prod" ] ; then
-	remoteCopyStuffToTarget npdb prod
+	  remoteCopyStuffToTarget npdb prod
   fi
   if [ "$action" = "remote-copy-api-prod" ] ; then
-	remoteCopyStuffToTarget api prod
+	  remoteCopyStuffToTarget api prod
   fi
   if [ "$action" = "remote-copy-solr-prod" ] ; then
-	remoteCopyStuffToTarget solr prod
+	  remoteCopyStuffToTarget solr prod
   fi
   if [ "$action" = "remote-copy-virtuosodb-prod" ] ; then
-	remoteCopyStuffToTarget virtuosodb prod
+    remoteCopyStuffToTarget virtuosodb prod
+  fi
+
+  if [ "$action" = "np2-mapping" ] ; then
+    getNP2Mappings
   fi
 
 
