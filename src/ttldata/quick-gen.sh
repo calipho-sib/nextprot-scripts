@@ -79,6 +79,9 @@ function publishFtp() {
   	archiveFtp
   fi 
   
+  # get once again the latest README for ftp 
+  curl 'https://raw.githubusercontent.com/calipho-sib/nextprot-readme/master/README' -o $pre_ftp_dir/README
+
   # publish
   # some variables used in there are defined at the top of the main program
   # target_dir=$ftp_root/previous_releases/test # value used for testing
@@ -180,8 +183,8 @@ function prepareFtp() {
   mkdir -p $outdir
   echo copying content of $indir ...
   cp $indir/*.txt $outdir/   
-  # we don't want the following one
-  rm -f $/outdir/nextprot_refseq-ftp.txt
+  # we do:wn't want the following one
+  rm -f $outdir/nextprot_refseq-ftp.txt
 
   # add files in pre ftp mapping directory with NP2-generated mapping files
   getNP2Mappings
