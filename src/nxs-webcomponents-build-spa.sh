@@ -62,6 +62,7 @@ function npmAndBowerInstall() {
     rm -rf node_modules
     npm install
     echo "bower install"
+    ./node_modules/.bin/bower cache clean
     ./node_modules/.bin/bower install --force
     echo "bower update"
     ./node_modules/.bin/bower update
