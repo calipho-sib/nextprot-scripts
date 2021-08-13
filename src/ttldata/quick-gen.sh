@@ -589,32 +589,22 @@ for action in $actions; do
 
 
 # remote copy to ALPHA
-  if [ "$action" = "remote-copy-npdb-alpha" ] ; then
-	  remoteCopyStuffToTarget npdb alpha
-  fi
-  if [ "$action" = "remote-copy-api-alpha" ] ; then
-	  remoteCopyStuffToTarget api alpha
-  fi
-  if [ "$action" = "remote-copy-solr-alpha" ] ; then
-	  remoteCopyStuffToTarget solr alpha
-  fi
-  if [ "$action" = "remote-copy-virtuosodb-alpha" ] ; then
-	  remoteCopyStuffToTarget virtuosodb alpha
-  fi
+  if [ "$action" = "remote-copy-npdb-alpha" ] ; then remoteCopyStuffToTarget npdb alpha ; fi
+  if [ "$action" = "remote-copy-api-alpha" ] ; then remoteCopyStuffToTarget api alpha ; fi
+  if [ "$action" = "remote-copy-solr-alpha" ] ; then remoteCopyStuffToTarget solr alpha ; fi
+  if [ "$action" = "remote-copy-virtuosodb-alpha" ] ; then remoteCopyStuffToTarget virtuosodb alpha ; fi
 
-# remote copy to PROD
-  if [ "$action" = "remote-copy-npdb-prod" ] ; then
-	  remoteCopyStuffToTarget npdb prod
-  fi
-  if [ "$action" = "remote-copy-api-prod" ] ; then
-	  remoteCopyStuffToTarget api prod
-  fi
-  if [ "$action" = "remote-copy-solr-prod" ] ; then
-	  remoteCopyStuffToTarget solr prod
-  fi
-  if [ "$action" = "remote-copy-virtuosodb-prod" ] ; then
-    remoteCopyStuffToTarget virtuosodb prod
-  fi
+# remote copy to PROD Lausanne
+  if [ "$action" = "remote-copy-npdb-prod" ] ; then remoteCopyStuffToTarget npdb prod ; fi
+  if [ "$action" = "remote-copy-api-prod" ] ; then remoteCopyStuffToTarget api prod ; fi
+  if [ "$action" = "remote-copy-solr-prod" ] ; then remoteCopyStuffToTarget solr prod ; fi
+  if [ "$action" = "remote-copy-virtuosodb-prod" ] ; then remoteCopyStuffToTarget virtuosodb prod ; fi
+
+# remote copy to PROD Geneva (new)
+  if [ "$action" = "remote-copy-npdb-prod" ] ; then remoteCopyStuffToTarget npdb prod-geneva ; fi
+  if [ "$action" = "remote-copy-api-prod" ] ; then remoteCopyStuffToTarget api prod-geneva ; fi
+  if [ "$action" = "remote-copy-solr-prod" ] ; then remoteCopyStuffToTarget solr prod-geneva ; fi
+  if [ "$action" = "remote-copy-virtuosodb-prod" ] ; then remoteCopyStuffToTarget virtuosodb prod-geneva ; fi
 
   if [ "$action" = "np2-mapping" ] ; then
     getNP2Mappings
