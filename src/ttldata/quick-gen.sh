@@ -30,12 +30,12 @@ function remoteCopyStuffToTarget() {
 		else
 			target_host=queloz.nextprot.org
 		fi
-        elif [ "$target" = "prod" ] ; then
-                if  [ "$stuff" = "virtuosodb" ]; then
-                        target_host=nextp-vm3.vital-it.ch
-                else
-                        target_host=nextp-vm2a.vital-it.ch
-                fi
+  elif [ "$target" = "prod" ] ; then
+    if  [ "$stuff" = "virtuosodb" ]; then
+      target_host=nextp-vm3.vital-it.ch
+    else
+      target_host=nextp-vm2a.vital-it.ch
+    fi
 	else 
 	  echo "remoteCopyStuffToTarget: invalid parameter 2: <$target> should be either alpha, prod. Exiting"
 	  return
@@ -601,10 +601,10 @@ for action in $actions; do
   if [ "$action" = "remote-copy-virtuosodb-prod" ] ; then remoteCopyStuffToTarget virtuosodb prod ; fi
 
 # remote copy to PROD Geneva (new)
-  if [ "$action" = "remote-copy-npdb-prod" ] ; then remoteCopyStuffToTarget npdb prod-geneva ; fi
-  if [ "$action" = "remote-copy-api-prod" ] ; then remoteCopyStuffToTarget api prod-geneva ; fi
-  if [ "$action" = "remote-copy-solr-prod" ] ; then remoteCopyStuffToTarget solr prod-geneva ; fi
-  if [ "$action" = "remote-copy-virtuosodb-prod" ] ; then remoteCopyStuffToTarget virtuosodb prod-geneva ; fi
+  if [ "$action" = "remote-copy-npdb-prod-geneva" ] ; then remoteCopyStuffToTarget npdb prod-geneva ; fi
+  if [ "$action" = "remote-copy-api-prod-geneva" ] ; then remoteCopyStuffToTarget api prod-geneva ; fi
+  if [ "$action" = "remote-copy-solr-prod-geneva" ] ; then remoteCopyStuffToTarget solr prod-geneva ; fi
+  if [ "$action" = "remote-copy-virtuosodb-prod-geneva" ] ; then remoteCopyStuffToTarget virtuosodb prod-geneva ; fi
 
   if [ "$action" = "np2-mapping" ] ; then
     getNP2Mappings
