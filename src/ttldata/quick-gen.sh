@@ -24,12 +24,18 @@ function remoteCopyStuffToTarget() {
   
 	if [ "$target" = "alpha" ] ; then
 		target_host=uat-web2
-	elif [ "$target" = "prod" ] ; then
+	elif [ "$target" = "prod-geneva" ] ; then
 		if  [ "$stuff" = "virtuosodb" ]; then
-			target_host=nextp-vm3.vital-it.ch
+			target_host=thuan.nextprot.org
 		else
-			target_host=nextp-vm2a.vital-it.ch
+			target_host=queloz.nextprot.org
 		fi
+        elif [ "$target" = "prod" ] ; then
+                if  [ "$stuff" = "virtuosodb" ]; then
+                        target_host=nextp-vm3.vital-it.ch
+                else
+                        target_host=nextp-vm2a.vital-it.ch
+                fi
 	else 
 	  echo "remoteCopyStuffToTarget: invalid parameter 2: <$target> should be either alpha, prod. Exiting"
 	  return
