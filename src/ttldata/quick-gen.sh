@@ -195,6 +195,16 @@ function prepareFtp() {
   # add files in pre ftp mapping directory with NP2-generated mapping files
   getNP2Mappings
 
+  # add header with genome assembly version in each mapping file
+  files=$(ls -1 $outdir/*.txt)
+  for f1 in $files; do
+    f2=$f1.new
+    echo -e "#Genome-Assembly\tGRCh38" | cat > $f2
+    cat $f1 >> $f2
+    rm $f1
+    mv $f2 $f1 
+  done
+
   # - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
   # copy all directories except ttl & xml to M for QC
   # - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
