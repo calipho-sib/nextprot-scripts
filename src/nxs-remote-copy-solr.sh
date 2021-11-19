@@ -92,7 +92,7 @@ function start_solr() {
   echo "starting solr on ${host} port ${port}"
   solr_pid=$(ssh npteam@${host} ps -ef | grep java | grep nextprot.solr | tr -s " " | cut -f2 -d' ')
   if [ -x ${solr_pid} ];then
-    ssh npteam@${host} "source .bash_profile; cd ${path}/example; nohup java -Dnextprot.solr -Xmx2048m -jar -Djetty.port=${port} start.jar  > solr.log 2>&1  &"
+    ssh npteam@${host} "source .bash_profile; cd ${path}/example; nohup java -Dnextprot.solr -Xmx4072m -jar -Djetty.port=${port} start.jar  > solr.log 2>&1  &"
     echo "solr started on ${host}"
     sleep 5
   else
