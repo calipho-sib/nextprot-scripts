@@ -108,7 +108,11 @@ function archiveFtp() {
   echo $(date) - Current release $dt on ftp server will be archived
 
   # build name for tar file
-  tarname=/local/ftpnextprot/root/pub/previous_releases/nextprot_release_$dt.tar
+  # vital-it tarname
+  #tarname=/local/ftpnextprot/root/pub/previous_releases/nextprot_release_$dt.tar
+  # mayor server tarnname
+  tarname=$ftp_root/previous_releases/nextprot_release_$dt.tar
+
   ssh $ftp_server "test -e $tarname"
   tar_exists=$?
   # 0 means, yes, it exists !!!
@@ -116,7 +120,7 @@ function archiveFtp() {
   if (( $tar_exists == 0 )); then
     echo  $(date) - Tar file exists !
     postfix=$(date +%Y%m%d.%H%M)
-    tarname=/local/ftpnextprot/root/pub/previous_releases/nextprot_release_$dt.created_at_$postfix.tar
+    tarname=$ftp_root/previous_releases/nextprot_release_$dt.created_at_$postfix.tar
   fi
   
   # archive files of current release in the tar file
@@ -341,8 +345,12 @@ function compressPeff() {
 # - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - 
 
 apibase="http://localhost:8080/nextprot-api-web"
-ftp_server=pmichel@ftp.nextprot.org
-ftp_root=/local/ftpnextprot/root/pub
+# on vital-it server
+#ftp_server=pmichel@ftp.nextprot.org
+#ftp_root=/local/ftpnextprot/root/pub
+# on geneva servers
+ftp_server=npteam@mayor.nextprot.org
+ftp_root=/work/www/download.nextprot.org/pub
 pre_ftp_dir=/work/ttldata/nobackup/prepared_ftp
 
 actions=$1
