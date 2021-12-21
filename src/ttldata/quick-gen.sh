@@ -97,6 +97,7 @@ function publishFtp() {
   scp -r $pre_ftp_dir/* $ftp_server:$target_dir
   ssh $ftp_server touch -t${touchdate}0200 $target_dir
   ssh $ftp_server "find $target_dir -name '*' -exec touch -t${touchdate}0200 {} \;"
+  ssh $ftp_server "find $target_dir -type d -exec chmod +xr {} \;"
   ssh $ftp_server "cp -pf $target_dir/README $target_dir/../README ; cp -pf $target_dir/README $target_dir/../../README"
    
 }
