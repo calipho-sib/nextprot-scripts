@@ -444,7 +444,7 @@ echo $(date) - Starting $0 with actions=[$1] and optional touchdate=[$2]
 echo $(date) - Updating local nextprot-scripts 
 
 cd ~/nextprot-scripts
-git pull
+git pull origin master
 
 mkdir -p /work/ttldata/operations
 
