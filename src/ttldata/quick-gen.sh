@@ -98,6 +98,7 @@ function publishFtp() {
   ssh $ftp_server touch -t${touchdate}0200 $target_dir
   ssh $ftp_server "find $target_dir -name '*' -exec touch -t${touchdate}0200 {} \;"
   ssh $ftp_server "find $target_dir -type d -exec chmod +xr {} \;"
+  ssh $ftp_server "find $target_dir -type f -exec chmod 644 {} \;"
   ssh $ftp_server "cp -pf $target_dir/README $target_dir/../README ; cp -pf $target_dir/README $target_dir/../../README"
    
 }
@@ -185,7 +186,7 @@ function prepareFtp() {
   cp $indir/cv-nextprot-protein-property.proxied $outdir/cv_protein_property.obo    
   cp $indir/cv-uniprot-topology.proxied $outdir/cv_topological_domain.txt    
   cp $indir/cv-icepo.proxied $outdir/icepo.obo 
-  curl $giturl/Caloha_readme.txt -o $outdir/Caloha_readme.txt   
+  curl $giturl/Caloha_readme.txt -o $outdir/Caloha_readme.txt
   curl $giturl/Bgee_caloha.tsv -o $outdir/Bgee_caloha.tsv
 
   # copy of NP1 mapping directory
