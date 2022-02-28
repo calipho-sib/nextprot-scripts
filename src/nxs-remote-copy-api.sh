@@ -86,22 +86,10 @@ check_cache_index_files ${SRC_HOST}
 dirs="webapps cache"
 for dir in ${dirs}; do
   if ssh npteam@${SRC_HOST} test -d /work/jetty/${dir}; then
-      echo -e "${color}Copying ${dir} in ${TRG_HOST}...${_color}"
-      ## preparing folders
-      echo -e "${color}Cleaning previous folder ${dir}.new in ${TRG_HOST}${_color}"
-      ssh npteam@${TRG_HOST} "rm -rf /work/jetty/${dir}.new"
-      echo "ssh npteam@${TRG_HOST} mkdir /work/jetty/${dir}.new"
+      echo "Copy files to target host ${dir}.new directory"
+      ssh npteam@${TRG_HOST} "rm -rf /work/jetty/${dir}.old /work/jetty/${dir}.sos /work/jetty/${dir}.new"      
       ssh npteam@${TRG_HOST} "mkdir /work/jetty/${dir}.new"
-
-      echo -e "${color}Cleaning previous folder ${dir}.sos in ${TRG_HOST}${_color}"
-      ssh npteam@${TRG_HOST} "rm -rf /work/jetty/${dir}.sos"
-      echo "ssh npteam@${TRG_HOST} mkdir /work/jetty/${dir}.sos"
-      ssh npteam@${TRG_HOST} "mkdir /work/jetty/${dir}.sos"
-
-      echo "ssh npteam@${SRC_HOST} scp /work/jetty/${dir}/* npteam@${TRG_HOST}:/work/jetty/${dir}.new/..."
       ssh npteam@${SRC_HOST} "scp /work/jetty/${dir}/* npteam@${TRG_HOST}:/work/jetty/${dir}.new/"
-      echo -e "${color}Backing-up directory ${dir}.sos in ${TRG_HOST}${_color}"
-      ssh npteam@${TRG_HOST} "cp /work/jetty/${dir}.new/* /work/jetty/${dir}.sos/"
   else
       echo -e "${error_color}ERROR: /work/jetty/${dir} is missing at ${host} ${error_color}"
       exit 3
@@ -113,9 +101,8 @@ start_jetty ${SRC_HOST}
 stop_jetty ${TRG_HOST}
 
 for dir in ${dirs}; do
-  echo -e "${color}Removing directory ${dir} in ${TRG_HOST}${_color}"
-  ssh npteam@${TRG_HOST} "rm -rf /work/jetty/${dir}"
-  echo -e "${color}Finalizing directory ${dir} in ${TRG_HOST}${_color}"
+  echo "Switching to new ${dir} directory"
+  ssh npteam@${TRG_HOST} "mkdir -p /work/jetty/${dir}; mv /work/jetty/${dir} /work/jetty/${dir}.old"
   ssh npteam@${TRG_HOST} "mv /work/jetty/${dir}.new /work/jetty/${dir}"
 done
 
