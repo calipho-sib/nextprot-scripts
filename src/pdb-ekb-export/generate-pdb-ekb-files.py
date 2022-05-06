@@ -41,9 +41,6 @@ def get3LetterCode(aa):
 	for element in aa:
 		output = output + switcher.get(element, "Invalid 1-letter code:" + element)
 		
-	if (len(aa) > 1):
-		logging.warning(str(aa) + " => " + str(output))
-
 	return output
 
 release_info_resp = requests.get("https://api.nextprot.org/release-info.json")
@@ -69,10 +66,11 @@ with open(input_file, "r") as csv_file:
 		pdb_res_label = row['varPos']
 		aa_type = get3LetterCode(row['orgAA'])
 		aa_variant = get3LetterCode(row['varAA'])
-		phvarDesc = row['phvarDescription']
-		x = re.search("^\((.+)\) (.+)$", phvarDesc) # ex: (ZAP70-p.Arg465Cys) decreases protein tyrosine kinase activity
-		label = x.group(1).split('-')[1]
-		description = x.group(2)
+		phvarDesc = row['phvarDescription']  # ex: (IDH1-p.Tyr139Asp) decreases isocitrate dehydrogenase (NADP+) activity
+		start_label = phvarDesc.index('-p.') + 1
+		end_label = phvarDesc.index(')')
+		label = phvarDesc[start_label:end_label]
+		description = phvarDesc[end_label+2: len(phvarDesc)]
 
 		if "Invalid" in aa_type: 
 			 logging.error("Unexpected amino acid: " + row['orgAA'])
@@ -89,13 +87,13 @@ with open(input_file, "r") as csv_file:
 			"label": label,
 			"site_url": "https://www.nextprot.org/entry/" + entry + "/phenotype",
 			"source_database": "neXtProt",
-			"source_accession": entry,
-			"additional_site_annotations": {"description": description}
+			"source_accession": entry
 		}
 		site_data = {
 			"site_id_ref": site_id_ref,
 			"confidence_classification": "curated",
-			"confidence_score": 1
+			"confidence_score": 1,
+			"aa_variant_causes": description
 		}
 		if (len(aa_variant) > 0):
 			# if it's not a deletion, we add the 'aa_variant'
