@@ -20,22 +20,13 @@ src_dir1=/work/ttldata/nobackup/export-ttl
 src_dir2=/work/ttldata/nobackup/construct
 trg_dir=/work/ttldata/ttl-compressed
 
-latest_release=$(ls -1tr /mnt/npdata/dump/release/ | grep 20 | tail -n1)
-qc_dir=/share/sib/common/Calipho/np/FTP/rdf/ttl
-
-echo "latest release (unused) : $latest_release"
 echo "target dir              : $trg_dir"
-echo "qc dir         (unused) : $qc_dir"
 
 
 # clear target directories
 
 mkdir -p $trg_dir
 rm -rf $trg_dir/*
-
-#mkdir -p $qc_dir
-#rm -f $qc_dir/*.gz
-
 
 # rename and copy files in chromosome dir to target directory
 
@@ -84,22 +75,4 @@ copy_rename_touch_compress $src_dir2/inferredSubClassOf-a.ttl $trg_dir/inferredS
 copy_rename_touch_compress $src_dir2/inferredSubClassOf-b.ttl $trg_dir/inferredSubClassOf-b.ttl
 
 echo "DONE"
-exit 0
-
-
-# what follows done elsewhere: in worksheet integration NP1
-# now copy all compressed files of target directory to qc directory (mount of remote HD)
-
-echo "copying compressed files to qc directory $qc_dir"
-cp $trg_dir/*.gz $qc_dir/
-
-
-# now touch target files with date specified in $1 <MMDDhhmm>
-if [ "$touch_date" != "" ]; then
-  echo "setting timestamp of files in qc directory"
-  find $qc_dir/ -type f -exec touch -t$touch_date {} \;
-  find $qc_dir/ -type d -exec touch -t$touch_date {} \;
-fi
-echo "DONE"
-
 
