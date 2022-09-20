@@ -1,0 +1,205 @@
+http://nextprot.org/rdf#absorptionMax	absorptionMax	absorption max	Links an isoform to an annotation	AnnotationCategory.java:label,schema-annotation-list.ttl.vm:comment	
+http://nextprot.org/rdf#absorptionNote	absorptionNote	absorption note	Links an isoform to an annotation	AnnotationCategory.java:label,schema-annotation-list.ttl.vm:comment	
+http://nextprot.org/rdf#accession	accession	accession	Links a cross-reference to a string uniquely identifying it in its database	schema-database.ttl.vm	
+http://nextprot.org/rdf#activeSite	activeSite	active site	Links an isoform to an annotation	AnnotationCategory.java:label,schema-annotation-list.ttl.vm:comment	
+http://nextprot.org/rdf#activityRegulation	activityRegulation	activity regulation	Links an isoform to an annotation	AnnotationCategory.java:label,schema-annotation-list.ttl.vm:comment	
+http://nextprot.org/rdf#alleleCount	alleleCount	allele count		additional-properties-def.ttl.vm	
+http://nextprot.org/rdf#alleleFrequency	alleleFrequency	allele frequency		additional-properties-def.ttl.vm	
+http://nextprot.org/rdf#alleleNumber	alleleNumber	allele number		additional-properties-def.ttl.vm	
+http://nextprot.org/rdf#allergen	allergen	allergen	Links an isoform to an annotation	AnnotationCategory.java:label,schema-annotation-list.ttl.vm:comment	
+http://nextprot.org/rdf#alternativeName	alternativeName	alternative name	Property linking a protein or a gene to an alternative name	schema-ontology-list.ttl.vm	
+http://nextprot.org/rdf#antibodiesAcc	antibodiesAcc	antibodies acc		additional-properties-def.ttl.vm	
+http://nextprot.org/rdf#antibodyMapping	antibodyMapping	antibody mapping	Links an isoform to an annotation	AnnotationCategory.java:label,schema-annotation-list.ttl.vm:comment	
+http://nextprot.org/rdf#antibodyName	antibodyName	antibody name		additional-properties-def.ttl.vm	
+http://nextprot.org/rdf#antibodyUnicity	antibodyUnicity	antibody unicity		additional-properties-def.ttl.vm	
+http://nextprot.org/rdf#assignedBy	assignedBy	assigned by	Links an evidence to its source	schema-evidence-list.ttl.vm	
+http://nextprot.org/rdf#author	author	author		additional-properties-def.ttl.vm	
+http://nextprot.org/rdf#band	band	band		additional-properties-def.ttl.vm	
+http://nextprot.org/rdf#begin	begin	begin		additional-properties-def.ttl.vm	
+http://nextprot.org/rdf#bestGeneMapping	bestGeneMapping	best gene mapping		additional-properties-def.ttl.vm	
+http://nextprot.org/rdf#betaStrand	betaStrand	beta strand	Links an isoform to an annotation	AnnotationCategory.java:label,schema-annotation-list.ttl.vm:comment	
+http://nextprot.org/rdf#binaryInteraction	binaryInteraction	binary interaction	Links an isoform to an annotation	AnnotationCategory.java:label,schema-annotation-list.ttl.vm:comment	
+http://nextprot.org/rdf#bindingSite	bindingSite	binding site	Links an isoform to an annotation	AnnotationCategory.java:label,schema-annotation-list.ttl.vm:comment	
+http://nextprot.org/rdf#biophysicochemicalProperty	biophysicochemicalProperty	biophysicochemical property	Links an isoform to an annotation	AnnotationCategory.java:label,schema-annotation-list.ttl.vm:comment	
+http://nextprot.org/rdf#calciumBindingRegion	calciumBindingRegion	calcium-binding region	Links an isoform to an annotation	AnnotationCategory.java:label,schema-annotation-list.ttl.vm:comment	
+http://nextprot.org/rdf#canonicalIsoform	canonicalIsoform	canonical isoform		additional-properties-def.ttl.vm	
+http://nextprot.org/rdf#catalyticActivity	catalyticActivity	catalytic activity	Links an isoform to an annotation	AnnotationCategory.java:label,schema-annotation-list.ttl.vm:comment	
+http://nextprot.org/rdf#category	category	category	Links a a database to its category	schema-database.ttl.vm	
+http://nextprot.org/rdf#caution	caution	caution	Links an isoform to an annotation	AnnotationCategory.java:label,schema-annotation-list.ttl.vm:comment	
+http://nextprot.org/rdf#cellLine	cellLine	cell line	Links a particular cell line used in the experimental context	schema-experimental-context.ttl.vm	
+http://nextprot.org/rdf#cellularComponent	cellularComponent	cellular component	Links an isoform to an annotation	AnnotationCategory.java:label,schema-annotation-list.ttl.vm:comment	
+http://nextprot.org/rdf#chain	chain	chain		additional-properties-def.ttl.vm	
+http://nextprot.org/rdf#childOf	childOf	child of	A relationship between two terms meaning that the object term is more specific than the subjet term	schema-ontology-list.ttl.vm	
+http://nextprot.org/rdf#chromosome	chromosome	chromosome		additional-properties-def.ttl.vm	
+http://nextprot.org/rdf#city	city	city		additional-properties-def.ttl.vm	
+http://nextprot.org/rdf#classifiedWith	classifiedWith	classified with		additional-properties-def.ttl.vm	
+http://nextprot.org/rdf#cleavageSite	cleavageSite	cleavage site	Links an isoform to an annotation	AnnotationCategory.java:label,schema-annotation-list.ttl.vm:comment	
+http://nextprot.org/rdf#cofactor	cofactor	cofactor	Links an isoform to an annotation	AnnotationCategory.java:label,schema-annotation-list.ttl.vm:comment	
+http://nextprot.org/rdf#cofactorInfo	cofactorInfo	cofactor information	Links an isoform to an annotation	AnnotationCategory.java:label,schema-annotation-list.ttl.vm:comment	
+http://nextprot.org/rdf#coiledCoilRegion	coiledCoilRegion	coiled-coil region	Links an isoform to an annotation	AnnotationCategory.java:label,schema-annotation-list.ttl.vm:comment	
+http://nextprot.org/rdf#compositionallyBiasedRegion	compositionallyBiasedRegion	compositionally biased region	Links an isoform to an annotation	AnnotationCategory.java:label,schema-annotation-list.ttl.vm:comment	
+http://nextprot.org/rdf#crossLink	crossLink	cross-link	Links an isoform to an annotation	AnnotationCategory.java:label,schema-annotation-list.ttl.vm:comment	
+http://nextprot.org/rdf#description	description	description		additional-properties-def.ttl.vm	
+http://nextprot.org/rdf#detectedExpression	detectedExpression	detected expression		additional-properties-def.ttl.vm	
+http://nextprot.org/rdf#developmentalStage	developmentalStage	developmental stage	Links a developmental stage associated to the sample used in the experimental context	schema-experimental-context.ttl.vm	
+http://nextprot.org/rdf#developmentalStageInfo	developmentalStageInfo	developmental stage	Links an isoform to an annotation	AnnotationCategory.java:label,schema-annotation-list.ttl.vm:comment	
+http://nextprot.org/rdf#disease	disease	disease	Links a an isoform to an annotation or an experimental context to the disease associated with the sample	schema-experimental-context.ttl.vm	
+http://nextprot.org/rdf#diseaseRelatedVariant	diseaseRelatedVariant	disease-related variant	Links an isoform to an annotation	AnnotationCategory.java:label,schema-annotation-list.ttl.vm:comment	
+http://nextprot.org/rdf#disulfideBond	disulfideBond	disulfide bond	Links an isoform to an annotation	AnnotationCategory.java:label,schema-annotation-list.ttl.vm:comment	
+http://nextprot.org/rdf#dnaBindingRegion	dnaBindingRegion	dna-binding region	Links an isoform to an annotation	AnnotationCategory.java:label,schema-annotation-list.ttl.vm:comment	
+http://nextprot.org/rdf#domain	domain	domain	Links an isoform to an annotation	AnnotationCategory.java:label,schema-annotation-list.ttl.vm:comment	
+http://nextprot.org/rdf#domainInfo	domainInfo	domain information	Links an isoform to an annotation	AnnotationCategory.java:label,schema-annotation-list.ttl.vm:comment	
+http://nextprot.org/rdf#editor	editor	editor		additional-properties-def.ttl.vm	
+http://nextprot.org/rdf#electrophysiologicalParameter	electrophysiologicalParameter	electrophysiological parameter	Links an isoform to an annotation	AnnotationCategory.java:label,schema-annotation-list.ttl.vm:comment	
+http://nextprot.org/rdf#end	end	end		additional-properties-def.ttl.vm	
+http://nextprot.org/rdf#entryAnnotationId	entryAnnotationId	entry annotation id		additional-properties-def.ttl.vm	
+http://nextprot.org/rdf#enzymeClassification	enzymeClassification	enzyme classification	Links an isoform to an annotation	AnnotationCategory.java:label,schema-annotation-list.ttl.vm:comment	
+http://nextprot.org/rdf#evidence	evidence	evidence	Links an annotation with the evidence supporting it	schema-evidence-list.ttl.vm	
+http://nextprot.org/rdf#evidenceCode	evidenceCode	evidence code		additional-properties-def.ttl.vm	
+http://nextprot.org/rdf#existence	existence	existence	link between a protein entry and its existence level	schema-entry-isoform.ttl.vm	
+http://nextprot.org/rdf#experimentalContext	experimentalContext	experimental context	Links an evidence with its experimental context	schema-experimental-context.ttl.vm	
+http://nextprot.org/rdf#expression	expression	expression	Links an isoform to an annotation	AnnotationCategory.java:label,schema-annotation-list.ttl.vm:comment	
+http://nextprot.org/rdf#expressionInfo	expressionInfo	expression info	Links an isoform to an annotation	AnnotationCategory.java:label,schema-annotation-list.ttl.vm:comment	
+http://nextprot.org/rdf#expressionLevel	expressionLevel	expression level		additional-properties-def.ttl.vm	
+http://nextprot.org/rdf#expressionProfile	expressionProfile	expression profile	Links an isoform to an annotation	AnnotationCategory.java:label,schema-annotation-list.ttl.vm:comment	
+http://nextprot.org/rdf#expressionScore	expressionScore	expression score		additional-properties-def.ttl.vm	
+http://nextprot.org/rdf#familyName	familyName	family name	Links an isoform to an annotation	AnnotationCategory.java:label,schema-annotation-list.ttl.vm:comment	
+http://nextprot.org/rdf#firstPage	firstPage	first page		additional-properties-def.ttl.vm	
+http://nextprot.org/rdf#from	from	from		additional-properties-def.ttl.vm	
+http://nextprot.org/rdf#fromXref	fromXref	from xref		additional-properties-def.ttl.vm	
+http://nextprot.org/rdf#function	function	function	Links an isoform to an annotation	AnnotationCategory.java:label,schema-annotation-list.ttl.vm:comment	
+http://nextprot.org/rdf#functionInfo	functionInfo	function info	Links an isoform to an annotation	AnnotationCategory.java:label,schema-annotation-list.ttl.vm:comment	
+http://nextprot.org/rdf#gene	gene	gene		additional-properties-def.ttl.vm	
+http://nextprot.org/rdf#generalAnnotation	generalAnnotation	general annotation	Links an isoform to an annotation	AnnotationCategory.java:label,schema-annotation-list.ttl.vm:comment	
+http://nextprot.org/rdf#genericPhenotype	genericPhenotype	generic phenotype	Links an isoform to an annotation	AnnotationCategory.java:label,schema-annotation-list.ttl.vm:comment	
+http://nextprot.org/rdf#glycosylationSite	glycosylationSite	glycosylation site	Links an isoform to an annotation	AnnotationCategory.java:label,schema-annotation-list.ttl.vm:comment	
+http://nextprot.org/rdf#goBiologicalProcess	goBiologicalProcess	go biological process	Links an isoform to an annotation	AnnotationCategory.java:label,schema-annotation-list.ttl.vm:comment	
+http://nextprot.org/rdf#goCellularComponent	goCellularComponent	go cellular component	Links an isoform to an annotation	AnnotationCategory.java:label,schema-annotation-list.ttl.vm:comment	
+http://nextprot.org/rdf#goMolecularFunction	goMolecularFunction	go molecular function	Links an isoform to an annotation	AnnotationCategory.java:label,schema-annotation-list.ttl.vm:comment	
+http://nextprot.org/rdf#goQualifier	goQualifier	go qualifier		additional-properties-def.ttl.vm	
+http://nextprot.org/rdf#helix	helix	helix	Links an isoform to an annotation	AnnotationCategory.java:label,schema-annotation-list.ttl.vm:comment	
+http://nextprot.org/rdf#hgvs	hgvs	hgvs		additional-properties-def.ttl.vm	
+http://nextprot.org/rdf#highExpression	highExpression	high expression		additional-properties-def.ttl.vm	
+http://nextprot.org/rdf#history	history	history		additional-properties-def.ttl.vm	
+http://nextprot.org/rdf#homozygoteCount	homozygoteCount	homozygote count		additional-properties-def.ttl.vm	
+http://nextprot.org/rdf#impactedObject	impactedObject	impacted object		additional-properties-def.ttl.vm	
+http://nextprot.org/rdf#induction	induction	induction	Links an isoform to an annotation	AnnotationCategory.java:label,schema-annotation-list.ttl.vm:comment	
+http://nextprot.org/rdf#initiatorMethionine	initiatorMethionine	initiator methionine	Links an isoform to an annotation	AnnotationCategory.java:label,schema-annotation-list.ttl.vm:comment	
+http://nextprot.org/rdf#integrated	integrated	integrated		additional-properties-def.ttl.vm	
+http://nextprot.org/rdf#integrationLevel	integrationLevel	integration level	antibody integration level	schema-evidence-list.ttl.vm	
+http://nextprot.org/rdf#intensity	intensity	intensity		additional-properties-def.ttl.vm	
+http://nextprot.org/rdf#interactant	interactant	interactant		additional-properties-def.ttl.vm	
+http://nextprot.org/rdf#interactingRegion	interactingRegion	interacting region	Links an isoform to an annotation	AnnotationCategory.java:label,schema-annotation-list.ttl.vm:comment	
+http://nextprot.org/rdf#interaction	interaction	interaction	Links an isoform to an annotation	AnnotationCategory.java:label,schema-annotation-list.ttl.vm:comment	
+http://nextprot.org/rdf#interactionDetectionMethod	interactionDetectionMethod	interaction detection method		additional-properties-def.ttl.vm	
+http://nextprot.org/rdf#interactionInfo	interactionInfo	interaction info	Links an isoform to an annotation	AnnotationCategory.java:label,schema-annotation-list.ttl.vm:comment	
+http://nextprot.org/rdf#interactionMapping	interactionMapping	interaction mapping	Links an isoform to an annotation	AnnotationCategory.java:label,schema-annotation-list.ttl.vm:comment	
+http://nextprot.org/rdf#intramembraneRegion	intramembraneRegion	intramembrane region	Links an isoform to an annotation	AnnotationCategory.java:label,schema-annotation-list.ttl.vm:comment	
+http://nextprot.org/rdf#isoelectricPoint	isoelectricPoint	isoelectric point		additional-properties-def.ttl.vm	
+http://nextprot.org/rdf#isoform	isoform	isoform		additional-properties-def.ttl.vm	
+http://nextprot.org/rdf#isoformCount	isoformCount	isoform count		additional-properties-def.ttl.vm	
+http://nextprot.org/rdf#issue	issue	issue		additional-properties-def.ttl.vm	
+http://nextprot.org/rdf#journal	journal	journal		additional-properties-def.ttl.vm	
+http://nextprot.org/rdf#keyword	keyword	keywords	Links an isoform to an annotation	AnnotationCategory.java:label,schema-annotation-list.ttl.vm:comment	
+http://nextprot.org/rdf#kineticKM	kineticKM	kinetic km	Links an isoform to an annotation	AnnotationCategory.java:label,schema-annotation-list.ttl.vm:comment	
+http://nextprot.org/rdf#kineticNote	kineticNote	kinetic note	Links an isoform to an annotation	AnnotationCategory.java:label,schema-annotation-list.ttl.vm:comment	
+http://nextprot.org/rdf#kineticVmax	kineticVmax	kinetic vmax	Links an isoform to an annotation	AnnotationCategory.java:label,schema-annotation-list.ttl.vm:comment	
+http://nextprot.org/rdf#lastPage	lastPage	last page		additional-properties-def.ttl.vm	
+http://nextprot.org/rdf#lastSequenceUpdate	lastSequenceUpdate	last sequence update		additional-properties-def.ttl.vm	
+http://nextprot.org/rdf#length	length	length		additional-properties-def.ttl.vm	
+http://nextprot.org/rdf#level	level	level		additional-properties-def.ttl.vm	
+http://nextprot.org/rdf#lipidationSite	lipidationSite	lipid moiety-binding region	Links an isoform to an annotation	AnnotationCategory.java:label,schema-annotation-list.ttl.vm:comment	
+http://nextprot.org/rdf#lowExpression	lowExpression	low expression		additional-properties-def.ttl.vm	
+http://nextprot.org/rdf#mammalianPhenotype	mammalianPhenotype	mammalian phenotype	Links an isoform to an annotation	AnnotationCategory.java:label,schema-annotation-list.ttl.vm:comment	
+http://nextprot.org/rdf#mapping	mapping	mapping	Links an isoform to an annotation	AnnotationCategory.java:label,schema-annotation-list.ttl.vm:comment	
+http://nextprot.org/rdf#matureProtein	matureProtein	mature protein	Links an isoform to an annotation	AnnotationCategory.java:label,schema-annotation-list.ttl.vm:comment	
+http://nextprot.org/rdf#medical	medical	medical	Links an isoform to an annotation	AnnotationCategory.java:label,schema-annotation-list.ttl.vm:comment	
+http://nextprot.org/rdf#mediumExpression	mediumExpression	medium expression		additional-properties-def.ttl.vm	
+http://nextprot.org/rdf#metadata	metadata	metadata		additional-properties-def.ttl.vm	
+http://nextprot.org/rdf#metalBindingSite	metalBindingSite	metal binding site	Links an isoform to an annotation	AnnotationCategory.java:label,schema-annotation-list.ttl.vm:comment	
+http://nextprot.org/rdf#method	method	method		additional-properties-def.ttl.vm	
+http://nextprot.org/rdf#miscellaneous	miscellaneous	miscellaneous	Links an isoform to an annotation	AnnotationCategory.java:label,schema-annotation-list.ttl.vm:comment	
+http://nextprot.org/rdf#miscellaneousRegion	miscellaneousRegion	miscellaneous region	Links an isoform to an annotation	AnnotationCategory.java:label,schema-annotation-list.ttl.vm:comment	
+http://nextprot.org/rdf#miscellaneousSite	miscellaneousSite	miscellaneous site	Links an isoform to an annotation	AnnotationCategory.java:label,schema-annotation-list.ttl.vm:comment	
+http://nextprot.org/rdf#mitochondrialTransitPeptide	mitochondrialTransitPeptide	mitochondrial transit peptide	Links an isoform to an annotation	AnnotationCategory.java:label,schema-annotation-list.ttl.vm:comment	
+http://nextprot.org/rdf#modification	modification	modification		additional-properties-def.ttl.vm	
+http://nextprot.org/rdf#modifiedResidue	modifiedResidue	modified residue	Links an isoform to an annotation	AnnotationCategory.java:label,schema-annotation-list.ttl.vm:comment	
+http://nextprot.org/rdf#molecularWeight	molecularWeight	molecular weight		additional-properties-def.ttl.vm	
+http://nextprot.org/rdf#mutagenesis	mutagenesis	mutagenesis	Links an isoform to an annotation	AnnotationCategory.java:label,schema-annotation-list.ttl.vm:comment	
+http://nextprot.org/rdf#name	name	name	Most general property linking a protein or a gene to a name	schema-ontology-list.ttl.vm	
+http://nextprot.org/rdf#negative	negative	negative		additional-properties-def.ttl.vm	
+http://nextprot.org/rdf#negativeEvidence	negativeEvidence	evidence	Links an annotation with an evidence unsupporting it	schema-evidence-list.ttl.vm	
+http://nextprot.org/rdf#nonConsecutiveResidue	nonConsecutiveResidue	non-consecutive residue	Links an isoform to an annotation	AnnotationCategory.java:label,schema-annotation-list.ttl.vm:comment	
+http://nextprot.org/rdf#nonTerminalResidue	nonTerminalResidue	non-terminal residue	Links an isoform to an annotation	AnnotationCategory.java:label,schema-annotation-list.ttl.vm:comment	
+http://nextprot.org/rdf#nucleotidePhosphateBindingRegion	nucleotidePhosphateBindingRegion	nucleotide phosphate-binding region	Links an isoform to an annotation	AnnotationCategory.java:label,schema-annotation-list.ttl.vm:comment	
+http://nextprot.org/rdf#numberOfExperiments	numberOfExperiments	number of experiments		additional-properties-def.ttl.vm	
+http://nextprot.org/rdf#orfName	orfName	orf name	Property linking a protein or a gene with an ORF name	schema-ontology-list.ttl.vm	
+http://nextprot.org/rdf#original	original	original		additional-properties-def.ttl.vm	
+http://nextprot.org/rdf#otherName	otherName	other name	Property linking a recommended name with an other name sometimes used to refer to the same entity	schema-ontology-list.ttl.vm	
+http://nextprot.org/rdf#pathway	pathway	pathway	Links an isoform to an annotation	AnnotationCategory.java:label,schema-annotation-list.ttl.vm:comment	
+http://nextprot.org/rdf#pdbMapping	pdbMapping	pdb mapping	Links an isoform to an annotation	AnnotationCategory.java:label,schema-annotation-list.ttl.vm:comment	
+http://nextprot.org/rdf#peptideMapping	peptideMapping	peptide mapping	Links an isoform to an annotation	AnnotationCategory.java:label,schema-annotation-list.ttl.vm:comment	
+http://nextprot.org/rdf#peptideName	peptideName	peptide name		additional-properties-def.ttl.vm	
+http://nextprot.org/rdf#peptideSet	peptideSet	peptide set		additional-properties-def.ttl.vm	
+http://nextprot.org/rdf#peptideUnicity	peptideUnicity	peptide unicity		additional-properties-def.ttl.vm	
+http://nextprot.org/rdf#peroxisomeTransitPeptide	peroxisomeTransitPeptide	peroxisome transit peptide	Links an isoform to an annotation	AnnotationCategory.java:label,schema-annotation-list.ttl.vm:comment	
+http://nextprot.org/rdf#phDependence	phDependence	ph dependence	Links an isoform to an annotation	AnnotationCategory.java:label,schema-annotation-list.ttl.vm:comment	
+http://nextprot.org/rdf#pharmaceutical	pharmaceutical	pharmaceutical	Links an isoform to an annotation	AnnotationCategory.java:label,schema-annotation-list.ttl.vm:comment	
+http://nextprot.org/rdf#phenotypicVariation	phenotypicVariation	phenotypic variation	Links an isoform to an annotation	AnnotationCategory.java:label,schema-annotation-list.ttl.vm:comment	
+http://nextprot.org/rdf#positionalAnnotation	positionalAnnotation	positional annotation	Links an isoform to an annotation	AnnotationCategory.java:label,schema-annotation-list.ttl.vm:comment	
+http://nextprot.org/rdf#processingProduct	processingProduct	processing product	Links an isoform to an annotation	AnnotationCategory.java:label,schema-annotation-list.ttl.vm:comment	
+http://nextprot.org/rdf#propeptide	propeptide	maturation peptide	Links an isoform to an annotation	AnnotationCategory.java:label,schema-annotation-list.ttl.vm:comment	
+http://nextprot.org/rdf#proteinProperty	proteinProperty	protein property	Links an isoform to an annotation	AnnotationCategory.java:label,schema-annotation-list.ttl.vm:comment	
+http://nextprot.org/rdf#proteoform	proteoform	proteoform		additional-properties-def.ttl.vm	
+http://nextprot.org/rdf#proteotypic	proteotypic	proteotypic		additional-properties-def.ttl.vm	
+http://nextprot.org/rdf#provenance	provenance	provenance	Links a cross-reference or identifier to its database	schema-database.ttl.vm	
+http://nextprot.org/rdf#ptm	ptm	ptm	Links an isoform to an annotation	AnnotationCategory.java:label,schema-annotation-list.ttl.vm:comment	
+http://nextprot.org/rdf#ptmInfo	ptmInfo	ptm info	Links an isoform to an annotation	AnnotationCategory.java:label,schema-annotation-list.ttl.vm:comment	
+http://nextprot.org/rdf#pubType	pubType	pub type		additional-properties-def.ttl.vm	
+http://nextprot.org/rdf#publisher	publisher	publisher		additional-properties-def.ttl.vm	
+http://nextprot.org/rdf#quality	quality	quality	link between an annotation or evidence and its quality	schema-entry-isoform.ttl.vm	
+http://nextprot.org/rdf#recommendedName	recommendedName	recommended name	Property linkng a protein or a gene to a recommended name	schema-ontology-list.ttl.vm	
+http://nextprot.org/rdf#redoxPotential	redoxPotential	redox potential	Links an isoform to an annotation	AnnotationCategory.java:label,schema-annotation-list.ttl.vm:comment	
+http://nextprot.org/rdf#reference	reference	reference		additional-properties-def.ttl.vm	
+http://nextprot.org/rdf#region	region	region	Links an isoform to an annotation	AnnotationCategory.java:label,schema-annotation-list.ttl.vm:comment	
+http://nextprot.org/rdf#related	related	related	A relationship between two terms meaning that the their meaning is close to each other	schema-ontology-list.ttl.vm	
+http://nextprot.org/rdf#repeat	repeat	repeat	Links an isoform to an annotation	AnnotationCategory.java:label,schema-annotation-list.ttl.vm:comment	
+http://nextprot.org/rdf#secondaryStructure	secondaryStructure	secondary structure	Links an isoform to an annotation	AnnotationCategory.java:label,schema-annotation-list.ttl.vm:comment	
+http://nextprot.org/rdf#selenocysteine	selenocysteine	selenocysteine	Links an isoform to an annotation	AnnotationCategory.java:label,schema-annotation-list.ttl.vm:comment	
+http://nextprot.org/rdf#selfInteraction	selfInteraction	self interaction		additional-properties-def.ttl.vm	
+http://nextprot.org/rdf#sequence	sequence	sequence		additional-properties-def.ttl.vm	
+http://nextprot.org/rdf#sequenceCaution	sequenceCaution	sequence caution	Links an isoform to an annotation	AnnotationCategory.java:label,schema-annotation-list.ttl.vm:comment	
+http://nextprot.org/rdf#sequenceConflict	sequenceConflict	sequence conflict	Links an isoform to an annotation	AnnotationCategory.java:label,schema-annotation-list.ttl.vm:comment	
+http://nextprot.org/rdf#sequenceVersion	sequenceVersion	sequence version		additional-properties-def.ttl.vm	
+http://nextprot.org/rdf#shortSequenceMotif	shortSequenceMotif	short sequence motif	Links an isoform to an annotation	AnnotationCategory.java:label,schema-annotation-list.ttl.vm:comment	
+http://nextprot.org/rdf#signalPeptide	signalPeptide	signal peptide	Links an isoform to an annotation	AnnotationCategory.java:label,schema-annotation-list.ttl.vm:comment	
+http://nextprot.org/rdf#site	site	site	Links an isoform to an annotation	AnnotationCategory.java:label,schema-annotation-list.ttl.vm:comment	
+http://nextprot.org/rdf#smallMoleculeInteraction	smallMoleculeInteraction	small molecule interaction	Links an isoform to an annotation	AnnotationCategory.java:label,schema-annotation-list.ttl.vm:comment	
+http://nextprot.org/rdf#srmPeptideMapping	srmPeptideMapping	srm peptide mapping	Links an isoform to an annotation	AnnotationCategory.java:label,schema-annotation-list.ttl.vm:comment	
+http://nextprot.org/rdf#start	start	start		additional-properties-def.ttl.vm	
+http://nextprot.org/rdf#strand	strand	strand		additional-properties-def.ttl.vm	
+http://nextprot.org/rdf#subcellularLocation	subcellularLocation	subcellular location	Links an isoform to an annotation	AnnotationCategory.java:label,schema-annotation-list.ttl.vm:comment	
+http://nextprot.org/rdf#subcellularLocationNote	subcellularLocationNote	subcellular location info	Links an isoform to an annotation	AnnotationCategory.java:label,schema-annotation-list.ttl.vm:comment	
+http://nextprot.org/rdf#suffix	suffix	suffix		additional-properties-def.ttl.vm	
+http://nextprot.org/rdf#swissprotDisplayed	swissprotDisplayed	swissprot displayed		additional-properties-def.ttl.vm	
+http://nextprot.org/rdf#swissprotPage	swissprotPage	swissprot page		additional-properties-def.ttl.vm	
+http://nextprot.org/rdf#temperatureDependence	temperatureDependence	temperature dependence	Links an isoform to an annotation	AnnotationCategory.java:label,schema-annotation-list.ttl.vm:comment	
+http://nextprot.org/rdf#term	term	term		additional-properties-def.ttl.vm	
+http://nextprot.org/rdf#tissue	tissue	disease	Links a paricular tissue associated to the sample used in the experimental context	schema-experimental-context.ttl.vm	
+http://nextprot.org/rdf#title	title	title		additional-properties-def.ttl.vm	
+http://nextprot.org/rdf#topologicalDomain	topologicalDomain	topological domain	Links an isoform to an annotation	AnnotationCategory.java:label,schema-annotation-list.ttl.vm:comment	
+http://nextprot.org/rdf#topology	topology	topology	Links an isoform to an annotation	AnnotationCategory.java:label,schema-annotation-list.ttl.vm:comment	
+http://nextprot.org/rdf#transitPeptide	transitPeptide	transit peptide	Links an isoform to an annotation	AnnotationCategory.java:label,schema-annotation-list.ttl.vm:comment	
+http://nextprot.org/rdf#transmembraneRegion	transmembraneRegion	transmembrane region	Links an isoform to an annotation	AnnotationCategory.java:label,schema-annotation-list.ttl.vm:comment	
+http://nextprot.org/rdf#transportActivity	transportActivity	transport activity	Links an isoform to an annotation	AnnotationCategory.java:label,schema-annotation-list.ttl.vm:comment	
+http://nextprot.org/rdf#turn	turn	turn	Links an isoform to an annotation	AnnotationCategory.java:label,schema-annotation-list.ttl.vm:comment	
+http://nextprot.org/rdf#undetectedExpression	undetectedExpression	undetected expression		additional-properties-def.ttl.vm	
+http://nextprot.org/rdf#uniprotKeyword	uniprotKeyword	uniprot keyword	Links an isoform to an annotation	AnnotationCategory.java:label,schema-annotation-list.ttl.vm:comment	
+http://nextprot.org/rdf#updated	updated	updated		additional-properties-def.ttl.vm	
+http://nextprot.org/rdf#variant	variant	variant	Links an isoform to an annotation	AnnotationCategory.java:label,schema-annotation-list.ttl.vm:comment	
+http://nextprot.org/rdf#variantInfo	variantInfo	variant info	Links an isoform to an annotation	AnnotationCategory.java:label,schema-annotation-list.ttl.vm:comment	
+http://nextprot.org/rdf#variation	variation	variation		additional-properties-def.ttl.vm	
+http://nextprot.org/rdf#version	version	version		additional-properties-def.ttl.vm	
+http://nextprot.org/rdf#volume	volume	volume		additional-properties-def.ttl.vm	
+http://nextprot.org/rdf#year	year	year		additional-properties-def.ttl.vm	
+http://nextprot.org/rdf#zincFingerRegion	zincFingerRegion	zinc finger region	Links an isoform to an annotation	AnnotationCategory.java:label,schema-annotation-list.ttl.vm:comment	

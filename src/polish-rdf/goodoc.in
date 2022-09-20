@@ -1,0 +1,147 @@
+Class from pylode html via schema.ttl	Class from RDFHelp (TypeName)	Status	rdfs:comment	Suggested rdfs:comment	Lydie's comments
+	AbsorptionMax	Public		Wavelength at which maximal light absorption by the photoreactive protein occurs. Other observed absorbance maxima (of lesser importance), lambda(max) for light emission, experimental or environmental remarks may also be included.	OK
+	ActiveSite	Public	Amino acid(s) directly involved in the activity of an enzyme	Amino acid(s) directly involved in the cataytic activity of the enzyme	OK
+	ActivityRegulation	Public		Mechanisms which regulate the activity of the protein isoform(s), including the components which regulate (by activation or inhibition) the reaction	OK
+	Allergen	Public	Allergenic properties: information relevant to allergenic proteins	Protein isoform causing an allergic reaction.	OK
+	AntibodyMapping	Public		Fragment of the protein or PrESTs (Protein Epitope Signature Tags) used to generate antibodies by the Human Protein Atlas project	OK
+	BetaStrand	Public	Beta strand regions within the experimentally determined protein structure	Beta strand within the protein isoform structure	OK
+	BgeeDevelopmentalStageCv	Public	Bgee controlled vocabulary of human developmental stages		
+	BinaryInteraction	Public		Interaction involving two protein isoform(s)	OK
+	BindingSite	Public	Binding site for any chemical group (co-enzyme prosthetic group etc.)		
+	CalciumBindingRegion	Public	Position(s) of calcium binding region(s) within the protein	Calcium binding region within the protein isoform	OK
+	CatalyticActivity	Public	Reaction(s) catalyzed by an enzyme		
+	Caution	Public	Warning about possible errors and/or grounds for confusion		
+	CleavageSite	Public	Cleavage site on the sequence.	Natural proteolytic cleavage site in the protein isoform	OK
+	Cofactor	Public	Non-protein substance required for enzyme activity		
+	CofactorInfo	Public	Relevant information on protein cofactor(s)	Information on protein cofactor(s)	OK
+	CoiledCoilRegion	Public	Positions of regions of coiled coil within the protein	Coiled coil region within the protein isoform	OK
+	CompositionallyBiasedRegion	Public	Region of compositional bias in the protein	Region of compositional bias within the protein isoform, in which a particular type of amino acid is over-represented	OK
+	Consortium	Public		Name of a specific consortium, committee, or study group	OK
+	CrossLink	Public	Residues participating in covalent linkage(s) between proteins	Amino acid(s) participating in covalent linkage(s) between protein isoform(s)	OK
+	Database	Public	Database of the cross-reference	Database cross-referenced by neXtProt	OK
+	DevelopmentalStageInfo	Public	Expression of the gene product according to the cell stage and/or tissue or organism development	Information describing the expression at various stages of a cell, tissue or organism development	OK
+	Disease	Public	Involvement in disease: disease(s) associated with protein defect(s)	Disease associated with genetic variations in the protein isoform	OK
+	DiseaseRelatedVariant	Public		Genetic variation in the protein isoform associated with disease(s)	OK
+	DisulfideBond	Public	Cysteine residues participating in disulfide bonds	Cysteine(s) participating in disulfide bonds	OK
+	DnaBindingRegion	Public	Position and type of a DNA-binding domain	DNA-binding region within the protein isoform	OK
+	Domain	Public	Position and type of each modular protein domain	Region within the protein isoform with a characteristic three-dimensional structure or fold	OK
+	DomainInfo	Public	Relevant information on protein domain(s)	Information describing domain(s)	OK
+	ElectrophysiologicalParameter	Public		Parameter describing electrical phenomena associated with a physiological process	OK
+	Entry	Public	General information of a protein.	Sequence(s) of protein isoform(s) encoded by one or more human genes, and associated information	OK
+	EnzymeClassification	Public	Ontology annotation by enzyme classification	Enzyme Commission (EC) number for the reaction catalyzed by the protein isoform(s)	OK
+	EnzymeClassificationCv	Public	Describes each type of enzyme for which an EC (Enzyme Commission) number has been provided	Enzyme Commission (EC) numerical classification scheme for enzymes, based on the chemical reactions they catalyze	OK
+	Evidence	Public		Information supporting an annotation concerning the protein isoform(s)	OK
+	EvidenceCodeOntologyCv	Public	Ontology to describe information that is used to support an assertion	ECO controlled vocabulary of evidence and assertion methods	OK
+	EvocDevelopmentalStageCv	Private	eVOC ontology of human development stages	eVOC controlled vocabulary of human developmental stages  	OK
+	ExperimentalContext	Public	Experimental variables related to evidences	Experimental context in which the protein isoform(s) was studied	OK
+	ExpressionInfo	Public	Expression annotation to summarize expression levels measured in a series of experiments	Information on the expression of the gene product(s) in cells or in tissues	OK
+	ExpressionProfile	Public	Expression of the gene product in different tissues	Expression of the gene product(s) in a given organ, tissue, cell type, fluid or gestational structure	OK
+	FamilyInfo	Public		Information on the family of proteins to which the protein belongs	OK
+	FunctionInfo	Public	General function(s) of a protein	Information on the function(s) of the protein isoform(s)	OK
+	GOEvidenceCode	Private	GO evidence code		
+	Gene	Public		Genomic DNA that encodes for the protein isoform sequence(s) described in the entry	OK
+	GlycosylationSite	Public	Covalently attached glycan group(s)	Amino acid covalently attached to a glycan group (mono-, di-, or polysaccharide)	OK
+	GoBiologicalProcess	Public	Ontology annotation by go biological process	Involvement of the protein isoform in a larger process, or ‘biological program’	OK
+	GoBiologicalProcessCv	Public	Ontology to describe gene and gene product attributes. This is the part of GO describing biological processes	GO controlled vocabulary of biological processes	OK
+	GoCellularComponent	Public	Ontology annotation by go cellular component	Component of the cell, either cellular compartment or stable macromolecular complex, in which the protein isoform performs its function(s)	OK
+	GoCellularComponentCv	Public	Ontology to describe gene and gene product attributes. This is the part of GO describing cellular components	GO controlled vocabular of cellular components	OK
+	GoMolecularFunction	Public	Ontology annotation by go molecular function	Activity of the protein isoform at the molecular level	OK
+	GoMolecularFunctionCv	Public	Ontology to describe gene and gene product attributes. This is the part of GO describing molecular functions	GO controlled vocabulary of molecular functions	OK
+	Helix	Public	Helical regions within the experimentally determined protein structure	Helical region within the protein isoform structure	OK
+	History	Public	A history of a protein entry	History of the entry	OK
+	Identifier	Public	Identifier type	Identifies a gene, protein or protein isoform	OK
+	Induction	Public	Effects of environmental factors on gene expression	Effect of chemical compounds, environmental factors or transcriptional regulators on the expression of the protein isoform(s)	OK
+	InitiatorMethionine	Public	Cleavage of the initiator methionine	Cleavage of the initiator methionine resulting in the mature protein	OK
+	InteractingRegion	Public	Region interacting with another macromolecule.	Smallest region within the protein isoform experimentally shown to participate in a given binary protein interaction	OK
+	InteractionInfo	Public	Subunit structure: interaction with other protein(s)	Information on the protein quaternary structure and interaction(s) with other proteins or protein complexes	OK
+	InteractionMapping	Public		Region within the protein isoform experimentally shown to participate in a given binary protein interaction	OK
+	IntramembraneRegion	Public		Region within the protein interacting with the membrane lipid bilayer.	OK
+	Isoform	Public	Specific information of a protein isoform.	Protein product generated by alternative splicing, alternative promoter usage, and alternative translation initiation. Protein isoforms have different sequences.	OK
+	IsoformAnnotationSpecificityQualifier	Private	Specificity qualifiers are used to describe the isoform specificity of an annotation		
+	KineticKM	Public		Michaelis constant (KM). This is the substrate concentration at which the reaction rate is half of its maximal value.	OK
+	KineticNote	Public		Note with additional information on the kinetic data for the protein isoform(s)	OK
+	KineticVmax	Public		Maximal velocity (Vmax). Vmax is the reaction rate attained when the enzyme sites are saturated with substrate.	OK
+	LargeScalePublication	Public		Publication relevant to a large number of entries	should specify what is a large number
+	LipidationSite	Public	Lipidation: covalently attached lipid group(s)	Amino acid covalently attached to a lipid group	OK
+	MammalianPhenotype	Public		Abnormal phenotype observed in mammals	OK
+	MammalianPhenotypeCv	Public	Ontology to describe mammalian phenotype.	Controlled vocabulary of mammalian phenotypes	OK
+	MatureProtein	Public	Extent of an active peptide or a polypetide chain in the mature protein	Mature form of the protein isoform. Processing (signal peptide and propeptide cleavage, transit peptide cleavage or initiator methionine cleavage) is required for maturation.	OK
+	MeshAnatomyCv	Public	National Library of Medicine&apos;s controlled vocabulary thesaurus. This is the C (diseases) part	NLM controlled vocabulary of medical subject headings (MeSH), C part (diseases)	If it is diseases (C part) why is it called AnatomyCv? 
+	MeshCv	Public	National Library of Medicine&apos;s controlled vocabulary thesaurus	NLM controlled vocabulary of medical subject headings (MeSH)	OK
+	MetalBindingSite	Public	Binding site for a metal ion	Amino acid directly involved in binding a metal ion	OK
+	Miscellaneous	Public	Any relevant information that doesn&apos;t fit in any other defined sections	Information on the protein isoform(s) that doesn't fall into the scope of any other section	OK
+	MiscellaneousRegion	Public	Region of interest in the sequence	Region of interest within the protein isoform	OK
+	MiscellaneousSite	Public	Interesting single amino acid site on the sequence	Amino acid of interest within the protein isoform	OK
+	MitochondrialTransitPeptide	Public		Transit peptide responsible for the transport of the protein isoform to mitochondria	OK
+	ModifiedResidue	Public	Modified residues	Amino acid modified post-translationally (excluding lipids, glycans and protein cross-links)	OK
+	Mutagenesis	Public	Site which has been experimentally altered by mutagenesis	Amino acid modified experimentally affecting the biological properties of the protein isoform	I prefer the original text as a modification is not always affecting the properties
+	Name	Public		Name	OK
+	NameList	Public		List of names	
+	NciMetathesaurusCv	Public	Ontology to describe information that is used to support an assertion.	NCI Metathesaurus controlled vocabulary	OK
+	NciThesaurusCv	Public	National Cancer Institute&apos;s reference terminology resource for biomedical concepts	NCI Thesaurus controlled vocabulary	OK
+	NegativeExpressionLevel	Public	Class of negative level of expression	Expression level for the entry is not detectable	I would replace "the entry" by "the gene product(s)" + Question for devs: Why do we need a specific class for negative or positive expression? why cannot they be values for expression?
+	NextprotAnatomyCv	Public	neXtProt human anatomical ontology. Developed to allow to navigate through protein and mRNA expression data	neXtProt controlled vocabulary of human anatomy and cell types	OK
+	NextprotAnnotationCv	Private	neXtProt ontology for biosequence annotations. Set of terms and relationships used to describe the annotations of biological sequences		OK
+	NextprotCellosaurusCv	Public	Controlled vocabulary of cell lines	Cellosaurus controlled vocabulary of cell lines	OK
+	NextprotDomainCv	Public	neXtProt controlled vocabulary of domains repeat and zinc fingers in human proteins as derived from UniProtKB/Swiss-Prot	neXtProt controlled vocabulary of human protein domains	Why changing the previous def?
+	NextprotFamilyCv	Public	neXtProt list of human protein families as derived from UniProtKB/Swiss-Prot	neXtProt controlled vocabulary of human protein families	Why changing the previous def?
+	NextprotIcepoCv	Public	Ontology that describes the electrophysiological properties of ion channels.	neXtProt ICEPO controlled vocabulary of ion channel electrophysiology	OK
+	NextprotMetalCv	Public	neXtProt controlled vocabulary of metal bound to human proteins as derived from UniProtKB/Swiss-Prot	neXtProt controlled vocabulary of metal ions bound to human proteins	Why changing the previous def?
+	NextprotModificationEffectCv	Public	Ontology that describes the change resulting from a modification on a protein. Possible modifications include variations and post-translational modifications while changes can be for example a sub-cellular localization a phenotype or a protein property.	neXtProt controlled vocabulary of the effect of a modification on the protein	neXtProt controlled vocabulary describing possible changes induced by a genomic variation or a post-translational modification on a sub-cellular localization, a phenotype, or a protein property
+	NextprotProteinPropertyCv	Public	Ontology that describes biophysical properties of proteins such as stability.	neXtProt controlled vocabulary of the property of the protein affected by a modification	neXtProt controlled vocabulary of biophysical properties of proteins such as stability
+	NextprotTopologyCv	Public	N-terminal signal peptide found in protein isoforms targeted to the endoplasmic reticulum and eventually destined to be either secreted/extracellular/periplasmic/etc., retained in the lumen of the endoplasmic reticulum, of the lysosome or of any other organelle along the secretory pathway or to be I single-pass membrane proteins	neXtProt controlled vocabulary of the topology of transmembrane regions of the protein	I don't understand the text in col. D. Parsing error??, should read "neXtProt controlled vocabulary to describe the topology of regions for transmembrane proteins that span membrane compartments as derived from UniProtKB/Swiss-Prot"  (and I would keep that def)
+	NonConsecutiveResidue	Public	Indicates that two residues in a sequence are not consecutive	Two amino acids which are not consecutive and with a undetermined number of unsequenced residues between them	OK
+	NonStandardAminoAcidCv	Public	Controled vocabulary for non-standard amino acids in protein sequences		
+	NonTerminalResidue	Public	The sequence is incomplete. Indicate that a residue is not the terminal residue of the complete protein	Amino acid which is not the terminal residue of the complete protein sequence. The sequence is incomplete. 	OK
+	NucleotidePhosphateBindingRegion	Public	Nucleotide phosphate binding region	Region binding nucleotide phosphates	OK
+	OmimCv	Public	OMIM is a comprehensive authoritative compendium of human genes and genetic phenotypes	OMIM controlled vocabulary of human genes and genetic phenotypes	OK
+	OrganelleCv	Public	List of organelles in which a mature protein is targeted using a transit peptide	Controlled vocabulary of organelles to which transite peptides transport the protein	to remove from the model?
+	Pathway	Public	Associated metabolic pathways	Series of actions involving the protein isoform and other molecules in a cell that leads to a certain product or a change in the cell	OK
+	PdbMapping	Public	Protein 3D structure	Region of the protein isoform for which there is a 3D structure in PDB	OK
+	PeptideMapping	Public		Peptide detected using mass spectrometry (MS)	OK
+	PeroxisomeTransitPeptide	Public		Transit peptide responsible for the transport of the protein isoform to peroxisomes	OK
+	Person	Public		Person	OK
+	PhDependence	Public		Optimum pH for protein activity, the variation of activity with pH variation and the pH stability of the protein	OK
+	Pharmaceutical	Public	Pharmaceutical use: use of as a pharmaceutical drug	Use of the protein as a pharmaceutical drug	OK
+	PhenotypicVariation	Public		Phenotype observed due to mutation(s) or variant(s) in the protein	define what we call phenotype here
+	PositiveExpressionLevel	Public	Class of positive expression level	Expression level for the entry is detectable	I would replace "the entry" by "the gene product(s)" + Question for devs: Why do we need a specific class for negative or positive expression? why cannot they be values for expression?
+	Propeptide	Public	Part of a protein that is cleaved during maturation or activation	Part of the protein isoform that is cleaved during maturation or activation. A propeptide generally has no independent biological function.	OK
+	ProteinExistence	Public	Protein existence detection method and reliabilty level	Type of evidence that supports the existence of the protein	OK
+	ProteinProperty	Public		Property of the protein isoform affected by a modification, such as variant(s) and PTM(s)	Not always associated to a change... A protein has a property in itself. What about "biophysical property of a protein isoform such as stability".
+	ProteinSequence	Public	Protein sequence object	Amino acid sequence of the protein isoform	OK
+	Proteoform	Public	Description of a protein isoform variation. Variations may include variants and PTMs.	Protein isoform which include modifications, such as variant(s) and PTM(s)	OK
+	PsiMiCv	Public	Data exchange format for molecular interactions proposed by the HUPO Proteomics Standards Initiative	PSI-MI controlled vocabulary of molecular interactions	OK
+	PtmInfo	Public	Post-translational modifications	Information on the post-translational modifications (PTMs) of the protein isoform	OK
+	Publication	Public		Publication in the scientific literature	Not all "publications" are scientific papers, we also have books, thesis etc... What about "publicly available printed or electronic document"
+	QualityQualifier	Public	Quality qualifiers are used to describe the reliability of an annotation or evidence	Qualifier used to describe the quality of an annotation or evidence	i would prefer reliability to quality
+	RedoxPotential	Public		Value of the standard (midpoint) oxido-reduction potential(s) for the electron transport protein	OK
+	Repeat	Public	Positions of repeated sequence motifs or repeated domains	Repeated sequence motifs or domains within the protein isoform	OK
+	Selenocysteine	Public	Occurence of non-standard amino acids (selenocysteine and pyrrolysine) in the protein sequence	Selenocysteine present in the sequence of the protein isoform	OK
+	SequenceCaution	Public	Errors concerning the protein sequence	Difference(s) between the UniProt protein isoform sequence shown and other available protein sequences derived from the same gene	wrong - see amos' comment 
+	SequenceConflict	Public	Sequence discrepancies of unknown origin	Difference between the canonical sequence (displayed by default) and the different sequence submissions merged in the entry by UniProt	wrong - see amos' comment above
+	SequenceOntologyCv	Private	Subset of protein feature ontology.		
+	ShortSequenceMotif	Public	Short (up to 20 amino acids) sequence motif of biological interest	Short sequence motif (up to 20 amino acids) of biological interest in the protein isoform	OK
+	SignalPeptide	Public	Sequence targeting proteins to the secretory pathway or periplasmic space	N-terminal signal peptide found in proteins that are targeted to the endoplasmic reticulum and eventually destined to be either secreted/extracellular/periplasmic/etc., retained in the lumen of the endoplasmic reticulum, of the lysosome or of any other organelle along the secretory pathway or to be I single-pass membrane proteins.	OK
+	SmallMoleculeInteraction	Public		Interaction of the protein isoform with chemical molecule(s)	OK
+	Source	Public	Originator of the data	Original source of the data	OK
+	SrmPeptideMapping	Public		Selected reaction monitoring (SRM) peptide to quantify the protein isoform	OK
+	SubcellularLocation	Public	Subcellular location of the mature protein	Location in the cell of the mature protein isoform	OK
+	SubcellularLocationNote	Public	Subcellular location information of the mature protein	Note with additional information on the location in the cell of the mature protein isoform	OK
+	TemperatureDependence	Public		Optimal temperature for enzyme activity and/or the variation of enzyme activity with temperature variation. The thermostability of the enzyme is mentioned, when known.	OK
+	TopologicalDomain	Public	Location of non-membrane regions of membrane-spanning proteins	Subcellular compartment where each non-membrane region of a membrane-spanning protein isoform is found	Extracellular is not a compartment... I would keep the original def
+	TransmembraneRegion	Public	Extent of a membrane-spanning region	Region of the protein isoform which spans the membrane	
+	TransportActivity	Public		Movement of substances by the protein isoform, usually across a membrane 	I would use "transport of substances" raher than "movement of substances"
+	Turn	Public	Turns within the experimentally determined protein structure	Hydrogen-bonded turn within the protein isoform sequence	OK
+	UnipathwayCv	Public	UniProt controlled vocabulary and hierarchical representation of metabolic pathways	UniProt controlled vocabulary of metabolic pathways	OK
+	UniprotDiseaseCv	Public	UniProt controlled vocabulary of human diseases	UniProt controlled vocabulary of human diseases associated with genetic variations	OK
+	UniprotFamilyCv	Should Delete			
+	UniprotKeyword	Public	Ontology annotation by uniprot keyword	UniProt keyword	UniProt keyword summarising the content of an entry
+	UniprotKeywordCv	Public	UniProt controlled vocabulary of keywords	UniProt controlled vocabulary of keywords	OK
+	UniprotPtmCv	Public	UniProt controlled vocabulary of post-translational modifications		
+	UniprotSubcellularLocationCv	Public	UniProt controlled vocabulary of subcellular locations		
+	UniprotSubcellularOrientationCv	Public	UniProt controlled vocabulary of subcellular orientations (in UniProt this is part of the UniProt subcellular location CV)	Part of UniProt controlled vocabulary of subcellular locations describing subcellular orientations	Part of UniProt controlled vocabulary of subcellular locations describing orientations
+	UniprotSubcellularTopologyCv	Public	UniProt controlled vocabulary of subcellular topologies (in UniProt this is part of the UniProt subcellular location CV)	Part of UniProt controlled vocabulary of subcellular locations describing subcellular topologies	Part of UniProt controlled vocabulary of subcellular locations describing membrane topologies
+	Variant	Public	Natural variant of the protein	Natural variant of the protein isoform sequence	individual genetic variant, linked to a disease or not, on the protein isoform sequence 
+	VariantInfo	Public	Description of polymorphism(s)	Information on polymorphic variant(s) of the protein isoform sequence	OK
+	Xref	Public	Cross reference	Link to an external resource providing additional information	OK
+	ZincFingerRegion	Public	Position(s) and type(s) of zinc fingers within the protein	Zinc fingers region within the protein isoform	OK

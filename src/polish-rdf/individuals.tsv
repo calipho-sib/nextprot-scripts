@@ -1,0 +1,514 @@
+http://nextprot.org/rdf#BRONZE	BRONZE	Bronze	Low level of confidence	schema-entry-isoform.ttl.vm	
+http://nextprot.org/rdf#Evidence_at_protein_level	Evidence_at_protein_level	Evidence at protein level	Protein existence is supported by evidence at protein level	schema-entry-isoform.ttl.vm	
+http://nextprot.org/rdf#Evidence_at_transcript_level	Evidence_at_transcript_level	Evidence at transcript level	Protein existence is supported by evidence at transcript level	schema-entry-isoform.ttl.vm	
+http://nextprot.org/rdf#GOLD	GOLD	Gold	High level of confidence	schema-entry-isoform.ttl.vm	
+http://nextprot.org/rdf#High	High	High expression detected	High level of expression	schema-expression.ttl.vm	
+http://nextprot.org/rdf#Inferred_from_homology	Inferred_from_homology	Inferred from homology	Protein existence is inferred by homology	schema-entry-isoform.ttl.vm	
+http://nextprot.org/rdf#Integrated	Integrated	Integrated	Integrated	schema-evidence-list.ttl.vm	
+http://nextprot.org/rdf#Low	Low	Low expression detected	Low level of expression	schema-expression.ttl.vm	
+http://nextprot.org/rdf#Medium	Medium	Medium expression detected	Medium level of expression	schema-expression.ttl.vm	
+http://nextprot.org/rdf#Negative	Negative	No expression detected	Negative level of expression	schema-expression.ttl.vm	
+http://nextprot.org/rdf#Positive	Positive	Expression detected	Positive level of expression	schema-expression.ttl.vm	
+http://nextprot.org/rdf#Predicted	Predicted	Predicted	Protein existence is supported by some algorithm	schema-entry-isoform.ttl.vm	
+http://nextprot.org/rdf#SILVER	SILVER	Silver	Medium level of confidence	schema-entry-isoform.ttl.vm	
+http://nextprot.org/rdf#Selected	Selected	Selected	Selected	schema-evidence-list.ttl.vm	
+http://nextprot.org/rdf#Single	Single	Single	Single	schema-evidence-list.ttl.vm	
+http://nextprot.org/rdf#Uncertain	Uncertain	Uncertain	Protein existence is uncertain	schema-entry-isoform.ttl.vm	
+http://nextprot.org/rdf/db/2DBase-Ecoli	db/2DBase-Ecoli	2DBase-Ecoli	2D-PAGE Database of Escherichia coli	uniprot|controlled-vocabulary/more-dbxrefs.txt	
+http://nextprot.org/rdf/db/ABCD	db/ABCD	ABCD	ABCD curated depository of sequenced antibodies	uniprot|controlled-vocabulary/more-dbxrefs.txt	
+http://nextprot.org/rdf/db/AGD	db/AGD	AGD	Ashbya genome database	uniprot|controlled-vocabulary/more-dbxrefs.txt	
+http://nextprot.org/rdf/db/ANU-2DPAGE	db/ANU-2DPAGE	ANU-2DPAGE	Australian National University 2-DE database	uniprot|controlled-vocabulary/more-dbxrefs.txt	
+http://nextprot.org/rdf/db/ATCC	db/ATCC	ATCC	ATCC	uniprot|controlled-vocabulary/more-dbxrefs.txt	
+http://nextprot.org/rdf/db/Aarhus_Ghent-2DPAGE	db/Aarhus_Ghent-2DPAGE	Aarhus/Ghent-2DPAGE	Human keratinocyte 2D gel protein database from Aarhus and Ghent universities	uniprot|controlled-vocabulary/more-dbxrefs.txt	
+http://nextprot.org/rdf/db/Affymetrix	db/Affymetrix	Affymetrix	Identifier subtype	uniprot|controlled-vocabulary/more-dbxrefs.txt	
+http://nextprot.org/rdf/db/Allergome	db/Allergome	Allergome	Allergome; a platform for allergen knowledge	uniprot|controlled-vocabulary/more-dbxrefs.txt	
+http://nextprot.org/rdf/db/Antibodypedia	db/Antibodypedia	Antibodypedia	Antibodypedia a portal for validated antibodies	uniprot|controlled-vocabulary/more-dbxrefs.txt	
+http://nextprot.org/rdf/db/AraC-XylS	db/AraC-XylS	AraC-XylS	AraC-XylS; a database on a family of Helix-Turn-Helix transcription factors from bacteria	uniprot|controlled-vocabulary/more-dbxrefs.txt	
+http://nextprot.org/rdf/db/ArachnoServer	db/ArachnoServer	ArachnoServer	ArachnoServer: Spider toxin database	uniprot|controlled-vocabulary/more-dbxrefs.txt	
+http://nextprot.org/rdf/db/Araport	db/Araport	Araport	Arabidopsis Information Portal	uniprot|controlled-vocabulary/more-dbxrefs.txt	
+http://nextprot.org/rdf/db/Array-probeset	db/Array-probeset	Array-probeset	Location and trancripts associated with probe features	uniprot|controlled-vocabulary/more-dbxrefs.txt	
+http://nextprot.org/rdf/db/BCGO	db/BCGO	BCGO	Beta Cell Genomics Ontology	uniprot|controlled-vocabulary/more-dbxrefs.txt	
+http://nextprot.org/rdf/db/BCRC	db/BCRC	BCRC	Taiwan Bioresource Collection and Research Center	uniprot|controlled-vocabulary/more-dbxrefs.txt	
+http://nextprot.org/rdf/db/BCRJ	db/BCRJ	BCRJ	Rio de Janeiro Cell Bank	uniprot|controlled-vocabulary/more-dbxrefs.txt	
+http://nextprot.org/rdf/db/BMRB	db/BMRB	BMRB	Biological Magnetic Resonance Data Bank	uniprot|controlled-vocabulary/more-dbxrefs.txt	
+http://nextprot.org/rdf/db/BRENDA	db/BRENDA	BRENDA	BRENDA Comprehensive Enzyme Information System	uniprot|controlled-vocabulary/more-dbxrefs.txt	
+http://nextprot.org/rdf/db/Bgee	db/Bgee	Bgee	Bgee dataBase for Gene Expression Evolution	uniprot|controlled-vocabulary/more-dbxrefs.txt	
+http://nextprot.org/rdf/db/BindingDB	db/BindingDB	BindingDB	BindingDB database of measured binding affinities	uniprot|controlled-vocabulary/more-dbxrefs.txt	
+http://nextprot.org/rdf/db/BioCyc	db/BioCyc	BioCyc	BioCyc Collection of Pathway/Genome Databases	uniprot|controlled-vocabulary/more-dbxrefs.txt	
+http://nextprot.org/rdf/db/BioGRID	db/BioGRID	BioGRID	The Biological General Repository for Interaction Datasets (BioGRID)	uniprot|controlled-vocabulary/more-dbxrefs.txt	
+http://nextprot.org/rdf/db/BioGRID-ORCS	db/BioGRID-ORCS	BioGRID-ORCS	BioGRID ORCS database of CRISPR phenotype screens	uniprot|controlled-vocabulary/more-dbxrefs.txt	
+http://nextprot.org/rdf/db/BioMuta	db/BioMuta	BioMuta	BioMuta curated single-nucleotide variation and disease association database	uniprot|controlled-vocabulary/more-dbxrefs.txt	
+http://nextprot.org/rdf/db/BioSample	db/BioSample	BioSample	BioSample database	uniprot|controlled-vocabulary/more-dbxrefs.txt	
+http://nextprot.org/rdf/db/BuruList	db/BuruList	BuruList	Mycobacterium ulcerans genome database	uniprot|controlled-vocabulary/more-dbxrefs.txt	
+http://nextprot.org/rdf/db/CATH	db/CATH	CATH	Hierarchical domain classification of protein structures	uniprot|controlled-vocabulary/more-dbxrefs.txt	
+http://nextprot.org/rdf/db/CAZy	db/CAZy	CAZy	Carbohydrate-Active enZymes	uniprot|controlled-vocabulary/more-dbxrefs.txt	
+http://nextprot.org/rdf/db/CBA	db/CBA	CBA	Japanese Collection of Research Bioresources	uniprot|controlled-vocabulary/more-dbxrefs.txt	
+http://nextprot.org/rdf/db/CCDS	db/CCDS	CCDS	The Consensus CDS (CCDS) project	uniprot|controlled-vocabulary/more-dbxrefs.txt	
+http://nextprot.org/rdf/db/CCLE	db/CCLE	CCLE	Cancer Cell Line Encyclopedia	uniprot|controlled-vocabulary/more-dbxrefs.txt	
+http://nextprot.org/rdf/db/CCLV	db/CCLV	CCLV	Collection of Cell Lines in Veterinary Medicine	uniprot|controlled-vocabulary/more-dbxrefs.txt	
+http://nextprot.org/rdf/db/CCRID	db/CCRID	CCRID	Cell resource platform	uniprot|controlled-vocabulary/more-dbxrefs.txt	
+http://nextprot.org/rdf/db/CDD	db/CDD	CDD	Conserved Domains Database	uniprot|controlled-vocabulary/more-dbxrefs.txt	
+http://nextprot.org/rdf/db/CGD	db/CGD	CGD	Candida Genome Database	uniprot|controlled-vocabulary/more-dbxrefs.txt	
+http://nextprot.org/rdf/db/CGH-DB	db/CGH-DB	CGH-DB	CGH Data Base	uniprot|controlled-vocabulary/more-dbxrefs.txt	
+http://nextprot.org/rdf/db/CL	db/CL	CL	Cell Ontology	uniprot|controlled-vocabulary/more-dbxrefs.txt	
+http://nextprot.org/rdf/db/CLAE	db/CLAE	CLAE	CLAE, a database of fungal genes encoding lignocellulose-active proteins	uniprot|controlled-vocabulary/more-dbxrefs.txt	
+http://nextprot.org/rdf/db/CLDB	db/CLDB	CLDB	Cell Line Data Base of the Interlab Project.	uniprot|controlled-vocabulary/more-dbxrefs.txt	
+http://nextprot.org/rdf/db/CLO	db/CLO	CLO	Community-based Cell Line Ontology	uniprot|controlled-vocabulary/more-dbxrefs.txt	
+http://nextprot.org/rdf/db/CLS	db/CLS	CLS	Cell Lines Service	uniprot|controlled-vocabulary/more-dbxrefs.txt	
+http://nextprot.org/rdf/db/CMR	db/CMR	CMR	Comprehensive Microbial Resource	uniprot|controlled-vocabulary/more-dbxrefs.txt	
+http://nextprot.org/rdf/db/COMPLUYEAST-2DPAGE	db/COMPLUYEAST-2DPAGE	COMPLUYEAST-2DPAGE	2-DE database at Universidad Complutense de Madrid	uniprot|controlled-vocabulary/more-dbxrefs.txt	
+http://nextprot.org/rdf/db/CORUM	db/CORUM	CORUM	CORUM comprehensive resource of mammalian protein complexes	uniprot|controlled-vocabulary/more-dbxrefs.txt	
+http://nextprot.org/rdf/db/CPTAC	db/CPTAC	CPTAC	The CPTAC Assay portal	uniprot|controlled-vocabulary/more-dbxrefs.txt	
+http://nextprot.org/rdf/db/CPTC	db/CPTC	CPTC	The CPTC Antibody Portal	uniprot|controlled-vocabulary/more-dbxrefs.txt	
+http://nextprot.org/rdf/db/CTD	db/CTD	CTD	Comparative Toxicogenomics Database	uniprot|controlled-vocabulary/more-dbxrefs.txt	
+http://nextprot.org/rdf/db/CYGD	db/CYGD	CYGD	Comprehensive Yeast Genome Database	uniprot|controlled-vocabulary/more-dbxrefs.txt	
+http://nextprot.org/rdf/db/CarbonylDB	db/CarbonylDB	CarbonylDB	CarbonylDB database of protein carbonylation sites	uniprot|controlled-vocabulary/more-dbxrefs.txt	
+http://nextprot.org/rdf/db/Cellosaurus	db/Cellosaurus	Cellosaurus	Cellosaurus	uniprot|controlled-vocabulary/more-dbxrefs.txt	
+http://nextprot.org/rdf/db/ChEBI	db/ChEBI	ChEBI	Chemical Entities of Biological Interest	uniprot|controlled-vocabulary/more-dbxrefs.txt	
+http://nextprot.org/rdf/db/ChEMBL	db/ChEMBL	ChEMBL	ChEMBL database of bioactive drug-like small molecules	uniprot|controlled-vocabulary/more-dbxrefs.txt	
+http://nextprot.org/rdf/db/ChEMBL-Cells	db/ChEMBL-Cells	ChEMBL-Cells	ChEMBL database of bioactive drug-like small molecules - Cell lines section	uniprot|controlled-vocabulary/more-dbxrefs.txt	
+http://nextprot.org/rdf/db/ChEMBL-Targets	db/ChEMBL-Targets	ChEMBL-Targets	ChEMBL database of bioactive drug-like small molecules - Targets section	uniprot|controlled-vocabulary/more-dbxrefs.txt	
+http://nextprot.org/rdf/db/ChiTaRS	db/ChiTaRS	ChiTaRS	ChiTaRS: a database of human, mouse and fruit fly chimeric transcripts and RNA-sequencing data	uniprot|controlled-vocabulary/more-dbxrefs.txt	
+http://nextprot.org/rdf/db/CleanEx	db/CleanEx	CleanEx	CleanEx database of gene expression profiles	uniprot|controlled-vocabulary/more-dbxrefs.txt	
+http://nextprot.org/rdf/db/Clinvar	db/Clinvar	Clinvar	Clinvar	uniprot|controlled-vocabulary/more-dbxrefs.txt	
+http://nextprot.org/rdf/db/CollecTF	db/CollecTF	CollecTF	CollecTF database of bacterial transcription factor binding sites	uniprot|controlled-vocabulary/more-dbxrefs.txt	
+http://nextprot.org/rdf/db/ComplexPortal	db/ComplexPortal	ComplexPortal	ComplexPortal: manually curated resource of macromolecular complexes	uniprot|controlled-vocabulary/more-dbxrefs.txt	
+http://nextprot.org/rdf/db/ConoServer	db/ConoServer	ConoServer	ConoServer: Cone snail toxin database	uniprot|controlled-vocabulary/more-dbxrefs.txt	
+http://nextprot.org/rdf/db/Coriell	db/Coriell	Coriell	Coriell Cell Repositories	uniprot|controlled-vocabulary/more-dbxrefs.txt	
+http://nextprot.org/rdf/db/Cornea-2DPAGE	db/Cornea-2DPAGE	Cornea-2DPAGE	Human Cornea 2-DE database	uniprot|controlled-vocabulary/more-dbxrefs.txt	
+http://nextprot.org/rdf/db/Cosmic	db/Cosmic	Cosmic	Sanger institute	uniprot|controlled-vocabulary/more-dbxrefs.txt	
+http://nextprot.org/rdf/db/Cosmic-CLP	db/Cosmic-CLP	Cosmic-CLP	COSMIC Cell lines Project	uniprot|controlled-vocabulary/more-dbxrefs.txt	
+http://nextprot.org/rdf/db/DDBJ	db/DDBJ	DDBJ	DNA Data Bank of Japan; a nucleotide sequence database	uniprot|controlled-vocabulary/more-dbxrefs.txt	
+http://nextprot.org/rdf/db/DECIPHER	db/DECIPHER	DECIPHER	DECIPHER - Mapping the clinical genome	uniprot|controlled-vocabulary/more-dbxrefs.txt	
+http://nextprot.org/rdf/db/DEPOD	db/DEPOD	DEPOD	DEPOD human dephosphorylation database	uniprot|controlled-vocabulary/more-dbxrefs.txt	
+http://nextprot.org/rdf/db/DGRC	db/DGRC	DGRC	Drosophila Genomics Resource Center	uniprot|controlled-vocabulary/more-dbxrefs.txt	
+http://nextprot.org/rdf/db/DIP	db/DIP	DIP	Database of interacting proteins	uniprot|controlled-vocabulary/more-dbxrefs.txt	
+http://nextprot.org/rdf/db/DKFZ	db/DKFZ	DKFZ	Identifier subtype	uniprot|controlled-vocabulary/more-dbxrefs.txt	
+http://nextprot.org/rdf/db/DMDM	db/DMDM	DMDM	Domain mapping of disease mutations (DMDM)	uniprot|controlled-vocabulary/more-dbxrefs.txt	
+http://nextprot.org/rdf/db/DNASU	db/DNASU	DNASU	The DNASU plasmid repository	uniprot|controlled-vocabulary/more-dbxrefs.txt	
+http://nextprot.org/rdf/db/DOI	db/DOI	DOI	DOI resolving site	uniprot|controlled-vocabulary/more-dbxrefs.txt	
+http://nextprot.org/rdf/db/DOSAC-COBS-2DPAGE	db/DOSAC-COBS-2DPAGE	DOSAC-COBS-2DPAGE	DOSAC-COBS 2D-PAGE database	uniprot|controlled-vocabulary/more-dbxrefs.txt	
+http://nextprot.org/rdf/db/DSMZ	db/DSMZ	DSMZ	DSMZ-German collection of microorganisms and cell culture	uniprot|controlled-vocabulary/more-dbxrefs.txt	
+http://nextprot.org/rdf/db/DYP	db/DYP	DYP	The Kahn Dynamic Proteomics project	uniprot|controlled-vocabulary/more-dbxrefs.txt	
+http://nextprot.org/rdf/db/Dharmacon	db/Dharmacon	Dharmacon	Dharmacon RNAi oligos	uniprot|controlled-vocabulary/more-dbxrefs.txt	
+http://nextprot.org/rdf/db/DisGeNET	db/DisGeNET	DisGeNET	DisGeNET	uniprot|controlled-vocabulary/more-dbxrefs.txt	
+http://nextprot.org/rdf/db/DisProt	db/DisProt	DisProt	Database of protein disorder	uniprot|controlled-vocabulary/more-dbxrefs.txt	
+http://nextprot.org/rdf/db/DrugBank	db/DrugBank	DrugBank	Drug and drug target database	uniprot|controlled-vocabulary/more-dbxrefs.txt	
+http://nextprot.org/rdf/db/DrugCentral	db/DrugCentral	DrugCentral	DrugCentral	uniprot|controlled-vocabulary/more-dbxrefs.txt	
+http://nextprot.org/rdf/db/EBiSC	db/EBiSC	EBiSC	European Bank for induced pluripotent Stem Cells	uniprot|controlled-vocabulary/more-dbxrefs.txt	
+http://nextprot.org/rdf/db/ECACC	db/ECACC	ECACC	European Collection of Cell Cultures (ECACC)	uniprot|controlled-vocabulary/more-dbxrefs.txt	
+http://nextprot.org/rdf/db/ECO	db/ECO	ECO	Evidences code ontology	uniprot|controlled-vocabulary/more-dbxrefs.txt	
+http://nextprot.org/rdf/db/ECO2DBASE	db/ECO2DBASE	ECO2DBASE	Escherichia coli gene-protein database; a 2-DE gel database	uniprot|controlled-vocabulary/more-dbxrefs.txt	
+http://nextprot.org/rdf/db/EFO	db/EFO	EFO	Experimental Factor Ontology	uniprot|controlled-vocabulary/more-dbxrefs.txt	
+http://nextprot.org/rdf/db/ELM	db/ELM	ELM	The Eukaryotic Linear Motif resource for Functional Sites in Proteins	uniprot|controlled-vocabulary/more-dbxrefs.txt	
+http://nextprot.org/rdf/db/EMBL	db/EMBL	EMBL	EMBL nucleotide sequence database	uniprot|controlled-vocabulary/more-dbxrefs.txt	
+http://nextprot.org/rdf/db/EMBL-CDS	db/EMBL-CDS	EMBL-CDS	EMBL coding sequence (CDS) database	uniprot|controlled-vocabulary/more-dbxrefs.txt	
+http://nextprot.org/rdf/db/ENCODE	db/ENCODE	ENCODE	Encyclopedia of DNA Elements	uniprot|controlled-vocabulary/more-dbxrefs.txt	
+http://nextprot.org/rdf/db/ENZYME	db/ENZYME	ENZYME	Enzyme nomenclature database	uniprot|controlled-vocabulary/more-dbxrefs.txt	
+http://nextprot.org/rdf/db/EPD	db/EPD	EPD	Encyclopedia of Proteome Dynamics	uniprot|controlled-vocabulary/more-dbxrefs.txt	
+http://nextprot.org/rdf/db/EPODOC	db/EPODOC	EPODOC	Europeen patent office database	uniprot|controlled-vocabulary/more-dbxrefs.txt	
+http://nextprot.org/rdf/db/ESTDAB	db/ESTDAB	ESTDAB	European Searchable Tumour Line Database	uniprot|controlled-vocabulary/more-dbxrefs.txt	
+http://nextprot.org/rdf/db/ESTHER	db/ESTHER	ESTHER	ESTHER database of the Alpha/Beta-hydrolase fold superfamily of proteins	uniprot|controlled-vocabulary/more-dbxrefs.txt	
+http://nextprot.org/rdf/db/EchoBASE	db/EchoBASE	EchoBASE	EchoBASE - an integrated post-genomic database for E. coli	uniprot|controlled-vocabulary/more-dbxrefs.txt	
+http://nextprot.org/rdf/db/EcoGene	db/EcoGene	EcoGene	Escherichia coli strain K12 genome database	uniprot|controlled-vocabulary/more-dbxrefs.txt	
+http://nextprot.org/rdf/db/Ensembl	db/Ensembl	Ensembl	Ensembl eukaryotic genome annotation project	uniprot|controlled-vocabulary/more-dbxrefs.txt	
+http://nextprot.org/rdf/db/EnsemblBacteria	db/EnsemblBacteria	EnsemblBacteria	Ensembl bacterial and archaeal genome annotation project	uniprot|controlled-vocabulary/more-dbxrefs.txt	
+http://nextprot.org/rdf/db/EnsemblFungi	db/EnsemblFungi	EnsemblFungi	Ensembl fungal genome annotation project	uniprot|controlled-vocabulary/more-dbxrefs.txt	
+http://nextprot.org/rdf/db/EnsemblMetazoa	db/EnsemblMetazoa	EnsemblMetazoa	Ensembl metazoan genome annotation project	uniprot|controlled-vocabulary/more-dbxrefs.txt	
+http://nextprot.org/rdf/db/EnsemblPlants	db/EnsemblPlants	EnsemblPlants	Ensembl plant genome annotation project	uniprot|controlled-vocabulary/more-dbxrefs.txt	
+http://nextprot.org/rdf/db/EnsemblProtists	db/EnsemblProtists	EnsemblProtists	Ensembl protists genome annotation project	uniprot|controlled-vocabulary/more-dbxrefs.txt	
+http://nextprot.org/rdf/db/EvolutionaryTrace	db/EvolutionaryTrace	EvolutionaryTrace	Relative evolutionary importance of amino acids within a protein sequence	uniprot|controlled-vocabulary/more-dbxrefs.txt	
+http://nextprot.org/rdf/db/ExpressionAtlas	db/ExpressionAtlas	ExpressionAtlas	ExpressionAtlas, Differential and Baseline Expression	uniprot|controlled-vocabulary/more-dbxrefs.txt	
+http://nextprot.org/rdf/db/FLJ	db/FLJ	FLJ	Identifier subtype	uniprot|controlled-vocabulary/more-dbxrefs.txt	
+http://nextprot.org/rdf/db/FMA	db/FMA	FMA	Foundational Model of Anatomy	uniprot|controlled-vocabulary/more-dbxrefs.txt	
+http://nextprot.org/rdf/db/FlyBase	db/FlyBase	FlyBase	Drosophila genome database	uniprot|controlled-vocabulary/more-dbxrefs.txt	
+http://nextprot.org/rdf/db/GAD	db/GAD	GAD	Genetic Association Database	uniprot|controlled-vocabulary/more-dbxrefs.txt	
+http://nextprot.org/rdf/db/GDSC	db/GDSC	GDSC	Genomics of Drug Sensitivity in Cancer Project	uniprot|controlled-vocabulary/more-dbxrefs.txt	
+http://nextprot.org/rdf/db/GEO	db/GEO	GEO	Gene Expression Omnibus	uniprot|controlled-vocabulary/more-dbxrefs.txt	
+http://nextprot.org/rdf/db/GFP-cDNA	db/GFP-cDNA	GFP-cDNA	EMBL/DKFZ GFP-cDNA Localisation Project	uniprot|controlled-vocabulary/more-dbxrefs.txt	
+http://nextprot.org/rdf/db/GO	db/GO	GO	Gene Ontology	uniprot|controlled-vocabulary/more-dbxrefs.txt	
+http://nextprot.org/rdf/db/GOA	db/GOA	GOA	Gene Ontologie Annotation	uniprot|controlled-vocabulary/more-dbxrefs.txt	
+http://nextprot.org/rdf/db/GO_REF	db/GO_REF	GO_REF	Gene Ontologie References	uniprot|controlled-vocabulary/more-dbxrefs.txt	
+http://nextprot.org/rdf/db/GPCRDB	db/GPCRDB	GPCRDB	Information system for G protein-coupled receptors (GPCRs)	uniprot|controlled-vocabulary/more-dbxrefs.txt	
+http://nextprot.org/rdf/db/GenAtlas	db/GenAtlas	GenAtlas	GenAtlas: human gene database	uniprot|controlled-vocabulary/more-dbxrefs.txt	
+http://nextprot.org/rdf/db/GenBank	db/GenBank	GenBank	GenBank nucleotide sequence database	uniprot|controlled-vocabulary/more-dbxrefs.txt	
+http://nextprot.org/rdf/db/Gene3D	db/Gene3D	Gene3D	Gene3D Structural and Functional Annotation of Protein Families	uniprot|controlled-vocabulary/more-dbxrefs.txt	
+http://nextprot.org/rdf/db/GeneCards	db/GeneCards	GeneCards	GeneCards: human genes, protein and diseases	uniprot|controlled-vocabulary/more-dbxrefs.txt	
+http://nextprot.org/rdf/db/GeneDB	db/GeneDB	GeneDB	GeneDB pathogen genome database from Sanger Institute	uniprot|controlled-vocabulary/more-dbxrefs.txt	
+http://nextprot.org/rdf/db/GeneFarm	db/GeneFarm	GeneFarm	Structural and functional annotation of Arabidopsis thaliana gene and protein families	uniprot|controlled-vocabulary/more-dbxrefs.txt	
+http://nextprot.org/rdf/db/GeneID	db/GeneID	GeneID	Database of genes from NCBI RefSeq genomes	uniprot|controlled-vocabulary/more-dbxrefs.txt	
+http://nextprot.org/rdf/db/GeneReviews	db/GeneReviews	GeneReviews	GeneReviews a resource of expert-authored, peer-reviewed disease descriptions.	uniprot|controlled-vocabulary/more-dbxrefs.txt	
+http://nextprot.org/rdf/db/GeneRif	db/GeneRif	GeneRif	Gene	uniprot|controlled-vocabulary/more-dbxrefs.txt	
+http://nextprot.org/rdf/db/GeneTree	db/GeneTree	GeneTree	Ensembl GeneTree	uniprot|controlled-vocabulary/more-dbxrefs.txt	
+http://nextprot.org/rdf/db/GeneWiki	db/GeneWiki	GeneWiki	The Gene Wiki collection of pages on human genes and proteins	uniprot|controlled-vocabulary/more-dbxrefs.txt	
+http://nextprot.org/rdf/db/Genevestigator	db/Genevestigator	Genevestigator	Genevestigator	uniprot|controlled-vocabulary/more-dbxrefs.txt	
+http://nextprot.org/rdf/db/Genevisible	db/Genevisible	Genevisible	Genevisible search portal to normalized and curated expression data from Genevestigator	uniprot|controlled-vocabulary/more-dbxrefs.txt	
+http://nextprot.org/rdf/db/GenoList	db/GenoList	GenoList	GenoList Integrated Environment for the Analysis of Microbial Genomes	uniprot|controlled-vocabulary/more-dbxrefs.txt	
+http://nextprot.org/rdf/db/GenomeRNAi	db/GenomeRNAi	GenomeRNAi	Database of phenotypes from RNA interference screens in Drosophila and Homo sapiens	uniprot|controlled-vocabulary/more-dbxrefs.txt	
+http://nextprot.org/rdf/db/GenomeReviews	db/GenomeReviews	GenomeReviews	Genome Reviews; an annotated view of completely sequenced genomes	uniprot|controlled-vocabulary/more-dbxrefs.txt	
+http://nextprot.org/rdf/db/GermOnline	db/GermOnline	GermOnline	GermOnline - a gateway for gametogenesis	uniprot|controlled-vocabulary/more-dbxrefs.txt	
+http://nextprot.org/rdf/db/GlyConnect	db/GlyConnect	GlyConnect	GlyConnect protein glycosylation platform	uniprot|controlled-vocabulary/more-dbxrefs.txt	
+http://nextprot.org/rdf/db/GlyGen	db/GlyGen	GlyGen	GlyGen: Computational and Informatics Resources for Glycoscience	uniprot|controlled-vocabulary/more-dbxrefs.txt	
+http://nextprot.org/rdf/db/Gramene	db/Gramene	Gramene	Gramene; a comparative resource for plants	uniprot|controlled-vocabulary/more-dbxrefs.txt	
+http://nextprot.org/rdf/db/GuidetoPHARMACOLOGY	db/GuidetoPHARMACOLOGY	GuidetoPHARMACOLOGY	IUPHAR/BPS Guide to PHARMACOLOGY	uniprot|controlled-vocabulary/more-dbxrefs.txt	
+http://nextprot.org/rdf/db/H-InvDB	db/H-InvDB	H-InvDB	H-Invitational Database, human transcriptome db	uniprot|controlled-vocabulary/more-dbxrefs.txt	
+http://nextprot.org/rdf/db/HAMAP	db/HAMAP	HAMAP	HAMAP database of protein families	uniprot|controlled-vocabulary/more-dbxrefs.txt	
+http://nextprot.org/rdf/db/HAMAP-Rule	db/HAMAP-Rule	HAMAP-Rule	High-quality Automated and Manual Annotation of Proteins	uniprot|controlled-vocabulary/more-dbxrefs.txt	
+http://nextprot.org/rdf/db/HGNC	db/HGNC	HGNC	Human Gene Nomenclature Database	uniprot|controlled-vocabulary/more-dbxrefs.txt	
+http://nextprot.org/rdf/db/HOGENOM	db/HOGENOM	HOGENOM	The HOGENOM Database of Homologous Genes from Fully Sequenced Organisms	uniprot|controlled-vocabulary/more-dbxrefs.txt	
+http://nextprot.org/rdf/db/HOVERGEN	db/HOVERGEN	HOVERGEN	The HOVERGEN Database of Homologous Vertebrate Genes	uniprot|controlled-vocabulary/more-dbxrefs.txt	
+http://nextprot.org/rdf/db/HPA	db/HPA	HPA	Human Protein Atlas	uniprot|controlled-vocabulary/more-dbxrefs.txt	
+http://nextprot.org/rdf/db/HPRD	db/HPRD	HPRD	Human Proteins Reference Database	uniprot|controlled-vocabulary/more-dbxrefs.txt	
+http://nextprot.org/rdf/db/HSSP	db/HSSP	HSSP	Homology-derived secondary structure of proteins database	uniprot|controlled-vocabulary/more-dbxrefs.txt	
+http://nextprot.org/rdf/db/HUGE	db/HUGE	HUGE	Human Unidentified Gene-Encoded large proteins database	uniprot|controlled-vocabulary/more-dbxrefs.txt	
+http://nextprot.org/rdf/db/HipSci	db/HipSci	HipSci	Human Induced Pluripotent Stem Cells Initiative	uniprot|controlled-vocabulary/more-dbxrefs.txt	
+http://nextprot.org/rdf/db/ICLC	db/ICLC	ICLC	Banca Biologica e Cell Factory	uniprot|controlled-vocabulary/more-dbxrefs.txt	
+http://nextprot.org/rdf/db/IDEAL	db/IDEAL	IDEAL	Intrinsically Disordered proteins with Extensive Annotations and Literature	uniprot|controlled-vocabulary/more-dbxrefs.txt	
+http://nextprot.org/rdf/db/IFO	db/IFO	IFO	Health Science Research Resources Bank	uniprot|controlled-vocabulary/more-dbxrefs.txt	
+http://nextprot.org/rdf/db/IGRhCellID	db/IGRhCellID	IGRhCellID	Integrated Genomic Resources of Human Cell lines for Identification	uniprot|controlled-vocabulary/more-dbxrefs.txt	
+http://nextprot.org/rdf/db/IGSR	db/IGSR	IGSR	International Genome Sample Resource	uniprot|controlled-vocabulary/more-dbxrefs.txt	
+http://nextprot.org/rdf/db/IHW	db/IHW	IHW	International Histocompatibility Workshop cell lines	uniprot|controlled-vocabulary/more-dbxrefs.txt	
+http://nextprot.org/rdf/db/IMAGE	db/IMAGE	IMAGE	Identifier subtype	uniprot|controlled-vocabulary/more-dbxrefs.txt	
+http://nextprot.org/rdf/db/IMGT_GENE-DB	db/IMGT_GENE-DB	IMGT_GENE-DB	The international ImMunoGeneTics information system	uniprot|controlled-vocabulary/more-dbxrefs.txt	
+http://nextprot.org/rdf/db/IMGT_HLA	db/IMGT_HLA	IMGT/HLA	IMGT/HLA	uniprot|controlled-vocabulary/more-dbxrefs.txt	
+http://nextprot.org/rdf/db/IPI	db/IPI	IPI	International Protein Index	uniprot|controlled-vocabulary/more-dbxrefs.txt	
+http://nextprot.org/rdf/db/ISBN	db/ISBN	ISBN	ISBN	uniprot|controlled-vocabulary/more-dbxrefs.txt	
+http://nextprot.org/rdf/db/ISCR	db/ISCR	ISCR	International Stem Cell Registry	uniprot|controlled-vocabulary/more-dbxrefs.txt	
+http://nextprot.org/rdf/db/IZSLER	db/IZSLER	IZSLER	Istituti Zooprofilattici Sperimentali della Lombardia e dell&apos;Emilia	uniprot|controlled-vocabulary/more-dbxrefs.txt	
+http://nextprot.org/rdf/db/Illumina	db/Illumina	Illumina	Identifier subtype	uniprot|controlled-vocabulary/more-dbxrefs.txt	
+http://nextprot.org/rdf/db/InParanoid	db/InParanoid	InParanoid	InParanoid: Eukaryotic Ortholog Groups	uniprot|controlled-vocabulary/more-dbxrefs.txt	
+http://nextprot.org/rdf/db/IntAct	db/IntAct	IntAct	Protein interaction database and analysis system	uniprot|controlled-vocabulary/more-dbxrefs.txt	
+http://nextprot.org/rdf/db/InterPro	db/InterPro	InterPro	Integrated resource of protein families, domains and functional sites	uniprot|controlled-vocabulary/more-dbxrefs.txt	
+http://nextprot.org/rdf/db/JCRB	db/JCRB	JCRB	Japanese Collection of Research Bioresources Cell Bank	uniprot|controlled-vocabulary/more-dbxrefs.txt	
+http://nextprot.org/rdf/db/KCB	db/KCB	KCB	Kunming Cell Bank of Type Culture Collection	uniprot|controlled-vocabulary/more-dbxrefs.txt	
+http://nextprot.org/rdf/db/KCLB	db/KCLB	KCLB	Korean Cell Line Bank	uniprot|controlled-vocabulary/more-dbxrefs.txt	
+http://nextprot.org/rdf/db/KEGG	db/KEGG	KEGG	KEGG: Kyoto Encyclopedia of Genes and Genomes	uniprot|controlled-vocabulary/more-dbxrefs.txt	
+http://nextprot.org/rdf/db/KEGGPathway	db/KEGGPathway	KEGGPathway	KEGG Pathway is a collection of manually drawn pathway maps	uniprot|controlled-vocabulary/more-dbxrefs.txt	
+http://nextprot.org/rdf/db/KIAA	db/KIAA	KIAA	Identifier subtype	uniprot|controlled-vocabulary/more-dbxrefs.txt	
+http://nextprot.org/rdf/db/KO	db/KO	KO	KEGG Orthology (KO)	uniprot|controlled-vocabulary/more-dbxrefs.txt	
+http://nextprot.org/rdf/db/LINCS	db/LINCS	LINCS	Library of Integrated Network-based Cellular Signatures	uniprot|controlled-vocabulary/more-dbxrefs.txt	
+http://nextprot.org/rdf/db/LOC	db/LOC	LOC	Entrez Gene symbol	uniprot|controlled-vocabulary/more-dbxrefs.txt	
+http://nextprot.org/rdf/db/LegioList	db/LegioList	LegioList	Legionella pneumophila genome database	uniprot|controlled-vocabulary/more-dbxrefs.txt	
+http://nextprot.org/rdf/db/Leproma	db/Leproma	Leproma	Mycobacterium leprae genome database	uniprot|controlled-vocabulary/more-dbxrefs.txt	
+http://nextprot.org/rdf/db/ListiList	db/ListiList	ListiList	Listeria innocua and Listeria monocytogenes genomes database	uniprot|controlled-vocabulary/more-dbxrefs.txt	
+http://nextprot.org/rdf/db/Lonza	db/Lonza	Lonza	Lonza Cell and Transfection Database	uniprot|controlled-vocabulary/more-dbxrefs.txt	
+http://nextprot.org/rdf/db/MCCL	db/MCCL	MCCL	Molecular connections cell line ontology	uniprot|controlled-vocabulary/more-dbxrefs.txt	
+http://nextprot.org/rdf/db/MEDLINE	db/MEDLINE	MEDLINE	MEDLINE	uniprot|controlled-vocabulary/more-dbxrefs.txt	
+http://nextprot.org/rdf/db/MEROPS	db/MEROPS	MEROPS	MEROPS protease database	uniprot|controlled-vocabulary/more-dbxrefs.txt	
+http://nextprot.org/rdf/db/MGC	db/MGC	MGC	Identifier subtype	uniprot|controlled-vocabulary/more-dbxrefs.txt	
+http://nextprot.org/rdf/db/MGI	db/MGI	MGI	Mouse genome database (MGD) from Mouse Genome Informatics (MGI)	uniprot|controlled-vocabulary/more-dbxrefs.txt	
+http://nextprot.org/rdf/db/MIM	db/MIM	MIM	Online Mendelian Inheritance in Man (OMIM)	uniprot|controlled-vocabulary/more-dbxrefs.txt	
+http://nextprot.org/rdf/db/MINT	db/MINT	MINT	Molecular INTeraction database	uniprot|controlled-vocabulary/more-dbxrefs.txt	
+http://nextprot.org/rdf/db/MaizeGDB	db/MaizeGDB	MaizeGDB	Maize Genetics and Genomics Database	uniprot|controlled-vocabulary/more-dbxrefs.txt	
+http://nextprot.org/rdf/db/MalaCards	db/MalaCards	MalaCards	MalaCards human disease database	uniprot|controlled-vocabulary/more-dbxrefs.txt	
+http://nextprot.org/rdf/db/Mammalian_Phenotype	db/Mammalian_Phenotype	Mammalian_Phenotype	Mammalian Phenotype Vocabulary	uniprot|controlled-vocabulary/more-dbxrefs.txt	
+http://nextprot.org/rdf/db/MassIVE	db/MassIVE	MassIVE	MassIVE - Mass Spectrometry Interactive Virtual Environment	uniprot|controlled-vocabulary/more-dbxrefs.txt	
+http://nextprot.org/rdf/db/MaxQB	db/MaxQB	MaxQB	MaxQB - The MaxQuant DataBase	uniprot|controlled-vocabulary/more-dbxrefs.txt	
+http://nextprot.org/rdf/db/MeSH	db/MeSH	MeSH	MeSH	uniprot|controlled-vocabulary/more-dbxrefs.txt	
+http://nextprot.org/rdf/db/MedGen	db/MedGen	MedGen	Information related to human medical genetics	uniprot|controlled-vocabulary/more-dbxrefs.txt	
+http://nextprot.org/rdf/db/MetOSite	db/MetOSite	MetOSite	MetOSite database of methionine sulfoxide sites	uniprot|controlled-vocabulary/more-dbxrefs.txt	
+http://nextprot.org/rdf/db/MetaCyc	db/MetaCyc	MetaCyc	MetaCyc Metabolic Pathway Database	uniprot|controlled-vocabulary/more-dbxrefs.txt	
+http://nextprot.org/rdf/db/Micado	db/Micado	Micado	Microbial advanced database	uniprot|controlled-vocabulary/more-dbxrefs.txt	
+http://nextprot.org/rdf/db/Millipore	db/Millipore	Millipore	Merck Millipore (EMD Millipore)	uniprot|controlled-vocabulary/more-dbxrefs.txt	
+http://nextprot.org/rdf/db/MobiDB	db/MobiDB	MobiDB	MobiDB: a database of protein disorder and mobility annotations	uniprot|controlled-vocabulary/more-dbxrefs.txt	
+http://nextprot.org/rdf/db/ModBase	db/ModBase	ModBase	Database of comparative protein structure models	uniprot|controlled-vocabulary/more-dbxrefs.txt	
+http://nextprot.org/rdf/db/MoonDB	db/MoonDB	MoonDB	MoonDB Database of extreme multifunctional and moonlighting proteins	uniprot|controlled-vocabulary/more-dbxrefs.txt	
+http://nextprot.org/rdf/db/MoonProt	db/MoonProt	MoonProt	MoonProt database of moonlighting proteins	uniprot|controlled-vocabulary/more-dbxrefs.txt	
+http://nextprot.org/rdf/db/MypuList	db/MypuList	MypuList	Mycoplasma pulmonis genome database	uniprot|controlled-vocabulary/more-dbxrefs.txt	
+http://nextprot.org/rdf/db/NCBI_Iran	db/NCBI_Iran	NCBI_Iran	National Cell Bank of Iran	uniprot|controlled-vocabulary/more-dbxrefs.txt	
+http://nextprot.org/rdf/db/NCBI_Taxonomy	db/NCBI_Taxonomy	NCBI_Taxonomy	NCBI taxonomy database	uniprot|controlled-vocabulary/more-dbxrefs.txt	
+http://nextprot.org/rdf/db/NCI	db/NCI	NCI	NCI thesaurus	uniprot|controlled-vocabulary/more-dbxrefs.txt	
+http://nextprot.org/rdf/db/NCImetathesaurus	db/NCImetathesaurus	NCImetathesaurus	National Cancer Institute Meta thesaurus	uniprot|controlled-vocabulary/more-dbxrefs.txt	
+http://nextprot.org/rdf/db/NHCDR	db/NHCDR	NHCDR	NINDS Human Cell and Data Repository	uniprot|controlled-vocabulary/more-dbxrefs.txt	
+http://nextprot.org/rdf/db/NIAGADS	db/NIAGADS	NIAGADS	NIAGADS Genomics Database	uniprot|controlled-vocabulary/more-dbxrefs.txt	
+http://nextprot.org/rdf/db/NIH-ARP	db/NIH-ARP	NIH-ARP	NIH AIDS Reagent Program	uniprot|controlled-vocabulary/more-dbxrefs.txt	
+http://nextprot.org/rdf/db/NISES	db/NISES	NISES	NISES Cell Database	uniprot|controlled-vocabulary/more-dbxrefs.txt	
+http://nextprot.org/rdf/db/NMPDR	db/NMPDR	NMPDR	National Microbial Pathogen Data Resource	uniprot|controlled-vocabulary/more-dbxrefs.txt	
+http://nextprot.org/rdf/db/NextBio	db/NextBio	NextBio	NextBio gene-centric data for human, mouse, rat, fly, worm and yeast	uniprot|controlled-vocabulary/more-dbxrefs.txt	
+http://nextprot.org/rdf/db/OGP	db/OGP	OGP	USC-OGP 2-DE database	uniprot|controlled-vocabulary/more-dbxrefs.txt	
+http://nextprot.org/rdf/db/OMA	db/OMA	OMA	Identification of Orthologs from Complete Genome Data	uniprot|controlled-vocabulary/more-dbxrefs.txt	
+http://nextprot.org/rdf/db/OpenTargets	db/OpenTargets	OpenTargets	Open Targets	uniprot|controlled-vocabulary/more-dbxrefs.txt	
+http://nextprot.org/rdf/db/Orphanet	db/Orphanet	Orphanet	Orphanet; a database dedicated to information on rare diseases and orphan drugs	uniprot|controlled-vocabulary/more-dbxrefs.txt	
+http://nextprot.org/rdf/db/OrthoDB	db/OrthoDB	OrthoDB	Database of Orthologous Groups	uniprot|controlled-vocabulary/more-dbxrefs.txt	
+http://nextprot.org/rdf/db/Others	db/Others	Others	Identifier subtype	uniprot|controlled-vocabulary/more-dbxrefs.txt	
+http://nextprot.org/rdf/db/PANTHER	db/PANTHER	PANTHER	The PANTHER Classification System	uniprot|controlled-vocabulary/more-dbxrefs.txt	
+http://nextprot.org/rdf/db/PATRIC	db/PATRIC	PATRIC	Pathosystems Resource Integration Center (PATRIC)	uniprot|controlled-vocabulary/more-dbxrefs.txt	
+http://nextprot.org/rdf/db/PCDDB	db/PCDDB	PCDDB	The Protein Circular Dichroism Data Bank	uniprot|controlled-vocabulary/more-dbxrefs.txt	
+http://nextprot.org/rdf/db/PDB	db/PDB	PDB	Protein Data Bank Europe	uniprot|controlled-vocabulary/more-dbxrefs.txt	
+http://nextprot.org/rdf/db/PDBe-KB	db/PDBe-KB	PDBe-KB	Protein Data Bank in Europe - Knowledge Base	uniprot|controlled-vocabulary/more-dbxrefs.txt	
+http://nextprot.org/rdf/db/PDBj	db/PDBj	PDBj	Protein Data Bank Japan	uniprot|controlled-vocabulary/more-dbxrefs.txt	
+http://nextprot.org/rdf/db/PDBsum	db/PDBsum	PDBsum	PDBsum; at-a-glance overview of macromolecular structures	uniprot|controlled-vocabulary/more-dbxrefs.txt	
+http://nextprot.org/rdf/db/PHCI-2DPAGE	db/PHCI-2DPAGE	PHCI-2DPAGE	Parasite host cell interaction 2D-PAGE database	uniprot|controlled-vocabulary/more-dbxrefs.txt	
+http://nextprot.org/rdf/db/PHI-base	db/PHI-base	PHI-base	Pathogen-Host Interaction database	uniprot|controlled-vocabulary/more-dbxrefs.txt	
+http://nextprot.org/rdf/db/PIR	db/PIR	PIR	Protein sequence database of the Protein Information Resource	uniprot|controlled-vocabulary/more-dbxrefs.txt	
+http://nextprot.org/rdf/db/PIRNR	db/PIRNR	PIRNR	PIR Name Rule	uniprot|controlled-vocabulary/more-dbxrefs.txt	
+http://nextprot.org/rdf/db/PIRSF	db/PIRSF	PIRSF	PIRSF; a whole-protein classification database	uniprot|controlled-vocabulary/more-dbxrefs.txt	
+http://nextprot.org/rdf/db/PIRSR	db/PIRSR	PIRSR	PIRSF site rule system	uniprot|controlled-vocabulary/more-dbxrefs.txt	
+http://nextprot.org/rdf/db/PMAP-CutDB	db/PMAP-CutDB	PMAP-CutDB	CutDB - Proteolytic event database	uniprot|controlled-vocabulary/more-dbxrefs.txt	
+http://nextprot.org/rdf/db/PMMA-2DPAGE	db/PMMA-2DPAGE	PMMA-2DPAGE	Purkyne Military Medical Academy 2D-PAGE database	uniprot|controlled-vocabulary/more-dbxrefs.txt	
+http://nextprot.org/rdf/db/PRIDE	db/PRIDE	PRIDE	PRoteomics IDEntifications database	uniprot|controlled-vocabulary/more-dbxrefs.txt	
+http://nextprot.org/rdf/db/PRINTS	db/PRINTS	PRINTS	Protein Motif fingerprint database; a protein domain database	uniprot|controlled-vocabulary/more-dbxrefs.txt	
+http://nextprot.org/rdf/db/PRO	db/PRO	PRO	Protein Ontology	uniprot|controlled-vocabulary/more-dbxrefs.txt	
+http://nextprot.org/rdf/db/PROSITE	db/PROSITE	PROSITE	PROSITE; a protein domain and family database	uniprot|controlled-vocabulary/more-dbxrefs.txt	
+http://nextprot.org/rdf/db/PROSITE-ProRule	db/PROSITE-ProRule	PROSITE-ProRule	prorule	uniprot|controlled-vocabulary/more-dbxrefs.txt	
+http://nextprot.org/rdf/db/PSI-MI	db/PSI-MI	PSI-MI	PSI-MI Molecular Interaction	uniprot|controlled-vocabulary/more-dbxrefs.txt	
+http://nextprot.org/rdf/db/PSI-MOD	db/PSI-MOD	PSI-MOD	For the description of covalent bonds in proteins.	uniprot|controlled-vocabulary/more-dbxrefs.txt	
+http://nextprot.org/rdf/db/Patent	db/Patent	Patent	Google Patent	uniprot|controlled-vocabulary/more-dbxrefs.txt	
+http://nextprot.org/rdf/db/PathwayCommons	db/PathwayCommons	PathwayCommons	Pathway Commons web resource for biological pathway data	uniprot|controlled-vocabulary/more-dbxrefs.txt	
+http://nextprot.org/rdf/db/Pathway_Interaction_DB	db/Pathway_Interaction_DB	Pathway_Interaction_DB	NCI-Nature Pathway Interaction Database	uniprot|controlled-vocabulary/more-dbxrefs.txt	
+http://nextprot.org/rdf/db/PaxDb	db/PaxDb	PaxDb	PaxDb, a database of protein abundance averages across all three domains of life	uniprot|controlled-vocabulary/more-dbxrefs.txt	
+http://nextprot.org/rdf/db/PeptideAtlas	db/PeptideAtlas	PeptideAtlas	PeptideAtlas	uniprot|controlled-vocabulary/more-dbxrefs.txt	
+http://nextprot.org/rdf/db/PeroxiBase	db/PeroxiBase	PeroxiBase	PeroxiBase, a peroxidase database	uniprot|controlled-vocabulary/more-dbxrefs.txt	
+http://nextprot.org/rdf/db/Pfam	db/Pfam	Pfam	Pfam protein domain database	uniprot|controlled-vocabulary/more-dbxrefs.txt	
+http://nextprot.org/rdf/db/PharmGKB	db/PharmGKB	PharmGKB	The Pharmacogenetics and Pharmacogenomics Knowledge Base	uniprot|controlled-vocabulary/more-dbxrefs.txt	
+http://nextprot.org/rdf/db/Pharos	db/Pharos	Pharos	Pharos NIH Druggable Genome Knowledgebase	uniprot|controlled-vocabulary/more-dbxrefs.txt	
+http://nextprot.org/rdf/db/PhosSite	db/PhosSite	PhosSite	Phosphorylation site database for Archaea and Bacteria	uniprot|controlled-vocabulary/more-dbxrefs.txt	
+http://nextprot.org/rdf/db/PhosphoSitePlus	db/PhosphoSitePlus	PhosphoSitePlus	Comprehensive resource for the study of protein post-translational modifications (PTMs) in human, mouse and rat.	uniprot|controlled-vocabulary/more-dbxrefs.txt	
+http://nextprot.org/rdf/db/PhotoList	db/PhotoList	PhotoList	Photorhabdus luminescens genome database	uniprot|controlled-vocabulary/more-dbxrefs.txt	
+http://nextprot.org/rdf/db/PhylomeDB	db/PhylomeDB	PhylomeDB	Database for complete collections of gene phylogenies	uniprot|controlled-vocabulary/more-dbxrefs.txt	
+http://nextprot.org/rdf/db/PlantReactome	db/PlantReactome	PlantReactome	Reactome - a knowledgebase of biological pathways and processes for plant species	uniprot|controlled-vocabulary/more-dbxrefs.txt	
+http://nextprot.org/rdf/db/PomBase	db/PomBase	PomBase	Schizosaccharomyces pombe database	uniprot|controlled-vocabulary/more-dbxrefs.txt	
+http://nextprot.org/rdf/db/PptaseDB	db/PptaseDB	PptaseDB	Prokaryotic Protein Phosphatase Database	uniprot|controlled-vocabulary/more-dbxrefs.txt	
+http://nextprot.org/rdf/db/ProDom	db/ProDom	ProDom	ProDom; a protein domain database	uniprot|controlled-vocabulary/more-dbxrefs.txt	
+http://nextprot.org/rdf/db/ProMEX	db/ProMEX	ProMEX	Protein Mass spectra EXtraction	uniprot|controlled-vocabulary/more-dbxrefs.txt	
+http://nextprot.org/rdf/db/ProtClustDB	db/ProtClustDB	ProtClustDB	Entrez Protein Clusters	uniprot|controlled-vocabulary/more-dbxrefs.txt	
+http://nextprot.org/rdf/db/ProteinModelPortal	db/ProteinModelPortal	ProteinModelPortal	Protein Model Portal of the PSI-Nature Structural Biology Knowledgebase	uniprot|controlled-vocabulary/more-dbxrefs.txt	
+http://nextprot.org/rdf/db/Proteomes	db/Proteomes	Proteomes	Proteomes	uniprot|controlled-vocabulary/more-dbxrefs.txt	
+http://nextprot.org/rdf/db/ProteomicsDB	db/ProteomicsDB	ProteomicsDB	ProteomicsDB: a multi-organism proteome resource	uniprot|controlled-vocabulary/more-dbxrefs.txt	
+http://nextprot.org/rdf/db/Proteopedia	db/Proteopedia	Proteopedia	Collaborative 3D-encyclopedia of proteins &amp; other molecules	uniprot|controlled-vocabulary/more-dbxrefs.txt	
+http://nextprot.org/rdf/db/ProtoNet	db/ProtoNet	ProtoNet	ProtoNet; Automatic hierarchical classification of proteins	uniprot|controlled-vocabulary/more-dbxrefs.txt	
+http://nextprot.org/rdf/db/PseudoCAP	db/PseudoCAP	PseudoCAP	Pseudomonas genome database	uniprot|controlled-vocabulary/more-dbxrefs.txt	
+http://nextprot.org/rdf/db/PubMed	db/PubMed	PubMed	PubMed site	uniprot|controlled-vocabulary/more-dbxrefs.txt	
+http://nextprot.org/rdf/db/RCB	db/RCB	RCB	RIKEN Cell Bank	uniprot|controlled-vocabulary/more-dbxrefs.txt	
+http://nextprot.org/rdf/db/RCSB	db/RCSB	RCSB	Royal Stem Cell Bank	uniprot|controlled-vocabulary/more-dbxrefs.txt	
+http://nextprot.org/rdf/db/RCSB-PDB	db/RCSB-PDB	RCSB-PDB	Protein Data Bank RCSB	uniprot|controlled-vocabulary/more-dbxrefs.txt	
+http://nextprot.org/rdf/db/REBASE	db/REBASE	REBASE	Restriction enzymes and methylases database	uniprot|controlled-vocabulary/more-dbxrefs.txt	
+http://nextprot.org/rdf/db/REPRODUCTION-2DPAGE	db/REPRODUCTION-2DPAGE	REPRODUCTION-2DPAGE	REPRODUCTION-2DPAGE	uniprot|controlled-vocabulary/more-dbxrefs.txt	
+http://nextprot.org/rdf/db/RESID	db/RESID	RESID	An ontology consisting of terms that describe protein chemical modifications.	uniprot|controlled-vocabulary/more-dbxrefs.txt	
+http://nextprot.org/rdf/db/RGD	db/RGD	RGD	Rat genome database	uniprot|controlled-vocabulary/more-dbxrefs.txt	
+http://nextprot.org/rdf/db/RNAct	db/RNAct	RNAct	RNAct, Protein-RNA interaction predictions for model organisms.	uniprot|controlled-vocabulary/more-dbxrefs.txt	
+http://nextprot.org/rdf/db/RSCB	db/RSCB	RSCB	Royan Stem Cell Bank	uniprot|controlled-vocabulary/more-dbxrefs.txt	
+http://nextprot.org/rdf/db/Rat-heart-2DPAGE	db/Rat-heart-2DPAGE	Rat-heart-2DPAGE	2-DE database of rat heart, at German Heart Institute Berlin, Germany	uniprot|controlled-vocabulary/more-dbxrefs.txt	
+http://nextprot.org/rdf/db/Reactome	db/Reactome	Reactome	Reactome - a knowledgebase of biological pathways and processes	uniprot|controlled-vocabulary/more-dbxrefs.txt	
+http://nextprot.org/rdf/db/RefSeq	db/RefSeq	RefSeq	NCBI Reference Sequences	uniprot|controlled-vocabulary/more-dbxrefs.txt	
+http://nextprot.org/rdf/db/Rhea	db/Rhea	Rhea	Rhea - the annotated database of biochemical reactions	uniprot|controlled-vocabulary/more-dbxrefs.txt	
+http://nextprot.org/rdf/db/Rouge	db/Rouge	Rouge	Rodent Unidentified Gene-Encoded large proteins database	uniprot|controlled-vocabulary/more-dbxrefs.txt	
+http://nextprot.org/rdf/db/RuleBase	db/RuleBase	RuleBase	UniProtKB annotation rules	uniprot|controlled-vocabulary/more-dbxrefs.txt	
+http://nextprot.org/rdf/db/SABIO-RK	db/SABIO-RK	SABIO-RK	SABIO-RK: Biochemical Reaction Kinetics Database	uniprot|controlled-vocabulary/more-dbxrefs.txt	
+http://nextprot.org/rdf/db/SAM	db/SAM	SAM	SAM - Sequence Analysis Methods for automatic annotation	uniprot|controlled-vocabulary/more-dbxrefs.txt	
+http://nextprot.org/rdf/db/SASBDB	db/SASBDB	SASBDB	Small Angle Scattering Biological Data Bank	uniprot|controlled-vocabulary/more-dbxrefs.txt	
+http://nextprot.org/rdf/db/SBKB	db/SBKB	SBKB	The Structural Biology Knowledgebase	uniprot|controlled-vocabulary/more-dbxrefs.txt	
+http://nextprot.org/rdf/db/SCOP	db/SCOP	SCOP	Structural Classification of Proteins	uniprot|controlled-vocabulary/more-dbxrefs.txt	
+http://nextprot.org/rdf/db/SFLD	db/SFLD	SFLD	Structure-Function Linkage Database	uniprot|controlled-vocabulary/more-dbxrefs.txt	
+http://nextprot.org/rdf/db/SGD	db/SGD	SGD	Saccharomyces Genome Database	uniprot|controlled-vocabulary/more-dbxrefs.txt	
+http://nextprot.org/rdf/db/SIGNOR	db/SIGNOR	SIGNOR	SIGNOR Signaling Network Open Resource	uniprot|controlled-vocabulary/more-dbxrefs.txt	
+http://nextprot.org/rdf/db/SKIP	db/SKIP	SKIP	Stemcell Knowledge and Information Portal	uniprot|controlled-vocabulary/more-dbxrefs.txt	
+http://nextprot.org/rdf/db/SKY_M-FISH_CGH	db/SKY_M-FISH_CGH	SKY/M-FISH/CGH	SKY/M-FISH and CGH database	uniprot|controlled-vocabulary/more-dbxrefs.txt	
+http://nextprot.org/rdf/db/SMART	db/SMART	SMART	Simple Modular Architecture Research Tool; a protein domain database	uniprot|controlled-vocabulary/more-dbxrefs.txt	
+http://nextprot.org/rdf/db/SMR	db/SMR	SMR	SWISS-MODEL Repository - a database of annotated 3D protein structure models	uniprot|controlled-vocabulary/more-dbxrefs.txt	
+http://nextprot.org/rdf/db/SOURCE	db/SOURCE	SOURCE	The Stanford Online Universal Resource for Clones and ESTs	uniprot|controlled-vocabulary/more-dbxrefs.txt	
+http://nextprot.org/rdf/db/SRMAtlas	db/SRMAtlas	SRMAtlas	SRMAtlas	uniprot|controlled-vocabulary/more-dbxrefs.txt	
+http://nextprot.org/rdf/db/STRING	db/STRING	STRING	STRING: functional protein association networks	uniprot|controlled-vocabulary/more-dbxrefs.txt	
+http://nextprot.org/rdf/db/SUPFAM	db/SUPFAM	SUPFAM	Superfamily database of structural and functional annotation	uniprot|controlled-vocabulary/more-dbxrefs.txt	
+http://nextprot.org/rdf/db/SWISS-2DPAGE	db/SWISS-2DPAGE	SWISS-2DPAGE	Two-dimensional polyacrylamide gel electrophoresis database from the Geneva University Hospital	uniprot|controlled-vocabulary/more-dbxrefs.txt	
+http://nextprot.org/rdf/db/SWISS-MODEL-Workspace	db/SWISS-MODEL-Workspace	SWISS-MODEL-Workspace	SWISS-MODEL Interactive Workspace	uniprot|controlled-vocabulary/more-dbxrefs.txt	
+http://nextprot.org/rdf/db/SagaList	db/SagaList	SagaList	Streptococcus agalactiae NEM316 / Serotype III genome database	uniprot|controlled-vocabulary/more-dbxrefs.txt	
+http://nextprot.org/rdf/db/SequenceOntology	db/SequenceOntology	SequenceOntology	Sequence Ontology	uniprot|controlled-vocabulary/more-dbxrefs.txt	
+http://nextprot.org/rdf/db/Siena-2DPAGE	db/Siena-2DPAGE	Siena-2DPAGE	2D-PAGE database from the Department of Molecular Biology, University of Siena, Italy	uniprot|controlled-vocabulary/more-dbxrefs.txt	
+http://nextprot.org/rdf/db/SignaLink	db/SignaLink	SignaLink	SignaLink: a signaling pathway resource with multi-layered regulatory networks	uniprot|controlled-vocabulary/more-dbxrefs.txt	
+http://nextprot.org/rdf/db/SubtiList	db/SubtiList	SubtiList	Bacillus subtilis strain 168 genome database	uniprot|controlled-vocabulary/more-dbxrefs.txt	
+http://nextprot.org/rdf/db/SwissLipids	db/SwissLipids	SwissLipids	SwissLipids knowledge resource for lipid biology	uniprot|controlled-vocabulary/more-dbxrefs.txt	
+http://nextprot.org/rdf/db/SwissPalm	db/SwissPalm	SwissPalm	SwissPalm database of S-palmitoylation events	uniprot|controlled-vocabulary/more-dbxrefs.txt	
+http://nextprot.org/rdf/db/TAIR	db/TAIR	TAIR	The Arabidopsis Information Resource	uniprot|controlled-vocabulary/more-dbxrefs.txt	
+http://nextprot.org/rdf/db/TCB	db/TCB	TCB	Tick Cell Biobank	uniprot|controlled-vocabulary/more-dbxrefs.txt	
+http://nextprot.org/rdf/db/TCDB	db/TCDB	TCDB	Transport Classification Database	uniprot|controlled-vocabulary/more-dbxrefs.txt	
+http://nextprot.org/rdf/db/TIGR	db/TIGR	TIGR	The bacterial database(s) of &apos;The Institute of Genome Research&apos;	uniprot|controlled-vocabulary/more-dbxrefs.txt	
+http://nextprot.org/rdf/db/TIGRFAMs	db/TIGRFAMs	TIGRFAMs	TIGRFAMs; a protein family database	uniprot|controlled-vocabulary/more-dbxrefs.txt	
+http://nextprot.org/rdf/db/TKG	db/TKG	TKG	Tohoku University Cancer Cell Line	uniprot|controlled-vocabulary/more-dbxrefs.txt	
+http://nextprot.org/rdf/db/TOKU-E	db/TOKU-E	TOKU-E	TOKU-E Cell-culture Database	uniprot|controlled-vocabulary/more-dbxrefs.txt	
+http://nextprot.org/rdf/db/TopDownProteomics	db/TopDownProteomics	TopDownProteomics	Consortium for Top Down Proteomics	uniprot|controlled-vocabulary/more-dbxrefs.txt	
+http://nextprot.org/rdf/db/TreeFam	db/TreeFam	TreeFam	TreeFam database of animal gene trees	uniprot|controlled-vocabulary/more-dbxrefs.txt	
+http://nextprot.org/rdf/db/TubercuList	db/TubercuList	TubercuList	Mycobacterium tuberculosis strain H37Rv genome database	uniprot|controlled-vocabulary/more-dbxrefs.txt	
+http://nextprot.org/rdf/db/UCD-2DPAGE	db/UCD-2DPAGE	UCD-2DPAGE	University College Dublin 2-DE Proteome Database	uniprot|controlled-vocabulary/more-dbxrefs.txt	
+http://nextprot.org/rdf/db/UCSC	db/UCSC	UCSC	UCSC genome browser	uniprot|controlled-vocabulary/more-dbxrefs.txt	
+http://nextprot.org/rdf/db/UKSCB	db/UKSCB	UKSCB	UK Stem Cell Bank	uniprot|controlled-vocabulary/more-dbxrefs.txt	
+http://nextprot.org/rdf/db/Uberon	db/Uberon	Uberon	Uberon	uniprot|controlled-vocabulary/more-dbxrefs.txt	
+http://nextprot.org/rdf/db/UniCarbKB	db/UniCarbKB	UniCarbKB	UniCarbKB; an annotated and curated database of glycan structures	uniprot|controlled-vocabulary/more-dbxrefs.txt	
+http://nextprot.org/rdf/db/UniGene	db/UniGene	UniGene	UniGene gene-oriented nucleotide sequence clusters	uniprot|controlled-vocabulary/more-dbxrefs.txt	
+http://nextprot.org/rdf/db/UniLectin	db/UniLectin	UniLectin	UniLectin database of carbohydrate-binding proteins	uniprot|controlled-vocabulary/more-dbxrefs.txt	
+http://nextprot.org/rdf/db/UniPathway	db/UniPathway	UniPathway	UniPathway: a resource for the exploration and annotation of metabolic pathways	uniprot|controlled-vocabulary/more-dbxrefs.txt	
+http://nextprot.org/rdf/db/UniProt	db/UniProt	UniProt	UniProt web site	uniprot|controlled-vocabulary/more-dbxrefs.txt	
+http://nextprot.org/rdf/db/UniProtKB	db/UniProtKB	UniProtKB	Identifier subtype	uniprot|controlled-vocabulary/more-dbxrefs.txt	
+http://nextprot.org/rdf/db/UniProt_control_vocabulary	db/UniProt_control_vocabulary	UniProt_control_vocabulary	Cross ref to all cv loaded from UniProt	uniprot|controlled-vocabulary/more-dbxrefs.txt	
+http://nextprot.org/rdf/db/UniProt_domain	db/UniProt_domain	UniProt_domain	UniProt protein list by domain	uniprot|controlled-vocabulary/more-dbxrefs.txt	
+http://nextprot.org/rdf/db/UniProt_family	db/UniProt_family	UniProt_family	UniProt protein list by family	uniprot|controlled-vocabulary/more-dbxrefs.txt	
+http://nextprot.org/rdf/db/Unimod	db/Unimod	Unimod	Unimod - Protein modifications for mass spectrometry	uniprot|controlled-vocabulary/more-dbxrefs.txt	
+http://nextprot.org/rdf/db/VEuPathDB	db/VEuPathDB	VEuPathDB	Eukaryotic Pathogen, Vector and Host Database Resources	uniprot|controlled-vocabulary/more-dbxrefs.txt	
+http://nextprot.org/rdf/db/VGNC	db/VGNC	VGNC	Vertebrate Gene Nomenclature Database	uniprot|controlled-vocabulary/more-dbxrefs.txt	
+http://nextprot.org/rdf/db/VariO	db/VariO	VariO	Variation ontology	uniprot|controlled-vocabulary/more-dbxrefs.txt	
+http://nextprot.org/rdf/db/VectorBase	db/VectorBase	VectorBase	Bioinformatics Resource for Invertebrate Vectors of Human Pathogens	uniprot|controlled-vocabulary/more-dbxrefs.txt	
+http://nextprot.org/rdf/db/WBParaSite	db/WBParaSite	WBParaSite	WormBase ParaSite	uniprot|controlled-vocabulary/more-dbxrefs.txt	
+http://nextprot.org/rdf/db/WEBINFO	db/WEBINFO	WEBINFO	web information	uniprot|controlled-vocabulary/more-dbxrefs.txt	
+http://nextprot.org/rdf/db/Wikidata	db/Wikidata	Wikidata	Wikidata	uniprot|controlled-vocabulary/more-dbxrefs.txt	
+http://nextprot.org/rdf/db/WorfDB	db/WorfDB	WorfDB	The C.elegans ORFeome cloning project	uniprot|controlled-vocabulary/more-dbxrefs.txt	
+http://nextprot.org/rdf/db/World-2DPAGE	db/World-2DPAGE	World-2DPAGE	The World-2DPAGE database	uniprot|controlled-vocabulary/more-dbxrefs.txt	
+http://nextprot.org/rdf/db/WormBase	db/WormBase	WormBase	WormBase	uniprot|controlled-vocabulary/more-dbxrefs.txt	
+http://nextprot.org/rdf/db/WormPep	db/WormPep	WormPep	Caenorhabditis elegans genome sequencing project protein database	uniprot|controlled-vocabulary/more-dbxrefs.txt	
+http://nextprot.org/rdf/db/Xenbase	db/Xenbase	Xenbase	Xenopus laevis and tropicalis biology and genomics resource	uniprot|controlled-vocabulary/more-dbxrefs.txt	
+http://nextprot.org/rdf/db/Ximbio	db/Ximbio	Ximbio	Ximbio reagents online portal	uniprot|controlled-vocabulary/more-dbxrefs.txt	
+http://nextprot.org/rdf/db/ZFIN	db/ZFIN	ZFIN	Zebrafish Information Network genome database	uniprot|controlled-vocabulary/more-dbxrefs.txt	
+http://nextprot.org/rdf/db/dbMHC	db/dbMHC	dbMHC	dbMHC	uniprot|controlled-vocabulary/more-dbxrefs.txt	
+http://nextprot.org/rdf/db/dbSNP	db/dbSNP	dbSNP	Database of single nucleotide polymorphism	uniprot|controlled-vocabulary/more-dbxrefs.txt	
+http://nextprot.org/rdf/db/dictyBase	db/dictyBase	dictyBase	Dictyostelium discoideum online informatics resource	uniprot|controlled-vocabulary/more-dbxrefs.txt	
+http://nextprot.org/rdf/db/eVOC	db/eVOC	eVOC	Controlled vocabularies that unifies gene expression data by facilitating a link between the genome sequence and expression phenotype information.	uniprot|controlled-vocabulary/more-dbxrefs.txt	
+http://nextprot.org/rdf/db/eggNOG	db/eggNOG	eggNOG	evolutionary genealogy of genes: Non-supervised Orthologous Groups	uniprot|controlled-vocabulary/more-dbxrefs.txt	
+http://nextprot.org/rdf/db/euHCVdb	db/euHCVdb	euHCVdb	European Hepatitis C Virus Database	uniprot|controlled-vocabulary/more-dbxrefs.txt	
+http://nextprot.org/rdf/db/gnomAD	db/gnomAD	gnomAD	Genome aggregation database	uniprot|controlled-vocabulary/more-dbxrefs.txt	
+http://nextprot.org/rdf/db/hESCreg	db/hESCreg	hESCreg	European Human Embryonic Stem Cell Registry	uniprot|controlled-vocabulary/more-dbxrefs.txt	
+http://nextprot.org/rdf/db/hPSCreg	db/hPSCreg	hPSCreg	Human Pluripotent Stem Cell Registry	uniprot|controlled-vocabulary/more-dbxrefs.txt	
+http://nextprot.org/rdf/db/iPTMnet	db/iPTMnet	iPTMnet	iPTMnet integrated resource for PTMs in systems biology context	uniprot|controlled-vocabulary/more-dbxrefs.txt	
+http://nextprot.org/rdf/db/jPOST	db/jPOST	jPOST	jPOST - Japan Proteome Standard Repository/Database	uniprot|controlled-vocabulary/more-dbxrefs.txt	
+http://nextprot.org/rdf/db/neXtProt	db/neXtProt	neXtProt	neXtProt; the human protein knowledge platform	uniprot|controlled-vocabulary/more-dbxrefs.txt	
+http://nextprot.org/rdf/db/neXtProtDoc	db/neXtProtDoc	neXtProtDoc	neXtProt document; the human protein knowledge platform, document part	uniprot|controlled-vocabulary/more-dbxrefs.txt	
+http://nextprot.org/rdf/db/neXtProtSubmission	db/neXtProtSubmission	neXtProtSubmission	neXtProt submission; the human protein knowledge platform, publication of type submission part	uniprot|controlled-vocabulary/more-dbxrefs.txt	
+http://nextprot.org/rdf/db/neXtProt_control_vocabulary	db/neXtProt_control_vocabulary	neXtProt_control_vocabulary	Cross ref to all cv loaded from neXtProt	uniprot|controlled-vocabulary/more-dbxrefs.txt	
+http://nextprot.org/rdf/source/ARUK-UCL	source/ARUK-UCL	ARUK-UCL	Alzheimers Research Gene Ontology Initiative (Alzheimer&apos;s research UK).	controlled-vocabulary/cv_datasources.txt	
+http://nextprot.org/rdf/source/AgBase	source/AgBase	AgBase	AgBase is a curated resource for functional analysis of agricultural plant and animal gene products.	controlled-vocabulary/cv_datasources.txt	
+http://nextprot.org/rdf/source/Alzforum	source/Alzforum	Alzforum	ALZFORUM networking for a cure	controlled-vocabulary/cv_datasources.txt	
+http://nextprot.org/rdf/source/Alzheimers_University_of_Toronto	source/Alzheimers_University_of_Toronto	Alzheimers_University_of_Toronto	Alzheimers Project at University of Toronto	controlled-vocabulary/cv_datasources.txt	
+http://nextprot.org/rdf/source/Antibodypedia	source/Antibodypedia	Antibodypedia	A searchable database of antibodies against human proteins	controlled-vocabulary/cv_datasources.txt	
+http://nextprot.org/rdf/source/BHF-UCL	source/BHF-UCL	BHF-UCL	British Heart Foundation - University College London	controlled-vocabulary/cv_datasources.txt	
+http://nextprot.org/rdf/source/Bgee	source/Bgee	Bgee	Information imported from dataBase for Gene Expression Evolution	controlled-vocabulary/cv_datasources.txt	
+http://nextprot.org/rdf/source/BioMuta	source/BioMuta	BioMuta	BioMuta curated single-nucleotide variation and disease association database	controlled-vocabulary/cv_datasources.txt	
+http://nextprot.org/rdf/source/Bioeditor	source/Bioeditor	Bioeditor	Information generated manually by neXtProt via the Bioeditor platform	controlled-vocabulary/cv_datasources.txt	
+http://nextprot.org/rdf/source/CACAO	source/CACAO	CACAO	Community Assessment of Community Annotation with Ontologies	controlled-vocabulary/cv_datasources.txt	
+http://nextprot.org/rdf/source/CAFA	source/CAFA	CAFA	Critical Assessment of Protein Function Annotation.	controlled-vocabulary/cv_datasources.txt	
+http://nextprot.org/rdf/source/CCDS	source/CCDS	CCDS	Consensus CDS project	controlled-vocabulary/cv_datasources.txt	
+http://nextprot.org/rdf/source/Cellosaurus	source/Cellosaurus	Cellosaurus	Information generated by neXtProt from the Cellosaurus	controlled-vocabulary/cv_datasources.txt	
+http://nextprot.org/rdf/source/ClinVar	source/ClinVar	ClinVar	Database of mutations and their clinical relevance	controlled-vocabulary/cv_datasources.txt	
+http://nextprot.org/rdf/source/ComplexPortal	source/ComplexPortal	ComplexPortal	A Manually curated, encyclopaedic resource of macromolecular complexes from a number of key model organisms	controlled-vocabulary/cv_datasources.txt	
+http://nextprot.org/rdf/source/Cosmic	source/Cosmic	Cosmic	Catalogue Of Somatic Mutations In Cancer	controlled-vocabulary/cv_datasources.txt	
+http://nextprot.org/rdf/source/DFLAT	source/DFLAT	DFLAT	Developmental FunctionaL Annotation at Tufts	controlled-vocabulary/cv_datasources.txt	
+http://nextprot.org/rdf/source/DIBU	source/DIBU	DIBU	DIBU	controlled-vocabulary/cv_datasources.txt	
+http://nextprot.org/rdf/source/DrugBank	source/DrugBank	DrugBank	Drug and drug target database	controlled-vocabulary/cv_datasources.txt	
+http://nextprot.org/rdf/source/Dyp	source/Dyp	Dyp	Information extracted form the Dyp database	controlled-vocabulary/cv_datasources.txt	
+http://nextprot.org/rdf/source/EMBL-EBI	source/EMBL-EBI	EMBL-EBI	European Molecular Biology Laboratory / European Bioinformatics Institute	controlled-vocabulary/cv_datasources.txt	
+http://nextprot.org/rdf/source/ENYO	source/ENYO	ENYO	ENYO Pharma, a clinical stage Biotech with a unique drug discovery engine inspired by viruses	controlled-vocabulary/cv_datasources.txt	
+http://nextprot.org/rdf/source/Ensembl	source/Ensembl	Ensembl	Information imported from Ensembl	controlled-vocabulary/cv_datasources.txt	
+http://nextprot.org/rdf/source/FlyBase	source/FlyBase	FlyBase	A database for Drosophila genetics and molecular biology.	controlled-vocabulary/cv_datasources.txt	
+http://nextprot.org/rdf/source/GDB	source/GDB	GDB	Human Genome Database	controlled-vocabulary/cv_datasources.txt	
+http://nextprot.org/rdf/source/GFP-cDNAEMBL	source/GFP-cDNAEMBL	GFP-cDNA@EMBL	GFP-cDNA Localisation Project (EMBL)	controlled-vocabulary/cv_datasources.txt	
+http://nextprot.org/rdf/source/GO	source/GO	GO	Information generated by Gene Ontology	controlled-vocabulary/cv_datasources.txt	
+http://nextprot.org/rdf/source/GOC	source/GOC	GOC	inferred annotations from GO OBO v1.2	controlled-vocabulary/cv_datasources.txt	
+http://nextprot.org/rdf/source/GO_central	source/GO_central	GO_central	Reference Genome Annotation Project	controlled-vocabulary/cv_datasources.txt	
+http://nextprot.org/rdf/source/GlyConnect	source/GlyConnect	GlyConnect	A platform integrating sources of information to help characterise the molecular components of protein glycosylation	controlled-vocabulary/cv_datasources.txt	
+http://nextprot.org/rdf/source/HGNC	source/HGNC	HGNC	HUGO Gene Nomenclature Committee	controlled-vocabulary/cv_datasources.txt	
+http://nextprot.org/rdf/source/HGNC-UCL	source/HGNC-UCL	HGNC-UCL	HGNC gene annotation from University College of London	controlled-vocabulary/cv_datasources.txt	
+http://nextprot.org/rdf/source/HPRD	source/HPRD	HPRD	Human Protein Reference Database	controlled-vocabulary/cv_datasources.txt	
+http://nextprot.org/rdf/source/Human_protein_atlas	source/Human_protein_atlas	Human_protein_atlas	Expression data imported from Human protein atlas	controlled-vocabulary/cv_datasources.txt	
+http://nextprot.org/rdf/source/Human_protein_atlas_RNA-seq	source/Human_protein_atlas_RNA-seq	Human_protein_atlas_RNA-seq	RNA-seq expression data imported from Human protein atlas	controlled-vocabulary/cv_datasources.txt	
+http://nextprot.org/rdf/source/Human_protein_atlas_subcellular_localization	source/Human_protein_atlas_subcellular_localization	Human_protein_atlas_subcellular_localization	Subcellular localization data imported from Human protein atlas	controlled-vocabulary/cv_datasources.txt	
+http://nextprot.org/rdf/source/IPI	source/IPI	IPI	International Protein Index, from EBI, no more maintain	controlled-vocabulary/cv_datasources.txt	
+http://nextprot.org/rdf/source/IntAct	source/IntAct	IntAct	Information generated by IntAct	controlled-vocabulary/cv_datasources.txt	
+http://nextprot.org/rdf/source/InterPro	source/InterPro	InterPro	Information generated by InterPro	controlled-vocabulary/cv_datasources.txt	
+http://nextprot.org/rdf/source/KEGG_PTW	source/KEGG_PTW	KEGG_PTW	Link to KEGG pathways	controlled-vocabulary/cv_datasources.txt	
+http://nextprot.org/rdf/source/LIFEdb	source/LIFEdb	LIFEdb	LIFEdb	controlled-vocabulary/cv_datasources.txt	
+http://nextprot.org/rdf/source/MDATA_0004_2011	source/MDATA_0004_2011	MDATA_0004_2011	Information extracted from the submission MDATA_0004_2011	controlled-vocabulary/cv_datasources.txt	
+http://nextprot.org/rdf/source/MDATA_0023_2012	source/MDATA_0023_2012	MDATA_0023_2012	Proteomics information extracted from the submission MDATA_0023_2012	controlled-vocabulary/cv_datasources.txt	
+http://nextprot.org/rdf/source/MDATA_0033_2013	source/MDATA_0033_2013	MDATA_0033_2013	Information extracted from the submission MDATA_0033_2013	controlled-vocabulary/cv_datasources.txt	
+http://nextprot.org/rdf/source/MEROPS	source/MEROPS	MEROPS	Information resource for peptidases	controlled-vocabulary/cv_datasources.txt	
+http://nextprot.org/rdf/source/MGI	source/MGI	MGI	Data from the Mouse orthologs database	controlled-vocabulary/cv_datasources.txt	
+http://nextprot.org/rdf/source/MTBbase	source/MTBbase	MTBbase	Collection and Refinement of Physiological Data on Mycobacterium tuberculosis	controlled-vocabulary/cv_datasources.txt	
+http://nextprot.org/rdf/source/MassIVE	source/MassIVE	MassIVE	Human peptide sequences and identifiers from MassIVE	controlled-vocabulary/cv_datasources.txt	
+http://nextprot.org/rdf/source/MassIVE_human_Adrenal_Gland	source/MassIVE_human_Adrenal_Gland	MassIVE_human_Adrenal_Gland	Information generated by MassIVE, project Adrenal Gland	controlled-vocabulary/cv_datasources.txt	
+http://nextprot.org/rdf/source/MassIVE_human_Blood_Cells	source/MassIVE_human_Blood_Cells	MassIVE_human_Blood_Cells	Information generated by MassIVE, project Blood Cells	controlled-vocabulary/cv_datasources.txt	
+http://nextprot.org/rdf/source/MassIVE_human_Blood_Plasma	source/MassIVE_human_Blood_Plasma	MassIVE_human_Blood_Plasma	Information generated by MassIVE, project Blood Plasma	controlled-vocabulary/cv_datasources.txt	
+http://nextprot.org/rdf/source/MassIVE_human_Blood_Vessel	source/MassIVE_human_Blood_Vessel	MassIVE_human_Blood_Vessel	Information generated by MassIVE, project Blood Vessel	controlled-vocabulary/cv_datasources.txt	
+http://nextprot.org/rdf/source/MassIVE_human_Bone	source/MassIVE_human_Bone	MassIVE_human_Bone	Information generated by MassIVE, project Bone	controlled-vocabulary/cv_datasources.txt	
+http://nextprot.org/rdf/source/MassIVE_human_Brain	source/MassIVE_human_Brain	MassIVE_human_Brain	Information generated by MassIVE, project Brain	controlled-vocabulary/cv_datasources.txt	
+http://nextprot.org/rdf/source/MassIVE_human_Breast	source/MassIVE_human_Breast	MassIVE_human_Breast	Information generated by MassIVE, project Breast	controlled-vocabulary/cv_datasources.txt	
+http://nextprot.org/rdf/source/MassIVE_human_Cancer_Blood_Cells	source/MassIVE_human_Cancer_Blood_Cells	MassIVE_human_Cancer_Blood_Cells	Information generated by MassIVE, project Cancer Blood Cells	controlled-vocabulary/cv_datasources.txt	
+http://nextprot.org/rdf/source/MassIVE_human_Cancer_Bone	source/MassIVE_human_Cancer_Bone	MassIVE_human_Cancer_Bone	Information generated by MassIVE, project Cancer Bone	controlled-vocabulary/cv_datasources.txt	
+http://nextprot.org/rdf/source/MassIVE_human_Cancer_Brain	source/MassIVE_human_Cancer_Brain	MassIVE_human_Cancer_Brain	Information generated by MassIVE, project Cancer, Brain	controlled-vocabulary/cv_datasources.txt	
+http://nextprot.org/rdf/source/MassIVE_human_Cancer_Breast	source/MassIVE_human_Cancer_Breast	MassIVE_human_Cancer_Breast	Information generated by MassIVE, project Cancer, Breast	controlled-vocabulary/cv_datasources.txt	
+http://nextprot.org/rdf/source/MassIVE_human_Cancer_Cell_Lines_Blood	source/MassIVE_human_Cancer_Cell_Lines_Blood	MassIVE_human_Cancer_Cell_Lines_Blood	Information generated by MassIVE, project Cancer Cell Lines, Blood	controlled-vocabulary/cv_datasources.txt	
+http://nextprot.org/rdf/source/MassIVE_human_Cancer_Cell_Lines_Bone	source/MassIVE_human_Cancer_Cell_Lines_Bone	MassIVE_human_Cancer_Cell_Lines_Bone	Information generated by MassIVE, project Cancer Cell Lines Bone	controlled-vocabulary/cv_datasources.txt	
+http://nextprot.org/rdf/source/MassIVE_human_Cancer_Cell_Lines_Brain	source/MassIVE_human_Cancer_Cell_Lines_Brain	MassIVE_human_Cancer_Cell_Lines_Brain	Information generated by MassIVE, project Cancer Cell Lines, Brain	controlled-vocabulary/cv_datasources.txt	
+http://nextprot.org/rdf/source/MassIVE_human_Cancer_Cell_Lines_Breast	source/MassIVE_human_Cancer_Cell_Lines_Breast	MassIVE_human_Cancer_Cell_Lines_Breast	Information generated by MassIVE, project Cancer Cell Lines, Breast	controlled-vocabulary/cv_datasources.txt	
+http://nextprot.org/rdf/source/MassIVE_human_Cancer_Cell_Lines_Colon	source/MassIVE_human_Cancer_Cell_Lines_Colon	MassIVE_human_Cancer_Cell_Lines_Colon	Information generated by MassIVE, project Cancer Cell Lines, Colon	controlled-vocabulary/cv_datasources.txt	
+http://nextprot.org/rdf/source/MassIVE_human_Cancer_Cell_Lines_Digestive_System	source/MassIVE_human_Cancer_Cell_Lines_Digestive_System	MassIVE_human_Cancer_Cell_Lines_Digestive_System	Information generated by MassIVE, project Cancer Cell Lines Digestive System	controlled-vocabulary/cv_datasources.txt	
+http://nextprot.org/rdf/source/MassIVE_human_Cancer_Cell_Lines_Liver	source/MassIVE_human_Cancer_Cell_Lines_Liver	MassIVE_human_Cancer_Cell_Lines_Liver	Information generated by MassIVE, project Cancer Cell Lines, Liver	controlled-vocabulary/cv_datasources.txt	
+http://nextprot.org/rdf/source/MassIVE_human_Cancer_Cell_Lines_Lung	source/MassIVE_human_Cancer_Cell_Lines_Lung	MassIVE_human_Cancer_Cell_Lines_Lung	Information generated by MassIVE, project Cancer Cell Lines, Lung	controlled-vocabulary/cv_datasources.txt	
+http://nextprot.org/rdf/source/MassIVE_human_Cancer_Cell_Lines_Other_Anatomical_Entities	source/MassIVE_human_Cancer_Cell_Lines_Other_Anatomical_Entities	MassIVE_human_Cancer_Cell_Lines_Other_Anatomical_Entities	Information generated by MassIVE, project Cancer Cell Lines, Other Anatomical Entities	controlled-vocabulary/cv_datasources.txt	
+http://nextprot.org/rdf/source/MassIVE_human_Cancer_Cell_Lines_Other_Female_Reproductive_Organ	source/MassIVE_human_Cancer_Cell_Lines_Other_Female_Reproductive_Organ	MassIVE_human_Cancer_Cell_Lines_Other_Female_Reproductive_Organ	Information generated by MassIVE, project Cancer Cell Lines, Other Female Reproductive Organ	controlled-vocabulary/cv_datasources.txt	
+http://nextprot.org/rdf/source/MassIVE_human_Cancer_Cell_Lines_Other_Gestational_Structure	source/MassIVE_human_Cancer_Cell_Lines_Other_Gestational_Structure	MassIVE_human_Cancer_Cell_Lines_Other_Gestational_Structure	Information generated by MassIVE, project Cancer Cell Lines, Other Gestational Structure	controlled-vocabulary/cv_datasources.txt	
+http://nextprot.org/rdf/source/MassIVE_human_Cancer_Cell_Lines_Ovary	source/MassIVE_human_Cancer_Cell_Lines_Ovary	MassIVE_human_Cancer_Cell_Lines_Ovary	Information generated by MassIVE, project Cancer Cell Lines, Ovary	controlled-vocabulary/cv_datasources.txt	
+http://nextprot.org/rdf/source/MassIVE_human_Cancer_Cell_Lines_Skin	source/MassIVE_human_Cancer_Cell_Lines_Skin	MassIVE_human_Cancer_Cell_Lines_Skin	Information generated by MassIVE, project Cancer Cell Lines Skin	controlled-vocabulary/cv_datasources.txt	
+http://nextprot.org/rdf/source/MassIVE_human_Cancer_Digestive_System	source/MassIVE_human_Cancer_Digestive_System	MassIVE_human_Cancer_Digestive_System	Information generated by MassIVE, project Cancer Digestive System	controlled-vocabulary/cv_datasources.txt	
+http://nextprot.org/rdf/source/MassIVE_human_Cancer_Kidney	source/MassIVE_human_Cancer_Kidney	MassIVE_human_Cancer_Kidney	Information generated by MassIVE, project Cancer, Kidney	controlled-vocabulary/cv_datasources.txt	
+http://nextprot.org/rdf/source/MassIVE_human_Cancer_Liver	source/MassIVE_human_Cancer_Liver	MassIVE_human_Cancer_Liver	Information generated by MassIVE, project Cancer, Liver	controlled-vocabulary/cv_datasources.txt	
+http://nextprot.org/rdf/source/MassIVE_human_Cancer_Lung	source/MassIVE_human_Cancer_Lung	MassIVE_human_Cancer_Lung	Information generated by MassIVE, project Cancer, Lung	controlled-vocabulary/cv_datasources.txt	
+http://nextprot.org/rdf/source/MassIVE_human_Cancer_Other_Male_Reproductive_Organ	source/MassIVE_human_Cancer_Other_Male_Reproductive_Organ	MassIVE_human_Cancer_Other_Male_Reproductive_Organ	Information generated by MassIVE, project Cancer, Other Male Reproductive Organ	controlled-vocabulary/cv_datasources.txt	
+http://nextprot.org/rdf/source/MassIVE_human_Cancer_Ovary	source/MassIVE_human_Cancer_Ovary	MassIVE_human_Cancer_Ovary	Information generated by MassIVE, project Cancer, Ovary	controlled-vocabulary/cv_datasources.txt	
+http://nextprot.org/rdf/source/MassIVE_human_Cancer_Skin	source/MassIVE_human_Cancer_Skin	MassIVE_human_Cancer_Skin	Information generated by MassIVE, project Cancer Skin	controlled-vocabulary/cv_datasources.txt	
+http://nextprot.org/rdf/source/MassIVE_human_Cancer_Urinary_Bladder	source/MassIVE_human_Cancer_Urinary_Bladder	MassIVE_human_Cancer_Urinary_Bladder	Information generated by MassIVE, project Cancer, Urinary Bladder	controlled-vocabulary/cv_datasources.txt	
+http://nextprot.org/rdf/source/MassIVE_human_Cerebrospinal_Fluid	source/MassIVE_human_Cerebrospinal_Fluid	MassIVE_human_Cerebrospinal_Fluid	Information generated by MassIVE, project Cerebrospinal Fluid	controlled-vocabulary/cv_datasources.txt	
+http://nextprot.org/rdf/source/MassIVE_human_Digestive_System	source/MassIVE_human_Digestive_System	MassIVE_human_Digestive_System	Information generated by MassIVE, project Digestive System	controlled-vocabulary/cv_datasources.txt	
+http://nextprot.org/rdf/source/MassIVE_human_Eye	source/MassIVE_human_Eye	MassIVE_human_Eye	Information generated by MassIVE, project Eye	controlled-vocabulary/cv_datasources.txt	
+http://nextprot.org/rdf/source/MassIVE_human_Heart	source/MassIVE_human_Heart	MassIVE_human_Heart	Information generated by MassIVE, project Heart	controlled-vocabulary/cv_datasources.txt	
+http://nextprot.org/rdf/source/MassIVE_human_Kidney	source/MassIVE_human_Kidney	MassIVE_human_Kidney	Information generated by MassIVE, project Kidney	controlled-vocabulary/cv_datasources.txt	
+http://nextprot.org/rdf/source/MassIVE_human_Liver	source/MassIVE_human_Liver	MassIVE_human_Liver	Information generated by MassIVE, project Liver	controlled-vocabulary/cv_datasources.txt	
+http://nextprot.org/rdf/source/MassIVE_human_Lung	source/MassIVE_human_Lung	MassIVE_human_Lung	Information generated by MassIVE, project Lung	controlled-vocabulary/cv_datasources.txt	
+http://nextprot.org/rdf/source/MassIVE_human_Muscle	source/MassIVE_human_Muscle	MassIVE_human_Muscle	Information generated by MassIVE, project Muscle	controlled-vocabulary/cv_datasources.txt	
+http://nextprot.org/rdf/source/MassIVE_human_Non_Cancer_Cell_Lines	source/MassIVE_human_Non_Cancer_Cell_Lines	MassIVE_human_Non_Cancer_Cell_Lines	Information generated by MassIVE, project Non Cancer Cell Lines	controlled-vocabulary/cv_datasources.txt	
+http://nextprot.org/rdf/source/MassIVE_human_Olfactory_System	source/MassIVE_human_Olfactory_System	MassIVE_human_Olfactory_System	Information generated by MassIVE, project Olfactory System	controlled-vocabulary/cv_datasources.txt	
+http://nextprot.org/rdf/source/MassIVE_human_Oocyte	source/MassIVE_human_Oocyte	MassIVE_human_Oocyte	Information generated by MassIVE, project Oocyte	controlled-vocabulary/cv_datasources.txt	
+http://nextprot.org/rdf/source/MassIVE_human_Other_Anatomical_Entities	source/MassIVE_human_Other_Anatomical_Entities	MassIVE_human_Other_Anatomical_Entities	Information generated by MassIVE, project Other Anatomical Entities	controlled-vocabulary/cv_datasources.txt	
+http://nextprot.org/rdf/source/MassIVE_human_Other_Female_Reproductive_Organ	source/MassIVE_human_Other_Female_Reproductive_Organ	MassIVE_human_Other_Female_Reproductive_Organ	Information generated by MassIVE, project Other Female Reproductive Organ	controlled-vocabulary/cv_datasources.txt	
+http://nextprot.org/rdf/source/MassIVE_human_Other_Gestational_Structure	source/MassIVE_human_Other_Gestational_Structure	MassIVE_human_Other_Gestational_Structure	Information generated by MassIVE, project Other Gestational Structure	controlled-vocabulary/cv_datasources.txt	
+http://nextprot.org/rdf/source/MassIVE_human_Other_Male_Reproductive_Organ	source/MassIVE_human_Other_Male_Reproductive_Organ	MassIVE_human_Other_Male_Reproductive_Organ	Information generated by MassIVE, project Other Male Reproductive Organ	controlled-vocabulary/cv_datasources.txt	
+http://nextprot.org/rdf/source/MassIVE_human_Other_Respiratory_Organ	source/MassIVE_human_Other_Respiratory_Organ	MassIVE_human_Other_Respiratory_Organ	Information generated by MassIVE, project Other Respiratory Organ	controlled-vocabulary/cv_datasources.txt	
+http://nextprot.org/rdf/source/MassIVE_human_Ovary	source/MassIVE_human_Ovary	MassIVE_human_Ovary	Information generated by MassIVE, project Ovary	controlled-vocabulary/cv_datasources.txt	
+http://nextprot.org/rdf/source/MassIVE_human_Pancreas	source/MassIVE_human_Pancreas	MassIVE_human_Pancreas	Information generated by MassIVE, project Pancreas	controlled-vocabulary/cv_datasources.txt	
+http://nextprot.org/rdf/source/MassIVE_human_Pituitary_Gland	source/MassIVE_human_Pituitary_Gland	MassIVE_human_Pituitary_Gland	Information generated by MassIVE, project Pituitary Gland	controlled-vocabulary/cv_datasources.txt	
+http://nextprot.org/rdf/source/MassIVE_human_Placenta	source/MassIVE_human_Placenta	MassIVE_human_Placenta	Information generated by MassIVE, project Placenta	controlled-vocabulary/cv_datasources.txt	
+http://nextprot.org/rdf/source/MassIVE_human_Skin	source/MassIVE_human_Skin	MassIVE_human_Skin	Information generated by MassIVE, project Skin	controlled-vocabulary/cv_datasources.txt	
+http://nextprot.org/rdf/source/MassIVE_human_Sperm	source/MassIVE_human_Sperm	MassIVE_human_Sperm	Information generated by MassIVE, project Sperm	controlled-vocabulary/cv_datasources.txt	
+http://nextprot.org/rdf/source/MassIVE_human_Spleen	source/MassIVE_human_Spleen	MassIVE_human_Spleen	Information generated by MassIVE, project Spleen	controlled-vocabulary/cv_datasources.txt	
+http://nextprot.org/rdf/source/MassIVE_human_Testis	source/MassIVE_human_Testis	MassIVE_human_Testis	Information generated by MassIVE, project Testis	controlled-vocabulary/cv_datasources.txt	
+http://nextprot.org/rdf/source/MassIVE_human_Thyroid_Gland	source/MassIVE_human_Thyroid_Gland	MassIVE_human_Thyroid_Gland	Information generated by MassIVE, project Thyroid Gland	controlled-vocabulary/cv_datasources.txt	
+http://nextprot.org/rdf/source/MassIVE_human_Ureter	source/MassIVE_human_Ureter	MassIVE_human_Ureter	Information generated by MassIVE, project Ureter	controlled-vocabulary/cv_datasources.txt	
+http://nextprot.org/rdf/source/MassIVE_human_Urinary_Bladder	source/MassIVE_human_Urinary_Bladder	MassIVE_human_Urinary_Bladder	Information generated by MassIVE, project Urinary Bladder	controlled-vocabulary/cv_datasources.txt	
+http://nextprot.org/rdf/source/MassIVE_human_Urine	source/MassIVE_human_Urine	MassIVE_human_Urine	Information generated by MassIVE, project Urine	controlled-vocabulary/cv_datasources.txt	
+http://nextprot.org/rdf/source/MeSH	source/MeSH	MeSH	Information generated by Medical Subject Headings	controlled-vocabulary/cv_datasources.txt	
+http://nextprot.org/rdf/source/NCBI	source/NCBI	NCBI	National Center for Biotechnology Information	controlled-vocabulary/cv_datasources.txt	
+http://nextprot.org/rdf/source/NCI	source/NCI	NCI	National Center Institute	controlled-vocabulary/cv_datasources.txt	
+http://nextprot.org/rdf/source/NTNU_SB	source/NTNU_SB	NTNU_SB	NTNU_SB ontology	controlled-vocabulary/cv_datasources.txt	
+http://nextprot.org/rdf/source/NextProt	source/NextProt	NextProt	Information generated automacally or manually by neXtProt	controlled-vocabulary/cv_datasources.txt	
+http://nextprot.org/rdf/source/NextProt_integration	source/NextProt_integration	NextProt_integration	Data integrated by neXtProt from various sources	controlled-vocabulary/cv_datasources.txt	
+http://nextprot.org/rdf/source/OBO	source/OBO	OBO	OBO supports community members who are developing and publishing ontologies in the biomedical domain.	controlled-vocabulary/cv_datasources.txt	
+http://nextprot.org/rdf/source/ORCID	source/ORCID	ORCID	Connecting Research and Researchers	controlled-vocabulary/cv_datasources.txt	
+http://nextprot.org/rdf/source/Orphanet	source/Orphanet	Orphanet	Orphanet; a database dedicated to information on rare diseases and orphan drugs	controlled-vocabulary/cv_datasources.txt	
+http://nextprot.org/rdf/source/PHI-base	source/PHI-base	PHI-base	The Pathogen-Host Interaction database	controlled-vocabulary/cv_datasources.txt	
+http://nextprot.org/rdf/source/PINC	source/PINC	PINC	Proteome Inc.	controlled-vocabulary/cv_datasources.txt	
+http://nextprot.org/rdf/source/PIR	source/PIR	PIR	Protein Information Resource	controlled-vocabulary/cv_datasources.txt	
+http://nextprot.org/rdf/source/PMID_18614565	source/PMID_18614565	PMID_18614565	Information extracted from the PubMed publication 18614565	controlled-vocabulary/cv_datasources.txt	
+http://nextprot.org/rdf/source/PMID_19413330	source/PMID_19413330	PMID_19413330	Information extracted from the PubMed publication 19413330	controlled-vocabulary/cv_datasources.txt	
+http://nextprot.org/rdf/source/PMID_19608861	source/PMID_19608861	PMID_19608861	Information extracted from the PubMed publication 19608861	controlled-vocabulary/cv_datasources.txt	
+http://nextprot.org/rdf/source/PMID_20068231	source/PMID_20068231	PMID_20068231	Information extracted from the PubMed publication 20068231	controlled-vocabulary/cv_datasources.txt	
+http://nextprot.org/rdf/source/PMID_20140087	source/PMID_20140087	PMID_20140087	Information extracted from the PubMed publication 20140087	controlled-vocabulary/cv_datasources.txt	
+http://nextprot.org/rdf/source/PMID_20570859	source/PMID_20570859	PMID_20570859	Information extracted from the PubMed publication 20570859	controlled-vocabulary/cv_datasources.txt	
+http://nextprot.org/rdf/source/PMID_20687582	source/PMID_20687582	PMID_20687582	Information extracted from the PubMed publication 20687582	controlled-vocabulary/cv_datasources.txt	
+http://nextprot.org/rdf/source/PMID_20797634	source/PMID_20797634	PMID_20797634	Information extracted from the PubMed publication 20797634	controlled-vocabulary/cv_datasources.txt	
+http://nextprot.org/rdf/source/PMID_20972266	source/PMID_20972266	PMID_20972266	Information extracted from the PubMed publication 20972266	controlled-vocabulary/cv_datasources.txt	
+http://nextprot.org/rdf/source/PMID_21139048	source/PMID_21139048	PMID_21139048	Information extracted from the PubMed publication 21139048	controlled-vocabulary/cv_datasources.txt	
+http://nextprot.org/rdf/source/PMID_21406692	source/PMID_21406692	PMID_21406692	Information extracted from the PubMed publication 21406692	controlled-vocabulary/cv_datasources.txt	
+http://nextprot.org/rdf/source/PMID_21645671	source/PMID_21645671	PMID_21645671	Information extracted from the PubMed publication 21645671	controlled-vocabulary/cv_datasources.txt	
+http://nextprot.org/rdf/source/PMID_21890473	source/PMID_21890473	PMID_21890473	Information extracted from the PubMed publication 21890473	controlled-vocabulary/cv_datasources.txt	
+http://nextprot.org/rdf/source/PMID_22148984	source/PMID_22148984	PMID_22148984	Information extracted from the PubMed publication 22148984	controlled-vocabulary/cv_datasources.txt	
+http://nextprot.org/rdf/source/PMID_22199227	source/PMID_22199227	PMID_22199227	Information extracted from the PubMed publication 22199227	controlled-vocabulary/cv_datasources.txt	
+http://nextprot.org/rdf/source/PMID_22468782	source/PMID_22468782	PMID_22468782	Information extracted from the PubMed publication 22468782	controlled-vocabulary/cv_datasources.txt	
+http://nextprot.org/rdf/source/PMID_22865923	source/PMID_22865923	PMID_22865923	Information extracted from the PubMed publication 22865923	controlled-vocabulary/cv_datasources.txt	
+http://nextprot.org/rdf/source/PMID_23153008	source/PMID_23153008	PMID_23153008	Information extracted from the PubMed publication 23153008	controlled-vocabulary/cv_datasources.txt	
+http://nextprot.org/rdf/source/PMID_23236377	source/PMID_23236377	PMID_23236377	Information extracted from the PubMed publication 23236377	controlled-vocabulary/cv_datasources.txt	
+http://nextprot.org/rdf/source/PMID_23266961	source/PMID_23266961	PMID_23266961	Information extracted from the PubMed publication 23266961	controlled-vocabulary/cv_datasources.txt	
