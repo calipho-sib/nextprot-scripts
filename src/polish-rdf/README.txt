@@ -52,14 +52,16 @@ The script should be refactured for future use.
 The output (a) should not depend on goodoc.in anymore but only from schema.ttl and output a file rather characters on stdout
 The output (a), (b) and (c) should be adapted to match existing columns in the google-doc
 
+------------- routine use starts below -----------------
+
 (5)
 python3 reimport-nextprot-rdf-entities-descriptions.py
 
 Input:
-- schema.ttl : the schema as produced by the API
-- "/Users/pmichel/Downloads/nextprot-rdf-classes - nextprot-rdf-classes-V2.tsv" : an tsv export of google sheet TAB "...classes V2"
-- "/Users/pmichel/Downloads/nextprot-rdf-classes - nextprot-rdf-predicates.tsv" : an tsv export of google sheet TAB "...rdf-predicates"
-- "/Users/pmichel/Downloads/nextprot-rdf-classes - nextprot-rdf-named-individuals.tsv" : an tsv export of google sheet TAB "...named-individuals"
+- schema.ttl : the schema as produced by the API - see point (2)
+- "nextprot-rdf-classes - nextprot-rdf-classes-V2.tsv" : an tsv export of google sheet TAB "...classes V2"
+- "nextprot-rdf-classes - nextprot-rdf-predicates.tsv" : an tsv export of google sheet TAB "...rdf-predicates"
+- "nextprot-rdf-classes - nextprot-rdf-named-individuals.tsv" : an tsv export of google sheet TAB "...named-individuals"
 
 Output
 - schema-new.ttl : the schema as produced by the API including label and comment change suggesions edited in the google doc
@@ -78,10 +80,33 @@ Input
 Output
 - schema.html: a human-readable html version of the neXtProt ontology 
 
+
 Note:
 pylone 2.13.2 is buggy, and later versions 3.x are not fully implemented:
 - hash anchors are based on entity labels and incorrect in some cases (links in Range(s) and alesewhere)
 - Range(s) defined with a owl:unionOf multiple classes don't work properly
+
+(7)
+python3 fix-pylode-links.py
+
+Input
+- schema.html
+- schema.ttl
+
+Output 
+- schema-fixed.html
+
+(8)
+python3 insert_images.py
+
+Input 
+- schema.html (a copy of schema-fixed.html)
+
+Output
+- schema-images.html
+
+
+
 
 
 

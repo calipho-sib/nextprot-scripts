@@ -7,9 +7,9 @@ import sys
 
 # input file with possibly new labels and new comments
 goofiles= [
-    "/Users/pmichel/Downloads/nextprot-rdf-classes - nextprot-rdf-classes-V2.tsv",
-    "/Users/pmichel/Downloads/nextprot-rdf-classes - nextprot-rdf-predicates.tsv",
-    "/Users/pmichel/Downloads/nextprot-rdf-classes - nextprot-named-individuals.tsv"
+    "nextprot-rdf-classes - nextprot-rdf-classes-V2.tsv",
+    "nextprot-rdf-classes - nextprot-rdf-predicates.tsv",
+    "nextprot-rdf-classes - nextprot-named-individuals.tsv"
     ]
 
 # input file with current schema in ttl format
