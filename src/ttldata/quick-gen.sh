@@ -488,6 +488,15 @@ for action in $actions; do
     rm -rf /work/construct/*.ttl
     rm -rf /work/ttldata/nobackup/ttl-compressed/*
     nohup nxs-export-by-chromosome.py -t1 build-api.nextprot.org ttl /work/ttldata/nobackup/export-ttl > nxs-export-by-chromosome-ttl-$(date "+%Y%m%d-%H%M").log 2>&1
+    # fix comments in schema.ttl
+    last_dir=$(pwd)
+    cd 
+    cd nextprot-scripts/src/polish-rdf
+    wget -O schema.ttl http://localhost:8080/nextprot-api-web/rdf/schema.ttl
+    python3 reimport-nextprot-rdf-entities-descriptions.py
+    cp schema-new.ttl /work/ttldata/export-ttl/schema.ttl
+    cd $last_dir
+    # end fix    
     nohup /work/ttldata/check-base-ttl-files.sh > check-base-ttl-files-$(date "+%Y%m%d-%H%M").log 2>&1 
     nohup /work/ttldata/generate-inferred-ttl-files-from-fuseki.sh> generate-inferred-ttl-files-from-fuseki-$(date "+%Y%m%d-%H%M").log 2>&1
     nohup /work/ttldata/load-base-ttl-files-to-virtuoso.sh > load-base-ttl-files-to-virtuoso-$(date "+%Y%m%d-%H%M").log 2>&1
