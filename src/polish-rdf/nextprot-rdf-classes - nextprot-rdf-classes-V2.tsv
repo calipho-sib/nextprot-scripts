@@ -133,7 +133,7 @@ http://nextprot.org/rdf#PeroxisomeTransitPeptide	PeroxisomeTransitPeptide	Public
 http://nextprot.org/rdf#Person	Person	Public	Person	Person	Person	Person.	
 http://nextprot.org/rdf#PhDependence	PhDependence	Public	PH dependence	PH dependence		Optimum pH for protein activity, the variation of activity with pH variation and the pH stability of the protein.	
 http://nextprot.org/rdf#Pharmaceutical	Pharmaceutical	Public	Pharmaceutical	Pharmaceutical	Pharmaceutical use: use of as a pharmaceutical drug	Use of the protein as a pharmaceutical drug.	
-http://nextprot.org/rdf#PhenotypeVariation	PhenotypicVariation => PhenotypeVariation	Public	Phenotype variation	Phenotype variation		Variation in observed molecular or organism phenotype due to modifications to the protein.	
+http://nextprot.org/rdf#PhenotypicVariation	PhenotypicVariation => PhenotypeVariation	Public	Phenotype variation	Phenotype variation		Variation in observed molecular or organism phenotype due to modifications to the protein.	
 http://nextprot.org/rdf#PositionalAnnotation	PositionalAnnotation	Public	Positional annotation	Positional annotation		Annotation relevant to one or more amino acid(s) of the protein.	
 http://nextprot.org/rdf#PositiveExpressionLevel	PositiveExpressionLevel DetectedExpression	Private	Positive expression level	Detected expression	Class of positive expression level	Detected expression of the protein.	in a given organ, tissue, cell type, fluid or gestational structure? pam: deleted from schema
 http://nextprot.org/rdf#ProcessingProduct	ProcessingProduct	Public	Processing product	Processing product.		Part of the protein resulting from natural processing events.	
