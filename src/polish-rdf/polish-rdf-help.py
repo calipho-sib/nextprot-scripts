@@ -29,10 +29,23 @@ for cl in data:
   tn = cl.get("typeName")
   pc = cl.get("parents")
   ptc = cl.get("parentTriples")
+  
   # do not include Classes having no parent
   if len(ptc)==0:
     print("Skipping class without parent", tn) 
     continue
+
+  # remove triples with owl classes in object type
+  new_triples = list()
+  for triple in cl.get("triples"):
+    ot = triple.get("objectType")
+    if "owl:" in ot:
+      st = triple.get("subjectType")
+      pred = triple.get("predicate")
+      print("Removing triple type", st, pred, ot)
+      continue
+    new_triples.append(triple)
+  # fix values (seems to be unnecessary)
   new_values = list()
   for v in cl.get("values"):
     if v in to_del:
