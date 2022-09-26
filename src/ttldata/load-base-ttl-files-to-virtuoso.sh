@@ -2,13 +2,7 @@
 
 ###isql 1111 dba dba exec="SPARQL DROP SILENT GRAPH <http://nextprot.org/rdf>;"
 
-if pgrep virtuoso-t; then
-  echo "killing virtuoso and wait 10 seconds..."
-  kill $(pgrep virtuoso-t)
-  sleep 10
-else
-  echo "virtuoso not running"
-fi
+/work/ttldata/stop-virtuoso.sh
 
 echo "removing virtuoso data but saving virtuoso.ini"
 mkdir -p /var/lib/virtuoso/tmp
@@ -16,10 +10,7 @@ cp /var/lib/virtuoso/db/virtuoso.ini /var/lib/virtuoso/tmp
 rm /var/lib/virtuoso/db/*
 cp /var/lib/virtuoso/tmp/virtuoso.ini /var/lib/virtuoso/db
 
-echo "restarting viruoso and wait 30 seconds..."
-/usr/bin/virtuoso-t +configfile /var/lib/virtuoso/db/virtuoso.ini --wait
-# do not try to sleep less, virtuoso needs some time before isql sessions can start...
-sleep 30
+/work/ttldata/restart-virtuoso
 
 echo "setting some configuaration options"
 isql 1111 dba dba exec="grant select on \"DB.DBA.SPARQL_SINV_2\" to \"SPARQL\";"
