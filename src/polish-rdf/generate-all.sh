@@ -25,6 +25,10 @@ python3 pylode/pyLODE-2.13.2/pylode/cli.py -i ./schema.ttl  > schema.html
 python3 fix-pylode-links.py
 mv schema-fixed.html schema.html
 
+sed 's/"#Protein"/"#Entry"/g' schema.html > schema-fixed.html
+mv schema-fixed.html schema.html
+sed 's/id="Protein"/id="Entry"/g' schema.html > schema-fixed.html
+mv schema-fixed.html schema.html
 
 #
 # 5. Insert images in HTML schema
